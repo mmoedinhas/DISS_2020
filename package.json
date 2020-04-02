@@ -1,0 +1,34 @@
+{
+  "name": "nutcracker_2020",
+  "version": "1.0.0",
+  "description": "Game for my dissertation work at FEUP 2020",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmoedinhas/DISS_2020.git"
+  },
+  "keywords": [
+    "game",
+    "nutcracker"
+  ],
+  "author": "Matilde",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmoedinhas/DISS_2020/issues"
+  },
+  "homepage": "https://github.com/mmoedinhas/DISS_2020#readme",
+  "dependencies": {
+    "copy-webpack-plugin": "^5.1.1",
+    "phaser": "^3.22.0",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}
