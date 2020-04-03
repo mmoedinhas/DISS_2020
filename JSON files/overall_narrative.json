@@ -1,0 +1,49 @@
+{
+    "scenes": [
+        {
+            "name": "scene1",
+            "map": "dance_hall.json",
+            "events": [
+                {
+                    "name": "event11A",
+                    "type": "cutscene",
+                    "file": "cutscene11A.json",
+                    "emotional_requirements": {
+                        "priority": 1,
+                        "anger": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "disgust": null,
+                        "fear": null,
+                        "anxiety": null,
+                        "sadness": null,
+                        "desire": {
+                            "condition": ">=",
+                            "value": 5
+                        },
+                        "relaxation": null,
+                        "happiness": null
+                    },
+                    "flag_requirements": "null",
+                    "flag_changes": [
+                        {
+                            "name": "cutscene1ADone",
+                            "value": true
+                        }
+                    ]
+                },
+                {
+                    "name": "event11B",
+                    "type": "cutscene",
+                    "file": "cutscene11B.json"
+                },
+                {
+                    "name": "event11C",
+                    "type": "cutscene",
+                    "file": "cutscene11C.json"
+                }
+            ]
+        }
+    ]
+}

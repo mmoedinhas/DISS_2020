@@ -1,0 +1,432 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "Narrative Overview",
+    "description": "JSON document for the narrative overview",
+    "required": [
+        "scenes"
+    ],
+    "properties": {
+        "scenes": {
+            "$id": "#/properties/scenes",
+            "type": "array",
+            "title": "The Scenes Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "items": {
+                "$id": "#/properties/scenes/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": {},
+                "examples": [
+                    {
+                        "map": "dance_hall.json",
+                        "name": "scene1",
+                        "events": [
+                            {
+                                "emotional_requirements": {
+                                    "anger": {
+                                        "value": 8.0,
+                                        "condition": ">="
+                                    },
+                                    "fear": null,
+                                    "happiness": null,
+                                    "anxiety": null,
+                                    "priority": 1.0,
+                                    "sadness": null,
+                                    "relaxation": null,
+                                    "disgust": null,
+                                    "desire": {
+                                        "condition": ">=",
+                                        "value": 5.0
+                                    }
+                                },
+                                "type": "cutscene",
+                                "flag_changes": [
+                                    {
+                                        "name": "cutscene1ADone",
+                                        "value": true
+                                    }
+                                ],
+                                "file": "cutscene11A.json",
+                                "flag_requirements": "null",
+                                "name": "event11A"
+                            },
+                            {
+                                "file": "cutscene11B.json",
+                                "type": "cutscene",
+                                "name": "event11B"
+                            },
+                            {
+                                "file": "cutscene11C.json",
+                                "type": "cutscene",
+                                "name": "event11C"
+                            }
+                        ]
+                    }
+                ],
+                "required": [
+                    "name",
+                    "map",
+                    "events"
+                ],
+                "properties": {
+                    "name": {
+                        "$id": "#/properties/scenes/items/properties/name",
+                        "type": "string",
+                        "title": "The Name Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "scene1"
+                        ]
+                    },
+                    "map": {
+                        "$id": "#/properties/scenes/items/properties/map",
+                        "type": "string",
+                        "title": "The Map Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "dance_hall.json"
+                        ]
+                    },
+                    "events": {
+                        "$id": "#/properties/scenes/items/properties/events",
+                        "type": "array",
+                        "title": "The Events Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/scenes/items/properties/events/items",
+                            "type": "object",
+                            "title": "The Items Schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "flag_changes": [
+                                        {
+                                            "name": "cutscene1ADone",
+                                            "value": true
+                                        }
+                                    ],
+                                    "file": "cutscene11A.json",
+                                    "flag_requirements": "null",
+                                    "name": "event11A",
+                                    "emotional_requirements": {
+                                        "priority": 1.0,
+                                        "anxiety": null,
+                                        "sadness": null,
+                                        "relaxation": null,
+                                        "disgust": null,
+                                        "desire": {
+                                            "value": 5.0,
+                                            "condition": ">="
+                                        },
+                                        "anger": {
+                                            "condition": ">=",
+                                            "value": 8.0
+                                        },
+                                        "fear": null,
+                                        "happiness": null
+                                    },
+                                    "type": "cutscene"
+                                },
+                                {
+                                    "file": "cutscene11B.json",
+                                    "type": "cutscene",
+                                    "name": "event11B"
+                                },
+                                {
+                                    "name": "event11C",
+                                    "file": "cutscene11C.json",
+                                    "type": "cutscene"
+                                }
+                            ],
+                            "required": [
+                                "name",
+                                "type",
+                                "file",
+                                "emotional_requirements",
+                                "flag_requirements",
+                                "flag_changes"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/name",
+                                    "type": "string",
+                                    "title": "The Name Schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "event11A"
+                                    ]
+                                },
+                                "type": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/type",
+                                    "type": "string",
+                                    "title": "The Type Schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "cutscene"
+                                    ]
+                                },
+                                "file": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/file",
+                                    "type": "string",
+                                    "title": "The File Schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "cutscene11A.json"
+                                    ]
+                                },
+                                "emotional_requirements": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements",
+                                    "type": "object",
+                                    "title": "The Emotional_requirements Schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "fear": null,
+                                            "happiness": null,
+                                            "anxiety": null,
+                                            "priority": 1.0,
+                                            "sadness": null,
+                                            "relaxation": null,
+                                            "disgust": null,
+                                            "desire": {
+                                                "value": 5.0,
+                                                "condition": ">="
+                                            },
+                                            "anger": {
+                                                "value": 8.0,
+                                                "condition": ">="
+                                            }
+                                        }
+                                    ],
+                                    "required": [
+                                        "priority",
+                                        "anger",
+                                        "disgust",
+                                        "fear",
+                                        "anxiety",
+                                        "sadness",
+                                        "desire",
+                                        "relaxation",
+                                        "happiness"
+                                    ],
+                                    "properties": {
+                                        "priority": {
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/priority",
+                                            "type": "integer",
+                                            "title": "The Priority Schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": 0,
+                                            "examples": [
+                                                1
+                                            ]
+                                        },
+                                        "anger": {
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anger",
+                                            "type": "object",
+                                            "title": "The Anger Schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": {},
+                                            "examples": [
+                                                {
+                                                    "value": 8.0,
+                                                    "condition": ">="
+                                                }
+                                            ],
+                                            "required": [
+                                                "condition",
+                                                "value"
+                                            ],
+                                            "properties": {
+                                                "condition": {
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anger/properties/condition",
+                                                    "type": "string",
+                                                    "title": "The Condition Schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": "",
+                                                    "examples": [
+                                                        ">="
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anger/properties/value",
+                                                    "type": "integer",
+                                                    "title": "The Value Schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": 0,
+                                                    "examples": [
+                                                        8
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        "disgust": {
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/disgust",
+                                            "title": "The Disgust Schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": null,
+                                            "examples": [
+                                                null
+                                            ]
+                                        },
+                                        "fear": {
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/fear",
+                                            "title": "The Fear Schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": null,
+                                            "examples": [
+                                                null
+                                            ]
+                                        },
+                                        "anxiety": {
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anxiety",
+                                            "title": "The Anxiety Schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": null,
+                                            "examples": [
+                                                null
+                                            ]
+                                        },
+                                        "sadness": {
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/sadness",
+                                            "title": "The Sadness Schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": null,
+                                            "examples": [
+                                                null
+                                            ]
+                                        },
+                                        "desire": {
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/desire",
+                                            "type": "object",
+                                            "title": "The Desire Schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": {},
+                                            "examples": [
+                                                {
+                                                    "condition": ">=",
+                                                    "value": 5.0
+                                                }
+                                            ],
+                                            "required": [
+                                                "condition",
+                                                "value"
+                                            ],
+                                            "properties": {
+                                                "condition": {
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/desire/properties/condition",
+                                                    "type": "string",
+                                                    "title": "The Condition Schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": "",
+                                                    "examples": [
+                                                        ">="
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/desire/properties/value",
+                                                    "type": "integer",
+                                                    "title": "The Value Schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": 0,
+                                                    "examples": [
+                                                        5
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        "relaxation": {
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/relaxation",
+                                            "title": "The Relaxation Schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": null,
+                                            "examples": [
+                                                null
+                                            ]
+                                        },
+                                        "happiness": {
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/happiness",
+                                            "title": "The Happiness Schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": null,
+                                            "examples": [
+                                                null
+                                            ]
+                                        }
+                                    }
+                                },
+                                "flag_requirements": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flag_requirements",
+                                    "type": "string",
+                                    "title": "The Flag_requirements Schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "null"
+                                    ]
+                                },
+                                "flag_changes": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flag_changes",
+                                    "type": "array",
+                                    "title": "The Flag_changes Schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": [],
+                                    "items": {
+                                        "$id": "#/properties/scenes/items/properties/events/items/properties/flag_changes/items",
+                                        "type": "object",
+                                        "title": "The Items Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": {},
+                                        "examples": [
+                                            {
+                                                "name": "cutscene1ADone",
+                                                "value": true
+                                            }
+                                        ],
+                                        "required": [
+                                            "name",
+                                            "value"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flag_changes/items/properties/name",
+                                                "type": "string",
+                                                "title": "The Name Schema",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "default": "",
+                                                "examples": [
+                                                    "cutscene1ADone"
+                                                ]
+                                            },
+                                            "value": {
+                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flag_changes/items/properties/value",
+                                                "type": "boolean",
+                                                "title": "The Value Schema",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "default": false,
+                                                "examples": [
+                                                    true
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
