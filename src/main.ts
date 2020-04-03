@@ -25,17 +25,25 @@ export class BootScene extends Phaser.Scene {
     }
 }
 
-const renderConfig: Phaser.Types.Core.RenderConfig = {
-    pixelArt: true,
-}
-
 const gameConfig: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
-    parent: 'content',
-    width: 800,
-    height: 800,
-    zoom: 1,
-    render: renderConfig,
+    scale: {
+        parent: 'content',
+        mode: Phaser.Scale.FIT,
+        width: 1280,
+        height: 720,
+        min: {
+            width: 320,
+            height: 240
+        },
+        max: {
+            width: 1280,
+            height: 720
+        }
+    },
+    render: {
+        pixelArt: true
+    },
     physics: {
         default: 'arcade',
         arcade: {

@@ -19,18 +19,28 @@ export class DanceHallScene extends Phaser.Scene {
         
         let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({key: 'dance-hall-map'});
         
-        let castle: Phaser.Tilemaps.Tileset = map.addTilesetImage('castle', 'castle-tiles');
-        let stairs: Phaser.Tilemaps.Tileset = map.addTilesetImage('stairs', 'stairs-tiles');
+        let castleTiles: Phaser.Tilemaps.Tileset = map.addTilesetImage('castle', 'castle-tiles');
+        let stairsTiles: Phaser.Tilemaps.Tileset = map.addTilesetImage('stairs', 'stairs-tiles');
+        let tilesets: Phaser.Tilemaps.Tileset[] = [castleTiles, stairsTiles];
 
-        let layer1 = map.createStaticLayer('floor', [castle, stairs], 0, 0);
+        let collidables: Phaser.Tilemaps.StaticTilemapLayer[] = [];
+        let layers: Phaser.Tilemaps.StaticTilemapLayer[] = [];
 
-        // let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({ key: 'map' });
+        for(let layerData of map.layers) {
 
-        // var tiles = map.addTilesetImage('spritesheet', 'tiles');
+            let depth: number = (layerData.properties as Array<object>).find(i => i['name'] === 'depth')['value'];
+            let collidable: boolean = (layerData.properties as Array<object>).find(i => i['name'] === 'collidable')['value'];
 
-        // var grass = map.createStaticLayer('Grass', tiles, 0, 0);
-        // var obstacles = map.createStaticLayer('Obstacles', tiles, 0, 0);
-        // obstacles.setCollisionByExclusion([-1]);
+            let layer: Phaser.Tilemaps.StaticTilemapLayer = map.createStaticLayer(layerData.name, tilesets).setDepth(depth);
+
+            if(collidable) {
+                collidables.push(layer);
+            }
+        }
+
+        for(let layer of collidables) {
+            layer.setCollisionByExclusion([-1]);
+        }
 
         return map;
     }
