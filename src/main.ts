@@ -18,6 +18,9 @@ export class BootScene extends Phaser.Scene {
 
         // map in json format
         this.load.tilemapTiledJSON('dance-hall-map', 'assets/map/dance_hall.json');
+
+        // character tiles
+        this.load.spritesheet('girls', 'assets/tileset/girls.png', { frameWidth: 39, frameHeight: 54 });
     }
 
     public create() {
@@ -30,15 +33,15 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     scale: {
         parent: 'content',
         mode: Phaser.Scale.FIT,
-        width: 1280,
-        height: 720,
+        width: 640,
+        height: 360,
         min: {
             width: 320,
             height: 240
         },
         max: {
-            width: 1280,
-            height: 720
+            width: 640,
+            height: 360
         }
     },
     render: {
@@ -47,7 +50,8 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 0 }
+            gravity: { y: 0 },
+            debug: true,
         }
     },
     scene: [
