@@ -1,0 +1,48 @@
+{
+    "name": "event1A1A",
+    "actors": [
+        {
+            "id": "Clara",
+            "start": [20, 40] 
+        },
+        {
+            "id": "Dancer1",
+            "start": [20, 100]
+        },
+        {
+            "id": "Dancer2",
+            "start": [10, 120]
+        }
+    ],
+    "Actions": [
+        {
+            "action": "walk",
+            "arguments": {
+                "x": -5,
+                "y": 0
+            },
+            "actor": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "text": "It's finally Christmas!"
+            },
+            "actor": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "text": "Everyone seems to be having fun. I can see my cousins and my grandma! I should go and say hello!"
+            }
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": 20
+            },
+            "actor": "Clara"
+        }
+    ]
+}

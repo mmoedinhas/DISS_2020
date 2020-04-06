@@ -1,0 +1,181 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "name",
+        "actors",
+        "Actions"
+    ],
+    "properties": {
+        "name": {
+            "$id": "#/properties/name",
+            "type": "string",
+            "title": "Name",
+            "description": "The name/id of the event",
+            "default": "",
+            "examples": [
+                "event1A1A"
+            ]
+        },
+        "actors": {
+            "$id": "#/properties/actors",
+            "type": "array",
+            "title": "Actors",
+            "description": "A list of the actors present in the event",
+            "default": [],
+            "items": {
+                "$id": "#/properties/actors/items",
+                "type": "object",
+                "title": "Actor",
+                "description": "The id and starting position of the actor",
+                "default": {},
+                "examples": [
+                    {
+                        "id": "Clara",
+                        "start": [
+                            20.0,
+                            40.0
+                        ]
+                    },
+                    {
+                        "id": "Dancer1",
+                        "start": [
+                            20.0,
+                            100.0
+                        ]
+                    },
+                    {
+                        "start": [
+                            10.0,
+                            120.0
+                        ],
+                        "id": "Dancer2"
+                    }
+                ],
+                "required": [
+                    "id",
+                    "start"
+                ],
+                "properties": {
+                    "id": {
+                        "$id": "#/properties/actors/items/properties/id",
+                        "type": "string",
+                        "title": "Id",
+                        "description": "The ID of the actor",
+                        "default": "",
+                        "examples": [
+                            "Clara"
+                        ]
+                    },
+                    "start": {
+                        "$id": "#/properties/actors/items/properties/start",
+                        "type": "array",
+                        "title": "Start",
+                        "description": "The starting position of the actor in the map",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/actors/items/properties/start/items",
+                            "type": "integer",
+                            "title": "X, Y",
+                            "description": "The X and Y position in the map ",
+                            "default": 0,
+                            "examples": [
+                                20,
+                                40
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "Actions": {
+            "$id": "#/properties/Actions",
+            "type": "array",
+            "title": "Actions",
+            "description": "A list of the actions in this event",
+            "default": [],
+            "items": {
+                "$id": "#/properties/Actions/items",
+                "type": "object",
+                "title": "Action",
+                "description": "The representation of an action",
+                "default": {},
+                "examples": [
+                    {
+                        "actor": "Clara",
+                        "action": "walk",
+                        "arguments": {
+                            "x": -5.0,
+                            "y": 0.0
+                        }
+                    },
+                    {
+                        "action": "talk",
+                        "arguments": {
+                            "text": "It's finally Christmas!"
+                        },
+                        "actor": "Clara"
+                    },
+                    {
+                        "action": "talk",
+                        "arguments": {
+                            "text": "Everyone seems to be having fun. I can see my cousins and my grandma! I should go and say hello!"
+                        }
+                    },
+                    {
+                        "action": "walk",
+                        "arguments": {
+                            "x": 0.0,
+                            "y": 20.0
+                        },
+                        "actor": "Clara"
+                    }
+                ],
+                "required": [
+                    "action",
+                    "arguments",
+                    "actor"
+                ],
+                "properties": {
+                    "action": {
+                        "$id": "#/properties/Actions/items/properties/action",
+                        "type": "string",
+                        "title": "Action",
+                        "description": "The type of action. For example, it can be \"walk\" or \"talk\"",
+                        "default": "",
+                        "examples": [
+                            "walk"
+                        ]
+                    },
+                    "arguments": {
+                        "$id": "#/properties/Actions/items/properties/arguments",
+                        "type": "object",
+                        "title": "Arguments",
+                        "description": "The arguments for the specific action",
+                        "default": {},
+                        "examples": [
+                            {
+                                "x": -5.0,
+                                "y": 0.0
+                            }
+                        ],
+                        "properties": {}
+                    },
+                    "actor": {
+                        "$id": "#/properties/Actions/items/properties/actor",
+                        "type": "string",
+                        "title": "Actor",
+                        "description": "The actor that should perform the action",
+                        "default": "",
+                        "examples": [
+                            "Clara"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,279 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "actors"
+    ],
+    "properties": {
+        "actors": {
+            "$id": "#/properties/actors",
+            "type": "array",
+            "title": "Actors",
+            "description": "A list of all the actors in the game (protagonists, NPCs, enemies)",
+            "default": [],
+            "items": {
+                "$id": "#/properties/actors/items",
+                "type": "object",
+                "title": "Actor",
+                "description": "The representation of an actor",
+                "default": {},
+                "examples": [
+                    {
+                        "id": "Clara",
+                        "Animations": [
+                            {
+                                "frameRate": 10.0,
+                                "key": "left",
+                                "repeat": -1.0,
+                                "frames": [
+                                    12.0,
+                                    13.0,
+                                    12.0,
+                                    11.0
+                                ]
+                            },
+                            {
+                                "frameRate": 10.0,
+                                "key": "right",
+                                "repeat": -1.0,
+                                "frames": [
+                                    25.0,
+                                    26.0,
+                                    25.0,
+                                    24.0
+                                ]
+                            },
+                            {
+                                "key": "up",
+                                "repeat": -1.0,
+                                "frames": [
+                                    37.0,
+                                    38.0,
+                                    37.0,
+                                    36.0
+                                ],
+                                "frameRate": 10.0
+                            },
+                            {
+                                "frameRate": 10.0,
+                                "key": "down",
+                                "repeat": -1.0,
+                                "frames": [
+                                    1.0,
+                                    2.0,
+                                    1.0,
+                                    0.0
+                                ]
+                            }
+                        ],
+                        "spritesheet": "girls.png",
+                        "resolution": {
+                            "frameHeight": 54.0,
+                            "frameWidth": 39.0
+                        },
+                        "name": "Clara"
+                    }
+                ],
+                "required": [
+                    "id",
+                    "name",
+                    "spritesheet",
+                    "resolution",
+                    "Animations"
+                ],
+                "properties": {
+                    "id": {
+                        "$id": "#/properties/actors/items/properties/id",
+                        "type": "string",
+                        "title": "Id",
+                        "description": "The unique ID for this actor",
+                        "default": "",
+                        "examples": [
+                            "Clara"
+                        ]
+                    },
+                    "name": {
+                        "$id": "#/properties/actors/items/properties/name",
+                        "type": "string",
+                        "title": "Name",
+                        "description": "The actor's name",
+                        "default": "",
+                        "examples": [
+                            "Clara"
+                        ]
+                    },
+                    "spritesheet": {
+                        "$id": "#/properties/actors/items/properties/spritesheet",
+                        "type": "string",
+                        "title": "Spritesheet",
+                        "description": "The spritesheet containing the sprites for this actor",
+                        "default": "",
+                        "examples": [
+                            "girls.png"
+                        ]
+                    },
+                    "resolution": {
+                        "$id": "#/properties/actors/items/properties/resolution",
+                        "type": "object",
+                        "title": "Resolution",
+                        "description": " The resolution of the sprites",
+                        "default": {},
+                        "examples": [
+                            {
+                                "frameHeight": 54.0,
+                                "frameWidth": 39.0
+                            }
+                        ],
+                        "required": [
+                            "frameWidth",
+                            "frameHeight"
+                        ],
+                        "properties": {
+                            "frameWidth": {
+                                "$id": "#/properties/actors/items/properties/resolution/properties/frameWidth",
+                                "type": "integer",
+                                "title": "Frame Width",
+                                "description": "The width of each sprite",
+                                "default": 0,
+                                "examples": [
+                                    39
+                                ]
+                            },
+                            "frameHeight": {
+                                "$id": "#/properties/actors/items/properties/resolution/properties/frameHeight",
+                                "type": "integer",
+                                "title": "Frame Height",
+                                "description": "The height of each sprite",
+                                "default": 0,
+                                "examples": [
+                                    54
+                                ]
+                            }
+                        }
+                    },
+                    "Animations": {
+                        "$id": "#/properties/actors/items/properties/Animations",
+                        "type": "array",
+                        "title": "Animations",
+                        "description": "A list of the animations for the actor",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/actors/items/properties/Animations/items",
+                            "type": "object",
+                            "title": "Animation",
+                            "description": "A representation of an animation",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "frameRate": 10.0,
+                                    "key": "left",
+                                    "repeat": -1.0,
+                                    "frames": [
+                                        12.0,
+                                        13.0,
+                                        12.0,
+                                        11.0
+                                    ]
+                                },
+                                {
+                                    "key": "right",
+                                    "repeat": -1.0,
+                                    "frames": [
+                                        25.0,
+                                        26.0,
+                                        25.0,
+                                        24.0
+                                    ],
+                                    "frameRate": 10.0
+                                },
+                                {
+                                    "frameRate": 10.0,
+                                    "key": "up",
+                                    "repeat": -1.0,
+                                    "frames": [
+                                        37.0,
+                                        38.0,
+                                        37.0,
+                                        36.0
+                                    ]
+                                },
+                                {
+                                    "frameRate": 10.0,
+                                    "key": "down",
+                                    "repeat": -1.0,
+                                    "frames": [
+                                        1.0,
+                                        2.0,
+                                        1.0,
+                                        0.0
+                                    ]
+                                }
+                            ],
+                            "required": [
+                                "key",
+                                "frames",
+                                "frameRate",
+                                "repeat"
+                            ],
+                            "properties": {
+                                "key": {
+                                    "$id": "#/properties/actors/items/properties/Animations/items/properties/key",
+                                    "type": "string",
+                                    "title": "Key",
+                                    "description": "The animation unique key",
+                                    "default": "",
+                                    "examples": [
+                                        "left"
+                                    ]
+                                },
+                                "frames": {
+                                    "$id": "#/properties/actors/items/properties/Animations/items/properties/frames",
+                                    "type": "array",
+                                    "title": "Frames",
+                                    "description": "The frames in the spritesheet required for the animation",
+                                    "default": [],
+                                    "items": {
+                                        "$id": "#/properties/actors/items/properties/Animations/items/properties/frames/items",
+                                        "type": "integer",
+                                        "title": "Frame",
+                                        "description": "The index corresponding to the desired frame in the spritesheet",
+                                        "default": 0,
+                                        "examples": [
+                                            12,
+                                            13,
+                                            12,
+                                            11
+                                        ]
+                                    }
+                                },
+                                "frameRate": {
+                                    "$id": "#/properties/actors/items/properties/Animations/items/properties/frameRate",
+                                    "type": "integer",
+                                    "title": "Framerate",
+                                    "description": "The framerate of the animation",
+                                    "default": 0,
+                                    "examples": [
+                                        10
+                                    ]
+                                },
+                                "repeat": {
+                                    "$id": "#/properties/actors/items/properties/Animations/items/properties/repeat",
+                                    "type": "integer",
+                                    "title": "Repeat",
+                                    "description": "Number of times the animation should repeat. -1 if animation should loop forever",
+                                    "default": 0,
+                                    "examples": [
+                                        -1
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

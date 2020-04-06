@@ -3,7 +3,7 @@
         {
             "name": "scene1A",
             "map": "dance_hallA.json",
-            "emotional_requirements": {
+            "emotionalRequirements": {
                 "priority": 1,
                 "anger": {
                     "condition": ">=",
@@ -42,7 +42,7 @@
                 {
                     "name": "scene1AToScene2A",
                     "to": "scene2A",
-                    "flag_requirements": [
+                    "flagRequirements": [
                         {
                             "name": "keyToDoorAcquired",
                             "value": true
@@ -55,7 +55,7 @@
                     "name": "event1A1A",
                     "type": "cutscene",
                     "file": "cutscene1A1A.json",
-                    "emotional_requirements": {
+                    "emotionalRequirements": {
                         "priority": 1,
                         "anger": {
                             "condition": ">=",
@@ -90,8 +90,8 @@
                             "value": 8
                         }
                     },
-                    "flag_requirements": [],
-                    "flag_changes": [
+                    "flagRequirements": [],
+                    "flagChanges": [
                         {
                             "name": "cutscene1ADone",
                             "value": true
@@ -102,7 +102,7 @@
                     "name": "event1A1B",
                     "type": "cutscene",
                     "file": "cutscene1A1B.json",
-                    "emotional_requirements": {
+                    "emotionalRequirements": {
                         "priority": 2,
                         "anger": {
                             "condition": "<=",
@@ -137,8 +137,8 @@
                             "value": 8
                         }
                     },
-                    "flag_requirements": [],
-                    "flag_changes": [
+                    "flagRequirements": [],
+                    "flagChanges": [
                         {
                             "name": "cutscene1ADone",
                             "value": true
@@ -149,7 +149,7 @@
                     "name": "event1A2",
                     "type": "gameplay",
                     "file": "gameplay1A2.json",
-                    "emotional_requirements": {
+                    "emotionalRequirements": {
                         "priority": 1,
                         "anger": null,
                         "disgust": null,
@@ -160,13 +160,13 @@
                         "relaxation": null,
                         "happiness": null
                     },
-                    "flag_requirements": [
+                    "flagRequirements": [
                         {
                             "name": "cutscene1ADone",
                             "value": true
                         }
                     ],
-                    "flag_changes": [
+                    "flagChanges": [
                         {
                             "name": "keyToDoorAcquired",
                             "value": true

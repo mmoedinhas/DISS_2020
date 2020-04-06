@@ -24,7 +24,7 @@
                     {
                         "transitions": [
                             {
-                                "flag_requirements": [
+                                "flagRequirements": [
                                     {
                                         "name": "keyToDoorAcquired",
                                         "value": true
@@ -34,7 +34,7 @@
                                 "name": "scene1AToScene2A"
                             }
                         ],
-                        "emotional_requirements": {
+                        "emotionalRequirements": {
                             "relaxation": {
                                 "condition": ">=",
                                 "value": 8.0
@@ -74,16 +74,16 @@
                         "events": [
                             {
                                 "type": "cutscene",
-                                "flag_changes": [
+                                "flagChanges": [
                                     {
                                         "name": "cutscene1ADone",
                                         "value": true
                                     }
                                 ],
                                 "file": "cutscene1A1A.json",
-                                "flag_requirements": [],
+                                "flagRequirements": [],
                                 "name": "event1A1A",
-                                "emotional_requirements": {
+                                "emotionalRequirements": {
                                     "anxiety": {
                                         "value": 8.0,
                                         "condition": ">="
@@ -120,7 +120,7 @@
                                 }
                             },
                             {
-                                "emotional_requirements": {
+                                "emotionalRequirements": {
                                     "relaxation": {
                                         "value": 8.0,
                                         "condition": ">="
@@ -156,32 +156,32 @@
                                     }
                                 },
                                 "type": "cutscene",
-                                "flag_changes": [
+                                "flagChanges": [
                                     {
                                         "name": "cutscene1ADone",
                                         "value": true
                                     }
                                 ],
                                 "file": "cutscene1A1B.json",
-                                "flag_requirements": [],
+                                "flagRequirements": [],
                                 "name": "event1A1B"
                             },
                             {
-                                "flag_changes": [
+                                "flagChanges": [
                                     {
                                         "name": "keyToDoorAcquired",
                                         "value": true
                                     }
                                 ],
                                 "file": "gameplay1A2.json",
-                                "flag_requirements": [
+                                "flagRequirements": [
                                     {
                                         "name": "cutscene1ADone",
                                         "value": true
                                     }
                                 ],
                                 "name": "event1A2",
-                                "emotional_requirements": {
+                                "emotionalRequirements": {
                                     "sadness": null,
                                     "relaxation": null,
                                     "disgust": null,
@@ -200,7 +200,7 @@
                 "required": [
                     "name",
                     "map",
-                    "emotional_requirements",
+                    "emotionalRequirements",
                     "transitions",
                     "events"
                 ],
@@ -225,8 +225,8 @@
                             "dance_hallA.json"
                         ]
                     },
-                    "emotional_requirements": {
-                        "$id": "#/properties/scenes/items/properties/emotional_requirements",
+                    "emotionalRequirements": {
+                        "$id": "#/properties/scenes/items/properties/emotionalRequirements",
                         "type": "object",
                         "title": "Emotional Requirements",
                         "description": "The emotional requirements for this scene to show to the player. This scene will only show to the player if the conditions stated in this object are ALL TRUE",
@@ -281,7 +281,7 @@
                         ],
                         "properties": {
                             "priority": {
-                                "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/priority",
+                                "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/priority",
                                 "type": "integer",
                                 "title": "Priority",
                                 "description": "In case there is a tie in the scenes, the framework chooses the one with the highest priority. This priority is defined by the designer",
@@ -291,7 +291,7 @@
                                 ]
                             },
                             "anger": {
-                                "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/anger",
+                                "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/anger",
                                 "type": "object",
                                 "title": "Anger",
                                 "description": "The condition for this scene to show up to the player according to their Anger value. If this object is null it means this emotion is not considered for this scene",
@@ -308,7 +308,7 @@
                                 ],
                                 "properties": {
                                     "condition": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/anger/properties/condition",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/anger/properties/condition",
                                         "type": "string",
                                         "title": "Condition",
                                         "description": "Can be >, <, >=, <=, =, !=",
@@ -318,7 +318,7 @@
                                         ]
                                     },
                                     "value": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/anger/properties/value",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/anger/properties/value",
                                         "type": "integer",
                                         "title": "Value",
                                         "description": "The value to be compared to ",
@@ -332,7 +332,7 @@
                                 "dependencies": {}
                             },
                             "disgust": {
-                                "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/disgust",
+                                "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/disgust",
                                 "type": "object",
                                 "title": "Disgust",
                                 "description": "The condition for this scene to show up to the player according to their Disgust value. If this object is null it means this emotion is not considered for this scene",
@@ -349,7 +349,7 @@
                                 ],
                                 "properties": {
                                     "condition": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/disgust/properties/condition",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/disgust/properties/condition",
                                         "type": "string",
                                         "title": "Condition",
                                         "description": "Can be >, <, >=, <=, =, !=",
@@ -359,7 +359,7 @@
                                         ]
                                     },
                                     "value": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/disgust/properties/value",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/disgust/properties/value",
                                         "type": "integer",
                                         "title": "Value",
                                         "description": "The value to be compared to",
@@ -373,7 +373,7 @@
                                 "dependencies": {}
                             },
                             "fear": {
-                                "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/fear",
+                                "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/fear",
                                 "type": "object",
                                 "title": "Fear",
                                 "description": "The condition for this scene to show up to the player according to their Fear value. If this object is null it means this emotion is not considered for this scene",
@@ -390,7 +390,7 @@
                                 ],
                                 "properties": {
                                     "condition": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/fear/properties/condition",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/fear/properties/condition",
                                         "type": "string",
                                         "title": "Condition",
                                         "description": "Can be >, <, >=, <=, =, !=",
@@ -400,7 +400,7 @@
                                         ]
                                     },
                                     "value": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/fear/properties/value",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/fear/properties/value",
                                         "type": "integer",
                                         "title": "Value",
                                         "description": "The value to be compared to",
@@ -414,7 +414,7 @@
                                 "dependencies": {}
                             },
                             "anxiety": {
-                                "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/anxiety",
+                                "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/anxiety",
                                 "type": "object",
                                 "title": "Anxiety",
                                 "description": "The condition for this scene to show up to the player according to their Anxiety value. If this object is null it means this emotion is not considered for this scene",
@@ -431,7 +431,7 @@
                                 ],
                                 "properties": {
                                     "condition": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/anxiety/properties/condition",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/anxiety/properties/condition",
                                         "type": "string",
                                         "title": "Condition",
                                         "description": "Can be >, <, >=, <=, =, !=",
@@ -441,7 +441,7 @@
                                         ]
                                     },
                                     "value": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/anxiety/properties/value",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/anxiety/properties/value",
                                         "type": "integer",
                                         "title": "Value",
                                         "description": "The value to be compared to",
@@ -455,7 +455,7 @@
                                 "dependencies": {}
                             },
                             "sadness": {
-                                "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/sadness",
+                                "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/sadness",
                                 "type": "object",
                                 "title": "Sadness",
                                 "description": "The condition for this scene to show up to the player according to their Sadness value. If this object is null it means this emotion is not considered for this scene",
@@ -472,7 +472,7 @@
                                 ],
                                 "properties": {
                                     "condition": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/sadness/properties/condition",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/sadness/properties/condition",
                                         "type": "string",
                                         "title": "Condition",
                                         "description": "Can be >, <, >=, <=, =, !=",
@@ -482,7 +482,7 @@
                                         ]
                                     },
                                     "value": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/sadness/properties/value",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/sadness/properties/value",
                                         "type": "integer",
                                         "title": "Value",
                                         "description": "The value to be compared to",
@@ -496,7 +496,7 @@
                                 "dependencies": {}
                             },
                             "desire": {
-                                "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/desire",
+                                "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/desire",
                                 "type": "object",
                                 "title": "Desire",
                                 "description": "The condition for this scene to show up to the player according to their Desire value. If this object is null it means this emotion is not considered for this scene",
@@ -513,7 +513,7 @@
                                 ],
                                 "properties": {
                                     "condition": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/desire/properties/condition",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/desire/properties/condition",
                                         "type": "string",
                                         "title": "Condition",
                                         "description": "Can be >, <, >=, <=, =, !=",
@@ -523,7 +523,7 @@
                                         ]
                                     },
                                     "value": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/desire/properties/value",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/desire/properties/value",
                                         "type": "integer",
                                         "title": "Value",
                                         "description": "The value to be compared to",
@@ -537,7 +537,7 @@
                                 "dependencies": {}
                             },
                             "relaxation": {
-                                "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/relaxation",
+                                "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/relaxation",
                                 "type": "object",
                                 "title": "Relaxation",
                                 "description": "The condition for this scene to show up to the player according to their Relaxation value. If this object is null it means this emotion is not considered for this scene",
@@ -554,7 +554,7 @@
                                 ],
                                 "properties": {
                                     "condition": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/relaxation/properties/condition",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/relaxation/properties/condition",
                                         "type": "string",
                                         "title": "Condition",
                                         "description": "Can be >, <, >=, <=, =, !=",
@@ -564,7 +564,7 @@
                                         ]
                                     },
                                     "value": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/relaxation/properties/value",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/relaxation/properties/value",
                                         "type": "integer",
                                         "title": "Value",
                                         "description": "The value to be compared to",
@@ -578,7 +578,7 @@
                                 "dependencies": {}
                             },
                             "happiness": {
-                                "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/happiness",
+                                "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/happiness",
                                 "type": "object",
                                 "title": "Happiness",
                                 "description": "The condition for this scene to show up to the player according to their Happiness value. If this object is null it means this emotion is not considered for this scene",
@@ -595,7 +595,7 @@
                                 ],
                                 "properties": {
                                     "condition": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/happiness/properties/condition",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/happiness/properties/condition",
                                         "type": "string",
                                         "title": "Condition",
                                         "description": "Can be >, <, >=, <=, =, !=",
@@ -605,7 +605,7 @@
                                         ]
                                     },
                                     "value": {
-                                        "$id": "#/properties/scenes/items/properties/emotional_requirements/properties/happiness/properties/value",
+                                        "$id": "#/properties/scenes/items/properties/emotionalRequirements/properties/happiness/properties/value",
                                         "type": "integer",
                                         "title": "Value",
                                         "description": "The value to be compared to",
@@ -638,7 +638,7 @@
                                 {
                                     "to": "scene2A",
                                     "name": "scene1AToScene2A",
-                                    "flag_requirements": [
+                                    "flagRequirements": [
                                         {
                                             "name": "keyToDoorAcquired",
                                             "value": true
@@ -649,7 +649,7 @@
                             "required": [
                                 "name",
                                 "to",
-                                "flag_requirements"
+                                "flagRequirements"
                             ],
                             "properties": {
                                 "name": {
@@ -672,14 +672,14 @@
                                         "scene2A"
                                     ]
                                 },
-                                "flag_requirements": {
-                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/flag_requirements",
+                                "flagRequirements": {
+                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements",
                                     "type": "array",
                                     "title": "Flag requirements",
                                     "description": "Which flags should be checked to know if the player can make the transition",
                                     "default": [],
                                     "items": {
-                                        "$id": "#/properties/scenes/items/properties/transitions/items/properties/flag_requirements/items",
+                                        "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items",
                                         "type": "object",
                                         "title": "Flag",
                                         "description": "An example of a flag",
@@ -696,7 +696,7 @@
                                         ],
                                         "properties": {
                                             "name": {
-                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flag_requirements/items/properties/name",
+                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/name",
                                                 "type": "string",
                                                 "title": "Name",
                                                 "description": "The name/id of the flag. Must be unique",
@@ -706,7 +706,7 @@
                                                 ]
                                             },
                                             "value": {
-                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flag_requirements/items/properties/value",
+                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/value",
                                                 "type": "boolean",
                                                 "title": "Value",
                                                 "description": "The value to be compared to",
@@ -740,16 +740,16 @@
                             "examples": [
                                 {
                                     "type": "cutscene",
-                                    "flag_changes": [
+                                    "flagChanges": [
                                         {
                                             "name": "cutscene1ADone",
                                             "value": true
                                         }
                                     ],
                                     "file": "cutscene1A1A.json",
-                                    "flag_requirements": [],
+                                    "flagRequirements": [],
                                     "name": "event1A1A",
-                                    "emotional_requirements": {
+                                    "emotionalRequirements": {
                                         "priority": 1.0,
                                         "anxiety": {
                                             "value": 8.0,
@@ -787,16 +787,16 @@
                                 },
                                 {
                                     "type": "cutscene",
-                                    "flag_changes": [
+                                    "flagChanges": [
                                         {
                                             "name": "cutscene1ADone",
                                             "value": true
                                         }
                                     ],
                                     "file": "cutscene1A1B.json",
-                                    "flag_requirements": [],
+                                    "flagRequirements": [],
                                     "name": "event1A1B",
-                                    "emotional_requirements": {
+                                    "emotionalRequirements": {
                                         "sadness": {
                                             "value": 5.0,
                                             "condition": ">="
@@ -833,21 +833,21 @@
                                     }
                                 },
                                 {
-                                    "flag_changes": [
+                                    "flagChanges": [
                                         {
                                             "name": "keyToDoorAcquired",
                                             "value": true
                                         }
                                     ],
                                     "file": "gameplay1A2.json",
-                                    "flag_requirements": [
+                                    "flagRequirements": [
                                         {
                                             "name": "cutscene1ADone",
                                             "value": true
                                         }
                                     ],
                                     "name": "event1A2",
-                                    "emotional_requirements": {
+                                    "emotionalRequirements": {
                                         "disgust": null,
                                         "desire": null,
                                         "anger": null,
@@ -865,9 +865,9 @@
                                 "name",
                                 "type",
                                 "file",
-                                "emotional_requirements",
-                                "flag_requirements",
-                                "flag_changes"
+                                "emotionalRequirements",
+                                "flagRequirements",
+                                "flagChanges"
                             ],
                             "properties": {
                                 "name": {
@@ -900,8 +900,8 @@
                                         "cutscene1A1A.json"
                                     ]
                                 },
-                                "emotional_requirements": {
-                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements",
+                                "emotionalRequirements": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements",
                                     "type": "object",
                                     "title": "Emotional requirements",
                                     "description": "The emotional requirements for this event to be available to the player. This event will only show to the player if the conditions stated in this object are ALL TRUE",
@@ -956,7 +956,7 @@
                                     ],
                                     "properties": {
                                         "priority": {
-                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/priority",
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/priority",
                                             "type": "integer",
                                             "title": "Priority",
                                             "description": "In case there is a tie in the events, the framework chooses the one with the highest priority. This priority is defined by the designer",
@@ -966,7 +966,7 @@
                                             ]
                                         },
                                         "anger": {
-                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anger",
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/anger",
                                             "type": "object",
                                             "title": "Anger",
                                             "description": "The condition for this scene to show up to the player according to their Anger value. If this object is null it means this emotion is not considered for this scene",
@@ -983,7 +983,7 @@
                                             ],
                                             "properties": {
                                                 "condition": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anger/properties/condition",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/anger/properties/condition",
                                                     "type": "string",
                                                     "title": "Condition",
                                                     "description": "Can be >, <, >=, <=, =, !=",
@@ -993,7 +993,7 @@
                                                     ]
                                                 },
                                                 "value": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anger/properties/value",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/anger/properties/value",
                                                     "type": "integer",
                                                     "title": "Value",
                                                     "description": "The value to be compared to",
@@ -1007,7 +1007,7 @@
                                             "dependencies": {}
                                         },
                                         "disgust": {
-                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/disgust",
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/disgust",
                                             "type": "object",
                                             "title": "Disgust",
                                             "description": "The condition for this scene to show up to the player according to their Disgust value. If this object is null it means this emotion is not considered for this scene",
@@ -1024,7 +1024,7 @@
                                             ],
                                             "properties": {
                                                 "condition": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/disgust/properties/condition",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/disgust/properties/condition",
                                                     "type": "string",
                                                     "title": "Condition",
                                                     "description": "Can be >, <, >=, <=, =, !=",
@@ -1034,7 +1034,7 @@
                                                     ]
                                                 },
                                                 "value": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/disgust/properties/value",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/disgust/properties/value",
                                                     "type": "integer",
                                                     "title": "Value",
                                                     "description": "The value to be compared to",
@@ -1048,7 +1048,7 @@
                                             "dependencies": {}
                                         },
                                         "fear": {
-                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/fear",
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/fear",
                                             "type": "object",
                                             "title": "Fear",
                                             "description": "The condition for this scene to show up to the player according to their Fear value. If this object is null it means this emotion is not considered for this scene",
@@ -1065,7 +1065,7 @@
                                             ],
                                             "properties": {
                                                 "condition": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/fear/properties/condition",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/fear/properties/condition",
                                                     "type": "string",
                                                     "title": "Condition",
                                                     "description": "Can be >, <, >=, <=, =, !=",
@@ -1075,7 +1075,7 @@
                                                     ]
                                                 },
                                                 "value": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/fear/properties/value",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/fear/properties/value",
                                                     "type": "integer",
                                                     "title": "Value",
                                                     "description": "The value to be compared to",
@@ -1089,7 +1089,7 @@
                                             "dependencies": {}
                                         },
                                         "anxiety": {
-                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anxiety",
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/anxiety",
                                             "type": "object",
                                             "title": "Anxiety",
                                             "description": "The condition for this scene to show up to the player according to their Anxiety value. If this object is null it means this emotion is not considered for this scene",
@@ -1106,7 +1106,7 @@
                                             ],
                                             "properties": {
                                                 "condition": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anxiety/properties/condition",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/anxiety/properties/condition",
                                                     "type": "string",
                                                     "title": "Condition",
                                                     "description": "Can be >, <, >=, <=, =, !=",
@@ -1116,7 +1116,7 @@
                                                     ]
                                                 },
                                                 "value": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/anxiety/properties/value",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/anxiety/properties/value",
                                                     "type": "integer",
                                                     "title": "Value",
                                                     "description": "The value to be compared to",
@@ -1130,7 +1130,7 @@
                                             "dependencies": {}
                                         },
                                         "sadness": {
-                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/sadness",
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/sadness",
                                             "type": "object",
                                             "title": "Sadness",
                                             "description": "The condition for this scene to show up to the player according to their Sadness value. If this object is null it means this emotion is not considered for this scene",
@@ -1147,7 +1147,7 @@
                                             ],
                                             "properties": {
                                                 "condition": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/sadness/properties/condition",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/sadness/properties/condition",
                                                     "type": "string",
                                                     "title": "Condition",
                                                     "description": "Can be >, <, >=, <=, =, !=",
@@ -1157,7 +1157,7 @@
                                                     ]
                                                 },
                                                 "value": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/sadness/properties/value",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/sadness/properties/value",
                                                     "type": "integer",
                                                     "title": "Value",
                                                     "description": "The value to be compared to",
@@ -1171,7 +1171,7 @@
                                             "dependencies": {}
                                         },
                                         "desire": {
-                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/desire",
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/desire",
                                             "type": "object",
                                             "title": "Desire",
                                             "description": "The condition for this scene to show up to the player according to their Desire value. If this object is null it means this emotion is not considered for this scene",
@@ -1188,7 +1188,7 @@
                                             ],
                                             "properties": {
                                                 "condition": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/desire/properties/condition",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/desire/properties/condition",
                                                     "type": "string",
                                                     "title": "Condition",
                                                     "description": "Can be >, <, >=, <=, =, !=",
@@ -1198,7 +1198,7 @@
                                                     ]
                                                 },
                                                 "value": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/desire/properties/value",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/desire/properties/value",
                                                     "type": "integer",
                                                     "title": "Value",
                                                     "description": "The value to be compared to",
@@ -1212,7 +1212,7 @@
                                             "dependencies": {}
                                         },
                                         "relaxation": {
-                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/relaxation",
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/relaxation",
                                             "type": "object",
                                             "title": "Relaxation",
                                             "description": "The condition for this scene to show up to the player according to their Relaxation value. If this object is null it means this emotion is not considered for this scene",
@@ -1229,7 +1229,7 @@
                                             ],
                                             "properties": {
                                                 "condition": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/relaxation/properties/condition",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/relaxation/properties/condition",
                                                     "type": "string",
                                                     "title": "Condition",
                                                     "description": "Can be >, <, >=, <=, =, !=",
@@ -1239,7 +1239,7 @@
                                                     ]
                                                 },
                                                 "value": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/relaxation/properties/value",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/relaxation/properties/value",
                                                     "type": "integer",
                                                     "title": "Value",
                                                     "description": "The value to be compared to",
@@ -1253,7 +1253,7 @@
                                             "dependencies": {}
                                         },
                                         "happiness": {
-                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/happiness",
+                                            "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/happiness",
                                             "type": "object",
                                             "title": "Happiness",
                                             "description": "The condition for this scene to show up to the player according to their Happiness value. If this object is null it means this emotion is not considered for this scene",
@@ -1270,7 +1270,7 @@
                                             ],
                                             "properties": {
                                                 "condition": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/happiness/properties/condition",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/happiness/properties/condition",
                                                     "type": "string",
                                                     "title": "Condition",
                                                     "description": "Can be >, <, >=, <=, =, !=",
@@ -1280,7 +1280,7 @@
                                                     ]
                                                 },
                                                 "value": {
-                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotional_requirements/properties/happiness/properties/value",
+                                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/properties/happiness/properties/value",
                                                     "type": "integer",
                                                     "title": "Value",
                                                     "description": "The value to be compared to",
@@ -1297,8 +1297,8 @@
                                     "patternProperties": {},
                                     "dependencies": {}
                                 },
-                                "flag_requirements": {
-                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flag_requirements",
+                                "flagRequirements": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flagRequirements",
                                     "type": "array",
                                     "title": "Flag requirements",
                                     "description": "Which flags should be checked to know if the player can enter the event. Can be an empty array if there are no requirements for the player to see the event",
@@ -1319,7 +1319,7 @@
                                         ],
                                         "properties": {
                                             "name": {
-                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flag_requirements/items/properties/name",
+                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/name",
                                                 "type": "string",
                                                 "title": "Name",
                                                 "description": "The name/id of the flag. Must be unique",
@@ -1329,7 +1329,7 @@
                                                 ]
                                             },
                                             "value": {
-                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flag_requirements/items/properties/value",
+                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/value",
                                                 "type": "boolean",
                                                 "title": "Value",
                                                 "description": "The value to be compared to",
@@ -1343,14 +1343,14 @@
                                         "dependencies": {}
                                     }
                                 },
-                                "flag_changes": {
-                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flag_changes",
+                                "flagChanges": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges",
                                     "type": "array",
                                     "title": "Flag changes",
                                     "description": "Which flags will change and to what value at the end of this event",
                                     "default": [],
                                     "items": {
-                                        "$id": "#/properties/scenes/items/properties/events/items/properties/flag_changes/items",
+                                        "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges/items",
                                         "type": "object",
                                         "title": "Flag",
                                         "description": "An example of a flag",
@@ -1367,7 +1367,7 @@
                                         ],
                                         "properties": {
                                             "name": {
-                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flag_changes/items/properties/name",
+                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges/items/properties/name",
                                                 "type": "string",
                                                 "title": "Name",
                                                 "description": "The name/id of the flag. Must be unique",
@@ -1377,7 +1377,7 @@
                                                 ]
                                             },
                                             "value": {
-                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flag_changes/items/properties/value",
+                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges/items/properties/value",
                                                 "type": "boolean",
                                                 "title": "Value",
                                                 "description": "The value to be compared to",
