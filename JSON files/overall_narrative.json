@@ -61,16 +61,34 @@
                             "condition": ">=",
                             "value": 8
                         },
-                        "disgust": null,
-                        "fear": null,
-                        "anxiety": null,
-                        "sadness": null,
+                        "disgust": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "fear": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "anxiety": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "sadness": {
+                            "condition": ">=",
+                            "value": 8
+                        },
                         "desire": {
                             "condition": ">=",
                             "value": 5
                         },
-                        "relaxation": null,
-                        "happiness": null
+                        "relaxation": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "happiness": {
+                            "condition": ">=",
+                            "value": 8
+                        }
                     },
                     "flag_requirements": [],
                     "flag_changes": [
@@ -90,16 +108,34 @@
                             "condition": "<=",
                             "value": 8
                         },
-                        "disgust": null,
-                        "fear": null,
-                        "anxiety": null,
+                        "disgust": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "fear": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "anxiety": {
+                            "condition": ">=",
+                            "value": 8
+                        },
                         "sadness": {
                             "condition": ">=",
                             "value": 5
                         },
-                        "desire": null,
-                        "relaxation": null,
-                        "happiness": null
+                        "desire": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "relaxation": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "happiness": {
+                            "condition": ">=",
+                            "value": 8
+                        }
                     },
                     "flag_requirements": [],
                     "flag_changes": [
