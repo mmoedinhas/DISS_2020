@@ -23,7 +23,7 @@
                 "examples": [
                     {
                         "id": "Clara",
-                        "Animations": [
+                        "animations": [
                             {
                                 "frameRate": 10.0,
                                 "key": "left",
@@ -82,7 +82,7 @@
                     "name",
                     "spritesheet",
                     "resolution",
-                    "Animations"
+                    "animations"
                 ],
                 "properties": {
                     "id": {
@@ -154,14 +154,14 @@
                             }
                         }
                     },
-                    "Animations": {
-                        "$id": "#/properties/actors/items/properties/Animations",
+                    "animations": {
+                        "$id": "#/properties/actors/items/properties/animations",
                         "type": "array",
-                        "title": "Animations",
+                        "title": "animations",
                         "description": "A list of the animations for the actor",
                         "default": [],
                         "items": {
-                            "$id": "#/properties/actors/items/properties/Animations/items",
+                            "$id": "#/properties/actors/items/properties/animations/items",
                             "type": "object",
                             "title": "Animation",
                             "description": "A representation of an animation",
@@ -220,7 +220,7 @@
                             ],
                             "properties": {
                                 "key": {
-                                    "$id": "#/properties/actors/items/properties/Animations/items/properties/key",
+                                    "$id": "#/properties/actors/items/properties/animations/items/properties/key",
                                     "type": "string",
                                     "title": "Key",
                                     "description": "The animation unique key",
@@ -230,13 +230,13 @@
                                     ]
                                 },
                                 "frames": {
-                                    "$id": "#/properties/actors/items/properties/Animations/items/properties/frames",
+                                    "$id": "#/properties/actors/items/properties/animations/items/properties/frames",
                                     "type": "array",
                                     "title": "Frames",
                                     "description": "The frames in the spritesheet required for the animation",
                                     "default": [],
                                     "items": {
-                                        "$id": "#/properties/actors/items/properties/Animations/items/properties/frames/items",
+                                        "$id": "#/properties/actors/items/properties/animations/items/properties/frames/items",
                                         "type": "integer",
                                         "title": "Frame",
                                         "description": "The index corresponding to the desired frame in the spritesheet",
@@ -250,7 +250,7 @@
                                     }
                                 },
                                 "frameRate": {
-                                    "$id": "#/properties/actors/items/properties/Animations/items/properties/frameRate",
+                                    "$id": "#/properties/actors/items/properties/animations/items/properties/frameRate",
                                     "type": "integer",
                                     "title": "Framerate",
                                     "description": "The framerate of the animation",
@@ -260,7 +260,7 @@
                                     ]
                                 },
                                 "repeat": {
-                                    "$id": "#/properties/actors/items/properties/Animations/items/properties/repeat",
+                                    "$id": "#/properties/actors/items/properties/animations/items/properties/repeat",
                                     "type": "integer",
                                     "title": "Repeat",
                                     "description": "Number of times the animation should repeat. -1 if animation should loop forever",
