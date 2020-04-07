@@ -7,7 +7,7 @@
     "required": [
         "name",
         "actors",
-        "Actions"
+        "actions"
     ],
     "properties": {
         "name": {
@@ -91,14 +91,14 @@
                 }
             }
         },
-        "Actions": {
-            "$id": "#/properties/Actions",
+        "actions": {
+            "$id": "#/properties/actions",
             "type": "array",
-            "title": "Actions",
+            "title": "actions",
             "description": "A list of the actions in this event",
             "default": [],
             "items": {
-                "$id": "#/properties/Actions/items",
+                "$id": "#/properties/actions/items",
                 "type": "object",
                 "title": "Action",
                 "description": "The representation of an action",
@@ -141,7 +141,7 @@
                 ],
                 "properties": {
                     "action": {
-                        "$id": "#/properties/Actions/items/properties/action",
+                        "$id": "#/properties/actions/items/properties/action",
                         "type": "string",
                         "title": "Action",
                         "description": "The type of action. For example, it can be \"walk\" or \"talk\"",
@@ -151,7 +151,7 @@
                         ]
                     },
                     "arguments": {
-                        "$id": "#/properties/Actions/items/properties/arguments",
+                        "$id": "#/properties/actions/items/properties/arguments",
                         "type": "object",
                         "title": "Arguments",
                         "description": "The arguments for the specific action",
@@ -165,7 +165,7 @@
                         "properties": {}
                     },
                     "actor": {
-                        "$id": "#/properties/Actions/items/properties/actor",
+                        "$id": "#/properties/actions/items/properties/actor",
                         "type": "string",
                         "title": "Actor",
                         "description": "The actor that should perform the action",

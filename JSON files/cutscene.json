@@ -14,7 +14,7 @@
             "start": [10, 120]
         }
     ],
-    "Actions": [
+    "actions": [
         {
             "action": "walk",
             "arguments": {
