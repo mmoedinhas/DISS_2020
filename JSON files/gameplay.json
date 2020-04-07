@@ -1,8 +1,5 @@
 {
     "name": "event1A2A",
-    "flags": [
-        "grandmaGreeted", "friendGreeted"
-    ],
     "endEventCondition": "grandmaGreeted && friendGreeted",
     "player": {
         "playerId": "Clara",
@@ -26,11 +23,11 @@
                 100
             ],
             "dialogue": "dialogue.json",
-            "variablesChange": [
+            "isInteractableConditions": [],
+            "flagChangesAfterInteraction": [
                 {
-                    "id": "numberOfGuestsGreeted",
-                    "action": "add",
-                    "value": 1
+                    "id": "grandmaGreeted",
+                    "value": true
                 }
             ]
         },
@@ -41,11 +38,11 @@
                 200
             ],
             "dialogue": "dialogue.json",
-            "variablesChange": [
+            "isInteractableConditions": [],
+            "flagChangesAfterInteraction": [
                 {
-                    "id": "numberOfGuestsGreeted",
-                    "action": "add",
-                    "value": 1
+                    "id": "friendGreeted",
+                    "value": true
                 }
             ]
         }
@@ -61,7 +58,20 @@
             "inventoryChange": {
                 "itemId": "cake",
                 "action": "+1"
-            }
+            },
+            "isInteractableConditions": [
+                {
+                    "name": "cakeAtPartyTaken",
+                    "value": false
+                }
+            ],
+            "flagChangesAfterInteraction": [
+                {
+                    "name": "cakeAtPartyTaken",
+                    "value": true
+                }
+            ],
+            "disappears": false
         }
     ]
 }
