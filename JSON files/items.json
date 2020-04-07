@@ -1,0 +1,15 @@
+{
+    "items": [
+        {
+            "itemId": "cake",
+            "name": "Piece of Cake",
+            "spritesheet": "items.png",
+            "resolution": { 
+                "frameWidth": 32, 
+                "frameHeight": 32 
+            },
+            "frame": 1,
+            "disappears": true
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "enemies": [
+        {
+            "id": "Dancer",
+            "hp": 30,
+            "mp": 30,
+            "attack": 15,
+            "defense": 5,
+            "speed": 10,
+            "moveset": {
+                "attacks": [
+                    {
+                        "name": "attack",
+                        "power": 1,
+                        "mpCost": 0,
+                        "accuracy": 0.95,
+                        "target": "one"
+                    },
+                    {
+                        "name": "twirl",
+                        "power": 2,
+                        "mpCost": 10,
+                        "accuracy": 0.9,
+                        "target": "one"
+                    }
+                ],
+                "buffs": []
+            },
+            "behaviors": [
+                {
+                    "condition": null,
+                    "activation": 40,
+                    "action": "twirl"
+                },
+                {
+                    "condition": null,
+                    "activation": 100,
+                    "action": "attack"
+                }
+            ]
+        }
+    ]
+}

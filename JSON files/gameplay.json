@@ -1,0 +1,67 @@
+{
+    "name": "event1A2A",
+    "flags": [
+        "grandmaGreeted", "friendGreeted"
+    ],
+    "endEventCondition": "grandmaGreeted && friendGreeted",
+    "player": {
+        "playerId": "Clara",
+        "actorId": "Clara",
+        "startPosition": [
+            15,
+            60
+        ]
+    },
+    "enemies": [
+        {
+            "id": "Dancer",
+            "encounterPercentage": 100
+        }
+    ],
+    "npcs": [
+        {
+            "actorId": "Grandma",
+            "position": [
+                100,
+                100
+            ],
+            "dialogue": "dialogue.json",
+            "variablesChange": [
+                {
+                    "id": "numberOfGuestsGreeted",
+                    "action": "add",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "actorId": "Grandma",
+            "position": [
+                100,
+                200
+            ],
+            "dialogue": "dialogue.json",
+            "variablesChange": [
+                {
+                    "id": "numberOfGuestsGreeted",
+                    "action": "add",
+                    "value": 1
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "itemId": "cake",
+            "position": [
+                100,
+                100
+            ],
+            "dialogue": "cake_dialogue.json",
+            "inventoryChange": {
+                "itemId": "cake",
+                "action": "+1"
+            }
+        }
+    ]
+}
