@@ -1,0 +1,93 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "actorsIds",
+        "lines"
+    ],
+    "properties": {
+        "actorsIds": {
+            "$id": "#/properties/actorsIds",
+            "type": "array",
+            "title": "Actors Ids",
+            "description": "The ids of the actors present in this dialogue",
+            "default": [],
+            "items": {
+                "$id": "#/properties/actorsIds/items",
+                "type": "string",
+                "title": "Actor Id",
+                "description": "The Id of the actor",
+                "default": "",
+                "examples": [
+                    "Clara",
+                    "Grandma"
+                ]
+            }
+        },
+        "lines": {
+            "$id": "#/properties/lines",
+            "type": "array",
+            "title": "Lines",
+            "description": "An array of all the dialogue lines, in order of appearance",
+            "default": [],
+            "items": {
+                "$id": "#/properties/lines/items",
+                "type": "object",
+                "title": "Line",
+                "description": "The object representation of a line",
+                "default": {},
+                "examples": [
+                    {
+                        "author": "Grandma",
+                        "text": "My my Clara, how much you've grown! Let grandma have a look at you. "
+                    },
+                    {
+                        "author": "Clara",
+                        "text": "Hello grandma! You think so? I don't think I've grown any taller. Do you like my new dress?"
+                    },
+                    {
+                        "author": "Grandma",
+                        "text": "I love it Clara. It makes me happy to see you so energetic as usual. Now, go on and enjoy the party."
+                    },
+                    {
+                        "author": "Clara",
+                        "text": "I will! And I'll show you my new dance moves in a bit, but I must find myself a nice dance partner. See you grandma!"
+                    },
+                    {
+                        "author": "Clara",
+                        "text": "(I'm happy that I was able to see grandma today. I love her very much!)"
+                    }
+                ],
+                "required": [
+                    "author",
+                    "text"
+                ],
+                "properties": {
+                    "author": {
+                        "$id": "#/properties/lines/items/properties/author",
+                        "type": "string",
+                        "title": "Author",
+                        "description": "The author that says the line",
+                        "default": "",
+                        "examples": [
+                            "Grandma"
+                        ]
+                    },
+                    "text": {
+                        "$id": "#/properties/lines/items/properties/text",
+                        "type": "string",
+                        "title": "Text",
+                        "description": "The text of the line",
+                        "default": "",
+                        "examples": [
+                            "My my Clara, how much you've grown! Let grandma have a look at you. "
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

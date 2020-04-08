@@ -1,0 +1,581 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "name",
+        "endEventCondition",
+        "player",
+        "enemies",
+        "npcs",
+        "items"
+    ],
+    "properties": {
+        "name": {
+            "$id": "#/properties/name",
+            "type": "string",
+            "title": "Name",
+            "description": "The name/id of the gameplay event. Should be unique",
+            "default": "",
+            "examples": [
+                "event1A2A"
+            ]
+        },
+        "endEventCondition": {
+            "$id": "#/properties/endEventCondition",
+            "type": "string",
+            "title": "End Event Condition",
+            "description": "The condition for this event to end. Should be a logic expression containing flags used in this json file",
+            "default": "",
+            "examples": [
+                "grandmaGreeted && friendGreeted"
+            ]
+        },
+        "player": {
+            "$id": "#/properties/player",
+            "type": "object",
+            "title": "Player",
+            "description": "The description of the player character",
+            "default": {},
+            "examples": [
+                {
+                    "actorId": "Clara",
+                    "startPosition": [
+                        15.0,
+                        60.0
+                    ],
+                    "playerId": "Clara"
+                }
+            ],
+            "required": [
+                "playerId",
+                "actorId",
+                "startPosition"
+            ],
+            "properties": {
+                "playerId": {
+                    "$id": "#/properties/player/properties/playerId",
+                    "type": "string",
+                    "title": "Player ID",
+                    "description": "The Id for this player",
+                    "default": "",
+                    "examples": [
+                        "Clara"
+                    ]
+                },
+                "actorId": {
+                    "$id": "#/properties/player/properties/actorId",
+                    "type": "string",
+                    "title": "The actor ID",
+                    "description": "The id of the actor (previously declared in actors.json) to be used for this player",
+                    "default": "",
+                    "examples": [
+                        "Clara"
+                    ]
+                },
+                "startPosition": {
+                    "$id": "#/properties/player/properties/startPosition",
+                    "type": "array",
+                    "title": "Start Position",
+                    "description": "The start position of the player in the map",
+                    "default": [],
+                    "items": {
+                        "$id": "#/properties/player/properties/startPosition/items",
+                        "type": "integer",
+                        "title": "Coordinate",
+                        "description": "The first element of the array is the X coordinate and the second is the Y coordinate (in map coordinates)",
+                        "default": 0,
+                        "examples": [
+                            15,
+                            60
+                        ]
+                    }
+                }
+            },
+            "patternProperties": {},
+            "dependencies": {}
+        },
+        "enemies": {
+            "$id": "#/properties/enemies",
+            "type": "array",
+            "title": "Enemies",
+            "description": "The list of possible enemy encounters in this event",
+            "default": [],
+            "items": {
+                "$id": "#/properties/enemies/items",
+                "type": "object",
+                "title": "Enemy encounter",
+                "description": "The details of an encounter",
+                "default": {},
+                "examples": [
+                    {
+                        "id": "Dancer",
+                        "encounterPercentage": 100.0
+                    }
+                ],
+                "required": [
+                    "id",
+                    "encounterPercentage"
+                ],
+                "properties": {
+                    "id": {
+                        "$id": "#/properties/enemies/items/properties/id",
+                        "type": "string",
+                        "title": "ID",
+                        "description": "The id of the enemy (previously declared in the enemies.json file) to be encountered",
+                        "default": "",
+                        "examples": [
+                            "Dancer"
+                        ]
+                    },
+                    "encounterPercentage": {
+                        "$id": "#/properties/enemies/items/properties/encounterPercentage",
+                        "type": "integer",
+                        "title": "Encounter percentage",
+                        "description": "The probability of the player finding this enemy of all the enemies available. If there is only one enemy, then the percentage should be 100",
+                        "default": 0,
+                        "examples": [
+                            100
+                        ]
+                    }
+                },
+                "patternProperties": {},
+                "dependencies": {}
+            }
+        },
+        "npcs": {
+            "$id": "#/properties/npcs",
+            "type": "array",
+            "title": "NPCs",
+            "description": "A list of the NPCs available in this event",
+            "default": [],
+            "items": {
+                "$id": "#/properties/npcs/items",
+                "type": "object",
+                "title": "NPC",
+                "description": "The description of the NPC",
+                "default": {},
+                "examples": [
+                    {
+                        "position": [
+                            100.0,
+                            100.0
+                        ],
+                        "flagChangesAfterInteraction": [
+                            {
+                                "value": true,
+                                "id": "grandmaGreeted"
+                            }
+                        ],
+                        "dialogue": "dialogue.json",
+                        "isInteractableConditions": [],
+                        "actorId": "Grandma"
+                    },
+                    {
+                        "isInteractableConditions": [],
+                        "actorId": "Grandma",
+                        "position": [
+                            100.0,
+                            200.0
+                        ],
+                        "flagChangesAfterInteraction": [
+                            {
+                                "id": "friendGreeted",
+                                "value": true
+                            }
+                        ],
+                        "dialogue": "dialogue.json"
+                    }
+                ],
+                "required": [
+                    "actorId",
+                    "position",
+                    "dialogue",
+                    "isInteractableConditions",
+                    "flagChangesAfterInteraction"
+                ],
+                "properties": {
+                    "actorId": {
+                        "$id": "#/properties/npcs/items/properties/actorId",
+                        "type": "string",
+                        "title": "Actor ID",
+                        "description": "The Id of the actor (previously declared in actors.json) to be used for this npc",
+                        "default": "",
+                        "examples": [
+                            "Grandma"
+                        ]
+                    },
+                    "position": {
+                        "$id": "#/properties/npcs/items/properties/position",
+                        "type": "array",
+                        "title": "Position",
+                        "description": "The position of this NPC",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/npcs/items/properties/position/items",
+                            "type": "integer",
+                            "title": "Coordinate",
+                            "description": "The first element of the array is the X coordinate and the second is the Y coordinate (in map coordinates)",
+                            "default": 0,
+                            "examples": [
+                                100,
+                                100
+                            ]
+                        }
+                    },
+                    "dialogue": {
+                        "$id": "#/properties/npcs/items/properties/dialogue",
+                        "type": "string",
+                        "title": "Dialogue",
+                        "description": "The file containing the dialogue for this NPC",
+                        "default": "",
+                        "examples": [
+                            "dialogue.json"
+                        ]
+                    },
+                    "isInteractableConditions": {
+                        "$id": "#/properties/npcs/items/properties/isInteractableConditions",
+                        "type": "array",
+                        "title": "Is Interactable Conditions",
+                        "description": "A list of conditions/flags and their desired values to know if this NPC could be interacted with. This NPC can be interacted with if all conditions are TRUE",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/npcs/items/properties/isInteractableConditions/items",
+                            "type": "object",
+                            "title": "Flag",
+                            "description": "A flag",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "id": "grandmaGreeted",
+                                    "value": true
+                                }
+                            ],
+                            "required": [
+                                "id",
+                                "value"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items/properties/id",
+                                    "type": "string",
+                                    "title": "ID ",
+                                    "description": "The Id of the flag",
+                                    "default": "",
+                                    "examples": [
+                                        "grandmaGreeted"
+                                    ]
+                                },
+                                "value": {
+                                    "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items/properties/value",
+                                    "type": "boolean",
+                                    "title": "Value",
+                                    "description": "The value of the flag",
+                                    "default": false,
+                                    "examples": [
+                                        true
+                                    ]
+                                }
+                            },
+                            "patternProperties": {},
+                            "dependencies": {}
+                        }
+                    },
+                    "flagChangesAfterInteraction": {
+                        "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction",
+                        "type": "array",
+                        "title": "Flag Changes After Interaction",
+                        "description": "A list of possible flag changes after this interaction and the desired value for the change",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items",
+                            "type": "object",
+                            "title": "Flag",
+                            "description": "A flag",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "value": true,
+                                    "id": "grandmaGreeted"
+                                }
+                            ],
+                            "required": [
+                                "id",
+                                "value"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items/properties/id",
+                                    "type": "string",
+                                    "title": "ID ",
+                                    "description": "The Id of the flag",
+                                    "default": "",
+                                    "examples": [
+                                        "grandmaGreeted"
+                                    ]
+                                },
+                                "value": {
+                                    "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items/properties/value",
+                                    "type": "boolean",
+                                    "title": "Value",
+                                    "description": "The value of the flag",
+                                    "default": false,
+                                    "examples": [
+                                        true
+                                    ]
+                                }
+                            },
+                            "patternProperties": {},
+                            "dependencies": {}
+                        }
+                    }
+                },
+                "patternProperties": {},
+                "dependencies": {}
+            }
+        },
+        "items": {
+            "$id": "#/properties/items",
+            "type": "array",
+            "title": "Items",
+            "description": "A list of the items available in this event",
+            "default": [],
+            "items": {
+                "$id": "#/properties/items/items",
+                "type": "object",
+                "title": "Item",
+                "description": "The representation of an item",
+                "default": {},
+                "examples": [
+                    {
+                        "itemId": "cake",
+                        "flagChangesAfterInteraction": [
+                            {
+                                "name": "cakeAtPartyTaken",
+                                "value": true
+                            }
+                        ],
+                        "position": [
+                            100.0,
+                            100.0
+                        ],
+                        "isInteractableConditions": [
+                            {
+                                "name": "cakeAtPartyTaken",
+                                "value": false
+                            }
+                        ],
+                        "inventoryChange": {
+                            "action": "+1",
+                            "itemId": "cake"
+                        },
+                        "disappears": false,
+                        "dialogue": "cake_dialogue.json"
+                    }
+                ],
+                "required": [
+                    "itemId",
+                    "position",
+                    "dialogue",
+                    "inventoryChange",
+                    "isInteractableConditions",
+                    "flagChangesAfterInteraction",
+                    "disappears"
+                ],
+                "properties": {
+                    "itemId": {
+                        "$id": "#/properties/items/items/properties/itemId",
+                        "type": "string",
+                        "title": "Item Id",
+                        "description": "The id of the item (previously declared in items.json) to be used for this item",
+                        "default": "",
+                        "examples": [
+                            "cake"
+                        ]
+                    },
+                    "position": {
+                        "$id": "#/properties/items/items/properties/position",
+                        "type": "array",
+                        "title": "Position",
+                        "description": "The position of this item in the map",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/items/items/properties/position/items",
+                            "type": "integer",
+                            "title": "Coordinate",
+                            "description": "The first element of the array is the X coordinate and the second is the Y coordinate (in map coordinates)",
+                            "default": 0,
+                            "examples": [
+                                100,
+                                100
+                            ]
+                        }
+                    },
+                    "dialogue": {
+                        "$id": "#/properties/items/items/properties/dialogue",
+                        "type": "string",
+                        "title": "Dialogue",
+                        "description": "The dialogue file containing possible dialogue with this item. Can be null",
+                        "default": "",
+                        "examples": [
+                            "cake_dialogue.json"
+                        ]
+                    },
+                    "inventoryChange": {
+                        "$id": "#/properties/items/items/properties/inventoryChange",
+                        "type": "object",
+                        "title": "Inventory Change",
+                        "description": "Description of a possible inventory change after interaction with the item",
+                        "default": {},
+                        "examples": [
+                            {
+                                "action": "+1",
+                                "itemId": "cake"
+                            }
+                        ],
+                        "required": [
+                            "itemId",
+                            "action"
+                        ],
+                        "properties": {
+                            "itemId": {
+                                "$id": "#/properties/items/items/properties/inventoryChange/properties/itemId",
+                                "type": "string",
+                                "title": "Item ID",
+                                "description": "The item id (previously declared in inventory_items.json) that will be changed in inventory",
+                                "default": "",
+                                "examples": [
+                                    "cake"
+                                ]
+                            },
+                            "action": {
+                                "$id": "#/properties/items/items/properties/inventoryChange/properties/action",
+                                "type": "string",
+                                "title": "Action",
+                                "description": "The kind of change to do in the inventory. Can be \"+n\" or \"-n\", where n is the number of items added or subtracted",
+                                "default": "",
+                                "examples": [
+                                    "+1"
+                                ]
+                            }
+                        },
+                        "patternProperties": {},
+                        "dependencies": {}
+                    },
+                    "isInteractableConditions": {
+                        "$id": "#/properties/items/items/properties/isInteractableConditions",
+                        "type": "array",
+                        "title": "Is Interactable Conditions",
+                        "description": "A list of conditions/flags and their desired values to know if this objet could be interacted with. This object can be interacted with if all conditions are TRUE",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/items/items/properties/isInteractableConditions/items",
+                            "type": "object",
+                            "title": "Flag",
+                            "description": "A flag",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "id": "grandmaGreeted",
+                                    "value": true
+                                }
+                            ],
+                            "required": [
+                                "id",
+                                "value"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "$id": "#/properties/items/items/properties/isInteractableConditions/items/properties/id",
+                                    "type": "string",
+                                    "title": "ID ",
+                                    "description": "The Id of the flag",
+                                    "default": "",
+                                    "examples": [
+                                        "grandmaGreeted"
+                                    ]
+                                },
+                                "value": {
+                                    "$id": "#/properties/items/items/properties/isInteractableConditions/items/properties/value",
+                                    "type": "boolean",
+                                    "title": "Value",
+                                    "description": "The value of the flag",
+                                    "default": false,
+                                    "examples": [
+                                        true
+                                    ]
+                                }
+                            },
+                            "patternProperties": {},
+                            "dependencies": {}
+                        }
+                    },
+                    "flagChangesAfterInteraction": {
+                        "$id": "#/properties/items/items/properties/flagChangesAfterInteraction",
+                        "type": "array",
+                        "title": "Flag Changes After Interaction",
+                        "description": "A list of possible flag changes after this interaction and the desired value for the change",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/items/items/properties/flagChangesAfterInteraction/items",
+                            "type": "object",
+                            "title": "Flag",
+                            "description": "A flag",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "name": "cakeAtPartyTaken",
+                                    "value": true
+                                }
+                            ],
+                            "required": [
+                                "value",
+                                "name"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "$id": "#/properties/items/items/properties/flagChangesAfterInteraction/items/properties/id",
+                                    "type": "string",
+                                    "title": "ID ",
+                                    "description": "The Id of the flag",
+                                    "default": "",
+                                    "examples": [
+                                        "grandmaGreeted"
+                                    ]
+                                },
+                                "value": {
+                                    "$id": "#/properties/items/items/properties/flagChangesAfterInteraction/items/properties/value",
+                                    "type": "boolean",
+                                    "title": "Value",
+                                    "description": "The value of the flag",
+                                    "default": false,
+                                    "examples": [
+                                        true
+                                    ]
+                                }
+                            },
+                            "patternProperties": {},
+                            "dependencies": {}
+                        }
+                    },
+                    "disappears": {
+                        "$id": "#/properties/items/items/properties/disappears",
+                        "type": "boolean",
+                        "title": "Disappears",
+                        "description": "A boolean to know if the graphic of the item should disappear from the map if it was interacted with",
+                        "default": false,
+                        "examples": [
+                            false
+                        ]
+                    }
+                },
+                "patternProperties": {},
+                "dependencies": {}
+            }
+        }
+    },
+    "patternProperties": {},
+    "dependencies": {}
+}

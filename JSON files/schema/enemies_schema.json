@@ -1,0 +1,535 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "enemies"
+    ],
+    "properties": {
+        "enemies": {
+            "$id": "#/properties/enemies",
+            "type": "array",
+            "title": "Enemies",
+            "description": "An array containing all enemies of the game",
+            "default": [],
+            "items": {
+                "$id": "#/properties/enemies/items",
+                "type": "object",
+                "title": "Enemy",
+                "description": "The object representation of an enemy",
+                "default": {},
+                "examples": [
+                    {
+                        "speed": 10.0,
+                        "moveset": {
+                            "buffs": [
+                                {
+                                    "mpCost": 20.0,
+                                    "target": "one",
+                                    "name": "first position",
+                                    "action": "heal",
+                                    "percentage": 30.0
+                                }
+                            ],
+                            "attacks": [
+                                {
+                                    "mpCost": 0.0,
+                                    "target": "one",
+                                    "name": "attack",
+                                    "power": 1.0,
+                                    "accuracy": 0.95
+                                },
+                                {
+                                    "accuracy": 0.9,
+                                    "mpCost": 10.0,
+                                    "target": "one",
+                                    "name": "twirl",
+                                    "power": 2.0
+                                }
+                            ]
+                        },
+                        "behaviors": [
+                            {
+                                "activation": 40.0,
+                                "conditions": [
+                                    {
+                                        "percentage": "30",
+                                        "field": "hp",
+                                        "target": "one",
+                                        "operator": "<="
+                                    }
+                                ],
+                                "action": "twirl"
+                            },
+                            {
+                                "activation": 100.0,
+                                "action": "attack",
+                                "condition": [
+                                    {
+                                        "percentage": "30",
+                                        "field": "hp",
+                                        "target": "one",
+                                        "operator": "<="
+                                    }
+                                ]
+                            }
+                        ],
+                        "attack": 15.0,
+                        "mp": 30.0,
+                        "id": "Dancer",
+                        "defense": 5.0,
+                        "hp": 30.0
+                    }
+                ],
+                "required": [
+                    "id",
+                    "hp",
+                    "mp",
+                    "attack",
+                    "defense",
+                    "speed",
+                    "moveset",
+                    "behaviors"
+                ],
+                "properties": {
+                    "id": {
+                        "$id": "#/properties/enemies/items/properties/id",
+                        "type": "string",
+                        "title": "Id",
+                        "description": "The unique Id of the enemy",
+                        "default": "",
+                        "examples": [
+                            "Dancer"
+                        ]
+                    },
+                    "hp": {
+                        "$id": "#/properties/enemies/items/properties/hp",
+                        "type": "integer",
+                        "title": "HP",
+                        "description": "The total Health Points of the enemy",
+                        "default": 0,
+                        "examples": [
+                            30
+                        ]
+                    },
+                    "mp": {
+                        "$id": "#/properties/enemies/items/properties/mp",
+                        "type": "integer",
+                        "title": "MP",
+                        "description": "The total Magic Points of the enemy",
+                        "default": 0,
+                        "examples": [
+                            30
+                        ]
+                    },
+                    "attack": {
+                        "$id": "#/properties/enemies/items/properties/attack",
+                        "type": "integer",
+                        "title": "Attack",
+                        "description": "The base attack of the enemy",
+                        "default": 0,
+                        "examples": [
+                            15
+                        ]
+                    },
+                    "defense": {
+                        "$id": "#/properties/enemies/items/properties/defense",
+                        "type": "integer",
+                        "title": "Defense",
+                        "description": "The defense of the enemy",
+                        "default": 0,
+                        "examples": [
+                            5
+                        ]
+                    },
+                    "speed": {
+                        "$id": "#/properties/enemies/items/properties/speed",
+                        "type": "integer",
+                        "title": "Speed",
+                        "description": "The speed of the enemy to decide its order in the battle turns. The higher speed, the sooner the enemy acts in the turn",
+                        "default": 0,
+                        "examples": [
+                            10
+                        ]
+                    },
+                    "moveset": {
+                        "$id": "#/properties/enemies/items/properties/moveset",
+                        "type": "object",
+                        "title": "Moveset",
+                        "description": "A list of all the moves available to this enemy",
+                        "default": {},
+                        "examples": [
+                            {
+                                "buffs": [
+                                    {
+                                        "name": "first position",
+                                        "action": "heal",
+                                        "percentage": 30.0,
+                                        "mpCost": 20.0,
+                                        "target": "one"
+                                    }
+                                ],
+                                "attacks": [
+                                    {
+                                        "mpCost": 0.0,
+                                        "target": "one",
+                                        "name": "attack",
+                                        "power": 1.0,
+                                        "accuracy": 0.95
+                                    },
+                                    {
+                                        "accuracy": 0.9,
+                                        "mpCost": 10.0,
+                                        "target": "one",
+                                        "name": "twirl",
+                                        "power": 2.0
+                                    }
+                                ]
+                            }
+                        ],
+                        "required": [
+                            "attacks",
+                            "buffs"
+                        ],
+                        "properties": {
+                            "attacks": {
+                                "$id": "#/properties/enemies/items/properties/moveset/properties/attacks",
+                                "type": "array",
+                                "title": "Attacks",
+                                "description": "A list of all the attacks available to the enemy ",
+                                "default": [],
+                                "items": {
+                                    "$id": "#/properties/enemies/items/properties/moveset/properties/attacks/items",
+                                    "type": "object",
+                                    "title": "Attack",
+                                    "description": "The object representation of an attack",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "accuracy": 0.95,
+                                            "mpCost": 0.0,
+                                            "target": "one",
+                                            "name": "attack",
+                                            "power": 1.0
+                                        },
+                                        {
+                                            "name": "twirl",
+                                            "power": 2.0,
+                                            "accuracy": 0.9,
+                                            "mpCost": 10.0,
+                                            "target": "one"
+                                        }
+                                    ],
+                                    "required": [
+                                        "name",
+                                        "power",
+                                        "mpCost",
+                                        "accuracy",
+                                        "target"
+                                    ],
+                                    "properties": {
+                                        "name": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/attacks/items/properties/name",
+                                            "type": "string",
+                                            "title": "Name",
+                                            "description": "The name of the attack. The name \"attack\" is reserved to the basic attack",
+                                            "default": "",
+                                            "examples": [
+                                                "attack"
+                                            ]
+                                        },
+                                        "power": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/attacks/items/properties/power",
+                                            "type": "integer",
+                                            "title": "Power",
+                                            "description": "The power of the attack. The damage of this attack is basicAttack*power",
+                                            "default": 0,
+                                            "examples": [
+                                                1
+                                            ]
+                                        },
+                                        "mpCost": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/attacks/items/properties/mpCost",
+                                            "type": "integer",
+                                            "title": "MP cost",
+                                            "description": "The MP cost for this attack",
+                                            "default": 0,
+                                            "examples": [
+                                                0
+                                            ]
+                                        },
+                                        "accuracy": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/attacks/items/properties/accuracy",
+                                            "type": "number",
+                                            "title": "Accuracy",
+                                            "description": "The accuracy of this attack in percentage. If 100% the attack always hits",
+                                            "default": 0,
+                                            "examples": [
+                                                0.95
+                                            ]
+                                        },
+                                        "target": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/attacks/items/properties/target",
+                                            "type": "string",
+                                            "title": "Target",
+                                            "description": "The target of the attack. If \"one\" the attacks targets one party member. If \"all\" the attack targets everyone in the party",
+                                            "default": "",
+                                            "examples": [
+                                                "one"
+                                            ]
+                                        }
+                                    },
+                                    "patternProperties": {},
+                                    "dependencies": {}
+                                }
+                            },
+                            "buffs": {
+                                "$id": "#/properties/enemies/items/properties/moveset/properties/buffs",
+                                "type": "array",
+                                "title": "Buffs",
+                                "description": "The list of possible buffs for this enemy to use in their party",
+                                "default": [],
+                                "items": {
+                                    "$id": "#/properties/enemies/items/properties/moveset/properties/buffs/items",
+                                    "type": "object",
+                                    "title": "Buff",
+                                    "description": "The object representation of a buff",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "mpCost": 20.0,
+                                            "target": "one",
+                                            "name": "first position",
+                                            "action": "heal",
+                                            "arguments": {
+                                                "percentage": 30.0
+                                            }
+                                        }
+                                    ],
+                                    "required": [
+                                        "name",
+                                        "action",
+                                        "arguments",
+                                        "mpCost",
+                                        "target"
+                                    ],
+                                    "properties": {
+                                        "name": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/buffs/items/properties/name",
+                                            "type": "string",
+                                            "title": "Name",
+                                            "description": "The name of the buff",
+                                            "default": "",
+                                            "examples": [
+                                                "first position"
+                                            ]
+                                        },
+                                        "action": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/buffs/items/properties/action",
+                                            "type": "string",
+                                            "title": "Action",
+                                            "description": "The kind of action this buff does",
+                                            "default": "",
+                                            "examples": [
+                                                "heal"
+                                            ]
+                                        },
+                                        "arguments": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/buffs/items/properties/arguments",
+                                            "type": "object",
+                                            "title": "Arguments",
+                                            "description": "An object with the list of arguments needed for this action. Example: if \"heal\" arguments could be \"percentage\": 30, meaning the amount of health healed",
+                                            "default": {},
+                                            "examples": [
+                                                {
+                                                    "percentage": 30.0
+                                                }
+                                            ],
+                                            "required": [
+                                                "percentage"
+                                            ],
+                                            "properties": {},
+                                            "patternProperties": {},
+                                            "dependencies": {}
+                                        },
+                                        "mpCost": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/buffs/items/properties/mpCost",
+                                            "type": "integer",
+                                            "title": "MP Cost",
+                                            "description": "The MP cost for this buff",
+                                            "default": 0,
+                                            "examples": [
+                                                20
+                                            ]
+                                        },
+                                        "target": {
+                                            "$id": "#/properties/enemies/items/properties/moveset/properties/buffs/items/properties/target",
+                                            "type": "string",
+                                            "title": "Target",
+                                            "description": "The target of the buff. If \"one\" the attacks buffs one party member. If \"all\" the buff targets everyone in the party",
+                                            "default": "",
+                                            "examples": [
+                                                "one"
+                                            ]
+                                        }
+                                    },
+                                    "patternProperties": {},
+                                    "dependencies": {}
+                                }
+                            }
+                        },
+                        "patternProperties": {},
+                        "dependencies": {}
+                    },
+                    "behaviors": {
+                        "$id": "#/properties/enemies/items/properties/behaviors",
+                        "type": "array",
+                        "title": "Behaviors",
+                        "description": "The \"AI\" of the enemy: a list of behaviors ordered by priority",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/enemies/items/properties/behaviors/items",
+                            "type": "object",
+                            "title": "Behavior",
+                            "description": "An object representation of a possible behavior of the enemy",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "activation": 40.0,
+                                    "conditions": [
+                                        {
+                                            "percentage": "30",
+                                            "field": "hp",
+                                            "target": "one",
+                                            "operator": "<="
+                                        }
+                                    ],
+                                    "action": "twirl"
+                                },
+                                {
+                                    "action": "attack",
+                                    "condition": [
+                                        {
+                                            "target": "one",
+                                            "operator": "<=",
+                                            "percentage": "30",
+                                            "field": "hp"
+                                        }
+                                    ],
+                                    "activation": 100.0
+                                }
+                            ],
+                            "required": [
+                                "conditions",
+                                "activation",
+                                "action"
+                            ],
+                            "properties": {
+                                "conditions": {
+                                    "$id": "#/properties/enemies/items/properties/behaviors/items/properties/conditions",
+                                    "type": "array",
+                                    "title": "Conditions",
+                                    "description": "The activation conditions for the enemy to conduct this behavior",
+                                    "default": [],
+                                    "items": {
+                                        "$id": "#/properties/enemies/items/properties/behaviors/items/properties/conditions/items",
+                                        "type": "object",
+                                        "title": "Condition",
+                                        "description": "An object representation of a condition",
+                                        "default": {},
+                                        "examples": [
+                                            {
+                                                "target": "one",
+                                                "operator": "<=",
+                                                "percentage": "30",
+                                                "field": "hp"
+                                            }
+                                        ],
+                                        "required": [
+                                            "field",
+                                            "target",
+                                            "operator",
+                                            "percentage"
+                                        ],
+                                        "properties": {
+                                            "field": {
+                                                "$id": "#/properties/enemies/items/properties/behaviors/items/properties/conditions/items/properties/field",
+                                                "type": "string",
+                                                "title": "Field",
+                                                "description": "The field that this behavior will watch. Example: if \"hp\" this behavior will activate when the \"hp\" reaches a certain value",
+                                                "default": "",
+                                                "examples": [
+                                                    "hp"
+                                                ]
+                                            },
+                                            "target": {
+                                                "$id": "#/properties/enemies/items/properties/behaviors/items/properties/conditions/items/properties/target",
+                                                "type": "string",
+                                                "title": "Target",
+                                                "description": "The target that contains the field that is being watched. Can be \"enemyOne\", \"enemyAll\", \"friendOne\", \"friendAll\"",
+                                                "default": "",
+                                                "examples": [
+                                                    "one"
+                                                ]
+                                            },
+                                            "operator": {
+                                                "$id": "#/properties/enemies/items/properties/behaviors/items/properties/conditions/items/properties/operator",
+                                                "type": "string",
+                                                "title": "Operator",
+                                                "description": "The operator to be used in the comparison of the field being watched and the desired percentage value",
+                                                "default": "",
+                                                "examples": [
+                                                    "<="
+                                                ]
+                                            },
+                                            "percentage": {
+                                                "$id": "#/properties/enemies/items/properties/behaviors/items/properties/conditions/items/properties/percentage",
+                                                "type": "string",
+                                                "title": "Percentage",
+                                                "description": "The percentage value. Example: if the field being watched is \"hp\", the operator is \"<=\" and percentage is \"30\", this behavior will activate if the hp is less or equal than 30%",
+                                                "default": "",
+                                                "examples": [
+                                                    "30"
+                                                ]
+                                            }
+                                        },
+                                        "patternProperties": {},
+                                        "dependencies": {}
+                                    }
+                                },
+                                "activation": {
+                                    "$id": "#/properties/enemies/items/properties/behaviors/items/properties/activation",
+                                    "type": "integer",
+                                    "title": "Activation",
+                                    "description": "A percentage of activation for this behavior. If the behavior activation: 100 the behavior will always occur if the conditions allow it",
+                                    "default": 0,
+                                    "examples": [
+                                        40
+                                    ]
+                                },
+                                "action": {
+                                    "$id": "#/properties/enemies/items/properties/behaviors/items/properties/action",
+                                    "type": "string",
+                                    "title": "Action",
+                                    "description": "The name of the action to take. Can be an attack or a buff",
+                                    "default": "",
+                                    "examples": [
+                                        "twirl"
+                                    ]
+                                }
+                            },
+                            "patternProperties": {},
+                            "dependencies": {}
+                        }
+                    }
+                },
+                "patternProperties": {},
+                "dependencies": {}
+            }
+        }
+    },
+    "patternProperties": {},
+    "dependencies": {}
+}

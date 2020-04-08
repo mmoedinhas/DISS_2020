@@ -1,0 +1,126 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "items"
+    ],
+    "properties": {
+        "items": {
+            "$id": "#/properties/items",
+            "type": "array",
+            "title": "Items",
+            "description": "A list of all the items in this game",
+            "default": [],
+            "items": {
+                "$id": "#/properties/items/items",
+                "type": "object",
+                "title": "Item",
+                "description": "The description of an item",
+                "default": {},
+                "examples": [
+                    {
+                        "spritesheet": "items.png",
+                        "resolution": {
+                            "frameHeight": 32.0,
+                            "frameWidth": 32.0
+                        },
+                        "name": "Piece of Cake",
+                        "frame": 1.0,
+                        "itemId": "cake"
+                    }
+                ],
+                "required": [
+                    "itemId",
+                    "name",
+                    "spritesheet",
+                    "resolution",
+                    "frame"
+                ],
+                "properties": {
+                    "itemId": {
+                        "$id": "#/properties/items/items/properties/itemId",
+                        "type": "string",
+                        "title": "Item id",
+                        "description": "The id for this item. Should be unique",
+                        "default": "",
+                        "examples": [
+                            "cake"
+                        ]
+                    },
+                    "name": {
+                        "$id": "#/properties/items/items/properties/name",
+                        "type": "string",
+                        "title": "Name",
+                        "description": "The name of this item as seen by the player",
+                        "default": "",
+                        "examples": [
+                            "Piece of Cake"
+                        ]
+                    },
+                    "spritesheet": {
+                        "$id": "#/properties/items/items/properties/spritesheet",
+                        "type": "string",
+                        "title": "Spritesheet",
+                        "description": "The spritesheet where the graphics for this item can be found",
+                        "default": "",
+                        "examples": [
+                            "items.png"
+                        ]
+                    },
+                    "resolution": {
+                        "$id": "#/properties/items/items/properties/resolution",
+                        "type": "object",
+                        "title": "Resolution",
+                        "description": "The resolution of the sprites in the spritesheet",
+                        "default": {},
+                        "examples": [
+                            {
+                                "frameHeight": 32.0,
+                                "frameWidth": 32.0
+                            }
+                        ],
+                        "required": [
+                            "frameWidth",
+                            "frameHeight"
+                        ],
+                        "properties": {
+                            "frameWidth": {
+                                "$id": "#/properties/items/items/properties/resolution/properties/frameWidth",
+                                "type": "integer",
+                                "title": "Frame Width",
+                                "description": "The width of each sprite",
+                                "default": 0,
+                                "examples": [
+                                    32
+                                ]
+                            },
+                            "frameHeight": {
+                                "$id": "#/properties/items/items/properties/resolution/properties/frameHeight",
+                                "type": "integer",
+                                "title": "Frame Height",
+                                "description": "The height of each sprite",
+                                "default": 0,
+                                "examples": [
+                                    32
+                                ]
+                            }
+                        }
+                    },
+                    "frame": {
+                        "$id": "#/properties/items/items/properties/frame",
+                        "type": "integer",
+                        "title": "Frame",
+                        "description": "The specific frame in the spritesheet where the item is",
+                        "default": 0,
+                        "examples": [
+                            1
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

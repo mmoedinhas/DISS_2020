@@ -119,7 +119,7 @@
                         "$id": "#/properties/actors/items/properties/resolution",
                         "type": "object",
                         "title": "Resolution",
-                        "description": " The resolution of the sprites",
+                        "description": " The resolution of the sprites in the spritesheet",
                         "default": {},
                         "examples": [
                             {
