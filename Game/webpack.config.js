@@ -45,6 +45,10 @@ module.exports = {
             {
                 from: path.resolve(__dirname, 'assets', '**', '*'),
                 to: path.resolve(__dirname, 'dist')
+            },
+            {
+                from: path.resolve(__dirname, 'sigma', "**", "*"),
+                to: path.resolve(__dirname, 'dist')
             }
         ]),
         new webpack.DefinePlugin({
