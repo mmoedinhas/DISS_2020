@@ -1,0 +1,11 @@
+{
+  "name": "story-viewer",
+  "version": "1.0.0",
+  "description": "Tool to convert JSON story files into graphs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
