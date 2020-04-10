@@ -25,116 +25,63 @@
 <body>
   <div id="content"></div>
   <script>
-    sigma.utils.pkg('sigma.canvas.nodes');
+    let requestURL = './json/overall_narrative.json';
 
-    // generate a random graph
-    var i,
-      s,
-      img,
-      N = 100,
-      E = 500,
-      g = {
-        nodes: [],
-        edges: []
-      },
-      urls = [
-        'img/img1.png',
-        'img/img2.png',
-        'img/img3.png',
-        'img/img4.png'
-      ],
-      colors = [
-        '#617db4',
-        '#668f3c',
-        '#c6583e',
-        '#b956af'
-      ];
+    let request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
 
-    // Generate a random graph, going through the different shapes
-    for (i = 0; i < N; i++) {
-      var node = {
-        id: 'n' + i,
-        label: 'Node ' + i,
-        // note the ShapeLibrary.enumerate() returns the names of all
-        // supported renderers
-        type: ShapeLibrary.enumerate().map(function (s) { return s.name; })[Math.round(Math.random() * 5)],
-        x: Math.random(),
-        y: Math.random(),
-        size: Math.random(),
-        color: colors[Math.floor(Math.random() * colors.length)],
-        borderColor: colors[Math.floor(Math.random() * colors.length)]
-      };
-
-      if (Math.random() > 0.75 && node.type != 'pacman') { // ~0.75 of the (non-pacman)shapes will have an image
-        node.image = {
-          url: urls[Math.floor(Math.random() * urls.length)],
-          // scale/clip are ratio values applied on top of 'size'
-          scale: 1.3,
-          clip: 0.85
-        }
+    request.onload = function () {
+      if (request.status == 404) {
+        const p = document.createElement('p');
+        p.textContent = "Couldn't find a json file";
+        document.querySelector('#content').appendChild(p);
+        return;
       }
 
-      switch (node.type) {
-        case "equilateral":
-          node.equilateral = {
-            rotate: Math.random() * 45, // random rotate up to 45 deg
-            numPoints: Math.round(5 + Math.random() * 3)
-          }
-          break;
-        case "star":
-          node.star = {
-            innerRatio: 0.4 + Math.random() * 0.2,
-            numPoints: Math.round(4 + Math.random() * 3)
-          }
-          if (node.image) {
-            // note clip/scale are ratio values. So we fit them to the inner ratio of the star shape
-            node.image.clip = node.star.innerRatio * 0.95;
-            node.image.scale = node.star.innerRatio * 1.2;
-          }
-          break;
-        case "square":
-        case "diamond":
-          if (node.image) {
-            // note clip/scale are ratio values. So we fit them to the borders of the square shape
-            node.image.clip = 0.7;
-          }
-          break;
-        case "circle":
-          break;
-        case "cross":
-          node.cross = {
-            lineWeight: Math.round(Math.random() * 5)
-          }
-          break;
-      }
-      g.nodes.push(node);
+      console.log(request.response);
+      const narrative = request.response;
+      createGraph(narrative);
     }
 
+    function createGraph(jsonObj) {
+      sigma.utils.pkg('sigma.canvas.nodes');
 
-    for (i = 0; i < E; i++)
-      g.edges.push({
-        id: 'e' + i,
-        source: 'n' + (Math.random() * N | 0),
-        target: 'n' + (Math.random() * N | 0),
-        size: Math.random()
-      });
-
-    s = new sigma({
-      graph: g,
-      renderer: {
-        // IMPORTANT:
-        // This works only with the canvas renderer, so the
-        // renderer type set as "canvas" is necessary here.
-        container: document.getElementById('content'),
-        type: 'canvas'
-      },
-      settings: {
-        minNodeSize: 8,
-        maxNodeSize: 16,
+      const graph = {
+        nodes: [],
+        edges: []
       }
-    });
-    CustomShapes.init(s);
-    s.refresh();
+
+      for (scene of jsonObj['scenes']) {
+        const id = 'scene_' + scene['name'];
+        console.log(id);
+
+        graph.nodes.push({
+          id: id,
+          label: scene['name'],
+          type: 'square',
+          x: 0,
+          y: 0,
+          size: Math.random(),
+        })
+      }
+
+      let s = new sigma({
+        graph: graph,
+        renderer: {
+          container: document.getElementById('content'),
+          type: 'canvas'
+        },
+        settings: {
+          minNodeSize: 8,
+          maxNodeSize: 16,
+        }
+      });
+      CustomShapes.init(s);
+      s.refresh();
+    }
+
   </script>
 </body>
 

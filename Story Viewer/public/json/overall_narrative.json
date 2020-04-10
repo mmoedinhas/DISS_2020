@@ -3,41 +3,14 @@
         {
             "name": "scene1A",
             "map": "dance_hallA.json",
-            "emotionalRequirements": {
-                "priority": 1,
-                "anger": {
-                    "condition": ">=",
-                    "value": 8
-                },
-                "disgust": {
-                    "condition": ">=",
-                    "value": 8
-                },
-                "fear": {
-                    "condition": ">=",
-                    "value": 8
-                },
-                "anxiety": {
-                    "condition": ">=",
-                    "value": 8
-                },
-                "sadness": {
-                    "condition": ">=",
-                    "value": 8
-                },
-                "desire": {
-                    "condition": ">=",
-                    "value": 8
-                },
-                "relaxation": {
-                    "condition": ">=",
-                    "value": 8
-                },
-                "happiness": {
+            "priority": 1,
+            "emotionalRequirements": [
+                {
+                    "parameter": "anger",
                     "condition": ">=",
                     "value": 8
                 }
-            },
+            ],
             "transictions": [
                 {
                     "name": "scene1AToScene2A",
@@ -55,41 +28,14 @@
                     "name": "event1A1A",
                     "type": "cutscene",
                     "file": "cutscene1A1A.json",
-                    "emotionalRequirements": {
-                        "priority": 1,
-                        "anger": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "disgust": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "fear": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "anxiety": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "sadness": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "desire": {
-                            "condition": ">=",
-                            "value": 5
-                        },
-                        "relaxation": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "happiness": {
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "anger",
                             "condition": ">=",
                             "value": 8
                         }
-                    },
+                    ],
                     "flagRequirements": [],
                     "flagChanges": [
                         {
@@ -102,41 +48,14 @@
                     "name": "event1A1B",
                     "type": "cutscene",
                     "file": "cutscene1A1B.json",
-                    "emotionalRequirements": {
-                        "priority": 2,
-                        "anger": {
-                            "condition": "<=",
-                            "value": 8
-                        },
-                        "disgust": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "fear": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "anxiety": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "sadness": {
-                            "condition": ">=",
-                            "value": 5
-                        },
-                        "desire": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "relaxation": {
-                            "condition": ">=",
-                            "value": 8
-                        },
-                        "happiness": {
+                    "priority": 2,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "anger",
                             "condition": ">=",
                             "value": 8
                         }
-                    },
+                    ],
                     "flagRequirements": [],
                     "flagChanges": [
                         {
@@ -149,17 +68,8 @@
                     "name": "event1A2",
                     "type": "gameplay",
                     "file": "gameplay1A2.json",
-                    "emotionalRequirements": {
-                        "priority": 1,
-                        "anger": null,
-                        "disgust": null,
-                        "fear": null,
-                        "anxiety": null,
-                        "sadness": null,
-                        "desire": null,
-                        "relaxation": null,
-                        "happiness": null
-                    },
+                    "priority": 1,
+                    "emotionalRequirements": [],
                     "flagRequirements": [
                         {
                             "name": "cutscene1ADone",
