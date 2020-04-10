@@ -1,0 +1,179 @@
+{
+    "scenes": [
+        {
+            "name": "scene1A",
+            "map": "dance_hallA.json",
+            "emotionalRequirements": {
+                "priority": 1,
+                "anger": {
+                    "condition": ">=",
+                    "value": 8
+                },
+                "disgust": {
+                    "condition": ">=",
+                    "value": 8
+                },
+                "fear": {
+                    "condition": ">=",
+                    "value": 8
+                },
+                "anxiety": {
+                    "condition": ">=",
+                    "value": 8
+                },
+                "sadness": {
+                    "condition": ">=",
+                    "value": 8
+                },
+                "desire": {
+                    "condition": ">=",
+                    "value": 8
+                },
+                "relaxation": {
+                    "condition": ">=",
+                    "value": 8
+                },
+                "happiness": {
+                    "condition": ">=",
+                    "value": 8
+                }
+            },
+            "transictions": [
+                {
+                    "name": "scene1AToScene2A",
+                    "to": "scene2A",
+                    "flagRequirements": [
+                        {
+                            "name": "keyToDoorAcquired",
+                            "value": true
+                        }
+                    ]
+                }
+            ],
+            "events": [
+                {
+                    "name": "event1A1A",
+                    "type": "cutscene",
+                    "file": "cutscene1A1A.json",
+                    "emotionalRequirements": {
+                        "priority": 1,
+                        "anger": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "disgust": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "fear": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "anxiety": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "sadness": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "desire": {
+                            "condition": ">=",
+                            "value": 5
+                        },
+                        "relaxation": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "happiness": {
+                            "condition": ">=",
+                            "value": 8
+                        }
+                    },
+                    "flagRequirements": [],
+                    "flagChanges": [
+                        {
+                            "name": "cutscene1ADone",
+                            "value": true
+                        }
+                    ]
+                },
+                {
+                    "name": "event1A1B",
+                    "type": "cutscene",
+                    "file": "cutscene1A1B.json",
+                    "emotionalRequirements": {
+                        "priority": 2,
+                        "anger": {
+                            "condition": "<=",
+                            "value": 8
+                        },
+                        "disgust": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "fear": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "anxiety": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "sadness": {
+                            "condition": ">=",
+                            "value": 5
+                        },
+                        "desire": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "relaxation": {
+                            "condition": ">=",
+                            "value": 8
+                        },
+                        "happiness": {
+                            "condition": ">=",
+                            "value": 8
+                        }
+                    },
+                    "flagRequirements": [],
+                    "flagChanges": [
+                        {
+                            "name": "cutscene1ADone",
+                            "value": true
+                        }
+                    ]
+                },
+                {
+                    "name": "event1A2",
+                    "type": "gameplay",
+                    "file": "gameplay1A2.json",
+                    "emotionalRequirements": {
+                        "priority": 1,
+                        "anger": null,
+                        "disgust": null,
+                        "fear": null,
+                        "anxiety": null,
+                        "sadness": null,
+                        "desire": null,
+                        "relaxation": null,
+                        "happiness": null
+                    },
+                    "flagRequirements": [
+                        {
+                            "name": "cutscene1ADone",
+                            "value": true
+                        }
+                    ],
+                    "flagChanges": [
+                        {
+                            "name": "keyToDoorAcquired",
+                            "value": true
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
