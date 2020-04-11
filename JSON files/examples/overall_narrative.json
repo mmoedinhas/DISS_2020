@@ -1,6 +1,8 @@
 {
+    "firstLocation": "salon",
     "scenes": [
         {
+            "locationId": "salon",
             "name": "scene1A",
             "map": "dance_hallA.json",
             "priority": 1,
@@ -11,10 +13,10 @@
                     "value": 8
                 }
             ],
-            "transictions": [
+            "transitions": [
                 {
                     "name": "scene1AToScene2A",
-                    "to": "scene2A",
+                    "toLocation": "kitchen",
                     "flagRequirements": [
                         {
                             "name": "keyToDoorAcquired",

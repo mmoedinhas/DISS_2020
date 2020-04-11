@@ -5,9 +5,20 @@
     "title": "The Root Schema",
     "description": "The root schema comprises the entire JSON document.",
     "required": [
+        "firstLocation",
         "scenes"
     ],
     "properties": {
+        "firstLocation": {
+            "$id": "#/properties/firstLocation",
+            "type": "string",
+            "title": "First Location",
+            "description": "Which location should be used for first scene",
+            "default": "",
+            "examples": [
+                "salon"
+            ]
+        },
         "scenes": {
             "$id": "#/properties/scenes",
             "type": "array",
@@ -93,7 +104,7 @@
                                         "value": true
                                     }
                                 ],
-                                "to": "scene2A",
+                                "toLocation": "kitchen",
                                 "name": "scene1AToScene2A"
                             }
                         ],
@@ -104,10 +115,12 @@
                                 "parameter": "anger"
                             }
                         ],
+                        "locationId": "salon",
                         "map": "dance_hallA.json"
                     }
                 ],
                 "required": [
+                    "locationId",
                     "name",
                     "map",
                     "priority",
@@ -116,6 +129,16 @@
                     "events"
                 ],
                 "properties": {
+                    "locationId": {
+                        "$id": "#/properties/scenes/items/properties/locationId",
+                        "type": "string",
+                        "title": "Location ID",
+                        "description": "The location to which this scene belongs to.",
+                        "default": "",
+                        "examples": [
+                            "salon"
+                        ]
+                    },
                     "name": {
                         "$id": "#/properties/scenes/items/properties/name",
                         "type": "string",
@@ -232,13 +255,13 @@
                                             "value": true
                                         }
                                     ],
-                                    "to": "scene2A",
+                                    "toLocation": "kitchen",
                                     "name": "scene1AToScene2A"
                                 }
                             ],
                             "required": [
                                 "name",
-                                "to",
+                                "toLocation",
                                 "flagRequirements"
                             ],
                             "properties": {
@@ -252,11 +275,11 @@
                                         "scene1AToScene2A"
                                     ]
                                 },
-                                "to": {
+                                "toLocation": {
                                     "$id": "#/properties/scenes/items/properties/transitions/items/properties/to",
                                     "type": "string",
-                                    "title": "To",
-                                    "description": "The name/id of the scene to transition to",
+                                    "title": "To Location",
+                                    "description": "The id of the location to transition to",
                                     "default": "",
                                     "examples": [
                                         "scene2A"
