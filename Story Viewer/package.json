@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Tool to convert JSON story files into graphs",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
