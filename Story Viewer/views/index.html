@@ -12,46 +12,79 @@
   <script src="libs/sigma/plugins/sigma.renderers.customShapes.min.js"></script>
 
   <style>
-    #content {
+    body {
+      display: flex;
+      flex-direction: column;
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
       position: absolute;
     }
+
+    #content {
+      flex: 1;
+    }
+
+    button {
+      align-self: flex-start;
+    }
   </style>
 </head>
 
 <body>
+  <button type="button" onclick="validateJSON()">Validate JSON</button>
+  <button id="createGraph" disabled type="button" onclick="showGraph()">Show Graph</button>
   <div id="content"></div>
   <script>
-    let requestURL = './json/overall_narrative.json';
 
-    let request = new XMLHttpRequest();
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-    request.send();
+    function validateJSON() {
+      let requestURL = './json/validate/overall_narrative.json';
 
-    request.onload = function () {
-      if (request.status == 404) {
+      let request = new XMLHttpRequest();
+      request.open('GET', requestURL);
+      request.responseType = 'text';
+      request.send();
+
+      request.onload = function () {
         const p = document.createElement('p');
-        p.textContent = "Couldn't find a json file";
+        p.textContent = request.responseText;
         document.querySelector('#content').appendChild(p);
-        return;
-      } 
 
-      console.log(request.response);
-      // const narrative = request.response;
-      // createGraph(narrative);
+        if(request.responseText == "Valid json") {
+          document.getElementById("createGraph").disabled = false;
+        }
+      }
     }
 
-    function createGraph(jsonObj) {
-      sigma.utils.pkg('sigma.canvas.nodes');
+    function showGraph() {
 
-      const graph = {
-        nodes: jsonObj['graph']['nodes'],
-        edges: jsonObj['graph']['edges']
+      let content = document.getElementById("content");
+      content.removeChild(content.firstChild);
+
+      const requestURL = './json/overall_narrative.json';
+
+      let request = new XMLHttpRequest();
+      request.open('GET', requestURL);
+      request.responseType = 'json';
+      request.send();
+
+      request.onload = function () {
+        if (request.status == 404) {
+          const p = document.createElement('p');
+          p.textContent = "Couldn't find narrative file";
+          document.querySelector('#content').appendChild(p);
+          return;
+        }
+
+        console.log(request.response);
+        const graph = request.response;
+        createGraph(graph);
       }
+    }
+
+    function createGraph(graph) {
+      sigma.utils.pkg('sigma.canvas.nodes');
 
       let s = new sigma({
         graph: graph,

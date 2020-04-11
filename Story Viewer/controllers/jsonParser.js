@@ -1,30 +1,59 @@
-var express = require('express');
-var router = express.Router();
-var path = require('path');
-var fs = require('fs');
+let express = require('express');
+let router = express.Router();
+let path = require('path');
+let fs = require('fs');
 
-router.get('/:filename', function (req, res) {
+let validateJson = require('../helpers/validateJson.js')
 
-    fs.readFile(path.join(__dirname + '/../json/' + req.params.filename), 'utf8', (err, jsonString) => {
-        if (err) {
-            res.status(404).send('Not found');
+router.get('/validate/:filename', function (req, res) {
+
+    fs.readFile(path.join(__dirname + '/../json/' + req.params.filename), 'utf8', (err1, jsonString) => {
+        if (err1) {
+            res.send('Error: Narrative file not found');
             return;
         }
 
-        if(validJson(jsonString)) {
-            res.send("Valid json");
-            //createGraph(jsonString);
-        } else {
-            res.send("Invalid json");
-        }
+        fs.readFile(path.join(__dirname + '/../json/schema/overall_narrative_schema.json'), 'utf8', (err2, schemaString) => {
+            if (err2) {
+                res.status(404).send('Error: Schema file not found');
+                return;
+            }
+
+            let data = JSON.parse(jsonString);
+            let schema = JSON.parse(schemaString);
+            let result = validateJson(data, schema);
+
+            if(result === "valid") {
+                res.send("Valid json");
+            } else {
+                res.json(result);
+            }
+        });
     })
 })
 
-function validJson(jsonString) {
-    
-}
+router.get('/:filename', function (req, res) {
+
+    fs.readFile(path.join(__dirname + '/../json/' + req.params.filename), 'utf8', (err1, jsonString) => {
+        if (err1) {
+            res.status(404).send('Narrative file not found');
+            return;
+        }
+
+        let data = JSON.parse(jsonString);
+        let graph = createGraph(data);
+        
+        res.json(graph);
+    })
+})
 
 function createGraph(jsonObj) {
+
+    const graph = {
+        nodes: [],
+        edges: []
+    }
+
     const palette = [
         '#8ecce6',
         '#d5cdea',
@@ -37,7 +66,6 @@ function createGraph(jsonObj) {
         let x = 0.0;
         let y = 0.0;
         let id = 'scene_' + scene['name'];
-        console.log(id);
 
         graph.nodes.push({
           id: id,
@@ -81,6 +109,8 @@ function createGraph(jsonObj) {
           x += 0.1;
         }
       }
+
+      return graph;
 }
 
 

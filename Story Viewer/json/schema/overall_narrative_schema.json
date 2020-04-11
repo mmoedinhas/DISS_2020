@@ -1,0 +1,666 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "firstLocation",
+        "scenes"
+    ],
+    "properties": {
+        "firstLocation": {
+            "$id": "#/properties/firstLocation",
+            "type": "string",
+            "title": "First Location",
+            "description": "Which location should be used for first scene",
+            "default": "",
+            "examples": [
+                "salon"
+            ]
+        },
+        "scenes": {
+            "$id": "#/properties/scenes",
+            "type": "array",
+            "title": "Scenes",
+            "description": "An array containing all the possible scenes of the game. Each scene represents a different map in the game",
+            "default": [],
+            "items": {
+                "$id": "#/properties/scenes/items",
+                "type": "object",
+                "title": "Scene",
+                "description": "The overview representation of a scene",
+                "default": {},
+                "examples": [
+                    {
+                        "events": [
+                            {
+                                "file": "cutscene1A1A.json",
+                                "flagChanges": [
+                                    {
+                                        "name": "cutscene1ADone",
+                                        "value": true
+                                    }
+                                ],
+                                "name": "event1A1A",
+                                "description": "Small description",
+                                "priority": 1.0,
+                                "emotionalRequirements": [
+                                    {
+                                        "parameter": "anger",
+                                        "value": 8.0,
+                                        "condition": ">="
+                                    }
+                                ],
+                                "type": "cutscene",
+                                "flagRequirements": []
+                            },
+                            {
+                                "priority": 2.0,
+                                "emotionalRequirements": [
+                                    {
+                                        "parameter": "anger",
+                                        "value": 8.0,
+                                        "condition": ">="
+                                    }
+                                ],
+                                "flagRequirements": [],
+                                "type": "cutscene",
+                                "file": "cutscene1A1B.json",
+                                "flagChanges": [
+                                    {
+                                        "name": "cutscene1ADone",
+                                        "value": true
+                                    }
+                                ],
+                                "name": "event1A1B",
+                                "description": "Small description"
+                            },
+                            {
+                                "emotionalRequirements": [],
+                                "flagRequirements": [
+                                    {
+                                        "name": "cutscene1ADone",
+                                        "value": true
+                                    }
+                                ],
+                                "type": "gameplay",
+                                "file": "gameplay1A2.json",
+                                "flagChanges": [
+                                    {
+                                        "name": "keyToDoorAcquired",
+                                        "value": true
+                                    }
+                                ],
+                                "name": "event1A2",
+                                "description": "Small description",
+                                "priority": 1.0
+                            }
+                        ],
+                        "name": "scene1A",
+                        "description": "Small description",
+                        "priority": 1.0,
+                        "transitions": [
+                            {
+                                "flagRequirements": [
+                                    {
+                                        "name": "keyToDoorAcquired",
+                                        "value": true
+                                    }
+                                ],
+                                "toLocation": "kitchen",
+                                "name": "scene1AToScene2A"
+                            }
+                        ],
+                        "emotionalRequirements": [
+                            {
+                                "value": 8.0,
+                                "condition": ">=",
+                                "parameter": "anger"
+                            }
+                        ],
+                        "locationId": "salon",
+                        "map": "dance_hallA.json"
+                    }
+                ],
+                "required": [
+                    "locationId",
+                    "name",
+                    "description",
+                    "map",
+                    "priority",
+                    "emotionalRequirements",
+                    "transitions",
+                    "events"
+                ],
+                "properties": {
+                    "locationId": {
+                        "$id": "#/properties/scenes/items/properties/locationId",
+                        "type": "string",
+                        "title": "Location ID",
+                        "description": "The location to which this scene belongs to.",
+                        "default": "",
+                        "examples": [
+                            "salon"
+                        ]
+                    },
+                    "name": {
+                        "$id": "#/properties/scenes/items/properties/name",
+                        "type": "string",
+                        "title": "Name",
+                        "description": "The name/id of the scene. Must be unique",
+                        "default": "",
+                        "examples": [
+                            "scene1A"
+                        ]
+                    },
+                    "description": {
+                        "$id": "#/properties/scenes/items/properties/description",
+                        "type": "string",
+                        "title": "Description",
+                        "description": "A small textual description for this scene",
+                        "default": "",
+                        "examples": [
+                            "Small description"
+                        ]
+                    },
+                    "map": {
+                        "$id": "#/properties/scenes/items/properties/map",
+                        "type": "string",
+                        "title": "Map",
+                        "description": "The path to the file containing the information about the map of this scene",
+                        "default": "",
+                        "examples": [
+                            "dance_hallA.json"
+                        ]
+                    },
+                    "priority": {
+                        "$id": "#/properties/scenes/items/properties/priority",
+                        "type": "integer",
+                        "title": "Priority",
+                        "description": "In case there is a tie in the emotional requirements of the scenes, the framework chooses the one with the highest priority",
+                        "default": 0,
+                        "examples": [
+                            1
+                        ]
+                    },
+                    "emotionalRequirements": {
+                        "$id": "#/properties/scenes/items/properties/emotionalRequirements",
+                        "type": "array",
+                        "title": "Emotional Requirements",
+                        "description": "The emotional requirements for this scene to show to the player. This scene will only show to the player if the conditions stated in this array are ALL TRUE",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/scenes/items/properties/emotionalRequirements/items",
+                            "type": "object",
+                            "title": "Requirement",
+                            "description": "The representation of an emotional requirement",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "parameter": "anger",
+                                    "value": 8.0,
+                                    "condition": ">="
+                                }
+                            ],
+                            "required": [
+                                "parameter",
+                                "condition",
+                                "value"
+                            ],
+                            "properties": {
+                                "parameter": {
+                                    "$id": "#/properties/scenes/items/properties/emotionalRequirements/items/properties/parameter",
+                                    "type": "string",
+                                    "title": "Parameter",
+                                    "description": "The name of the parameter(emotion) to be evaluated. Can be \"anger\", \"disgust\", \"fear\", \"anxiety\", \"sadness\", \"desire\", \"relaxation\" or \"happiness\"",
+                                    "default": "",
+                                    "examples": [
+                                        "anger",
+                                        "disgust",
+                                        "fear",
+                                        "anxiety",
+                                        "sadness",
+                                        "desire",
+                                        "relaxation"
+                                    ]
+                                },
+                                "condition": {
+                                    "$id": "#/properties/scenes/items/properties/emotionalRequirements/items/properties/condition",
+                                    "type": "string",
+                                    "title": "Condition",
+                                    "description": "Can be >, <, >=, <=, =, !=",
+                                    "default": "",
+                                    "examples": [
+                                        ">="
+                                    ]
+                                },
+                                "value": {
+                                    "$id": "#/properties/scenes/items/properties/emotionalRequirements/items/properties/value",
+                                    "type": "integer",
+                                    "title": "Value",
+                                    "description": "The value to be compared to",
+                                    "default": 0,
+                                    "examples": [
+                                        8
+                                    ]
+                                }
+                            },
+                            "patternProperties": {},
+                            "dependencies": {}
+                        }
+                    },
+                    "transitions": {
+                        "$id": "#/properties/scenes/items/properties/transitions",
+                        "type": "array",
+                        "title": "Transitions",
+                        "description": "List of transitions possible from this scene/map to other scenes and the necessary conditions for these transitions to be available",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/scenes/items/properties/transitions/items",
+                            "type": "object",
+                            "title": "Transition",
+                            "description": "Description of a possible transition from scene A to scene B",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "flagRequirements": [
+                                        {
+                                            "name": "keyToDoorAcquired",
+                                            "value": true
+                                        }
+                                    ],
+                                    "toLocation": "kitchen",
+                                    "name": "scene1AToScene2A"
+                                }
+                            ],
+                            "required": [
+                                "name",
+                                "toLocation",
+                                "flagRequirements"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/name",
+                                    "type": "string",
+                                    "title": "Name",
+                                    "description": "The name/id of the transition. Must be unique",
+                                    "default": "",
+                                    "examples": [
+                                        "scene1AToScene2A"
+                                    ]
+                                },
+                                "toLocation": {
+                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/to",
+                                    "type": "string",
+                                    "title": "To Location",
+                                    "description": "The id of the location to transition to",
+                                    "default": "",
+                                    "examples": [
+                                        "scene2A"
+                                    ]
+                                },
+                                "flagRequirements": {
+                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements",
+                                    "type": "array",
+                                    "title": "Flag requirements",
+                                    "description": "Which flags should be checked to know if the player can make the transition",
+                                    "default": [],
+                                    "items": {
+                                        "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items",
+                                        "type": "object",
+                                        "title": "Flag",
+                                        "description": "An example of a flag",
+                                        "default": {},
+                                        "examples": [
+                                            {
+                                                "name": "keyToDoorAcquired",
+                                                "value": true
+                                            }
+                                        ],
+                                        "required": [
+                                            "name",
+                                            "value"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/name",
+                                                "type": "string",
+                                                "title": "Name",
+                                                "description": "The name/id of the flag. Must be unique",
+                                                "default": "",
+                                                "examples": [
+                                                    "keyToDoorAcquired"
+                                                ]
+                                            },
+                                            "value": {
+                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/value",
+                                                "type": "boolean",
+                                                "title": "Value",
+                                                "description": "The value to be compared to",
+                                                "default": false,
+                                                "examples": [
+                                                    true
+                                                ]
+                                            }
+                                        },
+                                        "patternProperties": {},
+                                        "dependencies": {}
+                                    }
+                                }
+                            },
+                            "patternProperties": {},
+                            "dependencies": {}
+                        }
+                    },
+                    "events": {
+                        "$id": "#/properties/scenes/items/properties/events",
+                        "type": "array",
+                        "title": "Events",
+                        "description": "The list of events to take place in the scene. Can be cutscenes or gameplay",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/scenes/items/properties/events/items",
+                            "type": "object",
+                            "title": "Event",
+                            "description": "An overview representation of an event",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "flagChanges": [
+                                        {
+                                            "name": "cutscene1ADone",
+                                            "value": true
+                                        }
+                                    ],
+                                    "name": "event1A1A",
+                                    "description": "Small description",
+                                    "priority": 1.0,
+                                    "emotionalRequirements": [
+                                        {
+                                            "value": 8.0,
+                                            "condition": ">=",
+                                            "parameter": "anger"
+                                        }
+                                    ],
+                                    "flagRequirements": [],
+                                    "type": "cutscene",
+                                    "file": "cutscene1A1A.json"
+                                },
+                                {
+                                    "emotionalRequirements": [
+                                        {
+                                            "value": 8.0,
+                                            "condition": ">=",
+                                            "parameter": "anger"
+                                        }
+                                    ],
+                                    "flagRequirements": [],
+                                    "type": "cutscene",
+                                    "file": "cutscene1A1B.json",
+                                    "flagChanges": [
+                                        {
+                                            "name": "cutscene1ADone",
+                                            "value": true
+                                        }
+                                    ],
+                                    "name": "event1A1B",
+                                    "description": "Small description",
+                                    "priority": 2.0
+                                },
+                                {
+                                    "name": "event1A2",
+                                    "description": "Small description",
+                                    "priority": 1.0,
+                                    "emotionalRequirements": [],
+                                    "flagRequirements": [
+                                        {
+                                            "name": "cutscene1ADone",
+                                            "value": true
+                                        }
+                                    ],
+                                    "type": "gameplay",
+                                    "file": "gameplay1A2.json",
+                                    "flagChanges": [
+                                        {
+                                            "name": "keyToDoorAcquired",
+                                            "value": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "required": [
+                                "name",
+                                "description",
+                                "type",
+                                "file",
+                                "priority",
+                                "emotionalRequirements",
+                                "flagRequirements",
+                                "flagChanges"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/name",
+                                    "type": "string",
+                                    "title": "Name",
+                                    "description": "The name/id of the event. Must be unique",
+                                    "default": "",
+                                    "examples": [
+                                        "event1A1A"
+                                    ]
+                                },
+                                "description": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/description",
+                                    "type": "string",
+                                    "title": "Description",
+                                    "description": "A small textual description of the event",
+                                    "default": "",
+                                    "examples": [
+                                        "Small description"
+                                    ]
+                                },
+                                "type": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/type",
+                                    "type": "string",
+                                    "title": "Type",
+                                    "description": "Can be cutscene or gameplay",
+                                    "default": "",
+                                    "examples": [
+                                        "cutscene"
+                                    ]
+                                },
+                                "file": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/file",
+                                    "type": "string",
+                                    "title": "File",
+                                    "description": "The path to the file containing the details of the event",
+                                    "default": "",
+                                    "examples": [
+                                        "cutscene1A1A.json"
+                                    ]
+                                },
+                                "priority": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/priority",
+                                    "type": "integer",
+                                    "title": "Priority",
+                                    "description": "In case there is a tie in the emotional requirements of the scenes, the framework chooses the one with the highest priority",
+                                    "default": 0,
+                                    "examples": [
+                                        1
+                                    ]
+                                },
+                                "emotionalRequirements": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements",
+                                    "type": "array",
+                                    "title": "Emotional requirements",
+                                    "description": "The emotional requirements for this event to be available to the player. This event will only show to the player if the conditions stated in this array are ALL TRUE",
+                                    "default": [],
+                                    "items": {
+                                        "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/items",
+                                        "type": "object",
+                                        "title": "Requirement",
+                                        "description": "The representation of an emotional requirement",
+                                        "default": {},
+                                        "examples": [
+                                            {
+                                                "value": 8.0,
+                                                "condition": ">=",
+                                                "parameter": "anger"
+                                            }
+                                        ],
+                                        "required": [
+                                            "parameter",
+                                            "condition",
+                                            "value"
+                                        ],
+                                        "properties": {
+                                            "parameter": {
+                                                "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/items/properties/parameter",
+                                                "type": "string",
+                                                "title": "Parameter",
+                                                "description": "The name of the parameter(emotion) to be evaluated. Can be \"anger\", \"disgust\", \"fear\", \"anxiety\", \"sadness\", \"desire\", \"relaxation\" or \"happiness\"",
+                                                "default": "",
+                                                "examples": [
+                                                    "anger",
+                                                    "disgust",
+                                                    "fear",
+                                                    "anxiety",
+                                                    "sadness",
+                                                    "desire",
+                                                    "relaxation"
+                                                ]
+                                            },
+                                            "condition": {
+                                                "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/items/properties/condition",
+                                                "type": "string",
+                                                "title": "Condition",
+                                                "description": "Can be >, <, >=, <=, =, !=",
+                                                "default": "",
+                                                "examples": [
+                                                    ">="
+                                                ]
+                                            },
+                                            "value": {
+                                                "$id": "#/properties/scenes/items/properties/events/items/properties/emotionalRequirements/items/properties/value",
+                                                "type": "integer",
+                                                "title": "Value",
+                                                "description": "The value to be compared to",
+                                                "default": 0,
+                                                "examples": [
+                                                    8
+                                                ]
+                                            }
+                                        },
+                                        "patternProperties": {},
+                                        "dependencies": {}
+                                    }
+                                },
+                                "flagRequirements": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flagRequirements",
+                                    "type": "array",
+                                    "title": "Flag requirements",
+                                    "description": "Which flags should be checked to know if the player can enter the event. Can be an empty array if there are no requirements for the player to see the event",
+                                    "default": [],
+                                    "items": {
+                                        "title": "Flag",
+                                        "description": "An example of a flag",
+                                        "default": {},
+                                        "examples": [
+                                            {
+                                                "name": "keyToDoorAcquired",
+                                                "value": true
+                                            }
+                                        ],
+                                        "required": [
+                                            "name",
+                                            "value"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/name",
+                                                "type": "string",
+                                                "title": "Name",
+                                                "description": "The name/id of the flag. Must be unique",
+                                                "default": "",
+                                                "examples": [
+                                                    "keyToDoorAcquired"
+                                                ]
+                                            },
+                                            "value": {
+                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/value",
+                                                "type": "boolean",
+                                                "title": "Value",
+                                                "description": "The value to be compared to",
+                                                "default": false,
+                                                "examples": [
+                                                    true
+                                                ]
+                                            }
+                                        },
+                                        "patternProperties": {},
+                                        "dependencies": {}
+                                    }
+                                },
+                                "flagChanges": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges",
+                                    "type": "array",
+                                    "title": "Flag changes",
+                                    "description": "Which flags will change and to what value at the end of this event",
+                                    "default": [],
+                                    "items": {
+                                        "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges/items",
+                                        "type": "object",
+                                        "title": "Flag",
+                                        "description": "An example of a flag",
+                                        "default": {},
+                                        "examples": [
+                                            {
+                                                "name": "cutscene1ADone",
+                                                "value": true
+                                            }
+                                        ],
+                                        "required": [
+                                            "name",
+                                            "value"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges/items/properties/name",
+                                                "type": "string",
+                                                "title": "Name",
+                                                "description": "The name/id of the flag. Must be unique",
+                                                "default": "",
+                                                "examples": [
+                                                    "cutscene1ADone"
+                                                ]
+                                            },
+                                            "value": {
+                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges/items/properties/value",
+                                                "type": "boolean",
+                                                "title": "Value",
+                                                "description": "The value to be compared to",
+                                                "default": false,
+                                                "examples": [
+                                                    true
+                                                ]
+                                            }
+                                        },
+                                        "patternProperties": {},
+                                        "dependencies": {}
+                                    }
+                                }
+                            },
+                            "patternProperties": {},
+                            "dependencies": {}
+                        }
+                    }
+                },
+                "patternProperties": {},
+                "dependencies": {}
+            }
+        }
+    },
+    "patternProperties": {},
+    "dependencies": {}
+}

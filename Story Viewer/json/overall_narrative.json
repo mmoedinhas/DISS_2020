@@ -102,7 +102,7 @@
             "priority": 1,
             "emotionalRequirements": [
                 {
-                    "paramenter": "sadness",
+                    "parameter": "sadness",
                     "condition": ">",
                     "value": 10
                 }
