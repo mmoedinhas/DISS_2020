@@ -1,84 +1,93 @@
 {
+    "firstLocation": "salon",
     "scenes": [
         {
-            "name": "scene1A",
-            "map": "dance_hallA.json",
-            "priority": 1,
-            "emotionalRequirements": [
-                {
-                    "parameter": "anger",
-                    "condition": ">=",
-                    "value": 8
-                }
-            ],
-            "transictions": [
-                {
-                    "name": "scene1AToScene2A",
-                    "to": "scene2A",
-                    "flagRequirements": [
-                        {
-                            "name": "keyToDoorAcquired",
-                            "value": true
-                        }
-                    ]
-                }
-            ],
+            "locationId": "salon",
+            "name": "happySalon",
+            "description": "The dance salon looks well lit and nicely decorated with warm colors.",
+            "map": "dance_hall.json",
+            "priority": 2,
+            "emotionalRequirements": [],
+            "transitions": [],
             "events": [
                 {
-                    "name": "event1A1A",
+                    "name": "happySalon_1A",
+                    "description": "Clara is excited and happy for the Christmas party.",
                     "type": "cutscene",
-                    "file": "cutscene1A1A.json",
-                    "priority": 1,
-                    "emotionalRequirements": [
-                        {
-                            "parameter": "anger",
-                            "condition": ">=",
-                            "value": 8
-                        }
-                    ],
-                    "flagRequirements": [],
-                    "flagChanges": [
-                        {
-                            "name": "cutscene1ADone",
-                            "value": true
-                        }
-                    ]
-                },
-                {
-                    "name": "event1A1B",
-                    "type": "cutscene",
-                    "file": "cutscene1A1B.json",
+                    "file": "happySalon_1A.json",
                     "priority": 2,
+                    "emotionalRequirements": [],
+                    "flagRequirements": [],
+                    "flagChanges": [
+                        {
+                            "name": "cutscene1Done",
+                            "value": true
+                        }
+                    ]
+                },
+                {
+                    "name": "happySalon_1B",
+                    "description": "Clara is happy for the party but is somewhat nervous.",
+                    "type": "cutscene",
+                    "file": "happySalon_1B.json",
+                    "priority": 1,
                     "emotionalRequirements": [
                         {
-                            "parameter": "anger",
-                            "condition": ">=",
+                            "parameter": "anxiety",
+                            "condition": ">",
                             "value": 8
                         }
                     ],
                     "flagRequirements": [],
                     "flagChanges": [
                         {
-                            "name": "cutscene1ADone",
+                            "name": "cutscene1Done",
                             "value": true
                         }
                     ]
                 },
                 {
-                    "name": "event1A2",
+                    "name": "happySalon_2A",
+                    "description": "Since she is nervous, she only wants to talk to her Grandma first.",
                     "type": "gameplay",
-                    "file": "gameplay1A2.json",
+                    "file": "happySalon_2A.json",
                     "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "anxiety",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "flagRequirements": [
+                        {
+                            "name": "cutscene1Done",
+                            "value": true
+                        }
+                    ],
+                    "flagChanges": [
+                        {
+                            "name": "talkedToGrandma",
+                            "value": true
+                        }
+                    ]
+                },
+                {
+                    "name": "happySalon_3A",
+                    "description": "Time to talk to other guests and check the cake.",
+                    "type": "gameplay",
+                    "file": "happySalon_3A.json",
+                    "priority": 2,
                     "emotionalRequirements": [],
                     "flagRequirements": [
                         {
-                            "name": "cutscene1ADone",
+                            "name": "cutscene1Done",
                             "value": true
                         }
                     ],
                     "flagChanges": [
                         {
-                            "name": "keyToDoorAcquired",
+                            "name": "talkedToGuestsDone",
                             "value": true
                         }
                     ]
