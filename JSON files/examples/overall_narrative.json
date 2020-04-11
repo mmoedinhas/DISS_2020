@@ -4,6 +4,7 @@
         {
             "locationId": "salon",
             "name": "scene1A",
+            "description": "Small description",
             "map": "dance_hallA.json",
             "priority": 1,
             "emotionalRequirements": [
@@ -28,6 +29,7 @@
             "events": [
                 {
                     "name": "event1A1A",
+                    "description": "Small description",
                     "type": "cutscene",
                     "file": "cutscene1A1A.json",
                     "priority": 1,
@@ -48,6 +50,7 @@
                 },
                 {
                     "name": "event1A1B",
+                    "description": "Small description",
                     "type": "cutscene",
                     "file": "cutscene1A1B.json",
                     "priority": 2,
@@ -68,6 +71,7 @@
                 },
                 {
                     "name": "event1A2",
+                    "description": "Small description",
                     "type": "gameplay",
                     "file": "gameplay1A2.json",
                     "priority": 1,

@@ -43,6 +43,7 @@
                                     }
                                 ],
                                 "name": "event1A1A",
+                                "description": "Small description",
                                 "priority": 1.0,
                                 "emotionalRequirements": [
                                     {
@@ -72,7 +73,8 @@
                                         "value": true
                                     }
                                 ],
-                                "name": "event1A1B"
+                                "name": "event1A1B",
+                                "description": "Small description"
                             },
                             {
                                 "emotionalRequirements": [],
@@ -91,10 +93,12 @@
                                     }
                                 ],
                                 "name": "event1A2",
+                                "description": "Small description",
                                 "priority": 1.0
                             }
                         ],
                         "name": "scene1A",
+                        "description": "Small description",
                         "priority": 1.0,
                         "transitions": [
                             {
@@ -122,6 +126,7 @@
                 "required": [
                     "locationId",
                     "name",
+                    "description",
                     "map",
                     "priority",
                     "emotionalRequirements",
@@ -147,6 +152,16 @@
                         "default": "",
                         "examples": [
                             "scene1A"
+                        ]
+                    },
+                    "description": {
+                        "$id": "#/properties/scenes/items/properties/description",
+                        "type": "string",
+                        "title": "Description",
+                        "description": "A small textual description for this scene",
+                        "default": "",
+                        "examples": [
+                            "Small description"
                         ]
                     },
                     "map": {
@@ -359,6 +374,7 @@
                                         }
                                     ],
                                     "name": "event1A1A",
+                                    "description": "Small description",
                                     "priority": 1.0,
                                     "emotionalRequirements": [
                                         {
@@ -389,10 +405,12 @@
                                         }
                                     ],
                                     "name": "event1A1B",
+                                    "description": "Small description",
                                     "priority": 2.0
                                 },
                                 {
                                     "name": "event1A2",
+                                    "description": "Small description",
                                     "priority": 1.0,
                                     "emotionalRequirements": [],
                                     "flagRequirements": [
@@ -413,6 +431,7 @@
                             ],
                             "required": [
                                 "name",
+                                "description",
                                 "type",
                                 "file",
                                 "priority",
@@ -429,6 +448,16 @@
                                     "default": "",
                                     "examples": [
                                         "event1A1A"
+                                    ]
+                                },
+                                "description": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/description",
+                                    "type": "string",
+                                    "title": "Description",
+                                    "description": "A small textual description of the event",
+                                    "default": "",
+                                    "examples": [
+                                        "Small description"
                                     ]
                                 },
                                 "type": {
