@@ -93,6 +93,59 @@
                     ]
                 }
             ]
+        },
+        {
+            "locationId": "salon",
+            "name": "sadSalon",
+            "description": "The dance salon is decorated nicely but has cold colors and looks quite sad.",
+            "map": "sad_dance_hall.json",
+            "priority": 1,
+            "emotionalRequirements": [
+                {
+                    "paramenter": "sadness",
+                    "condition": ">",
+                    "value": 10
+                }
+            ],
+            "transitions": [],
+            "events": [
+                {
+                    "name": "sadSalon_1A",
+                    "description": "Clara is sad and doesn't feel like going to the party.",
+                    "type": "cutscene",
+                    "file": "sadSalon_1A.json",
+                    "priority": 2,
+                    "emotionalRequirements": [],
+                    "flagRequirements": [],
+                    "flagChanges": [
+                        {
+                            "name": "cutscene1Done",
+                            "value": true
+                        }
+                    ]
+                },
+                {
+                    "name": "sadSalon_1B",
+                    "description": "Clara is sad and the mere thought of talking to the guests is making her very nervous",
+                    "type": "cutscene",
+                    "file": "sadSalon_1B.json",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "anxiety",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "flagRequirements": [],
+                    "flagChanges": [
+                        {
+                            "name": "cutscene1Done",
+                            "value": true
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
