@@ -53,7 +53,10 @@
                                     }
                                 ],
                                 "type": "cutscene",
-                                "flagRequirements": []
+                                "flagRequirements": [],
+                                "nextEvents": [
+                                    "event1A2"
+                                ]
                             },
                             {
                                 "priority": 2.0,
@@ -74,10 +77,16 @@
                                     }
                                 ],
                                 "name": "event1A1B",
-                                "description": "Small description"
+                                "description": "Small description",
+                                "nextEvents": [
+                                    "event1A2"
+                                ]
                             },
                             {
                                 "emotionalRequirements": [],
+                                "nextEvents": [
+                                    "event1A2"
+                                ],
                                 "flagRequirements": [
                                     {
                                         "name": "cutscene1ADone",
@@ -383,6 +392,9 @@
                                             "parameter": "anger"
                                         }
                                     ],
+                                    "nextEvents": [
+                                        "event1A2"
+                                    ],
                                     "flagRequirements": [],
                                     "type": "cutscene",
                                     "file": "cutscene1A1A.json"
@@ -406,7 +418,10 @@
                                     ],
                                     "name": "event1A1B",
                                     "description": "Small description",
-                                    "priority": 2.0
+                                    "priority": 2.0,
+                                    "nextEvents": [
+                                        "event1A2"
+                                    ]
                                 },
                                 {
                                     "name": "event1A2",
@@ -426,6 +441,9 @@
                                             "name": "keyToDoorAcquired",
                                             "value": true
                                         }
+                                    ],
+                                    "nextEvents": [
+                                        "event1A2"
                                     ]
                                 }
                             ],
@@ -437,7 +455,8 @@
                                 "priority",
                                 "emotionalRequirements",
                                 "flagRequirements",
-                                "flagChanges"
+                                "flagChanges",
+                                "nextEvents"
                             ],
                             "properties": {
                                 "name": {
@@ -648,6 +667,29 @@
                                         },
                                         "patternProperties": {},
                                         "dependencies": {}
+                                    }
+                                },
+                                "nextEvents": {
+                                    "$id": "#/properties/scenes/items/properties/events/items/properties/nextEvents",
+                                    "type": "array",
+                                    "title": "Next Events",
+                                    "description": "A list of event ids (of this current scene) that can be the next events occuring after this event",
+                                    "default": [],
+                                    "examples": [
+                                        [
+                                            "event1A2"
+                                        ]
+                                    ],
+                                    "additionalItems": true,
+                                    "items": {
+                                        "$id": "#/properties/scenes/items/properties/events/items/properties/nextEvents/items",
+                                        "type": "string",
+                                        "title": "Event id",
+                                        "description": "The id of the event that could happen next. Must belong to the same scene.",
+                                        "default": "",
+                                        "examples": [
+                                            "event1A2"
+                                        ]
                                     }
                                 }
                             },

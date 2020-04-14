@@ -46,6 +46,9 @@
                             "name": "cutscene1ADone",
                             "value": true
                         }
+                    ],
+                    "nextEvents": [
+                        "event1A2"
                     ]
                 },
                 {
@@ -67,6 +70,9 @@
                             "name": "cutscene1ADone",
                             "value": true
                         }
+                    ],
+                    "nextEvents": [
+                        "event1A2"
                     ]
                 },
                 {
@@ -87,6 +93,8 @@
                             "name": "keyToDoorAcquired",
                             "value": true
                         }
+                    ],
+                    "nextEvents": [
                     ]
                 }
             ]
