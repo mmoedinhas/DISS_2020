@@ -23,6 +23,9 @@
                             "name": "cutscene1Done",
                             "value": true
                         }
+                    ],
+                    "nextEvents": [
+                        "happySalon_2A", "happySalon_3A" 
                     ]
                 },
                 {
@@ -44,6 +47,9 @@
                             "name": "cutscene1Done",
                             "value": true
                         }
+                    ],
+                    "nextEvents": [
+                        "happySalon_2A", "happySalon_3A" 
                     ]
                 },
                 {
@@ -70,6 +76,9 @@
                             "name": "talkedToGrandma",
                             "value": true
                         }
+                    ],
+                    "nextEvents": [
+                        "happySalon_3A" 
                     ]
                 },
                 {
@@ -90,7 +99,8 @@
                             "name": "talkedToGuestsDone",
                             "value": true
                         }
-                    ]
+                    ],
+                    "nextEvents": []
                 }
             ]
         },
@@ -122,7 +132,8 @@
                             "name": "cutscene1Done",
                             "value": true
                         }
-                    ]
+                    ],
+                    "nextEvents": []
                 },
                 {
                     "name": "sadSalon_1B",
@@ -143,7 +154,8 @@
                             "name": "cutscene1Done",
                             "value": true
                         }
-                    ]
+                    ],
+                    "nextEvents": []
                 }
             ]
         }
