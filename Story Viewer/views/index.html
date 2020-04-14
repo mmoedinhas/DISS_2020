@@ -78,9 +78,11 @@
           return;
         }
 
-        console.log(request.response);
-        const graph = request.response;
-        createGraph(graph);
+        const graphObject = request.response;
+
+        console.log(graphObject.graph);
+        console.log(graphObject.errors);
+        createGraph(graphObject.graph);
       }
     }
 

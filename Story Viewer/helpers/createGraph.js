@@ -5,6 +5,8 @@ const graph = {
     edges: []
 };
 
+let errors = [];
+
 const palette = {
     blue: '#8ecce6',
     purple: '#d5cdea',
@@ -18,6 +20,7 @@ let y = 0.0;
 
 function createGraph(jsonObj) {
 
+    errors = [];
     graph.nodes = [];
     graph.edges = [];
     x = 0.0;
@@ -41,7 +44,7 @@ function createGraph(jsonObj) {
         parseScene(scene, 'start');
     }
 
-    return graph;
+    return {graph: graph, errors: errors};
 }
 
 function getFirstScenes(scenes, firstLocationId) {
@@ -94,7 +97,7 @@ function parseScene(scene, parentId) {
     let label = createLabel(scene['emotionalRequirements'], scene['priority']);
 
     graph.edges.push({
-        id: 'edge_' + parentId + "_" + id,
+        id: getEdgeId(parentId, id),
         label: label,
         source: parentId,
         target: id,
@@ -127,7 +130,7 @@ function drawNodesAfterEvent(scene, event, coords) {
     let flags = new Map();
 
     let stack = new Stack();
-    let explored = [event['name']];
+    let visited = [];
 
     stack.push(event);
 
@@ -137,7 +140,9 @@ function drawNodesAfterEvent(scene, event, coords) {
         currEvent = stack.pop();
 
         let eventProperties = getEventNodeProperties(currEvent);
-        if (!isNodeInGraph(eventProperties.id)) {
+        if (!visited.includes(currEvent['name'])
+            && !isNodeInGraph(eventProperties.id)) {
+
             graph.nodes.push({
                 id: eventProperties.id,
                 label: currEvent['name'],
@@ -149,11 +154,15 @@ function drawNodesAfterEvent(scene, event, coords) {
             });
             y += 0.1;
             updateFlags(flags, currEvent);
+
+            visited.push(currEvent['name']);
         }
 
-        let nextEvents = getNextEvents(explored, events, flags);
+        let nextEvents = getNextEvents(currEvent, events, flags);
         for (nextEvent of nextEvents) {
-            stack.push(nextEvent);
+            if(!visited.includes(nextEvent['name'])) {
+                stack.push(nextEvent);
+            }
         }
     }
 
@@ -166,7 +175,7 @@ function drawEdgesBetweenEvents(scene, event) {
     let flags = new Map();
 
     let stack = new Stack();
-    let explored = [event['name']];
+    let visited = [];
 
     stack.push(event);
 
@@ -181,7 +190,7 @@ function drawEdgesBetweenEvents(scene, event) {
             let label = createLabel(currEvent['emotionalRequirements'], currEvent['priority']);
 
             graph.edges.push({
-                id: 'edge_' + getSceneId(scene) + "_" + currEventProperties.id,
+                id: getEdgeId(getSceneId(scene), currEventProperties.id),
                 label: label,
                 source: getSceneId(scene),
                 target: currEventProperties.id,
@@ -191,22 +200,29 @@ function drawEdgesBetweenEvents(scene, event) {
 
         updateFlags(flags, currEvent);
 
-        let nextEvents = getNextEvents(explored, events, flags);
+        let nextEvents = getNextEvents(currEvent, events, flags);
         console.log("curr: " + currEvent['name']);
 
         for (nextEvent of nextEvents) {
             console.log("next: " + nextEvent['name']);
-            stack.push(nextEvent);
+            if(!visited.includes(nextEvent['name'])) {
+                stack.push(nextEvent);
+            }
 
             let nextEventProperties = getEventNodeProperties(nextEvent);
             let label = createLabel(nextEvent['emotionalRequirements'], nextEvent['priority']);
-            graph.edges.push({
-                id: 'edge_' + currEventProperties.id + "_" + nextEventProperties.id,
-                label: label,
-                source: currEventProperties.id,
-                target: nextEventProperties.id,
-                size: 1
-            })
+
+            let edgeId = getEdgeId(currEventProperties.id, nextEventProperties.id);
+            if(!isEdgeInGraph(edgeId)) {
+                graph.edges.push({
+                    id: edgeId,
+                    label: label,
+                    source: currEventProperties.id,
+                    target: nextEventProperties.id,
+                    size: 1,
+                    color: palette['purple']
+                })
+            }
         }
     }
 
@@ -221,32 +237,37 @@ function updateFlags(flags, event) {
     }
 }
 
-function getNextEvents(explored, events, flags) {
+function getNextEvents(currEvent, events, flags) {
 
     let nextEvents = [];
 
-    for (event of events) {
-        if (!explored.includes(event['name']) && event['flagRequirements'].length != 0) {
-            let allFlagsMatch = true;
+    for (eventName of currEvent['nextEvents']) {
 
-            for (requirement of event['flagRequirements']) {
-                if (flags.has(requirement['name'])) {
-                    if (flags.get(requirement['name']) != requirement['value']) {
-                        allFlagsMatch = false;
-                        break;
-                    }
-                } else {
-                    if (requirement['value'] != false) {
-                        allFlagsMatch = false;
-                        break;
-                    }
+        let event = events.find(event => event['name'] === eventName);
+        if(event === undefined) {
+            let error = "Next event " + eventName + " in " + currEvent['name'] + " is undefined";
+            errors.push(error);
+            continue;
+        }
+
+        let allFlagsMatch = true;
+
+        for (requirement of event['flagRequirements']) {
+            if (flags.has(requirement['name'])) {
+                if (flags.get(requirement['name']) != requirement['value']) {
+                    allFlagsMatch = false;
+                    break;
+                }
+            } else {
+                if (requirement['value'] != false) {
+                    allFlagsMatch = false;
+                    break;
                 }
             }
+        }
 
-            if (allFlagsMatch) {
-                nextEvents.push(event);
-                explored.push(event['name']);
-            }
+        if (allFlagsMatch) {
+            nextEvents.push(event);
         }
     }
 
@@ -281,9 +302,19 @@ function getSceneId(scene) {
     return id;
 }
 
+function getEdgeId(sourceId, targetId) {
+    let id = 'edge_' + sourceId + "_" + targetId;
+    return id;
+}
+
 function isNodeInGraph(nodeId) {
     let node = graph.nodes.find(node => node.id === nodeId);
     return node !== undefined;
+}
+
+function isEdgeInGraph(edgeId) {
+    let edge = graph.edges.find(edge => edge.id === edgeId);
+    return edge !== undefined;
 }
 
 function createLabel(emotionalRequirements, priority) {
