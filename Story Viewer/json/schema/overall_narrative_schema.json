@@ -36,12 +36,6 @@
                         "events": [
                             {
                                 "file": "cutscene1A1A.json",
-                                "flagChanges": [
-                                    {
-                                        "name": "cutscene1ADone",
-                                        "value": true
-                                    }
-                                ],
                                 "name": "event1A1A",
                                 "description": "Small description",
                                 "priority": 1.0,
@@ -53,7 +47,6 @@
                                     }
                                 ],
                                 "type": "cutscene",
-                                "flagRequirements": [],
                                 "nextEvents": [
                                     "event1A2"
                                 ]
@@ -67,15 +60,8 @@
                                         "condition": ">="
                                     }
                                 ],
-                                "flagRequirements": [],
                                 "type": "cutscene",
                                 "file": "cutscene1A1B.json",
-                                "flagChanges": [
-                                    {
-                                        "name": "cutscene1ADone",
-                                        "value": true
-                                    }
-                                ],
                                 "name": "event1A1B",
                                 "description": "Small description",
                                 "nextEvents": [
@@ -87,20 +73,8 @@
                                 "nextEvents": [
                                     "event1A2"
                                 ],
-                                "flagRequirements": [
-                                    {
-                                        "name": "cutscene1ADone",
-                                        "value": true
-                                    }
-                                ],
                                 "type": "gameplay",
                                 "file": "gameplay1A2.json",
-                                "flagChanges": [
-                                    {
-                                        "name": "keyToDoorAcquired",
-                                        "value": true
-                                    }
-                                ],
                                 "name": "event1A2",
                                 "description": "Small description",
                                 "priority": 1.0
@@ -111,13 +85,11 @@
                         "priority": 1.0,
                         "transitions": [
                             {
-                                "flagRequirements": [
-                                    {
-                                        "name": "keyToDoorAcquired",
-                                        "value": true
-                                    }
+                                "unlockedOnEventsEnding": [
+                                    "sadSalon_1A", "sadSalon_1B"
                                 ],
-                                "toLocation": "kitchen"
+                                "toLocation": "hugeSalon",
+                                "name": "sadSalonToHugeSalon"
                             }
                         ],
                         "emotionalRequirements": [
@@ -271,23 +243,31 @@
                             "description": "Description of a possible transition from scene A to scene B",
                             "default": {},
                             "examples": [
-                                {
-                                    "flagRequirements": [
-                                        {
-                                            "name": "keyToDoorAcquired",
-                                            "value": true
-                                        }
-                                    ],
-                                    "toLocation": "kitchen"
-                                }
+                                    {
+                                        "unlockedOnEventsEnding": [
+                                            "sadSalon_1A", "sadSalon_1B"
+                                        ],
+                                        "toLocation": "hugeSalon",
+                                        "name": "sadSalonToHugeSalon"
+                                    }
                             ],
                             "required": [
                                 "toLocation",
-                                "flagRequirements"
+                                "name"
                             ],
                             "properties": {
+                                "name": {
+                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/name",
+                                    "type": "string",
+                                    "title": "Name",
+                                    "description": "The id/name of this transiction. Must be unique",
+                                    "default": "",
+                                    "examples": [
+                                        "sadSalonToHugeSalon"
+                                    ]
+                                },
                                 "toLocation": {
-                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/to",
+                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/toLocation",
                                     "type": "string",
                                     "title": "To Location",
                                     "description": "The id of the location to transition to",
@@ -296,50 +276,21 @@
                                         "scene2A"
                                     ]
                                 },
-                                "flagRequirements": {
-                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements",
+                                "unlockedOnEventsEnding": {
+                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/unlockedOnEventsEnding",
                                     "type": "array",
-                                    "title": "Flag requirements",
-                                    "description": "Which flags should be checked to know if the player can make the transition",
+                                    "title": "Unlocked On Events Ending",
+                                    "description": "Which events'endings trigger the unlocking of the transiction",
                                     "default": [],
                                     "items": {
-                                        "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items",
-                                        "type": "object",
-                                        "title": "Flag",
-                                        "description": "An example of a flag",
-                                        "default": {},
+                                        "$id": "#/properties/scenes/items/properties/transitions/items/properties/unlockedOnEventsEnding/items",
+                                        "type": "string",
+                                        "title": "Event ID",
+                                        "description": "The event ID that enables the transiction after the event ends",
+                                        "default": "",
                                         "examples": [
-                                            {
-                                                "name": "keyToDoorAcquired",
-                                                "value": true
-                                            }
+                                            "event1A_1A"
                                         ],
-                                        "required": [
-                                            "name",
-                                            "value"
-                                        ],
-                                        "properties": {
-                                            "name": {
-                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/name",
-                                                "type": "string",
-                                                "title": "Name",
-                                                "description": "The name/id of the flag. Must be unique",
-                                                "default": "",
-                                                "examples": [
-                                                    "keyToDoorAcquired"
-                                                ]
-                                            },
-                                            "value": {
-                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/value",
-                                                "type": "boolean",
-                                                "title": "Value",
-                                                "description": "The value to be compared to",
-                                                "default": false,
-                                                "examples": [
-                                                    true
-                                                ]
-                                            }
-                                        },
                                         "patternProperties": {},
                                         "dependencies": {}
                                     }
@@ -363,12 +314,6 @@
                             "default": {},
                             "examples": [
                                 {
-                                    "flagChanges": [
-                                        {
-                                            "name": "cutscene1ADone",
-                                            "value": true
-                                        }
-                                    ],
                                     "name": "event1A1A",
                                     "description": "Small description",
                                     "priority": 1.0,
@@ -382,7 +327,6 @@
                                     "nextEvents": [
                                         "event1A2"
                                     ],
-                                    "flagRequirements": [],
                                     "type": "cutscene",
                                     "file": "cutscene1A1A.json"
                                 },
@@ -394,15 +338,8 @@
                                             "parameter": "anger"
                                         }
                                     ],
-                                    "flagRequirements": [],
                                     "type": "cutscene",
                                     "file": "cutscene1A1B.json",
-                                    "flagChanges": [
-                                        {
-                                            "name": "cutscene1ADone",
-                                            "value": true
-                                        }
-                                    ],
                                     "name": "event1A1B",
                                     "description": "Small description",
                                     "priority": 2.0,
@@ -415,20 +352,8 @@
                                     "description": "Small description",
                                     "priority": 1.0,
                                     "emotionalRequirements": [],
-                                    "flagRequirements": [
-                                        {
-                                            "name": "cutscene1ADone",
-                                            "value": true
-                                        }
-                                    ],
                                     "type": "gameplay",
                                     "file": "gameplay1A2.json",
-                                    "flagChanges": [
-                                        {
-                                            "name": "keyToDoorAcquired",
-                                            "value": true
-                                        }
-                                    ],
                                     "nextEvents": [
                                         "event1A2"
                                     ]
@@ -441,8 +366,6 @@
                                 "file",
                                 "priority",
                                 "emotionalRequirements",
-                                "flagRequirements",
-                                "flagChanges",
                                 "nextEvents"
                             ],
                             "properties": {
@@ -555,100 +478,6 @@
                                                 "default": 0,
                                                 "examples": [
                                                     8
-                                                ]
-                                            }
-                                        },
-                                        "patternProperties": {},
-                                        "dependencies": {}
-                                    }
-                                },
-                                "flagRequirements": {
-                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flagRequirements",
-                                    "type": "array",
-                                    "title": "Flag requirements",
-                                    "description": "Which flags should be checked to know if the player can enter the event. Can be an empty array if there are no requirements for the player to see the event",
-                                    "default": [],
-                                    "items": {
-                                        "title": "Flag",
-                                        "description": "An example of a flag",
-                                        "default": {},
-                                        "examples": [
-                                            {
-                                                "name": "keyToDoorAcquired",
-                                                "value": true
-                                            }
-                                        ],
-                                        "required": [
-                                            "name",
-                                            "value"
-                                        ],
-                                        "properties": {
-                                            "name": {
-                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/name",
-                                                "type": "string",
-                                                "title": "Name",
-                                                "description": "The name/id of the flag. Must be unique",
-                                                "default": "",
-                                                "examples": [
-                                                    "keyToDoorAcquired"
-                                                ]
-                                            },
-                                            "value": {
-                                                "$id": "#/properties/scenes/items/properties/transitions/items/properties/flagRequirements/items/properties/value",
-                                                "type": "boolean",
-                                                "title": "Value",
-                                                "description": "The value to be compared to",
-                                                "default": false,
-                                                "examples": [
-                                                    true
-                                                ]
-                                            }
-                                        },
-                                        "patternProperties": {},
-                                        "dependencies": {}
-                                    }
-                                },
-                                "flagChanges": {
-                                    "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges",
-                                    "type": "array",
-                                    "title": "Flag changes",
-                                    "description": "Which flags will change and to what value at the end of this event",
-                                    "default": [],
-                                    "items": {
-                                        "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges/items",
-                                        "type": "object",
-                                        "title": "Flag",
-                                        "description": "An example of a flag",
-                                        "default": {},
-                                        "examples": [
-                                            {
-                                                "name": "cutscene1ADone",
-                                                "value": true
-                                            }
-                                        ],
-                                        "required": [
-                                            "name",
-                                            "value"
-                                        ],
-                                        "properties": {
-                                            "name": {
-                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges/items/properties/name",
-                                                "type": "string",
-                                                "title": "Name",
-                                                "description": "The name/id of the flag. Must be unique",
-                                                "default": "",
-                                                "examples": [
-                                                    "cutscene1ADone"
-                                                ]
-                                            },
-                                            "value": {
-                                                "$id": "#/properties/scenes/items/properties/events/items/properties/flagChanges/items/properties/value",
-                                                "type": "boolean",
-                                                "title": "Value",
-                                                "description": "The value to be compared to",
-                                                "default": false,
-                                                "examples": [
-                                                    true
                                                 ]
                                             }
                                         },

@@ -10,13 +10,11 @@
             "emotionalRequirements": [],
             "transitions": [
                 {
-                    "flagRequirements": [
-                        {
-                            "name": "talkedToGuestsDone",
-                            "value": true
-                        }
+                    "unlockedOnEventsEnding": [
+                        "happySalon_3A"
                     ],
-                    "toLocation": "hugeSalon"
+                    "toLocation": "hugeSalon",
+                    "name": "happySalonToHugeSalon"
                 }
             ],
             "events": [
@@ -27,13 +25,6 @@
                     "file": "happySalon_1A.json",
                     "priority": 2,
                     "emotionalRequirements": [],
-                    "flagRequirements": [],
-                    "flagChanges": [
-                        {
-                            "name": "cutscene1Done",
-                            "value": true
-                        }
-                    ],
                     "nextEvents": [
                         "happySalon_2A", "happySalon_3A" 
                     ]
@@ -49,13 +40,6 @@
                             "parameter": "anxiety",
                             "condition": ">",
                             "value": 8
-                        }
-                    ],
-                    "flagRequirements": [],
-                    "flagChanges": [
-                        {
-                            "name": "cutscene1Done",
-                            "value": true
                         }
                     ],
                     "nextEvents": [
@@ -75,18 +59,6 @@
                             "value": 8
                         }
                     ],
-                    "flagRequirements": [
-                        {
-                            "name": "cutscene1Done",
-                            "value": true
-                        }
-                    ],
-                    "flagChanges": [
-                        {
-                            "name": "talkedToGrandma",
-                            "value": true
-                        }
-                    ],
                     "nextEvents": [
                         "happySalon_3A" 
                     ]
@@ -98,18 +70,6 @@
                     "file": "happySalon_3A.json",
                     "priority": 2,
                     "emotionalRequirements": [],
-                    "flagRequirements": [
-                        {
-                            "name": "cutscene1Done",
-                            "value": true
-                        }
-                    ],
-                    "flagChanges": [
-                        {
-                            "name": "talkedToGuestsDone",
-                            "value": true
-                        }
-                    ],
                     "nextEvents": []
                 }
             ]
@@ -129,13 +89,11 @@
             ],
             "transitions": [
                 {
-                    "flagRequirements": [
-                        {
-                            "name": "talkedToGuestsDone",
-                            "value": true
-                        }
+                    "unlockedOnEventsEnding": [
+                        "sadSalon_1A", "sadSalon_1B"
                     ],
-                    "toLocation": "hugeSalon"
+                    "toLocation": "hugeSalon",
+                    "name": "sadSalonToHugeSalon"
                 }
             ],
             "events": [
@@ -146,13 +104,6 @@
                     "file": "sadSalon_1A.json",
                     "priority": 2,
                     "emotionalRequirements": [],
-                    "flagRequirements": [],
-                    "flagChanges": [
-                        {
-                            "name": "cutscene1Done",
-                            "value": true
-                        }
-                    ],
                     "nextEvents": []
                 },
                 {
@@ -168,13 +119,6 @@
                             "value": 8
                         }
                     ],
-                    "flagRequirements": [],
-                    "flagChanges": [
-                        {
-                            "name": "cutscene1Done",
-                            "value": true
-                        }
-                    ],
                     "nextEvents": []
                 }
             ]
@@ -188,8 +132,8 @@
             "emotionalRequirements": [],
             "transitions": [
                 {
-                    "flagRequirements": [],
-                    "toLocation": "insidePresent"
+                    "toLocation": "insidePresent",
+                    "name": "hugeSalonToInsidePresent"
                 }
             ],
             "events": [
@@ -200,8 +144,6 @@
                     "file": "hugeSalon_1.json",
                     "priority": 1,
                     "emotionalRequirements": [],
-                    "flagRequirements": [],
-                    "flagChanges": [],
                     "nextEvents": [
                         "hugeSalon_2"
                     ]
@@ -213,8 +155,6 @@
                     "file": "hugeSalon_2.json",
                     "priority": 1,
                     "emotionalRequirements": [],
-                    "flagRequirements": [],
-                    "flagChanges": [],
                     "nextEvents": [
                         "hugeSalon_3"
                     ]
@@ -226,8 +166,6 @@
                     "file": "hugeSalon_3.json",
                     "priority": 1,
                     "emotionalRequirements": [],
-                    "flagRequirements": [],
-                    "flagChanges": [],
                     "nextEvents": []
                 }
             ]
@@ -241,8 +179,8 @@
             "emotionalRequirements": [],
             "transitions": [
                 {
-                    "flagRequirements": [],
-                    "toLocation": "hugeSalon"
+                    "toLocation": "hugeSalon",
+                    "name": "insidePresentToHugeSalon"
                 }
             ],
             "events": [
@@ -253,8 +191,6 @@
                     "file": "inside_present_1.json",
                     "priority": 1,
                     "emotionalRequirements": [],
-                    "flagRequirements": [],
-                    "flagChanges": [],
                     "nextEvents": []
                 }
             ]
