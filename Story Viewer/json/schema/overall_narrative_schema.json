@@ -117,8 +117,7 @@
                                         "value": true
                                     }
                                 ],
-                                "toLocation": "kitchen",
-                                "name": "scene1AToScene2A"
+                                "toLocation": "kitchen"
                             }
                         ],
                         "emotionalRequirements": [
@@ -279,26 +278,14 @@
                                             "value": true
                                         }
                                     ],
-                                    "toLocation": "kitchen",
-                                    "name": "scene1AToScene2A"
+                                    "toLocation": "kitchen"
                                 }
                             ],
                             "required": [
-                                "name",
                                 "toLocation",
                                 "flagRequirements"
                             ],
                             "properties": {
-                                "name": {
-                                    "$id": "#/properties/scenes/items/properties/transitions/items/properties/name",
-                                    "type": "string",
-                                    "title": "Name",
-                                    "description": "The name/id of the transition. Must be unique",
-                                    "default": "",
-                                    "examples": [
-                                        "scene1AToScene2A"
-                                    ]
-                                },
                                 "toLocation": {
                                     "$id": "#/properties/scenes/items/properties/transitions/items/properties/to",
                                     "type": "string",

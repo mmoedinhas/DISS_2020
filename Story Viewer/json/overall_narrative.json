@@ -8,7 +8,17 @@
             "map": "dance_hall.json",
             "priority": 2,
             "emotionalRequirements": [],
-            "transitions": [],
+            "transitions": [
+                {
+                    "flagRequirements": [
+                        {
+                            "name": "talkedToGuestsDone",
+                            "value": true
+                        }
+                    ],
+                    "toLocation": "hugeSalon"
+                }
+            ],
             "events": [
                 {
                     "name": "happySalon_1A",
@@ -117,7 +127,17 @@
                     "value": 10
                 }
             ],
-            "transitions": [],
+            "transitions": [
+                {
+                    "flagRequirements": [
+                        {
+                            "name": "talkedToGuestsDone",
+                            "value": true
+                        }
+                    ],
+                    "toLocation": "hugeSalon"
+                }
+            ],
             "events": [
                 {
                     "name": "sadSalon_1A",
@@ -155,6 +175,86 @@
                             "value": true
                         }
                     ],
+                    "nextEvents": []
+                }
+            ]
+        },
+        {
+            "locationId": "hugeSalon",
+            "name": "hugeSalon",
+            "description": "Clara is shrunken so everything looks huge",
+            "map": "huge_salon.json",
+            "priority": 1,
+            "emotionalRequirements": [],
+            "transitions": [
+                {
+                    "flagRequirements": [],
+                    "toLocation": "insidePresent"
+                }
+            ],
+            "events": [
+                {
+                    "name": "hugeSalon_1",
+                    "description": "Clara is shrunken and very confused. The nutcracker also turned human.",
+                    "type": "cutscene",
+                    "file": "hugeSalon_1.json",
+                    "priority": 1,
+                    "emotionalRequirements": [],
+                    "flagRequirements": [],
+                    "flagChanges": [],
+                    "nextEvents": [
+                        "hugeSalon_2"
+                    ]
+                },
+                {
+                    "name": "hugeSalon_2",
+                    "description": "Gameplay event: the nutracker must defeat the rats and cover the hole from which they are coming from",
+                    "type": "gameplay",
+                    "file": "hugeSalon_2.json",
+                    "priority": 1,
+                    "emotionalRequirements": [],
+                    "flagRequirements": [],
+                    "flagChanges": [],
+                    "nextEvents": [
+                        "hugeSalon_3"
+                    ]
+                },
+                {
+                    "name": "hugeSalon_3",
+                    "description": "Gameplay event: defeat the king of the rats",
+                    "type": "gameplay",
+                    "file": "hugeSalon_3.json",
+                    "priority": 1,
+                    "emotionalRequirements": [],
+                    "flagRequirements": [],
+                    "flagChanges": [],
+                    "nextEvents": []
+                }
+            ]
+        },
+        {
+            "locationId": "insidePresent",
+            "name": "insidePresent",
+            "description": "Inside a present box",
+            "map": "inside_present.json",
+            "priority": 1,
+            "emotionalRequirements": [],
+            "transitions": [
+                {
+                    "flagRequirements": [],
+                    "toLocation": "hugeSalon"
+                }
+            ],
+            "events": [
+                {
+                    "name": "insidePresent_1",
+                    "description": "Clara and the nutcracker look for a item in the present box",
+                    "type": "gameplay",
+                    "file": "inside_present_1.json",
+                    "priority": 1,
+                    "emotionalRequirements": [],
+                    "flagRequirements": [],
+                    "flagChanges": [],
                     "nextEvents": []
                 }
             ]
