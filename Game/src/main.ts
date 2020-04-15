@@ -37,16 +37,20 @@ export class BootScene extends Phaser.Scene {
 
         let overallNarrativeObj = this.cache.json.get('overallNarrativeObj');
 
-        let request:XMLHttpRequest = new XMLHttpRequest();
+        let request: XMLHttpRequest = new XMLHttpRequest();
         let url: string = "http://localhost:3000/json/";
         request.open("POST", url);
         request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        request.responseType = 'text';
+        request.responseType = 'json';
         request.send(JSON.stringify(overallNarrativeObj));
 
-        request.onreadystatechange = function() { 
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                console.log(request.response);
+        request.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE) {
+                if (this.status === 200) {
+                    console.log(request.response);
+                } else if (this.status === 500) {
+                    console.log(request.response);
+                }
             }
         }
     }

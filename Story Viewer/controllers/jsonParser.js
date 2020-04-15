@@ -50,7 +50,30 @@ router.get('/:filename', function (req, res) {
 
 router.post('/', function (req, res) {
     console.log(req.body);
-    res.send('POST request received. Thanks!');
+    let data = req.body;
+    
+    fs.readFile(path.join(__dirname + '/../json/schema/overall_narrative_schema.json'), 'utf8', (err2, schemaString) => {
+        if (err2) {
+            let error = {
+                error: "Schema file not found."
+            };
+            res.status(500).send(error);
+            return;
+        }
+
+        let schema = JSON.parse(schemaString);
+        let result = validateJson(data, schema);
+
+        if(result === "valid") {
+            let graph = createGraph(data);
+            res.json(graph);
+        } else {
+            let error = {
+                error: result
+            };
+            res.status(500).json(error);
+        }
+    });
 })
 
 
