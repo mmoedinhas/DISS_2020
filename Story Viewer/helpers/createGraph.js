@@ -90,7 +90,8 @@ function parseScene(scene, parentId) {
         x: x,
         y: sceneY,
         size: 1,
-        color: palette['blue']
+        color: palette['blue'],
+        obj: scene
     });
 
     sceneY += 0.1;
@@ -151,7 +152,8 @@ function drawNodesAfterEvent(scene, event, coords) {
                 x: coords.x,
                 y: y,
                 size: 1,
-                color: eventProperties.color
+                color: eventProperties.color,
+                obj: currEvent
             });
             y += 0.1;
 
