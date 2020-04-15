@@ -17,6 +17,10 @@
                     "name": "happySalonToHugeSalon"
                 }
             ],
+            "firstEvents": [
+                "happySalon_1A",
+                "happySalon_1B"
+            ],
             "events": [
                 {
                     "name": "happySalon_1A",
@@ -26,7 +30,8 @@
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "happySalon_2A", "happySalon_3A" 
+                        "happySalon_2A",
+                        "happySalon_3A"
                     ]
                 },
                 {
@@ -43,7 +48,8 @@
                         }
                     ],
                     "nextEvents": [
-                        "happySalon_2A", "happySalon_3A" 
+                        "happySalon_2A",
+                        "happySalon_3A"
                     ]
                 },
                 {
@@ -60,7 +66,7 @@
                         }
                     ],
                     "nextEvents": [
-                        "happySalon_3A" 
+                        "happySalon_3A"
                     ]
                 },
                 {
@@ -90,11 +96,16 @@
             "transitions": [
                 {
                     "unlockedOnEventsEnding": [
-                        "sadSalon_1A", "sadSalon_1B"
+                        "sadSalon_1A",
+                        "sadSalon_1B"
                     ],
                     "toLocation": "hugeSalon",
                     "name": "sadSalonToHugeSalon"
                 }
+            ],
+            "firstEvents": [
+                "sadSalon_1A",
+                "sadSalon_1B"
             ],
             "events": [
                 {
@@ -135,6 +146,9 @@
                     "toLocation": "insidePresent",
                     "name": "hugeSalonToInsidePresent"
                 }
+            ],
+            "firstEvents": [
+                "hugeSalon_1"
             ],
             "events": [
                 {
@@ -182,6 +196,9 @@
                     "toLocation": "hugeSalon",
                     "name": "insidePresentToHugeSalon"
                 }
+            ],
+            "firstEvents": [
+                "insidePresent_1"
             ],
             "events": [
                 {

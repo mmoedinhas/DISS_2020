@@ -33,74 +33,83 @@
                 "default": {},
                 "examples": [
                     {
-                        "events": [
-                            {
-                                "file": "cutscene1A1A.json",
-                                "name": "event1A1A",
-                                "description": "Small description",
-                                "priority": 1.0,
-                                "emotionalRequirements": [
-                                    {
-                                        "parameter": "anger",
-                                        "value": 8.0,
-                                        "condition": ">="
-                                    }
-                                ],
-                                "type": "cutscene",
-                                "nextEvents": [
-                                    "event1A2"
-                                ]
-                            },
-                            {
-                                "priority": 2.0,
-                                "emotionalRequirements": [
-                                    {
-                                        "parameter": "anger",
-                                        "value": 8.0,
-                                        "condition": ">="
-                                    }
-                                ],
-                                "type": "cutscene",
-                                "file": "cutscene1A1B.json",
-                                "name": "event1A1B",
-                                "description": "Small description",
-                                "nextEvents": [
-                                    "event1A2"
-                                ]
-                            },
-                            {
-                                "emotionalRequirements": [],
-                                "nextEvents": [
-                                    "event1A2"
-                                ],
-                                "type": "gameplay",
-                                "file": "gameplay1A2.json",
-                                "name": "event1A2",
-                                "description": "Small description",
-                                "priority": 1.0
-                            }
-                        ],
-                        "name": "scene1A",
-                        "description": "Small description",
-                        "priority": 1.0,
+                        "locationId": "salon",
+                        "name": "happySalon",
+                        "description": "The dance salon looks well lit and nicely decorated with warm colors.",
+                        "map": "dance_hall.json",
+                        "priority": 2,
+                        "emotionalRequirements": [],
                         "transitions": [
                             {
                                 "unlockedOnEventsEnding": [
-                                    "sadSalon_1A", "sadSalon_1B"
+                                    "happySalon_3A"
                                 ],
                                 "toLocation": "hugeSalon",
-                                "name": "sadSalonToHugeSalon"
+                                "name": "happySalonToHugeSalon"
                             }
                         ],
-                        "emotionalRequirements": [
+                        "firstEvents": [
+                            "happySalon_1A",
+                            "happySalon_1B"
+                        ],
+                        "events": [
                             {
-                                "value": 8.0,
-                                "condition": ">=",
-                                "parameter": "anger"
+                                "name": "happySalon_1A",
+                                "description": "Clara is excited and happy for the Christmas party.",
+                                "type": "cutscene",
+                                "file": "happySalon_1A.json",
+                                "priority": 2,
+                                "emotionalRequirements": [],
+                                "nextEvents": [
+                                    "happySalon_2A",
+                                    "happySalon_3A"
+                                ]
+                            },
+                            {
+                                "name": "happySalon_1B",
+                                "description": "Clara is happy for the party but is somewhat nervous.",
+                                "type": "cutscene",
+                                "file": "happySalon_1B.json",
+                                "priority": 1,
+                                "emotionalRequirements": [
+                                    {
+                                        "parameter": "anxiety",
+                                        "condition": ">",
+                                        "value": 8
+                                    }
+                                ],
+                                "nextEvents": [
+                                    "happySalon_2A",
+                                    "happySalon_3A"
+                                ]
+                            },
+                            {
+                                "name": "happySalon_2A",
+                                "description": "Since she is nervous, she only wants to talk to her Grandma first.",
+                                "type": "gameplay",
+                                "file": "happySalon_2A.json",
+                                "priority": 1,
+                                "emotionalRequirements": [
+                                    {
+                                        "parameter": "anxiety",
+                                        "condition": ">",
+                                        "value": 8
+                                    }
+                                ],
+                                "nextEvents": [
+                                    "happySalon_3A"
+                                ]
+                            },
+                            {
+                                "name": "happySalon_3A",
+                                "description": "Time to talk to other guests and check the cake.",
+                                "type": "gameplay",
+                                "file": "happySalon_3A.json",
+                                "priority": 2,
+                                "emotionalRequirements": [],
+                                "nextEvents": []
                             }
-                        ],
-                        "locationId": "salon",
-                        "map": "dance_hallA.json"
+                        ]
                     }
                 ],
                 "required": [
@@ -111,6 +120,7 @@
                     "priority",
                     "emotionalRequirements",
                     "transitions",
+                    "firstEvents",
                     "events"
                 ],
                 "properties": {
@@ -243,13 +253,14 @@
                             "description": "Description of a possible transition from scene A to scene B",
                             "default": {},
                             "examples": [
-                                    {
-                                        "unlockedOnEventsEnding": [
-                                            "sadSalon_1A", "sadSalon_1B"
-                                        ],
-                                        "toLocation": "hugeSalon",
-                                        "name": "sadSalonToHugeSalon"
-                                    }
+                                {
+                                    "unlockedOnEventsEnding": [
+                                        "sadSalon_1A",
+                                        "sadSalon_1B"
+                                    ],
+                                    "toLocation": "hugeSalon",
+                                    "name": "sadSalonToHugeSalon"
+                                }
                             ],
                             "required": [
                                 "toLocation",
@@ -298,6 +309,29 @@
                             },
                             "patternProperties": {},
                             "dependencies": {}
+                        }
+                    },
+                    "firstEvents": {
+                        "$id": "#/properties/scenes/items/properties/firstEvents",
+                        "type": "array",
+                        "title": "First Events",
+                        "description": "A list of event ids (of this current scene) that can be the first event of the scene",
+                        "default": [],
+                        "examples": [
+                            [
+                                "event1A2", "event1B2"
+                            ]
+                        ],
+                        "additionalItems": true,
+                        "items": {
+                            "$id": "#/properties/scenes/items/properties/firstEvents/items",
+                            "type": "string",
+                            "title": "Event id",
+                            "description": "The id of the event. Must belong to the same scene.",
+                            "default": "",
+                            "examples": [
+                                "event1A2"
+                            ]
                         }
                     },
                     "events": {
