@@ -38,26 +38,25 @@ function createGraph(jsonObj) {
 
     y += 0.1;
 
-    const firstScenes = getFirstScenes(jsonObj['scenes'], jsonObj['firstLocation']);
+    const firstScenes = jsonObj['scenes'].filter(scene => jsonObj['firstLocation'] === scene['locationId']);
+
+    if(firstScenes.length == 0) {
+        let error = "No scenes have a location id corresponding to the first location";
+        errors.push(error);
+    }
 
     for (scene of firstScenes) {
         parseScene(scene, 'start');
     }
 
+    const otherScenes = jsonObj['scenes'].filter(scene => !firstScenes.includes(scene));
+    for (scene of otherScenes) {
+        parseScene(scene);
+    }
+
     return {graph: graph, errors: errors};
 }
 
-function getFirstScenes(scenes, firstLocationId) {
-    const firstScenes = [];
-
-    for (scene of scenes) {
-        if (scene['locationId'] === firstLocationId) {
-            firstScenes.push(scene);
-        }
-    }
-
-    return firstScenes;
-}
 
 function getFirstEvents(scene) {
     let events = scene['events'];
@@ -96,15 +95,16 @@ function parseScene(scene, parentId) {
 
     sceneY += 0.1;
 
-    let label = createLabel(scene['emotionalRequirements'], scene['priority']);
-
-    graph.edges.push({
-        id: getEdgeId(parentId, id),
-        label: label,
-        source: parentId,
-        target: id,
-        size: 1
-    })
+    if(parentId !== undefined) {
+        let label = createLabel(scene['emotionalRequirements'], scene['priority']);
+        graph.edges.push({
+            id: getEdgeId(parentId, id),
+            label: label,
+            source: parentId,
+            target: id,
+            size: 1
+        })
+    }
 
     let firstEvents = getFirstEvents(scene);
 
