@@ -12,6 +12,9 @@ export class BootScene extends Phaser.Scene {
     }
 
     public preload() {
+
+        this.load.json('overallNarrativeObj', 'assets/story/overall_narrative.json');
+
         // map tiles
         this.load.image('castle-tiles', 'assets/tileset/castle.png');
         this.load.image('stairs-tiles', 'assets/tileset/stairs.png');
@@ -24,7 +27,28 @@ export class BootScene extends Phaser.Scene {
     }
 
     public create() {
+
+        this.getStoryGraph();
         this.scene.start('DanceHallScene');
+    }
+
+    private getStoryGraph() {
+        //this.registry.set('story-graph',)
+
+        let overallNarrativeObj = this.cache.json.get('overallNarrativeObj');
+
+        let request:XMLHttpRequest = new XMLHttpRequest();
+        let url: string = "http://localhost:3000/json/";
+        request.open("POST", url);
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = 'text';
+        request.send(JSON.stringify(overallNarrativeObj));
+
+        request.onreadystatechange = function() { 
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                console.log(request.response);
+            }
+        }
     }
 }
 

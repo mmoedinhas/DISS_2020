@@ -49,7 +49,8 @@ router.get('/:filename', function (req, res) {
 })
 
 router.post('/', function (req, res) {
-    //res.send('POST request to the homepage')
+    console.log(req.body);
+    res.send('POST request received. Thanks!');
 })
 
 
