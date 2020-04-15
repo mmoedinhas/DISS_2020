@@ -59,16 +59,18 @@ function getFirstScenes(scenes, firstLocationId) {
     return firstScenes;
 }
 
-function isFirstEvent(event) {
-    return event['flagRequirements'].length == 0;
-}
-
 function getFirstEvents(scene) {
     let events = scene['events'];
+    let firstEventsNames = scene['firstEvents'];
     let firstEvents = [];
 
-    for (event of events) {
-        if (isFirstEvent(event)) {
+    for (eventName of firstEventsNames) {
+        let event = events.find(event => event['name'] === eventName);
+
+        if(event === undefined) {
+            let error = "First event " + eventName + " in scene " + scene['name'] + " is undefined";
+            errors.push(error);
+        } else {
             firstEvents.push(event);
         }
     }
@@ -127,7 +129,6 @@ function drawNodesAfterEvent(scene, event, coords) {
 
     let y = coords.y;
     let events = scene['events'];
-    let flags = new Map();
 
     let stack = new Stack();
     let visited = [];
@@ -153,12 +154,11 @@ function drawNodesAfterEvent(scene, event, coords) {
                 color: eventProperties.color
             });
             y += 0.1;
-            updateFlags(flags, currEvent);
 
             visited.push(currEvent['name']);
         }
 
-        let nextEvents = getNextEvents(currEvent, events, flags);
+        let nextEvents = getNextEvents(currEvent, events);
         for (nextEvent of nextEvents) {
             if(!visited.includes(nextEvent['name'])) {
                 stack.push(nextEvent);
@@ -172,7 +172,6 @@ function drawNodesAfterEvent(scene, event, coords) {
 function drawEdgesBetweenEvents(scene, event) {
 
     let events = scene['events'];
-    let flags = new Map();
 
     let stack = new Stack();
     let visited = [];
@@ -186,7 +185,7 @@ function drawEdgesBetweenEvents(scene, event) {
 
         let currEventProperties = getEventNodeProperties(currEvent);
 
-        if (isFirstEvent(currEvent)) {
+        if (isFirstEvent(currEvent, scene)) {
             let label = createLabel(currEvent['emotionalRequirements'], currEvent['priority']);
 
             graph.edges.push({
@@ -198,9 +197,7 @@ function drawEdgesBetweenEvents(scene, event) {
             })
         }
 
-        updateFlags(flags, currEvent);
-
-        let nextEvents = getNextEvents(currEvent, events, flags);
+        let nextEvents = getNextEvents(currEvent, events);
         console.log("curr: " + currEvent['name']);
 
         for (nextEvent of nextEvents) {
@@ -229,15 +226,7 @@ function drawEdgesBetweenEvents(scene, event) {
     console.log("finished this event");
 }
 
-function updateFlags(flags, event) {
-    let flagChanges = event['flagChanges'];
-
-    for (flag of flagChanges) {
-        flags.set(flag['name'], flag['value']);
-    }
-}
-
-function getNextEvents(currEvent, events, flags) {
+function getNextEvents(currEvent, events) {
 
     let nextEvents = [];
 
@@ -247,26 +236,7 @@ function getNextEvents(currEvent, events, flags) {
         if(event === undefined) {
             let error = "Next event " + eventName + " in " + currEvent['name'] + " is undefined";
             errors.push(error);
-            continue;
-        }
-
-        let allFlagsMatch = true;
-
-        for (requirement of event['flagRequirements']) {
-            if (flags.has(requirement['name'])) {
-                if (flags.get(requirement['name']) != requirement['value']) {
-                    allFlagsMatch = false;
-                    break;
-                }
-            } else {
-                if (requirement['value'] != false) {
-                    allFlagsMatch = false;
-                    break;
-                }
-            }
-        }
-
-        if (allFlagsMatch) {
+        } else {
             nextEvents.push(event);
         }
     }
@@ -295,6 +265,10 @@ function getEventNodeProperties(event) {
     properties.id += event['name'];
 
     return properties;
+}
+
+function isFirstEvent(event, scene) {
+    return scene['firstEvents'].includes(event['name']);
 }
 
 function getSceneId(scene) {
