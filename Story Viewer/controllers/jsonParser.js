@@ -57,7 +57,7 @@ router.post('/', function (req, res) {
             let error = {
                 error: "Schema file not found."
             };
-            res.status(500).send(error);
+            res.send(error);
             return;
         }
 
@@ -71,7 +71,7 @@ router.post('/', function (req, res) {
             let error = {
                 error: result
             };
-            res.status(500).json(error);
+            res.json(error);
         }
     });
 })
