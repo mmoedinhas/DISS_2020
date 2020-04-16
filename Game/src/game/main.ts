@@ -26,7 +26,8 @@ export class BootScene extends Phaser.Scene {
 
     public preload() {
 
-        this.load.json('overallNarrativeObj', 'assets/story/overall_narrative.json');
+        // TODO gather all files to load them here
+        this.load.json('overall_narrative', 'assets/story/overall_narrative.json');
 
         // // map tiles
         // this.load.image('castle-tiles', 'assets/tileset/castle.png');
@@ -58,7 +59,7 @@ export class BootScene extends Phaser.Scene {
     }
 
     private getStoryGraph(): Promise<Object> {
-        let overallNarrativeObj = this.cache.json.get('overallNarrativeObj');
+        let overallNarrativeObj = this.cache.json.get('overall_narrative');
 
         let request: XMLHttpRequest = new XMLHttpRequest();
 
@@ -79,6 +80,10 @@ export class BootScene extends Phaser.Scene {
                 }
             }
         })
+    }
+
+    private loadFirstSceneAssets() {
+
     }
 }
 

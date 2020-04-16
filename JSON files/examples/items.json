@@ -3,11 +3,7 @@
         {
             "itemId": "cake",
             "name": "Piece of Cake",
-            "spritesheet": "items.png",
-            "resolution": { 
-                "frameWidth": 32, 
-                "frameHeight": 32 
-            },
+            "tileset": "items.png",
             "frame": 1
         }
     ]

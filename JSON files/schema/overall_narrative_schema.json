@@ -36,7 +36,7 @@
                         "locationId": "salon",
                         "name": "happySalon",
                         "description": "The dance salon looks well lit and nicely decorated with warm colors.",
-                        "map": "dance_hall.json",
+                        "map": "dance_hall",
                         "priority": 2,
                         "emotionalRequirements": [],
                         "transitions": [
@@ -57,7 +57,6 @@
                                 "name": "happySalon_1A",
                                 "description": "Clara is excited and happy for the Christmas party.",
                                 "type": "cutscene",
-                                "file": "happySalon_1A.json",
                                 "priority": 2,
                                 "emotionalRequirements": [],
                                 "nextEvents": [
@@ -69,7 +68,6 @@
                                 "name": "happySalon_1B",
                                 "description": "Clara is happy for the party but is somewhat nervous.",
                                 "type": "cutscene",
-                                "file": "happySalon_1B.json",
                                 "priority": 1,
                                 "emotionalRequirements": [
                                     {
@@ -87,7 +85,6 @@
                                 "name": "happySalon_2A",
                                 "description": "Since she is nervous, she only wants to talk to her Grandma first.",
                                 "type": "gameplay",
-                                "file": "happySalon_2A.json",
                                 "priority": 1,
                                 "emotionalRequirements": [
                                     {
@@ -104,7 +101,6 @@
                                 "name": "happySalon_3A",
                                 "description": "Time to talk to other guests and check the cake.",
                                 "type": "gameplay",
-                                "file": "happySalon_3A.json",
                                 "priority": 2,
                                 "emotionalRequirements": [],
                                 "nextEvents": []
@@ -158,10 +154,10 @@
                         "$id": "#/properties/scenes/items/properties/map",
                         "type": "string",
                         "title": "Map",
-                        "description": "The path to the file containing the information about the map of this scene",
+                        "description": "The key to the map of this scene",
                         "default": "",
                         "examples": [
-                            "dance_hallA.json"
+                            "dance_hallA"
                         ]
                     },
                     "priority": {
@@ -361,8 +357,7 @@
                                     "nextEvents": [
                                         "event1A2"
                                     ],
-                                    "type": "cutscene",
-                                    "file": "cutscene1A1A.json"
+                                    "type": "cutscene"
                                 },
                                 {
                                     "emotionalRequirements": [
@@ -373,7 +368,6 @@
                                         }
                                     ],
                                     "type": "cutscene",
-                                    "file": "cutscene1A1B.json",
                                     "name": "event1A1B",
                                     "description": "Small description",
                                     "priority": 2.0,
@@ -387,7 +381,6 @@
                                     "priority": 1.0,
                                     "emotionalRequirements": [],
                                     "type": "gameplay",
-                                    "file": "gameplay1A2.json",
                                     "nextEvents": [
                                         "event1A2"
                                     ]
@@ -397,7 +390,6 @@
                                 "name",
                                 "description",
                                 "type",
-                                "file",
                                 "priority",
                                 "emotionalRequirements",
                                 "nextEvents"
@@ -407,7 +399,7 @@
                                     "$id": "#/properties/scenes/items/properties/events/items/properties/name",
                                     "type": "string",
                                     "title": "Name",
-                                    "description": "The name/id of the event. Must be unique",
+                                    "description": "The name/id of the event. Must be unique. Must match the name (minus the extension) of the file containing the event.",
                                     "default": "",
                                     "examples": [
                                         "event1A1A"
@@ -431,16 +423,6 @@
                                     "default": "",
                                     "examples": [
                                         "cutscene"
-                                    ]
-                                },
-                                "file": {
-                                    "$id": "#/properties/scenes/items/properties/events/items/properties/file",
-                                    "type": "string",
-                                    "title": "File",
-                                    "description": "The path to the file containing the details of the event",
-                                    "default": "",
-                                    "examples": [
-                                        "cutscene1A1A.json"
                                     ]
                                 },
                                 "priority": {

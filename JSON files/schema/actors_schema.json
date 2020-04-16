@@ -69,19 +69,14 @@
                                 ]
                             }
                         ],
-                        "spritesheet": "girls.png",
-                        "resolution": {
-                            "frameHeight": 54.0,
-                            "frameWidth": 39.0
-                        },
+                        "tileset": "girls.png",
                         "name": "Clara"
                     }
                 ],
                 "required": [
                     "id",
                     "name",
-                    "spritesheet",
-                    "resolution",
+                    "tileset",
                     "animations"
                 ],
                 "properties": {
@@ -105,54 +100,15 @@
                             "Clara"
                         ]
                     },
-                    "spritesheet": {
-                        "$id": "#/properties/actors/items/properties/spritesheet",
+                    "tileset": {
+                        "$id": "#/properties/actors/items/properties/tileset",
                         "type": "string",
-                        "title": "Spritesheet",
-                        "description": "The spritesheet containing the sprites for this actor",
+                        "title": "Tileset",
+                        "description": "The name/id of the tileset containing the sprites for this actor",
                         "default": "",
                         "examples": [
-                            "girls.png"
+                            "girls"
                         ]
-                    },
-                    "resolution": {
-                        "$id": "#/properties/actors/items/properties/resolution",
-                        "type": "object",
-                        "title": "Resolution",
-                        "description": " The resolution of the sprites in the spritesheet",
-                        "default": {},
-                        "examples": [
-                            {
-                                "frameHeight": 54.0,
-                                "frameWidth": 39.0
-                            }
-                        ],
-                        "required": [
-                            "frameWidth",
-                            "frameHeight"
-                        ],
-                        "properties": {
-                            "frameWidth": {
-                                "$id": "#/properties/actors/items/properties/resolution/properties/frameWidth",
-                                "type": "integer",
-                                "title": "Frame Width",
-                                "description": "The width of each sprite",
-                                "default": 0,
-                                "examples": [
-                                    39
-                                ]
-                            },
-                            "frameHeight": {
-                                "$id": "#/properties/actors/items/properties/resolution/properties/frameHeight",
-                                "type": "integer",
-                                "title": "Frame Height",
-                                "description": "The height of each sprite",
-                                "default": 0,
-                                "examples": [
-                                    54
-                                ]
-                            }
-                        }
                     },
                     "animations": {
                         "$id": "#/properties/actors/items/properties/animations",
@@ -233,13 +189,13 @@
                                     "$id": "#/properties/actors/items/properties/animations/items/properties/frames",
                                     "type": "array",
                                     "title": "Frames",
-                                    "description": "The frames in the spritesheet required for the animation",
+                                    "description": "The frames in the tileset required for the animation",
                                     "default": [],
                                     "items": {
                                         "$id": "#/properties/actors/items/properties/animations/items/properties/frames/items",
                                         "type": "integer",
                                         "title": "Frame",
-                                        "description": "The index corresponding to the desired frame in the spritesheet",
+                                        "description": "The index corresponding to the desired frame in the tileset",
                                         "default": 0,
                                         "examples": [
                                             12,

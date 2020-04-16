@@ -1,3 +1,15 @@
+export interface INarrativeFiles {
+    overall: string,
+    events: string[],
+    others: string[]
+}
+
+export interface ITileset {
+    tileset: string, 
+    frameWidth: number,
+    frameHeight: number 
+}
+
 export interface IEmotionalRequirement {
     parameter: string,
     condition: string,

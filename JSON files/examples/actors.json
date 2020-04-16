@@ -3,11 +3,7 @@
         {
             "id": "Clara",
             "name": "Clara",
-            "spritesheet": "girls.png",
-            "resolution": { 
-                "frameWidth": 39, 
-                "frameHeight": 54 
-            },
+            "tileset": "girls.png",
             "animations": [
                 {
                     "key": "left",
@@ -38,11 +34,7 @@
         {
             "id": "Dancer1",
             "name": "Dancer",
-            "spritesheet": "girls.png",
-            "resolution": { 
-                "frameWidth": 39, 
-                "frameHeight": 54 
-            },
+            "tileset": "girls.png",
             "animations": [
                 {
                     "key": "left",
@@ -73,11 +65,7 @@
         {
             "id": "Dancer2",
             "name": "Dancer",
-            "spritesheet": "girls.png",
-            "resolution": { 
-                "frameWidth": 39, 
-                "frameHeight": 54 
-            },
+            "tileset": "girls.png",
             "animations": [
                 {
                     "key": "left",
@@ -108,11 +96,7 @@
         {
             "id": "Grandma",
             "name": "Grandma",
-            "spritesheet": "girls.png",
-            "resolution": { 
-                "frameWidth": 39, 
-                "frameHeight": 54 
-            },
+            "tileset": "girls.png",
             "animations": [
                 {
                     "key": "left",

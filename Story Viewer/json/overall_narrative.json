@@ -26,7 +26,6 @@
                     "name": "happySalon_1A",
                     "description": "Clara is excited and happy for the Christmas party.",
                     "type": "cutscene",
-                    "file": "happySalon_1A.json",
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": [
@@ -38,7 +37,6 @@
                     "name": "happySalon_1B",
                     "description": "Clara is happy for the party but is somewhat nervous.",
                     "type": "cutscene",
-                    "file": "happySalon_1B.json",
                     "priority": 1,
                     "emotionalRequirements": [
                         {
@@ -56,7 +54,6 @@
                     "name": "happySalon_2A",
                     "description": "Since she is nervous, she only wants to talk to her Grandma first.",
                     "type": "gameplay",
-                    "file": "happySalon_2A.json",
                     "priority": 1,
                     "emotionalRequirements": [
                         {
@@ -73,7 +70,6 @@
                     "name": "happySalon_3A",
                     "description": "Time to talk to other guests and check the cake.",
                     "type": "gameplay",
-                    "file": "happySalon_3A.json",
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": []
@@ -112,7 +108,6 @@
                     "name": "sadSalon_1A",
                     "description": "Clara is sad and doesn't feel like going to the party.",
                     "type": "cutscene",
-                    "file": "sadSalon_1A.json",
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": []
@@ -121,7 +116,6 @@
                     "name": "sadSalon_1B",
                     "description": "Clara is sad and the mere thought of talking to the guests is making her very nervous",
                     "type": "cutscene",
-                    "file": "sadSalon_1B.json",
                     "priority": 1,
                     "emotionalRequirements": [
                         {
@@ -155,7 +149,6 @@
                     "name": "hugeSalon_1",
                     "description": "Clara is shrunken and very confused. The nutcracker also turned human.",
                     "type": "cutscene",
-                    "file": "hugeSalon_1.json",
                     "priority": 1,
                     "emotionalRequirements": [],
                     "nextEvents": [
@@ -166,7 +159,6 @@
                     "name": "hugeSalon_2",
                     "description": "Gameplay event: the nutracker must defeat the rats and cover the hole from which they are coming from",
                     "type": "gameplay",
-                    "file": "hugeSalon_2.json",
                     "priority": 1,
                     "emotionalRequirements": [],
                     "nextEvents": [
@@ -177,7 +169,6 @@
                     "name": "hugeSalon_3",
                     "description": "Gameplay event: defeat the king of the rats",
                     "type": "gameplay",
-                    "file": "hugeSalon_3.json",
                     "priority": 1,
                     "emotionalRequirements": [],
                     "nextEvents": []
@@ -205,7 +196,6 @@
                     "name": "insidePresent_1",
                     "description": "Clara and the nutcracker look for a item in the present box",
                     "type": "gameplay",
-                    "file": "inside_present_1.json",
                     "priority": 1,
                     "emotionalRequirements": [],
                     "nextEvents": []
