@@ -1,4 +1,4 @@
-import { IPlayerType, IScene, IEvent, IStory } from './interfaces';
+import { IPlayerType, IScene, IEvent, IStory, IFiles } from './interfaces';
 
 export class StoryManager {
 
@@ -31,4 +31,8 @@ export class StoryManager {
     public getCurrEvent(): IEvent {
         return this.getEventAt(this.currSceneIndex, this.currEventIndex);
     }
+
+    // public getAllFiles(): IFiles {
+    //     //TODO get all files needed for narrative here
+    // }
 }

@@ -1,9 +1,3 @@
-export interface INarrativeFiles {
-    overall: string,
-    events: string[],
-    others: string[]
-}
-
 export interface ITileset {
     tileset: string, 
     frameWidth: number,
@@ -50,4 +44,11 @@ export interface IPlayerType {
     desire: number, 
     relaxation: number,
     happiness: number
+}
+
+export interface IFiles {
+    maps: string,
+    events: string,
+    tilemaps: string,
+    tilesets: ITileset
 }

@@ -1,7 +1,8 @@
 import * as Phaser from 'phaser';
 import { DanceHallScene } from './dance-hall-scene';
-import { IPlayerType } from '../utils/interfaces';
+import { IPlayerType, IStory } from '../utils/interfaces';
 import { StoryManager } from '../utils/story-manager';
+import * as paths from '../utils/paths';
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
@@ -18,6 +19,11 @@ const playerType: IPlayerType = {
     happiness: 10
 }
 
+const frameworkUrl: string = "http://localhost:3000/json/";
+
+const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
+let overallNarrativeId: string;
+
 export class BootScene extends Phaser.Scene {
 
     constructor() {
@@ -27,7 +33,8 @@ export class BootScene extends Phaser.Scene {
     public preload() {
 
         // TODO gather all files to load them here
-        this.load.json('overall_narrative', 'assets/story/overall_narrative.json');
+        overallNarrativeId = paths.getAssetIdFromFilename(overallNarrativeFile);
+        this.load.json(overallNarrativeId, overallNarrativeFile);
 
         // // map tiles
         // this.load.image('castle-tiles', 'assets/tileset/castle.png');
@@ -45,8 +52,8 @@ export class BootScene extends Phaser.Scene {
         this.getStory().then((response) => {
             console.log(response);
 
-            //let storyGraph = new StoryGraph(response['graph'] as IGraph, playerType);
-            //this.registry.set('story-graph', storyGraph);
+            let storyManager = new StoryManager(response['story'] as IStory, playerType);
+            this.registry.set('storyManager', storyManager);
 
             //this.scene.start('Scene');
         }).catch((response) => {
@@ -60,8 +67,7 @@ export class BootScene extends Phaser.Scene {
         let request: XMLHttpRequest = new XMLHttpRequest();
 
         return new Promise<Object>(function (resolve, reject) {
-            let url: string = "http://localhost:3000/json/";
-            request.open("POST", url);
+            request.open("POST", frameworkUrl);
             request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             request.responseType = 'json';
             
@@ -81,6 +87,10 @@ export class BootScene extends Phaser.Scene {
                 }
             }
         })
+    } 
+
+    private loadStoryFiles() {
+
     }
 }
 
