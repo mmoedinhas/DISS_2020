@@ -40,9 +40,9 @@ function createGraph(jsonObj) {
 
     const firstScenes = jsonObj['scenes'].filter(scene => jsonObj['firstLocation'] === scene['locationId']);
 
-    if(firstScenes.length == 0) {
-        let error = "No scenes have a location id corresponding to the first location";
-        errors.push(error);
+    if (firstScenes.length == 0) {
+        let error = "No first location scenes: No scenes have a location id corresponding to the first location";
+        addError(error);
     }
 
     for (scene of firstScenes) {
@@ -54,7 +54,7 @@ function createGraph(jsonObj) {
         parseScene(scene);
     }
 
-    return {graph: graph, errors: errors};
+    return { graph: graph, errors: errors };
 }
 
 
@@ -66,9 +66,9 @@ function getFirstEvents(scene) {
     for (eventName of firstEventsNames) {
         let event = events.find(event => event['name'] === eventName);
 
-        if(event === undefined) {
-            let error = "First event " + eventName + " in scene " + scene['name'] + " is undefined";
-            errors.push(error);
+        if (event === undefined) {
+            let error = "Undefined first event: First event " + eventName + " in scene " + scene['name'] + " is undefined";
+            addError(error);
         } else {
             firstEvents.push(event);
         }
@@ -96,7 +96,7 @@ function parseScene(scene, parentId) {
 
     sceneY += 0.1;
 
-    if(parentId !== undefined) {
+    if (parentId !== undefined) {
         let label = createLabel(scene['emotionalRequirements'], scene['priority']);
         graph.edges.push({
             id: getEdgeId(parentId, id),
@@ -115,18 +115,21 @@ function parseScene(scene, parentId) {
     }
 
     for (event of firstEvents) {
-        drawNodesAfterEvent(scene, event, coords);
+        drawGraphAfterEvent(scene, event, coords);
         coords.x += 0.1;
     }
 
-    for (event of firstEvents) {
-        drawEdgesBetweenEvents(scene, event);
+    let cyclePaths = detectCycle(scene);
+    if (cyclePaths.length != 0) {
+        for (cyclePath of cyclePaths) {
+            addError("Cycle: There is a cycle in scene " + scene['name'] + " with path: " + cyclePath);
+        }
     }
 
     x = coords.x;
 }
 
-function drawNodesAfterEvent(scene, event, coords) {
+function drawGraphAfterEvent(scene, event, coords) {
 
     let y = coords.y;
     let events = scene['events'];
@@ -140,71 +143,43 @@ function drawNodesAfterEvent(scene, event, coords) {
     while (!stack.isEmpty()) {
 
         currEvent = stack.pop();
-
-        let eventProperties = getEventNodeProperties(currEvent);
-        if (!visited.includes(currEvent['name'])
-            && !isNodeInGraph(eventProperties.id)) {
-
-            graph.nodes.push({
-                id: eventProperties.id,
-                label: currEvent['name'],
-                type: eventProperties.type,
-                x: coords.x,
-                y: y,
-                size: 1,
-                color: eventProperties.color,
-                obj: currEvent
-            });
-            y += 0.1;
-
-            visited.push(currEvent['name']);
-        }
-
-        let nextEvents = getNextEvents(currEvent, events);
-        for (nextEvent of nextEvents) {
-            if(!visited.includes(nextEvent['name'])) {
-                stack.push(nextEvent);
-            }
-        }
-    }
-
-    coords.x += 0.1;
-}
-
-function drawEdgesBetweenEvents(scene, event) {
-
-    let events = scene['events'];
-
-    let stack = new Stack();
-    let visited = [];
-
-    stack.push(event);
-
-    let currEvent;
-    while (!stack.isEmpty()) {
-
-        currEvent = stack.pop();
+        visited.push(currEvent['name']);
 
         let currEventProperties = getEventNodeProperties(currEvent);
 
         if (isFirstEvent(currEvent, scene)) {
             let label = createLabel(currEvent['emotionalRequirements'], currEvent['priority']);
+            let edgeId = getEdgeId(getSceneId(scene), currEventProperties.id);
 
-            graph.edges.push({
-                id: getEdgeId(getSceneId(scene), currEventProperties.id),
-                label: label,
-                source: getSceneId(scene),
-                target: currEventProperties.id,
-                size: 1
-            })
+            if (!isEdgeInGraph(edgeId)) {
+                graph.edges.push({
+                    id: edgeId,
+                    label: label,
+                    source: getSceneId(scene),
+                    target: currEventProperties.id,
+                    size: 1
+                })
+            }
+        }
+
+        if (!isNodeInGraph(currEventProperties.id)) {
+
+            graph.nodes.push({
+                id: currEventProperties.id,
+                label: currEvent['name'],
+                type: currEventProperties.type,
+                x: coords.x,
+                y: y,
+                size: 1,
+                color: currEventProperties.color,
+                obj: currEvent
+            });
+            y += 0.1;
         }
 
         let nextEvents = getNextEvents(currEvent, events);
-        console.log("curr: " + currEvent['name']);
-
         for (nextEvent of nextEvents) {
-            console.log("next: " + nextEvent['name']);
-            if(!visited.includes(nextEvent['name'])) {
+            if (!visited.includes(nextEvent['name'])) {
                 stack.push(nextEvent);
             }
 
@@ -212,7 +187,7 @@ function drawEdgesBetweenEvents(scene, event) {
             let label = createLabel(nextEvent['emotionalRequirements'], nextEvent['priority']);
 
             let edgeId = getEdgeId(currEventProperties.id, nextEventProperties.id);
-            if(!isEdgeInGraph(edgeId)) {
+            if (!isEdgeInGraph(edgeId)) {
                 graph.edges.push({
                     id: edgeId,
                     label: label,
@@ -225,7 +200,76 @@ function drawEdgesBetweenEvents(scene, event) {
         }
     }
 
-    console.log("finished this event");
+    coords.x += 0.1;
+}
+
+function detectCycle(scene) {
+    let events = scene['events'];
+    let cyclePaths = [];
+
+    for (event of events) {
+        let stack = new Stack();
+        let visited = [];
+        let cyclePath = [];
+
+        stack.push(event);
+
+        let currEvent;
+        while (!stack.isEmpty()) {
+
+            currEvent = stack.pop();
+            visited.push(currEvent['name']);
+            cyclePath.push(currEvent['name']);
+
+            let nextEvents = getNextEvents(currEvent, events);
+
+            for (nextEvent of nextEvents) {
+
+                if (nextEvent['name'] == event['name']) {
+                    let cyclePathCopy = [...cyclePath];
+                    cyclePathCopy.push(nextEvent['name']);
+                    cyclePaths.push(cyclePathCopy);
+                }
+
+                if (!visited.includes(nextEvent['name'])) {
+                    stack.push(nextEvent);
+                }
+            }
+        }
+    }
+
+    if (cyclePaths.length == 0) {
+        return cyclePaths;
+    }
+
+    // remove equal cycle paths
+    let cyclePathsFinal = [];
+    cyclePathsFinal.push(cyclePaths[0]);
+
+    for (let i = 0; i < cyclePaths.length; i++) {
+        let allDiferent = true;
+        let cyclePathCopy = [...cyclePaths[i]];
+        cyclePathCopy.sort();
+
+        for (let j = 0; j < cyclePathsFinal.length; j++) {
+
+            if (cyclePathCopy.length == cyclePathsFinal[j].length) {
+                let cycle2 = [...cyclePathsFinal[j]];
+                cycle2.sort();
+
+                if (JSON.stringify(cyclePathCopy) == JSON.stringify(cycle2)) {
+                    allDiferent = false;
+                    break;
+                }
+            }
+        }
+
+        if (allDiferent) {
+            cyclePathsFinal.push(cyclePaths[i]);
+        }
+    }
+
+    return cyclePathsFinal;
 }
 
 function getNextEvents(currEvent, events) {
@@ -235,9 +279,9 @@ function getNextEvents(currEvent, events) {
     for (eventName of currEvent['nextEvents']) {
 
         let event = events.find(event => event['name'] === eventName);
-        if(event === undefined) {
-            let error = "Next event " + eventName + " in " + currEvent['name'] + " is undefined";
-            errors.push(error);
+        if (event === undefined) {
+            let error = "Undefined next event: Next event " + eventName + " in " + currEvent['name'] + " is undefined";
+            addError(error);
         } else {
             nextEvents.push(event);
         }
@@ -310,6 +354,12 @@ function createLabel(emotionalRequirements, priority) {
     label = "(priority: " + priority + ") " + label;
 
     return label;
+}
+
+function addError(error) {
+    if (!errors.includes(error)) {
+        errors.push(error);
+    }
 }
 
 module.exports = createGraph;

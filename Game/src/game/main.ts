@@ -11,7 +11,7 @@ const playerType: IPlayerType = {
     anger: 4,
     disgust: 4,
     fear: 5,
-    anxiety: 15,
+    anxiety: 4,
     sadness: 8,
     desire: 14,
     relaxation: 6,
@@ -42,15 +42,11 @@ export class BootScene extends Phaser.Scene {
 
     public create() {
 
-        this.getStoryGraph().then((response) => {
-            console.log(response['errors']);
-            console.log(response['graph']);
+        this.getStory().then((response) => {
+            console.log(response);
 
-            let storyGraph = new StoryGraph(response['graph'] as IGraph, playerType);
-            this.registry.set('story-graph', storyGraph);
-
-            let currScene: INode = (this.registry.get('story-graph') as StoryGraph).start();
-            console.log(currScene);
+            //let storyGraph = new StoryGraph(response['graph'] as IGraph, playerType);
+            //this.registry.set('story-graph', storyGraph);
 
             //this.scene.start('Scene');
         }).catch((response) => {
@@ -58,7 +54,7 @@ export class BootScene extends Phaser.Scene {
         })
     }
 
-    private getStoryGraph(): Promise<Object> {
+    private getStory(): Promise<Object> {
         let overallNarrativeObj = this.cache.json.get('overall_narrative');
 
         let request: XMLHttpRequest = new XMLHttpRequest();
@@ -68,22 +64,23 @@ export class BootScene extends Phaser.Scene {
             request.open("POST", url);
             request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             request.responseType = 'json';
-            request.send(JSON.stringify(overallNarrativeObj));
+            
+            let body = {
+                playerType: playerType,
+                data: overallNarrativeObj
+            };
+            request.send(JSON.stringify(body));
 
             request.onreadystatechange = function () {
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    if (request.response['graph'] !== undefined) {
-                        resolve(request.response);
-                    } else {
+                    if (request.response['error'] !== undefined) {
                         reject(request.response);
+                    } else {
+                        resolve(request.response);
                     }
                 }
             }
         })
-    }
-
-    private loadFirstSceneAssets() {
-
     }
 }
 

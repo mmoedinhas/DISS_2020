@@ -72,7 +72,8 @@
                     "type": "gameplay",
                     "priority": 2,
                     "emotionalRequirements": [],
-                    "nextEvents": []
+                    "nextEvents": [
+                    ]
                 }
             ]
         },

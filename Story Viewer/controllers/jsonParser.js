@@ -5,6 +5,7 @@ let fs = require('fs');
 
 let validateJson = require('../helpers/validateJson.js');
 let createGraph = require('../helpers/createGraph.js');
+let buildStory = require('../helpers/storyBuilder.js');
 
 router.get('/validate/:filename', function (req, res) {
 
@@ -49,8 +50,8 @@ router.get('/:filename', function (req, res) {
 })
 
 router.post('/', function (req, res) {
-    console.log(req.body);
-    let data = req.body;
+    let playerType = req.body.playerType;
+    let data = req.body.data;
     
     fs.readFile(path.join(__dirname + '/../json/schema/overall_narrative_schema.json'), 'utf8', (err2, schemaString) => {
         if (err2) {
@@ -66,7 +67,17 @@ router.post('/', function (req, res) {
 
         if(result === "valid") {
             let graph = createGraph(data);
-            res.json(graph);
+
+            if(graph.errors.length != 0) {
+                let error = {
+                    error: graph.errors
+                }
+                res.send(error);
+                return;
+            } 
+
+            res.send(buildStory(playerType, graph.graph));
+            
         } else {
             let error = {
                 error: result

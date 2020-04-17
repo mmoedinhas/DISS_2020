@@ -1,8 +1,6 @@
-import { IPlayerType, IEmotionalRequirement } from "./interfaces";
+class EmotionalValidator {
 
-export class EmotionalValidator {
-
-    private evaluators = {
+    evaluators = {
         ">": function(x, y) { return x > y; },
         "<": function(x, y) { return x < y; },
         ">=": function(x, y) { return x >= y; },
@@ -11,13 +9,11 @@ export class EmotionalValidator {
         "!=": function(x, y) { return x != y; }
     };
 
-    private playerType: IPlayerType;
-
-    constructor(playerType: IPlayerType) {
+    constructor(playerType) {
         this.playerType = playerType;
     }
 
-    public matches(emotionalRequirements: IEmotionalRequirement[]): boolean {
+    matches(emotionalRequirements) {
 
         let allTrue = true;
 
@@ -35,3 +31,5 @@ export class EmotionalValidator {
         return allTrue;
     }
 }
+
+module.exports = EmotionalValidator;
