@@ -32,7 +32,6 @@ export class BootScene extends Phaser.Scene {
 
     public preload() {
 
-        // TODO gather all files to load them here
         overallNarrativeId = paths.getAssetIdFromFilename(overallNarrativeFile);
         this.load.json(overallNarrativeId, overallNarrativeFile);
 
@@ -54,6 +53,8 @@ export class BootScene extends Phaser.Scene {
 
             let storyManager = new StoryManager(response['story'] as IStory, playerType);
             this.registry.set('storyManager', storyManager);
+
+            // TODO call to load files here
 
             //this.scene.start('Scene');
         }).catch((response) => {
@@ -90,7 +91,7 @@ export class BootScene extends Phaser.Scene {
     } 
 
     private loadStoryFiles() {
-
+        //TODO load files here
     }
 }
 
