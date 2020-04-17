@@ -74,9 +74,34 @@ router.post('/', function (req, res) {
                 }
                 res.send(error);
                 return;
-            } 
+            }
+            
+            let story = buildStory(playerType, graph.graph);
 
-            res.send(buildStory(playerType, graph.graph));
+            if(story.scenes.length == 0) {
+                let error = {
+                    error: "Story has no scenes."
+                }
+                res.send(error);
+                return;
+            }
+
+            let errors = [];
+            for(scene of story.scenes) {
+                if(scene.events.length == 0) {
+                    errors.push("Scene " + scene.name + " has no events.");
+                }
+            }
+
+            if(errors.length != 0) {
+                let error = {
+                    error: errors
+                }
+                res.send(error);
+                return;
+            }
+
+            res.send(story);
             
         } else {
             let error = {

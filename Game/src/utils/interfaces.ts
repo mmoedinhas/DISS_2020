@@ -37,21 +37,8 @@ export interface IEvent {
     nextEvents: string[]
 }
 
-export interface INode {
-    id: string,
-    obj: IScene | IEvent | undefined
-}
-
-export interface IEdge {
-    id: string,
-    source: string,
-    target: string,
-    label: string
-}
-
-export interface IGraph {
-    nodes: INode[],
-    edges: IEdge[]
+export interface IStory {
+    scenes: IScene[]
 }
 
 export interface IPlayerType {

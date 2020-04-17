@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { DanceHallScene } from './dance-hall-scene';
-import { IPlayerType, IGraph, INode } from '../utils/interfaces';
-import { StoryGraph } from '../utils/story-graph';
+import { IPlayerType } from '../utils/interfaces';
+import { StoryManager } from '../utils/story-manager';
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
