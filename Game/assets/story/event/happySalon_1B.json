@@ -1,5 +1,5 @@
 {
-    "name": "happySalon_1A",
+    "name": "happySalon_1B",
     "actors": [
         {
             "id": "Clara",
@@ -53,7 +53,42 @@
         {
             "action": "talk",
             "arguments": {
-                "text": "I can see the guests already arrived. I should go and say hello!"
+                "text": "I can see the guests already arrived. Oh my, I haven't seen everyone for so long..."
+            },
+            "actor": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "text": "I'm so nervous, what if they don't remember who I am anymore?"
+            },
+            "actor": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "text": "... I really don't want to be awkward ..."
+            },
+            "actor": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "text": "Why am I so nervous?"
+            },
+            "actor": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "text": "..."
+            },
+            "actor": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "text": "For now, let's just say hello to everyone and see how things go."
             },
             "actor": "Clara"
         },
@@ -62,6 +97,13 @@
             "arguments": {
                 "x": 0,
                 "y": 6
+            },
+            "actor": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "text": "Wait, I see grandma over there! I'll go over to her, maybe she can help."
             },
             "actor": "Clara"
         }

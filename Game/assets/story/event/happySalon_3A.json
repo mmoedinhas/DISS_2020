@@ -1,0 +1,93 @@
+{
+    "name": "happySalon_3A",
+    "endEventCondition": "guest1Greeted && guest2Greeted && guest3Greeted && grandmaGreeted",
+    "player": {
+        "playerId": "Clara",
+        "actorId": "Clara",
+        "startPosition": "current"
+    },
+    "enemies": [],
+    "npcs": [
+        {
+            "actorId": "Dancer1",
+            "position": [
+                3,
+                10
+            ],
+            "dialogue": "notGrandma.json",
+            "isInteractableConditions": [
+                {
+                    "id": "guest1Greeted",
+                    "value": false
+                }
+            ],
+            "flagChangesAfterInteraction": [
+                {
+                    "id": "guest1Greeted",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "actorId": "Dancer2",
+            "position": [
+                14,
+                13
+            ],
+            "dialogue": "notGrandma.json",
+            "isInteractableConditions": [
+                {
+                    "id": "guest2Greeted",
+                    "value": false
+                }
+            ],
+            "flagChangesAfterInteraction": [
+                {
+                    "id": "guest2Greeted",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "actorId": "Dancer2",
+            "position": [
+                7,
+                17
+            ],
+            "dialogue": "notGrandma.json",
+            "isInteractableConditions": [
+                {
+                    "id": "guest3Greeted",
+                    "value": false
+                }
+            ],
+            "flagChangesAfterInteraction": [
+                {
+                    "id": "guest3Greeted",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "actorId": "Grandma",
+            "position": [
+                15,
+                15
+            ],
+            "dialogue": "dialogue.json",
+            "isInteractableConditions": [
+                {
+                    "id": "grandmaGreeted",
+                    "value": false
+                }
+            ],
+            "flagChangesAfterInteraction": [
+                {
+                    "id": "grandmaGreeted",
+                    "value": true
+                }
+            ]
+        }
+    ],
+    "items": []
+}

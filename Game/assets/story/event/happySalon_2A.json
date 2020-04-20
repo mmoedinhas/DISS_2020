@@ -1,0 +1,66 @@
+{
+    "name": "happySalon_2A",
+    "endEventCondition": "grandmaGreeted",
+    "player": {
+        "playerId": "Clara",
+        "actorId": "Clara",
+        "startPosition": [
+            0,
+            20
+        ]
+    },
+    "enemies": [],
+    "npcs": [
+        {
+            "actorId": "Dancer1",
+            "position": [
+                3,
+                10
+            ],
+            "dialogue": "notGrandma.json",
+            "isInteractableConditions": "always",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Dancer2",
+            "position": [
+                14,
+                13
+            ],
+            "dialogue": "notGrandma.json",
+            "isInteractableConditions": "always",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Dancer2",
+            "position": [
+                7,
+                17
+            ],
+            "dialogue": "notGrandma.json",
+            "isInteractableConditions": "always",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Grandma",
+            "position": [
+                15,
+                15
+            ],
+            "dialogue": "dialogue.json",
+            "isInteractableConditions": [
+                {
+                    "id": "grandmaGreeted",
+                    "value": false
+                }
+            ],
+            "flagChangesAfterInteraction": [
+                {
+                    "id": "grandmaGreeted",
+                    "value": true
+                }
+            ]
+        }
+    ],
+    "items": []
+}
