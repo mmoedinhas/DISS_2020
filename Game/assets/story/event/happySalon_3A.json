@@ -14,7 +14,7 @@
                 3,
                 10
             ],
-            "dialogue": "notGrandma.json",
+            "dialogue": "talkGuest.json",
             "isInteractableConditions": [
                 {
                     "id": "guest1Greeted",
@@ -34,7 +34,7 @@
                 14,
                 13
             ],
-            "dialogue": "notGrandma.json",
+            "dialogue": "talkGuest.json",
             "isInteractableConditions": [
                 {
                     "id": "guest2Greeted",
@@ -54,7 +54,7 @@
                 7,
                 17
             ],
-            "dialogue": "notGrandma.json",
+            "dialogue": "talkGuest.json",
             "isInteractableConditions": [
                 {
                     "id": "guest3Greeted",
@@ -74,7 +74,7 @@
                 15,
                 15
             ],
-            "dialogue": "dialogue.json",
+            "dialogue": "talkGrandma.json",
             "isInteractableConditions": [
                 {
                     "id": "grandmaGreeted",

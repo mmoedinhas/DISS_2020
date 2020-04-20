@@ -47,7 +47,7 @@
                 15,
                 15
             ],
-            "dialogue": "dialogue.json",
+            "dialogue": "nervousTalkGrandma.json",
             "isInteractableConditions": [
                 {
                     "id": "grandmaGreeted",

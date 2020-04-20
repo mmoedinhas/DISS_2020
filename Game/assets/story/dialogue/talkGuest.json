@@ -1,0 +1,23 @@
+{
+    "actorsIds": [
+        "Clara", "Guest"
+    ],
+    "lines": [
+        {
+            "author": "Clara",
+            "text": "Merry Christmas! Enjoying the party?"
+        },
+        {
+            "author": "Guest",
+            "text": "Merry Christmas Clara! Yes, very much so! Your parents throw the best parties!"
+        },
+        {
+            "author": "Clara",
+            "text": "I'm glad! Well, hope you continue enjoying the party. See you!"
+        },
+        {
+            "author": "Guest",
+            "text": "See you!"
+        }
+    ]
+}
