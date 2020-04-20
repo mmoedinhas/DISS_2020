@@ -77,10 +77,14 @@
                 },
                 "startPosition": {
                     "$id": "#/properties/player/properties/startPosition",
-                    "type": "array",
+                    "type": [
+                        "array",
+                        "string"
+                    ],
                     "title": "Start Position",
                     "description": "The start position of the player in the map",
                     "default": [],
+                    "pattern": "^current$",
                     "items": {
                         "$id": "#/properties/player/properties/startPosition/items",
                         "type": "integer",
