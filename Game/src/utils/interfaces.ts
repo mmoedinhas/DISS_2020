@@ -1,9 +1,3 @@
-export interface ITileset {
-    tileset: string, 
-    frameWidth: number,
-    frameHeight: number 
-}
-
 export interface IEmotionalRequirement {
     parameter: string,
     condition: string,
@@ -46,9 +40,19 @@ export interface IPlayerType {
     happiness: number
 }
 
-export interface IFiles {
-    maps: string,
-    events: string,
-    tilemaps: string,
-    tilesets: ITileset
+export interface IFileBundle {
+    maps: IFile[],
+    events: IFile[],
+    tilemaps: IFile[],
+    tilesets: ITileset[]
+}
+
+export interface IFile {
+    id: string,
+    filename: string
+}
+
+export interface ITileset extends IFile {
+    frameWidth: number,
+    frameHeight: number 
 }
