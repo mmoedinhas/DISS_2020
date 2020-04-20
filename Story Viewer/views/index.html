@@ -11,6 +11,7 @@
   <script src="libs/sigma/sigma.min.js"></script>
   <script src="libs/sigma/plugins/sigma.renderers.customShapes.min.js"></script>
   <script src="libs/sigma/plugins/sigma.renderers.edgeLabels.min.js"></script>
+  <script src="libs/jquery-3.5.0.min.js"></script>
 
   <style>
     body {
@@ -34,29 +35,49 @@
 </head>
 
 <body>
-  <button type="button" onclick="validateJSON()">Validate JSON</button>
-  <button id="createGraph" disabled type="button" onclick="showGraph()">Show Graph</button>
+  <div id="validation">
+    <form id="validationForm" enctype="multipart/form-data">
+      <input type="file" name="jsonFile" />
+      <select id="jsonType" name="jsonType">
+        <option value="overall_narrative">Overall narrative</option>
+        <option value="cutscene">Cutscene</option>
+      </select>
+      <input id="submit" type="button" value="Validate JSON" />
+    </form>
+  </div>
+  <button id="createGraph" type="button" onclick="showGraph()">Show Graph</button>
   <div id="content"></div>
   <script>
 
-    function validateJSON() {
-      let requestURL = './json/validate/overall_narrative.json';
+    $('#submit').on('click', function () {
+      $.ajax({
 
-      let request = new XMLHttpRequest();
-      request.open('GET', requestURL);
-      request.responseType = 'text';
-      request.send();
+        url: 'json/validate',
+        type: 'POST',
+        data: new FormData(document.getElementById("validationForm")),
+        cache: false,
+        contentType: false,
+        processData: false,
 
-      request.onload = function () {
-        const p = document.createElement('p');
-        p.textContent = request.responseText;
-        document.querySelector('#content').appendChild(p);
+        error: function (err) {
+          const p = document.createElement('p');
+          p.textContent = err.responseText;
+          document.getElementById('content').appendChild(p);
+        },
 
-        if(request.responseText == "Valid json") {
-          document.getElementById("createGraph").disabled = false;
+        success: function (result) {
+
+          const p = document.createElement('p');
+          p.textContent = result;
+
+          if (result !== "Valid json") {
+            p.textContent = JSON.stringify(result);
+          }
+
+          document.getElementById('content').appendChild(p);
         }
-      }
-    }
+      });
+    });
 
     function showGraph() {
 
