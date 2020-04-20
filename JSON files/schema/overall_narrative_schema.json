@@ -418,6 +418,7 @@
                                 "type": {
                                     "$id": "#/properties/scenes/items/properties/events/items/properties/type",
                                     "type": "string",
+                                    "pattern": "^(cutscene|gameplay)$",
                                     "title": "Type",
                                     "description": "Can be cutscene or gameplay",
                                     "default": "",
