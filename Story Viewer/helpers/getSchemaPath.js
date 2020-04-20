@@ -9,6 +9,9 @@ function getSchemaPath(jsonType) {
         case "cutscene":
             path = "cutscene_schema.json";
             break;
+        case "gameplay":
+            path = "gameplay_schema.json";
+            break;
     }
 
     return path;
