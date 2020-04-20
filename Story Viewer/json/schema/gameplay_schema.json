@@ -243,7 +243,8 @@
                         ],
                         "title": "Is Interactable Conditions",
                         "description": "A list of conditions/flags and their desired values to know if this NPC could be interacted with. This NPC can be interacted with if all conditions are TRUE",
-                        "default": [],
+                        "default": "never",
+                        "pattern": "^(always|never)$",
                         "items": {
                             "$id": "#/properties/npcs/items/properties/isInteractableConditions/items",
                             "type": "object",
