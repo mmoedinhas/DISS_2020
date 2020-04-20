@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": [],
+    "additionalItems": true,
+    "items": {
+        "type": "object",
+        "title": "Tileset",
+        "description": "An object description of a tileset.",
+        "default": {},
+        "examples": [
+            {
+                "frameWidth": 39.0,
+                "id": "girls",
+                "frameHeight": 54.0,
+                "filename": "girls.png"
+            }
+        ],
+        "additionalProperties": true,
+        "required": [
+            "id",
+            "filename",
+            "frameWidth",
+            "frameHeight"
+        ],
+        "properties": {
+            "id": {
+                "type": "string",
+                "title": "Id",
+                "description": "The id of this tileset. Must be unique",
+                "default": "",
+                "examples": [
+                    "girls"
+                ]
+            },
+            "filename": {
+                "type": "string",
+                "title": "Filename",
+                "description": "The filename where this tileset is",
+                "default": "",
+                "examples": [
+                    "girls.png"
+                ]
+            },
+            "frameWidth": {
+                "type": "integer",
+                "title": "Frame width",
+                "description": "The width of each frame",
+                "default": 0,
+                "examples": [
+                    39.0
+                ]
+            },
+            "frameHeight": {
+                "type": "integer",
+                "title": "Frame Heigth",
+                "description": "The height of each frame",
+                "default": 0,
+                "examples": [
+                    54.0
+                ]
+            }
+        }
+    }
+}
