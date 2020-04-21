@@ -34,7 +34,7 @@
         {
             "id": "Dancer1",
             "name": "Dancer",
-            "tilesetId": "girls.png",
+            "tilesetId": "girls",
             "animations": [
                 {
                     "key": "left",
@@ -65,7 +65,7 @@
         {
             "id": "Dancer2",
             "name": "Dancer",
-            "tilesetId": "girls.png",
+            "tilesetId": "girls",
             "animations": [
                 {
                     "key": "left",
@@ -96,7 +96,7 @@
         {
             "id": "Grandma",
             "name": "Grandma",
-            "tilesetId": "girls.png",
+            "tilesetId": "girls",
             "animations": [
                 {
                     "key": "left",

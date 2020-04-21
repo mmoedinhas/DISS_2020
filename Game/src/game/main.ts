@@ -51,7 +51,7 @@ export class BootScene extends Phaser.Scene {
     public create() {
 
         this.getStory().then((response) => {
-            //console.log(response);
+            console.log(response);
 
             let storyManager = new StoryManager(response as IStory, playerType);
             this.registry.set('storyManager', storyManager);
@@ -60,7 +60,7 @@ export class BootScene extends Phaser.Scene {
 
             this.load.on('complete', () => {
                 //this.scene.switch('OpeningTitle')
-                console.log("load complete");
+                console.log("load complete for " + this.load.totalComplete + " files");
             });
 
             this.load.start();
@@ -117,41 +117,59 @@ export class BootScene extends Phaser.Scene {
 
     private loadCutsceneFiles(key: string, filename: string) {
         this.load.json(key, paths.eventsPath + filename).on('filecomplete', function (givenKey) {
-            if(givenKey === key) {
-                console.log("loaded cutscene file " + key);
+            if (givenKey === key) {
+                let cutsceneObj = this.cache.json.get(key);
+                let actorsObj = this.cache.json.get('actors');
+                let tilesetsArray = this.cache.json.get('tilesets');
+
+                for (let actor of cutsceneObj.actors) {
+                    this.loadActorTileset(actorsObj, tilesetsArray, actor.actorId);
+                }
             }
         }, this);
     }
 
     private loadGameplayFiles(key: string, filename: string) {
         this.load.json(key, paths.eventsPath + filename).on('filecomplete', function (givenKey) {
-            if(givenKey === key) {
-                console.log("loaded gameplay file " + key);
+            if (givenKey === key) {
+                let gameplayObj = this.cache.json.get(key);
+                let actorsObj = this.cache.json.get('actors');
+                let tilesetsArray = this.cache.json.get('tilesets');
+
+                this.loadActorTileset(actorsObj, tilesetsArray, gameplayObj.player.actorId);
+                // TODO load enemy tilesets
+
+                for (let npc of gameplayObj.npcs) {
+                    this.loadActorTileset(actorsObj, tilesetsArray, npc.actorId);
+                }
+
+                //TODO load item tilesets
             }
         }, this);
     }
 
     private loadMap(key: string, filename: string) {
         this.load.tilemapTiledJSON(key, paths.mapsPath + filename).on('filecomplete', function (givenKey) {
-            if(givenKey === key) {
-                console.log("loading map " + key);
+            if (givenKey === key) {
 
-                let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({key: key});
-                console.log(map);
-                for(let tileset of map.tilesets) {
+                let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({ key: key });
+                for (let tileset of map.tilesets) {
                     let filename = paths.mapTilesPath + tileset.name + '.png';
-                    
-                    this.load.image(tileset.name + '_tiles', filename).on('filecomplete', function (givenKey2) {
-                        if(givenKey2 === tileset.name + '_tiles') {
-                            console.log("loaded map tileset " + tileset.name);
-                        }
-                    }, this);
-                }
 
-                console.log("loaded map " + key);
+                    this.load.image(tileset.name, filename);
+                }
 
             }
         }, this);
+    }
+
+    private loadActorTileset(actorsObj: any, tilesetsArray: any, actorId: string) {
+        let actor = actorsObj.actors.find(actor => actor.id == actorId);
+        let tilesetKey = actor.tilesetId;
+
+        let tileset = tilesetsArray.find(tileset => tileset.id == tilesetKey);
+
+        this.load.spritesheet(tileset.id, paths.tilesetPath + tileset.filename, { frameWidth: tileset.frameWidth, frameHeight: tileset.frameHeight });
     }
 }
 
