@@ -4,6 +4,7 @@
             "id": "Clara",
             "name": "Clara",
             "tilesetId": "girls",
+            "defaultFrame": 1,
             "animations": [
                 {
                     "key": "left",
@@ -40,6 +41,7 @@
             "id": "Dancer1",
             "name": "Dancer",
             "tilesetId": "girls",
+            "defaultFrame": 4,
             "animations": [
                 {
                     "key": "left",
@@ -76,6 +78,7 @@
             "id": "Dancer2",
             "name": "Dancer",
             "tilesetId": "girls",
+            "defaultFrame": 7,
             "animations": [
                 {
                     "key": "left",
@@ -112,6 +115,7 @@
             "id": "Grandma",
             "name": "Grandma",
             "tilesetId": "girls",
+            "defaultFrame": 7,
             "animations": [
                 {
                     "key": "left",

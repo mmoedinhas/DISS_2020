@@ -20,68 +20,11 @@
                 "title": "Actor",
                 "description": "The representation of an actor",
                 "default": {},
-                "examples": [
-                    {
-                        "id": "Clara",
-                        "animations": [
-                            {
-                                "frameRate": 10.0,
-                                "key": "left",
-                                "repeat": -1.0,
-                                "frames": [
-                                    12.0,
-                                    13.0,
-                                    12.0,
-                                    11.0
-                                ]
-                            },
-                            {
-                                "frameRate": 10.0,
-                                "key": "right",
-                                "repeat": -1.0,
-                                "frames": [
-                                    25.0,
-                                    26.0,
-                                    25.0,
-                                    24.0
-                                ]
-                            },
-                            {
-                                "key": "up",
-                                "repeat": -1.0,
-                                "frames": [
-                                    37.0,
-                                    38.0,
-                                    37.0,
-                                    36.0
-                                ],
-                                "frameRate": 10.0
-                            },
-                            {
-                                "frameRate": 10.0,
-                                "key": "down",
-                                "repeat": -1.0,
-                                "frames": [
-                                    1.0,
-                                    2.0,
-                                    1.0,
-                                    0.0
-                                ]
-                            }
-                        ],
-                        "body": {
-                            "height": 33,
-                            "width": 50,
-                            "anchor": "center-bottom"
-                        },
-                        "tilesetId": "girls.png",
-                        "name": "Clara"
-                    }
-                ],
                 "required": [
                     "id",
                     "name",
                     "tilesetId",
+                    "defaultFrame",
                     "animations",
                     "body"
                 ],
@@ -115,6 +58,13 @@
                         "examples": [
                             "girls"
                         ]
+                    },
+                    "defaultFrame": {
+                        "$id": "#/properties/actors/items/properties/initFrame",
+                        "type": "integer",
+                        "title": "Init Frame",
+                        "description": "The default/initial frame of this actor.",
+                        "default": 0
                     },
                     "animations": {
                         "$id": "#/properties/actors/items/properties/animations",
