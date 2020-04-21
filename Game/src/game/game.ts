@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
-import { StoryManager } from '../utils/story-manager';
-import { IScene } from '../utils/interfaces';
+import { StoryManager } from './story-manager';
+import { IScene, IEvent, IBodySpecs } from '../utils/interfaces';
+import { Player } from './player';
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
     key: 'Game',
@@ -8,8 +9,8 @@ const config: Phaser.Types.Scenes.SettingsConfig = {
 
 export class Game extends Phaser.Scene {
 
-    private player: Phaser.GameObjects.Sprite;
-    private map: Phaser.Tilemaps.Tilemap;
+    public player: Player;
+    public map: Phaser.Tilemaps.Tilemap;
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private storyManager: StoryManager; 
     private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
@@ -25,7 +26,13 @@ export class Game extends Phaser.Scene {
     public create() {
         
         let currScene: IScene = this.storyManager.getCurrScene();
+        let currEvent: IEvent = this.storyManager.getEventAt(0, 1);
         this.map = this.initMap(currScene);
+        this.player = this.initPlayer(currEvent);
+
+        //this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+        this.cameras.main.startFollow(this.player.sprite);
+        this.cameras.main.roundPixels = true;
     }
 
     public update(time, delta) {
@@ -57,6 +64,26 @@ export class Game extends Phaser.Scene {
         }
 
         return map;
+    }
+
+    private initPlayer(currEvent: IEvent): Player {
+
+        let actorsObj = this.cache.json.get('actors');
+        let eventObj = this.cache.json.get(currEvent.name);
+
+        let actor = actorsObj.actors.find(actor => actor.id == eventObj.player.actorId);
+        let x = eventObj.player.startPosition[0];
+        let y = eventObj.player.startPosition[1];
+
+        let bodySpecs: IBodySpecs = {
+            width: actor.body.width,
+            height: actor.body.height,
+            anchor: actor.body.anchor
+        };
+
+        console.log(this.map.tileWidth);
+
+        return new Player(this, this.map.tileWidth * x, this.map.tileHeight * y, actor.tilesetId, actor.defaultFrame, bodySpecs);
     }
     
 }

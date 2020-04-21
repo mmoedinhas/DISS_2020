@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { Game } from './game';
 import { IPlayerType, IStory, IFileBundle, IFile } from '../utils/interfaces';
-import { StoryManager } from '../utils/story-manager';
+import { StoryManager } from './story-manager';
 import * as paths from '../utils/paths';
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
@@ -12,7 +12,7 @@ const playerType: IPlayerType = {
     anger: 4,
     disgust: 4,
     fear: 5,
-    anxiety: 4,
+    anxiety: 10,
     sadness: 8,
     desire: 14,
     relaxation: 6,

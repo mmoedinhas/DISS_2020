@@ -1,7 +1,7 @@
 export interface IEmotionalRequirement {
     parameter: string,
     condition: string,
-    value: number
+    value: integer
 }
 
 export interface IScene {
@@ -9,7 +9,7 @@ export interface IScene {
     name: string,
     description: string,
     map: string,
-    priority: number,
+    priority: integer,
     emotionalRequirements: IEmotionalRequirement[],
     firstEvents: string[],
     events: IEvent[]
@@ -19,8 +19,7 @@ export interface IEvent {
     name: string,
     description: string,
     type: string,
-    file: string,
-    priority: number,
+    priority: integer,
     emotionalRequirements: IEmotionalRequirement[],
     nextEvents: string[]
 }
@@ -30,14 +29,14 @@ export interface IStory {
 }
 
 export interface IPlayerType {
-    anger: number,
-    disgust: number, 
-    fear: number,
-    anxiety: number, 
-    sadness: number, 
-    desire: number, 
-    relaxation: number,
-    happiness: number
+    anger: integer,
+    disgust: integer, 
+    fear: integer,
+    anxiety: integer, 
+    sadness: integer, 
+    desire: integer, 
+    relaxation: integer,
+    happiness: integer
 }
 
 export interface IFileBundle {
@@ -53,6 +52,12 @@ export interface IFile {
 }
 
 export interface ITileset extends IFile {
-    frameWidth: number,
-    frameHeight: number 
+    frameWidth: integer,
+    frameHeight: integer 
+}
+
+export interface IBodySpecs {
+    width: integer,
+    height: integer,
+    anchor: string
 }
