@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import { DanceHallScene } from './dance-hall-scene';
+import { Game } from './game';
 import { IPlayerType, IStory, IFileBundle, IFile } from '../utils/interfaces';
 import { StoryManager } from '../utils/story-manager';
 import * as paths from '../utils/paths';
@@ -50,9 +50,11 @@ export class BootScene extends Phaser.Scene {
 
             this.loadAllEventFiles(response as IStory);
 
+            let scene: Phaser.Scenes.ScenePlugin = this.scene;
+
             this.load.on('complete', () => {
-                //this.scene.switch('OpeningTitle')
                 console.log("load complete for " + this.load.totalComplete + " files");
+                scene.start('Game');
             });
 
             this.load.start();
@@ -193,7 +195,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     },
     scene: [
         BootScene,
-        DanceHallScene
+        Game
     ]
 }
 
