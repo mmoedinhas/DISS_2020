@@ -33,19 +33,11 @@ export class BootScene extends Phaser.Scene {
     }
 
     public preload() {
-
         //load main story files
         this.load.json('overall_narrative', overallNarrativeFile);
         this.load.json('actors', actorsFile);
         this.load.json('playable_characters', playableCharactersFile);
         this.load.json('tilesets', tilesetsFile);
-
-        // // map tiles
-        // this.load.image('castle-tiles', 'assets/tileset/castle.png');
-        // this.load.image('stairs-tiles', 'assets/tileset/stairs.png');
-
-        // // character tiles
-        // this.load.spritesheet('girls', 'assets/tileset/girls.png', { frameWidth: 39, frameHeight: 54 });
     }
 
     public create() {
