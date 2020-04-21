@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import { isArcadeBody } from '../utils/type-predicates'; 
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
     key: 'DanceHallScene',
@@ -33,7 +34,7 @@ export class DanceHallScene extends Phaser.Scene {
 
     public update(time, delta) {
 
-        if(this.isArcadeBody(this.player.body)) {
+        if(isArcadeBody(this.player.body)) {
             this.player.body.setVelocity(0);
 
             // Horizontal movement
@@ -80,10 +81,6 @@ export class DanceHallScene extends Phaser.Scene {
         
     }
 
-    private isArcadeBody(body: object|Phaser.Physics.Arcade.Body|Phaser.Physics.Impact.Body): body is Phaser.Physics.Arcade.Body {
-        return body instanceof Phaser.Physics.Arcade.Body;
-    }
-
     private initMap(): Phaser.Tilemaps.Tilemap {
         
         let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({key: 'dance-hall-map'});
@@ -111,7 +108,7 @@ export class DanceHallScene extends Phaser.Scene {
     private initPlayer(): Phaser.GameObjects.Sprite {
         let player: Phaser.GameObjects.Sprite = this.physics.add.sprite(500, 200, 'girls', 2);
 
-        if(this.isArcadeBody(player.body)) {
+        if(isArcadeBody(player.body)) {
             let oldWidth: number = player.body.width;
             let oldHeight: number = player.body.height;
 
