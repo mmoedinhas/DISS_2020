@@ -116,7 +116,7 @@ export class DanceHallScene extends Phaser.Scene {
             let oldHeight: number = player.body.height;
 
             player.body.setSize(player.body.width/2.0, player.body.height/3.0);
-            player.body.setOffset((oldWidth - player.body.height) / 2.0, oldHeight - player.body.height);
+            player.body.setOffset((oldWidth - player.body.width) / 2.0, oldHeight - player.body.height);
         }
 
         //  animation with key 'left', we don't need left and right as we will use one and flip the sprite
