@@ -39,25 +39,13 @@ export interface IPlayerType {
     happiness: integer
 }
 
-export interface IFileBundle {
-    maps: IFile[],
-    events: IFile[],
-    tilemaps: IFile[],
-    tilesets: ITileset[]
-}
-
-export interface IFile {
-    id: string,
-    filename: string
-}
-
-export interface ITileset extends IFile {
-    frameWidth: integer,
-    frameHeight: integer 
-}
-
 export interface IBodySpecs {
     width: integer,
     height: integer,
     anchor: string
+}
+
+export interface ICoordinates {
+    x: number,
+    y: number
 }

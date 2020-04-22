@@ -1,4 +1,4 @@
-import { IPlayerType, IScene, IEvent, IStory, IFileBundle, IFile } from '../utils/interfaces';
+import { IPlayerType, IScene, IEvent, IStory } from '../utils/interfaces';
 
 export class StoryManager {
 

@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 import { Game } from './game';
-import { IPlayerType, IStory, IFileBundle, IFile } from '../utils/interfaces';
+import { IPlayerType, IStory } from '../utils/interfaces';
 import { StoryManager } from './story-manager';
 import * as paths from '../utils/paths';
 

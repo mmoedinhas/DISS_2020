@@ -55,7 +55,7 @@
             },
             "frameHeight": {
                 "type": "integer",
-                "title": "Frame Heigth",
+                "title": "Frame Height",
                 "description": "The height of each frame",
                 "default": 0,
                 "examples": [

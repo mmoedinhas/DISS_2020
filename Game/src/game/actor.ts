@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
-import { IBodySpecs } from '../utils/interfaces';
+import { IBodySpecs, ICoordinates } from '../utils/interfaces';
 import { isArcadeBody } from '../utils/type-predicates';
+import { toMapCoordinates } from '../utils/coordinates';
 import { Game } from './game';
 
 export abstract class Actor {
@@ -8,14 +9,15 @@ export abstract class Actor {
     public sprite: Phaser.GameObjects.Sprite;
 
     constructor(scene: Game, x: integer, y: integer, tilesetKey: string, frame: integer, bodySpecs: IBodySpecs) {
-        this.sprite = scene.physics.add.sprite(x, y, tilesetKey, frame);
+
+        let mapCoords: ICoordinates = toMapCoordinates(x, y, scene.map);
+        this.sprite = scene.physics.add.sprite(mapCoords.x, mapCoords.y, tilesetKey, frame).setOrigin(0.5, 1);
         this.initBody(bodySpecs);
-        this.correctOrigin(scene.map);
         //TODO this.createAnimations();
     }
 
     private initBody(bodySpecs: IBodySpecs) {
-        if(isArcadeBody(this.sprite.body)) {
+        if (isArcadeBody(this.sprite.body)) {
             let oldWidth: number = this.sprite.body.width;
             let oldHeight: number = this.sprite.body.height;
 
@@ -27,7 +29,7 @@ export abstract class Actor {
             let xOffset: number = 0.0;
             let yOffset: number = 0.0;
 
-            switch(xOffsetSpec) {
+            switch (xOffsetSpec) {
                 case "center":
                     xOffset = (oldWidth - newWidth) / 2.0;
                     break;
@@ -39,7 +41,7 @@ export abstract class Actor {
                     break;
             }
 
-            switch(yOffsetSpec) {
+            switch (yOffsetSpec) {
                 case "center":
                     yOffset = (oldHeight - newHeight) / 2.0;
                     break;
@@ -57,7 +59,7 @@ export abstract class Actor {
     }
 
     private correctOrigin(map: Phaser.Tilemaps.Tilemap) {
-        
+
         let originX = (this.sprite.width - map.tileWidth) / 2.0 / this.sprite.width;
         let originY = (this.sprite.height - map.tileHeight) / this.sprite.height;
 
