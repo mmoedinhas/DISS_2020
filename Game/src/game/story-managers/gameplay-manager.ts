@@ -11,7 +11,7 @@ export class GameplayManager extends EventManager{
         
     }
 
-    public populateActors(scene: GameScene) {
+    public populateActors() {
         
     }
 }

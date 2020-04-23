@@ -1,30 +1,44 @@
 import { EventManager } from "./event-manager";
-import { Action } from "./action";
+import { Action } from "./cutscene-actions/action";
 import { GameScene } from "../game-scene";
 import { IBodySpecs } from "../../utils/interfaces";
 import { Actor } from "../actor";
+import { Walk } from "./cutscene-actions/walk";
 
 export class CutsceneManager extends EventManager{
 
-    private actions: Action;
+    private actions: Action[] = [];
+    private currActionIndex: integer;
 
     constructor(scene: GameScene, name: string) {
         super(scene, name);
+        this.currActionIndex = 0;
+        this.instantiateActions();
     }
 
     public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
+
+        if(this.currActionIndex < this.actions.length) {
+            if(this.actions[this.currActionIndex].isDone()) {
+                this.currActionIndex++;
+            }
+        }
+
+        if(this.currActionIndex < this.actions.length) {
+            this.actions[this.currActionIndex].act();
+        }
         
     }
 
-    public populateActors(scene: GameScene) {
-        for(let actor of scene.actors) {
-            actor.sprite.destroy();
+    public populateActors() {
+        for(let actor of this.scene.actors) {
+            actor.destroy();
         }
 
-        scene.actors = [];
+        this.scene.actors = [];
 
         let actorsFromEventObj = this.jsonObj.actors;
-        let allActorsObj = scene.cache.json.get('actors').actors;
+        let allActorsObj = this.scene.cache.json.get('actors').actors;
 
         for(let actorDesc of actorsFromEventObj) {
             let actor = allActorsObj.find(actor => actor.id == actorDesc.actorId);
@@ -37,7 +51,23 @@ export class CutsceneManager extends EventManager{
                 anchor: actor.body.anchor
             };
 
-            scene.actors.push(new Actor(scene, x, y, actor.tilesetId, actor.defaultFrame, bodySpecs));
+            this.scene.actors.push(new Actor(this.scene, x, y, actor));
         }
+    }
+
+    public instantiateActions() {
+        let actionsObj = this.jsonObj.actions;
+
+        for(let actionObj of actionsObj) {
+            
+            switch(actionObj.action) {
+                case "walk":
+                    this.actions.push(new Walk(this.scene, actionObj.actorId, actionObj.arguments.x, actionObj.arguments.y));
+                    break;
+                case "talk":
+                    break;
+            }
+        }
+        
     }
 }

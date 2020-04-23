@@ -50,9 +50,8 @@ export class GameScene extends Phaser.Scene {
         // }
         
 
-        //this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-        // this.cameras.main.startFollow(this.player.sprite);
-        // this.cameras.main.roundPixels = true;
+        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+        this.cameras.main.roundPixels = true;
     }
 
     public update(time: number, delta: number) {
@@ -123,13 +122,7 @@ export class GameScene extends Phaser.Scene {
         let x = eventObj.player.startPosition[0];
         let y = eventObj.player.startPosition[1];
 
-        let bodySpecs: IBodySpecs = {
-            width: actor.body.width,
-            height: actor.body.height,
-            anchor: actor.body.anchor
-        };
-
-        return new Player(this, x, y, actor.tilesetId, actor.defaultFrame, bodySpecs);
+        return new Player(this, x, y, actor);
     }
 
     private applyPipeline() {

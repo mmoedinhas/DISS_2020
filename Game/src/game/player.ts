@@ -4,7 +4,7 @@ import { IBodySpecs } from '../utils/interfaces';
 
 export class Player extends Actor {
 
-    constructor(scene: GameScene, x: integer, y: integer, tilesetKey: string, frame: integer, bodySpecs: IBodySpecs) {
-        super(scene, x, y, tilesetKey, frame, bodySpecs);
+    constructor(scene: GameScene, x: integer, y: integer, actorObj: any) {
+        super(scene, x, y, actorObj);
     }
 }

@@ -1,22 +1,37 @@
 import * as Phaser from 'phaser';
+import MoveTo from 'phaser3-rex-plugins/plugins/moveto.js';
+
 import { IBodySpecs, ICoordinates } from '../utils/interfaces';
 import { isArcadeBody } from '../utils/type-predicates';
-import { toMapCoordinates } from '../utils/coordinates';
+import { toRealMapCoordinates, toTileMapCoordinates } from '../utils/coordinates';
 import { GameScene } from './game-scene';
 
 export class Actor {
 
-    public sprite: Phaser.GameObjects.Sprite;
+    private sprite: Phaser.GameObjects.Sprite;
+    private id: string;
+    private name: string;
+    private speed: number = 80;
 
-    constructor(scene: GameScene, x: integer, y: integer, tilesetKey: string, frame: integer, bodySpecs: IBodySpecs) {
+    constructor(scene: GameScene, x: integer, y: integer, actorObj: any) {
 
-        let mapCoords: ICoordinates = toMapCoordinates(x, y, scene.map);
-        this.sprite = scene.physics.add.sprite(mapCoords.x, mapCoords.y, tilesetKey, frame).setOrigin(0.5, 1);
-        this.initBody(bodySpecs);
-        //TODO this.createAnimations();
+        this.id = actorObj.id;
+        this.name = actorObj.name;
+        
+        let mapCoords: ICoordinates = toRealMapCoordinates(x, y, scene.map);
+        this.sprite = scene.physics.add.sprite(mapCoords.x, mapCoords.y, actorObj.tilesetId, actorObj.defaultFrame).setOrigin(0.5, 1);
+        this.initBody(actorObj);
+        //TODO this.createAnimations(actorObj);
     }
 
-    private initBody(bodySpecs: IBodySpecs) {
+    private initBody(actorObj: any) {
+
+        const bodySpecs: IBodySpecs = {
+            width: actorObj.body.width,
+            height: actorObj.body.height,
+            anchor: actorObj.body.anchor
+        }
+
         if (isArcadeBody(this.sprite.body)) {
             let oldWidth: number = this.sprite.body.width;
             let oldHeight: number = this.sprite.body.height;
@@ -64,5 +79,41 @@ export class Actor {
         let originY = (this.sprite.height - map.tileHeight) / this.sprite.height;
 
         this.sprite.setOrigin(originX, originY);
+    }
+
+    public getId(): string {
+        return this.id;
+    }
+
+    public destroy() {
+        this.sprite.destroy();
+    }
+
+    public getCameraToFollow(scene: GameScene) {
+        scene.cameras.main.startFollow(this.sprite);
+    }
+
+    public getName() : string {
+        return this.name;
+    }
+
+    public move(scene: GameScene, x:integer, y:integer, emitter: Phaser.Events.EventEmitter) {
+
+        let moveTo = new MoveTo(this.sprite, {
+            speed: this.speed,
+            rotateToTarget: false
+        });
+
+        moveTo.on('complete', function(gameObject, moveTo){
+            emitter.emit('stopWalking');
+        });
+
+        let tileCoords: ICoordinates = toTileMapCoordinates(this.sprite.x, this.sprite.y, scene.map);
+        tileCoords.x += x;
+        tileCoords.y += y;
+
+        let mapCoords: ICoordinates = toRealMapCoordinates(tileCoords.x, tileCoords.y, scene.map);
+
+        moveTo.moveTo(mapCoords.x, mapCoords.y);
     }
 }
