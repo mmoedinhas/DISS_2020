@@ -2,27 +2,22 @@
     "name": "happySalon_1A",
     "actors": [
         {
-            "id": "Clara",
             "actorId": "Clara",
             "start": [8, 4] 
         },
         {
-            "id": "Dancer1",
             "actorId": "Dancer1",
             "start": [3, 10]
         },
         {
-            "id": "Dancer2",
             "actorId": "Dancer2",
             "start": [14, 13]
         },
         {
-            "id": "Dancer3",
-            "actorId": "Dancer2",
+            "actorId": "Dancer3",
             "start": [7, 17]
         },
         {
-            "id": "Grandma",
             "actorId": "Grandma",
             "start": [15, 15]
         }
@@ -34,28 +29,28 @@
                 "x": 2,
                 "y": 0
             },
-            "actor": "Clara"
+            "actorId": "Clara"
         },
         {
             "action": "talk",
             "arguments": {
                 "text": "It's finally Christmas!"
             },
-            "actor": "Clara"
+            "actorId": "Clara"
         },
         {
             "action": "talk",
             "arguments": {
                 "text": "I waited for this day for so long! I'm so excited!"
             },
-            "actor": "Clara"
+            "actorId": "Clara"
         },
         {
             "action": "talk",
             "arguments": {
                 "text": "I can see the guests already arrived. I should go and say hello!"
             },
-            "actor": "Clara"
+            "actorId": "Clara"
         },
         {
             "action": "walk",
@@ -63,7 +58,7 @@
                 "x": 0,
                 "y": 6
             },
-            "actor": "Clara"
+            "actorId": "Clara"
         }
     ]
 }

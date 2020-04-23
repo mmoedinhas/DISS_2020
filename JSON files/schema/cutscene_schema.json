@@ -32,48 +32,11 @@
                 "title": "Actor",
                 "description": "The id and starting position of the actor",
                 "default": {},
-                "examples": [
-                    {
-                        "id": "Clara",
-                        "actorId": "Clara",
-                        "start": [
-                            20.0,
-                            40.0
-                        ]
-                    },
-                    {
-                        "id": "Dancer1",
-                        "actorId": "Dancer1",
-                        "start": [
-                            20.0,
-                            100.0
-                        ]
-                    },
-                    {
-                        "start": [
-                            10.0,
-                            120.0
-                        ],
-                        "id": "Dancer2",
-                        "actorId": "Dancer2"
-                    }
-                ],
                 "required": [
-                    "id",
                     "actorId",
                     "start"
                 ],
                 "properties": {
-                    "id": {
-                        "$id": "#/properties/actors/items/properties/id",
-                        "type": "string",
-                        "title": "Id",
-                        "description": "Declaration of the id for this actor for this event",
-                        "default": "",
-                        "examples": [
-                            "Clara"
-                        ]
-                    },
                     "actorId": {
                         "$id": "#/properties/actors/items/properties/actorId",
                         "type": "string",
@@ -117,41 +80,10 @@
                 "title": "Action",
                 "description": "The representation of an action",
                 "default": {},
-                "examples": [
-                    {
-                        "actor": "Clara",
-                        "action": "walk",
-                        "arguments": {
-                            "x": -5.0,
-                            "y": 0.0
-                        }
-                    },
-                    {
-                        "action": "talk",
-                        "arguments": {
-                            "text": "It's finally Christmas!"
-                        },
-                        "actor": "Clara"
-                    },
-                    {
-                        "action": "talk",
-                        "arguments": {
-                            "text": "Everyone seems to be having fun. I can see my cousins and my grandma! I should go and say hello!"
-                        }
-                    },
-                    {
-                        "action": "walk",
-                        "arguments": {
-                            "x": 0.0,
-                            "y": 20.0
-                        },
-                        "actor": "Clara"
-                    }
-                ],
                 "required": [
                     "action",
                     "arguments",
-                    "actor"
+                    "actorId"
                 ],
                 "properties": {
                     "action": {
@@ -178,7 +110,7 @@
                         ],
                         "properties": {}
                     },
-                    "actor": {
+                    "actorId": {
                         "$id": "#/properties/actions/items/properties/actor",
                         "type": "string",
                         "title": "Actor",
