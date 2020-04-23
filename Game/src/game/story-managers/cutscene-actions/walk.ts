@@ -20,7 +20,7 @@ export class Walk extends Action {
         this.emitter.on('stopWalking', this.stopWalkingHandler, this);
     }
 
-    public act() {
+    public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
         if(!this.started) {
             this.started = true;
 

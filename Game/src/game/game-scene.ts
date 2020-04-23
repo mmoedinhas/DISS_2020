@@ -41,6 +41,7 @@ export class GameScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.storyManager.start();
+        this.scene.launch('Dialogue');
         
         //this.player = this.initPlayer(currEvent);
 

@@ -1,7 +1,10 @@
 import * as Phaser from 'phaser';
+import WebfontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
+
 import { GameScene } from './game-scene';
 import { IPlayerType, IStory } from '../utils/interfaces';
 import * as paths from '../utils/paths';
+import { DialogueScene } from './dialogue-scene';
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
@@ -24,6 +27,7 @@ const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
 const actorsFile: string = paths.storyPath + 'actors.json';
 const playableCharactersFile: string = paths.storyPath + 'playable_characters.json';
 const tilesetsFile: string = paths.tilesetPath + 'tilesets.json';
+const dialogueBox: string = paths.assetsPath + 'text-box.png';
 
 export class BootScene extends Phaser.Scene {
 
@@ -37,6 +41,23 @@ export class BootScene extends Phaser.Scene {
         this.load.json('actors', actorsFile);
         this.load.json('playable_characters', playableCharactersFile);
         this.load.json('tilesets', tilesetsFile);
+        this.load.image('dialogue_box', dialogueBox);
+
+        (this.load as any).rexWebFont({
+            custom: {
+                families: ['MatchupPro'],
+                urls: ['assets/fonts.css']
+            }
+        });
+
+        
+        this.load.on('webfontactive', function (fileObj, familyName) {
+            console.log('font-active: ' + familyName)
+        });
+
+        this.load.on('webfontinactive', function (fileObj, familyName) {
+            console.log('font-inactive: ' + familyName)
+        });
     }
 
     public create() {
@@ -52,6 +73,10 @@ export class BootScene extends Phaser.Scene {
 
             this.load.on('complete', () => {
                 console.log("load complete for " + this.load.totalComplete + " files");
+                this.add.text(100, 0, "load complete for " + this.load.totalComplete + " files", {
+                    fontFamily: 'MatchupPro',
+                    fontSize: '20px'
+                });
                 scene.start('Game');
             });
 
@@ -193,8 +218,18 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     },
     scene: [
         BootScene,
-        GameScene
-    ]
+        GameScene,
+        DialogueScene
+    ],
+    plugins: {
+        global: [
+            {
+                key: 'rexWebfontLoader',
+                plugin: WebfontLoaderPlugin,
+                start: true
+            },
+        ]
+    }
 }
 
 export const game = new Phaser.Game(gameConfig);

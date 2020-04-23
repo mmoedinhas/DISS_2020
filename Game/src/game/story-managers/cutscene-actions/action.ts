@@ -14,7 +14,7 @@ export abstract class Action {
         this.actor = this.scene.actors.find(actor => actor.getId() == actorId);
     }
 
-    public abstract act();
+    public abstract act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]);
     
     public isDone() {
         return this.done;

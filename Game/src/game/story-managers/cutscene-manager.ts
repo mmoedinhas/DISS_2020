@@ -25,7 +25,7 @@ export class CutsceneManager extends EventManager{
         }
 
         if(this.currActionIndex < this.actions.length) {
-            this.actions[this.currActionIndex].act();
+            this.actions[this.currActionIndex].act(time, delta, keysPressed);
         }
         
     }
