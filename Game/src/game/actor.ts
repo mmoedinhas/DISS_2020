@@ -2,13 +2,13 @@ import * as Phaser from 'phaser';
 import { IBodySpecs, ICoordinates } from '../utils/interfaces';
 import { isArcadeBody } from '../utils/type-predicates';
 import { toMapCoordinates } from '../utils/coordinates';
-import { Game } from './game';
+import { GameScene } from './game-scene';
 
-export abstract class Actor {
+export class Actor {
 
     public sprite: Phaser.GameObjects.Sprite;
 
-    constructor(scene: Game, x: integer, y: integer, tilesetKey: string, frame: integer, bodySpecs: IBodySpecs) {
+    constructor(scene: GameScene, x: integer, y: integer, tilesetKey: string, frame: integer, bodySpecs: IBodySpecs) {
 
         let mapCoords: ICoordinates = toMapCoordinates(x, y, scene.map);
         this.sprite = scene.physics.add.sprite(mapCoords.x, mapCoords.y, tilesetKey, frame).setOrigin(0.5, 1);
@@ -65,6 +65,4 @@ export abstract class Actor {
 
         this.sprite.setOrigin(originX, originY);
     }
-
-    public abstract handleInput();
 }

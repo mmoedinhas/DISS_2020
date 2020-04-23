@@ -1,7 +1,6 @@
 import * as Phaser from 'phaser';
-import { Game } from './game';
+import { GameScene } from './game-scene';
 import { IPlayerType, IStory } from '../utils/interfaces';
-import { StoryManager } from './story-manager';
 import * as paths from '../utils/paths';
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
@@ -45,9 +44,8 @@ export class BootScene extends Phaser.Scene {
         this.getStory().then((response) => {
             console.log(response);
 
-            let storyManager = new StoryManager(response as IStory, playerType);
-            this.registry.set('storyManager', storyManager);
-
+            this.registry.set('story', response);
+            this.registry.set('playerType', playerType);
             this.loadAllEventFiles(response as IStory);
 
             let scene: Phaser.Scenes.ScenePlugin = this.scene;
@@ -179,8 +177,8 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
             height: 240
         },
         max: {
-            width: 640,
-            height: 360
+            width: 1280,
+            height: 720
         }
     },
     render: {
@@ -195,7 +193,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     },
     scene: [
         BootScene,
-        Game
+        GameScene
     ]
 }
 

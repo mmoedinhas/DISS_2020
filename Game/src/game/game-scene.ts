@@ -1,18 +1,21 @@
 import * as Phaser from 'phaser';
-import { StoryManager } from './story-manager';
-import { IScene, IEvent, IBodySpecs } from '../utils/interfaces';
+import { StoryManager, EventType } from './story-managers/story-manager';
+import { IScene, IEvent, IBodySpecs, IStory, IPlayerType } from '../utils/interfaces';
 import { isWebGLRenderer } from '../utils/type-predicates';
 import { Player } from './player';
 import { Vignette } from './shaders/pipeline.js';
+import { Actor } from './actor';
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
     key: 'Game',
 };
 
-export class Game extends Phaser.Scene {
+export class GameScene extends Phaser.Scene {
 
-    public player: Player;
     public map: Phaser.Tilemaps.Tilemap;
+    public actors: Actor[] = [];
+
+    private player: Player;
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private storyManager: StoryManager; 
     private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
@@ -23,7 +26,11 @@ export class Game extends Phaser.Scene {
     }
 
     public init() {
-        this.storyManager = this.registry.get('storyManager');
+        
+        let story: IStory = this.registry.get('story');
+        let playerType: IPlayerType = this.registry.get('playerType');
+
+        this.storyManager = new StoryManager(this, story, playerType);
     }
 
     public create() {
@@ -31,6 +38,10 @@ export class Game extends Phaser.Scene {
         let currScene: IScene = this.storyManager.getCurrScene();
         let currEvent: IEvent = this.storyManager.getEventAt(0, 1);
         this.map = this.initMap(currScene);
+        this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.storyManager.start();
+        
         //this.player = this.initPlayer(currEvent);
 
         // if(isWebGLRenderer(this.game.renderer)) {
@@ -44,9 +55,37 @@ export class Game extends Phaser.Scene {
         // this.cameras.main.roundPixels = true;
     }
 
-    public update(time, delta) {
+    public update(time: number, delta: number) {
 
-        
+        let keysPressed:Phaser.Input.Keyboard.Key[]  = this.parseUserInput();
+        this.storyManager.act(time, delta, keysPressed);
+    }
+
+    private parseUserInput(): Phaser.Input.Keyboard.Key[] {
+
+        let keysPressed: Phaser.Input.Keyboard.Key[] = [];
+
+        if (this.cursors.space.isDown) {
+            keysPressed.push(this.cursors.space);
+        }
+
+        if (this.cursors.left.isDown) {
+            keysPressed.push(this.cursors.left);
+        }
+
+        if (this.cursors.right.isDown) {
+            keysPressed.push(this.cursors.right);
+        }
+
+        if (this.cursors.up.isDown) {
+            keysPressed.push(this.cursors.up);
+        }
+
+        if (this.cursors.down.isDown) {
+            keysPressed.push(this.cursors.down);
+        }
+
+        return keysPressed;
     }
 
     private initMap(currScene: IScene): Phaser.Tilemaps.Tilemap {
