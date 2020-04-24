@@ -4,6 +4,7 @@ import { GameScene } from "../game-scene";
 import { IBodySpecs } from "../../utils/interfaces";
 import { Actor } from "../actor";
 import { Walk } from "./cutscene-actions/walk";
+import { Talk } from "./cutscene-actions/talk";
 
 export class CutsceneManager extends EventManager{
 
@@ -65,9 +66,9 @@ export class CutsceneManager extends EventManager{
                     this.actions.push(new Walk(this.scene, actionObj.actorId, actionObj.arguments.x, actionObj.arguments.y));
                     break;
                 case "talk":
+                    this.actions.push(new Talk(this.scene, actionObj.actorId, actionObj.arguments.text));
                     break;
             }
         }
-        
     }
 }
