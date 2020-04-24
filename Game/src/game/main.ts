@@ -27,7 +27,8 @@ const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
 const actorsFile: string = paths.storyPath + 'actors.json';
 const playableCharactersFile: string = paths.storyPath + 'playable_characters.json';
 const tilesetsFile: string = paths.tilesetPath + 'tilesets.json';
-const dialogueBox: string = paths.assetsPath + 'text-box.png';
+const dialogueBox: string = paths.uiPath + 'text-box.png';
+const dialogueArrow: string = paths.uiPath + 'dialogue-arrow.png';
 
 export class BootScene extends Phaser.Scene {
 
@@ -42,21 +43,22 @@ export class BootScene extends Phaser.Scene {
         this.load.json('playable_characters', playableCharactersFile);
         this.load.json('tilesets', tilesetsFile);
         this.load.image('dialogue_box', dialogueBox);
+        this.load.image('dialogue_arrow', dialogueArrow);
 
         (this.load as any).rexWebFont({
             custom: {
-                families: ['MatchupPro'],
-                urls: ['assets/fonts.css']
+                families: ['MatchupPro', 'EquipmentPro'],
+                urls: ['assets/fonts/fonts.css']
             }
         });
 
         
         this.load.on('webfontactive', function (fileObj, familyName) {
-            console.log('font-active: ' + familyName)
+            console.log('loaded font: ' + familyName)
         });
 
         this.load.on('webfontinactive', function (fileObj, familyName) {
-            console.log('font-inactive: ' + familyName)
+            console.log('couldn\'t load font: ' + familyName)
         });
     }
 
@@ -73,10 +75,6 @@ export class BootScene extends Phaser.Scene {
 
             this.load.on('complete', () => {
                 console.log("load complete for " + this.load.totalComplete + " files");
-                this.add.text(100, 0, "load complete for " + this.load.totalComplete + " files", {
-                    fontFamily: 'MatchupPro',
-                    fontSize: '20px'
-                });
                 scene.start('Game');
             });
 
@@ -202,8 +200,8 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
             height: 240
         },
         max: {
-            width: 1280,
-            height: 720
+            width: 640,
+            height: 360
         }
     },
     render: {

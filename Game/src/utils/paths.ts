@@ -1,4 +1,5 @@
-export const assetsPath: string = 'assets/';
+export const uiPath: string = 'assets/ui/';
+export const fontsPath: string = 'assets/fonts/';
 export const storyPath: string = 'assets/story/';
 export const eventsPath: string = 'assets/story/event/';
 export const dialoguePath: string = 'assets/story/dialogue/';

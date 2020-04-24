@@ -41,7 +41,10 @@ export class GameScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.storyManager.start();
-        this.scene.launch('Dialogue');
+
+        const text: string = `Devil May Cry is an action-adventure hack and slash video game series developed and published by Capcom and created by Hideki Kamiya. The series centers on the monster hunter Dante and his efforts to avenge his mother's murder. Its gameplay consists of combat scenes in which the player must attempt to extend long chains of attacks, avoiding damage and exhibiting stylized combat; this combat, along with time and the number of items collected and used, are considered in grading the player's performance. Across the series, new characters with unique skills are available.`
+
+        this.scene.launch('Dialogue', { text: text, actor: "Clara"});
         
         //this.player = this.initPlayer(currEvent);
 
@@ -49,7 +52,6 @@ export class GameScene extends Phaser.Scene {
         //     this.vignette = this.game.renderer.addPipeline('Vignette', new Vignette(this.game));
         //     this.applyPipeline();
         // }
-        
 
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.roundPixels = true;
