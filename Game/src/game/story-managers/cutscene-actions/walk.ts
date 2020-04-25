@@ -24,7 +24,7 @@ export class Walk extends Action {
         if(!this.started) {
             this.started = true;
 
-            this.actor.move(this.scene, this.x, this.y, this.emitter);
+            this.actor.moveAuto(this.scene, this.x, this.y, this.emitter);
             this.actor.getCameraToFollow(this.scene);
         }
     }

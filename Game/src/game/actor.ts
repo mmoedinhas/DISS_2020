@@ -2,23 +2,23 @@ import * as Phaser from 'phaser';
 import MoveTo from 'phaser3-rex-plugins/plugins/moveto.js';
 
 import { IBodySpecs, ICoordinates } from '../utils/interfaces';
-import { isArcadeBody } from '../utils/type-predicates';
+import { isArcadeBody, isActor, isStaticMapLayer } from '../utils/type-predicates';
 import { toRealMapCoordinates, toTileMapCoordinates } from '../utils/coordinates';
 import { GameScene } from './game-scene';
 
 export class Actor {
 
-    private sprite: Phaser.GameObjects.Sprite;
-    private id: string;
-    private name: string;
-    private speed: number = 80;
+    protected sprite: Phaser.GameObjects.Sprite;
+    protected velocity: number = 80;
+    protected id: string;
+    protected name: string;
 
     constructor(scene: GameScene, x: integer, y: integer, actorObj: any) {
 
         this.id = actorObj.id;
         this.name = actorObj.name;
         
-        let mapCoords: ICoordinates = toRealMapCoordinates(x, y, scene.map);
+        let mapCoords: ICoordinates = toRealMapCoordinates(x, y, scene.getMap());
         this.sprite = scene.physics.add.sprite(mapCoords.x, mapCoords.y, actorObj.tilesetId, actorObj.defaultFrame).setOrigin(0.5, 1);
         this.initBody(actorObj);
         //TODO this.createAnimations(actorObj);
@@ -73,12 +73,8 @@ export class Actor {
         }
     }
 
-    private correctOrigin(map: Phaser.Tilemaps.Tilemap) {
-
-        let originX = (this.sprite.width - map.tileWidth) / 2.0 / this.sprite.width;
-        let originY = (this.sprite.height - map.tileHeight) / this.sprite.height;
-
-        this.sprite.setOrigin(originX, originY);
+    private setCollisionsWithMap() {
+        
     }
 
     public getId(): string {
@@ -93,14 +89,24 @@ export class Actor {
         scene.cameras.main.startFollow(this.sprite);
     }
 
-    public getName() : string {
+    public getName(): string {
         return this.name;
     }
 
-    public move(scene: GameScene, x:integer, y:integer, emitter: Phaser.Events.EventEmitter) {
+    public setCollisionWith(thing: Actor | Phaser.Tilemaps.StaticTilemapLayer, scene: GameScene) {
+
+        if(isActor(thing)) {
+            scene.physics.add.collider(thing.sprite, this.sprite);
+        } else if(isStaticMapLayer(thing)) {
+            scene.physics.add.collider(thing, this.sprite);
+        }
+
+    }
+
+    public moveAuto(scene: GameScene, x:integer, y:integer, emitter: Phaser.Events.EventEmitter) {
 
         let moveTo = new MoveTo(this.sprite, {
-            speed: this.speed,
+            speed: this.velocity,
             rotateToTarget: false
         });
 
@@ -108,11 +114,11 @@ export class Actor {
             emitter.emit('stopWalking');
         });
 
-        let tileCoords: ICoordinates = toTileMapCoordinates(this.sprite.x, this.sprite.y, scene.map);
+        let tileCoords: ICoordinates = toTileMapCoordinates(this.sprite.x, this.sprite.y, scene.getMap());
         tileCoords.x += x;
         tileCoords.y += y;
 
-        let mapCoords: ICoordinates = toRealMapCoordinates(tileCoords.x, tileCoords.y, scene.map);
+        let mapCoords: ICoordinates = toRealMapCoordinates(tileCoords.x, tileCoords.y, scene.getMap());
 
         moveTo.moveTo(mapCoords.x, mapCoords.y);
     }

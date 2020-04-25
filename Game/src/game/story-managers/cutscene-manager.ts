@@ -27,16 +27,13 @@ export class CutsceneManager extends EventManager{
 
         if(this.currActionIndex < this.actions.length) {
             this.actions[this.currActionIndex].act(time, delta, keysPressed);
+        } else {
+            this.done = true;
         }
         
     }
 
     public populateActors() {
-        for(let actor of this.scene.actors) {
-            actor.destroy();
-        }
-
-        this.scene.actors = [];
 
         let actorsFromEventObj = this.jsonObj.actors;
         let allActorsObj = this.scene.cache.json.get('actors').actors;
@@ -52,7 +49,7 @@ export class CutsceneManager extends EventManager{
                 anchor: actor.body.anchor
             };
 
-            this.scene.actors.push(new Actor(this.scene, x, y, actor));
+            this.scene.addActor(new Actor(this.scene, x, y, actor));
         }
     }
 

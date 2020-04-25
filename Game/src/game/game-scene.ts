@@ -12,13 +12,13 @@ const config: Phaser.Types.Scenes.SettingsConfig = {
 
 export class GameScene extends Phaser.Scene {
 
-    public map: Phaser.Tilemaps.Tilemap;
-    public actors: Actor[] = [];
+    private map: Phaser.Tilemaps.Tilemap;
+    private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
+    private actors: Actor[] = [];
 
     private player: Player;
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private storyManager: StoryManager; 
-    private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
     private vignette: Vignette;
 
     constructor() {
@@ -57,6 +57,57 @@ export class GameScene extends Phaser.Scene {
 
         let keysPressed:Phaser.Input.Keyboard.Key[]  = this.parseUserInput();
         this.storyManager.act(time, delta, keysPressed);
+    }
+
+    public destroyEvent() {
+        if(this.player !== undefined) {
+            this.player.destroy();
+        }
+
+        for(let actor of this.actors) {
+            actor.destroy();
+        }
+    }
+
+    public setPlayer(player: Player) {
+        this.setCollisionsWithAllActors(player);
+        this.setActorCollisionsWithMap(player);
+        player.getCameraToFollow(this);
+        
+        this.player = player;
+    }
+
+    public getPlayer(): Player {
+        return this.player;
+    }
+
+    public setActorCollisionsWithMap(actor: Actor) {
+        for(let layer of this.obstacles) {
+            actor.setCollisionWith(layer, this);
+        }
+    }
+
+    public setCollisionsWithAllActors(actor: Actor) {
+        for(let actor2 of this.actors) {
+            actor.setCollisionWith(actor2, this);
+        }
+    }
+
+    public getActorWithId(actorId: string): Actor {
+        return this.actors.find(actor => actor.getId() == actorId);
+    }
+
+    public getMap(): Phaser.Tilemaps.Tilemap {
+        return this.map;
+    }
+
+    public addActor(newActor: Actor) {
+
+        this.setCollisionsWithAllActors(newActor);
+
+        this.setActorCollisionsWithMap(newActor);
+
+        this.actors.push(newActor);
     }
 
     private parseUserInput(): Phaser.Input.Keyboard.Key[] {
@@ -110,18 +161,6 @@ export class GameScene extends Phaser.Scene {
         }
 
         return map;
-    }
-
-    private initPlayer(currEvent: IEvent): Player {
-
-        let actorsObj = this.cache.json.get('actors');
-        let eventObj = this.cache.json.get(currEvent.name);
-
-        let actor = actorsObj.actors.find(actor => actor.id == eventObj.player.actorId);
-        let x = eventObj.player.startPosition[0];
-        let y = eventObj.player.startPosition[1];
-
-        return new Player(this, x, y, actor);
     }
 
     private applyPipeline() {

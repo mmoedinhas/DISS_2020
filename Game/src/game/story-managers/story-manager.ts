@@ -33,15 +33,54 @@ export class StoryManager {
         this.updateEventType();   
     }
 
-    public start() {
+    public start(): EventManager {
+
+        this.scene.destroyEvent();
+
+        let currEventManager: EventManager;
+
         switch(this.currEventType) {
             case EventType.GAMEPLAY:
-                this.currEventManager = new GameplayManager(this.scene, this.getCurrEvent().name);
+                currEventManager = new GameplayManager(this.scene, this.getCurrEvent().name);
                 break;
             case EventType.CUTSCENE:
-                this.currEventManager = new CutsceneManager(this.scene, this.getCurrEvent().name);
+                currEventManager = new CutsceneManager(this.scene, this.getCurrEvent().name);
                 break;
-        } 
+        }
+        
+        this.currEventManager = currEventManager;
+
+        return currEventManager;
+    }
+
+    public next(): EventManager {
+
+        let scene: IScene = this.getSceneAt(this.currSceneIndex);
+
+        if(scene.events.length <= this.currEventIndex) {
+            return;
+        }
+
+        this.currEventIndex++;
+
+        if(scene.events.length <= this.currEventIndex) {
+            return;
+        }
+
+        this.updateEventType();
+
+        return this.start();
+    }
+
+    public updateEventType() {
+        switch(this.getCurrEvent().type) {
+            case "gameplay":
+                this.currEventType = EventType.GAMEPLAY;
+                break;
+            case "cutscene":
+                this.currEventType = EventType.CUTSCENE;
+                break;
+        }
     }
 
     public getEventAt(sceneIndex: integer, eventIndex: integer): IEvent {
@@ -65,17 +104,11 @@ export class StoryManager {
     }
 
     public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
-        this.currEventManager.act(time, delta, keysPressed);
-    }
 
-    private updateEventType() {
-        switch(this.getCurrEvent().type) {
-            case "gameplay":
-                this.currEventType = EventType.GAMEPLAY;
-                break;
-            case "cutscene":
-                this.currEventType = EventType.CUTSCENE;
-                break;
+        if(this.currEventManager.isDone()) {
+            this.next();
+        } else {
+            this.currEventManager.act(time, delta, keysPressed);
         }
     }
 }
