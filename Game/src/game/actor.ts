@@ -5,6 +5,7 @@ import { IBodySpecs, ICoordinates } from '../utils/interfaces';
 import { isArcadeBody, isActor, isStaticMapLayer } from '../utils/type-predicates';
 import { toRealMapCoordinates, toTileMapCoordinates } from '../utils/coordinates';
 import { GameScene } from './game-scene';
+import { Npc } from './npc';
 
 export class Actor {
 
@@ -97,6 +98,10 @@ export class Actor {
             scene.physics.add.collider(thing, this.sprite);
         }
 
+    }
+
+    public setOverlapWithZone(zone: Phaser.GameObjects.Zone, scene: GameScene, callback: () => boolean , context: Npc) {
+        scene.physics.add.overlap(zone, this.sprite, callback, callback, context);
     }
 
     public moveAuto(scene: GameScene, x:integer, y:integer, emitter: Phaser.Events.EventEmitter) {

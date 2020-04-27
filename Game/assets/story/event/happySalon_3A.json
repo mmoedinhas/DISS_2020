@@ -7,26 +7,21 @@
         "startPosition": "current"
     },
     "enemies": [],
-    "npcs": [
-        {
+    "npcs": [{
             "actorId": "Dancer1",
             "position": [
                 3,
                 10
             ],
             "dialogue": "talkGuest.json",
-            "isInteractableConditions": [
-                {
-                    "id": "guest1Greeted",
-                    "value": false
-                }
-            ],
-            "flagChangesAfterInteraction": [
-                {
-                    "id": "guest1Greeted",
-                    "value": true
-                }
-            ]
+            "isInteractableConditions": [{
+                "id": "guest1Greeted",
+                "value": false
+            }],
+            "flagChangesAfterInteraction": [{
+                "id": "guest1Greeted",
+                "value": true
+            }]
         },
         {
             "actorId": "Dancer2",
@@ -35,38 +30,30 @@
                 13
             ],
             "dialogue": "talkGuest.json",
-            "isInteractableConditions": [
-                {
-                    "id": "guest2Greeted",
-                    "value": false
-                }
-            ],
-            "flagChangesAfterInteraction": [
-                {
-                    "id": "guest2Greeted",
-                    "value": true
-                }
-            ]
+            "isInteractableConditions": [{
+                "id": "guest2Greeted",
+                "value": false
+            }],
+            "flagChangesAfterInteraction": [{
+                "id": "guest2Greeted",
+                "value": true
+            }]
         },
         {
-            "actorId": "Dancer2",
+            "actorId": "Dancer3",
             "position": [
                 7,
                 17
             ],
             "dialogue": "talkGuest.json",
-            "isInteractableConditions": [
-                {
-                    "id": "guest3Greeted",
-                    "value": false
-                }
-            ],
-            "flagChangesAfterInteraction": [
-                {
-                    "id": "guest3Greeted",
-                    "value": true
-                }
-            ]
+            "isInteractableConditions": [{
+                "id": "guest3Greeted",
+                "value": false
+            }],
+            "flagChangesAfterInteraction": [{
+                "id": "guest3Greeted",
+                "value": true
+            }]
         },
         {
             "actorId": "Grandma",
@@ -75,18 +62,14 @@
                 15
             ],
             "dialogue": "talkGrandma.json",
-            "isInteractableConditions": [
-                {
-                    "id": "grandmaGreeted",
-                    "value": false
-                }
-            ],
-            "flagChangesAfterInteraction": [
-                {
-                    "id": "grandmaGreeted",
-                    "value": true
-                }
-            ]
+            "isInteractableConditions": [{
+                "id": "grandmaGreeted",
+                "value": false
+            }],
+            "flagChangesAfterInteraction": [{
+                "id": "grandmaGreeted",
+                "value": true
+            }]
         }
     ],
     "items": []

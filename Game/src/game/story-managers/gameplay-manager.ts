@@ -38,7 +38,7 @@ export class GameplayManager extends EventManager{
                 interactable = true;
             }
 
-            this.addNpc(new Npc(this.scene, x, y, actor, interactable));
+            this.addNpc(new Npc(this.scene, x, y, actor, interactable, this.player));
         }
     }
 
