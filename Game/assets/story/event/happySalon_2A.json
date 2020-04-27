@@ -5,13 +5,12 @@
         "playerId": "Clara",
         "actorId": "Clara",
         "startPosition": [
-            12,
-            6
+            10,
+            13
         ]
     },
     "enemies": [],
-    "npcs": [
-        {
+    "npcs": [{
             "actorId": "Dancer1",
             "position": [
                 3,
@@ -48,18 +47,14 @@
                 15
             ],
             "dialogue": "nervousTalkGrandma.json",
-            "isInteractableConditions": [
-                {
-                    "id": "grandmaGreeted",
-                    "value": false
-                }
-            ],
-            "flagChangesAfterInteraction": [
-                {
-                    "id": "grandmaGreeted",
-                    "value": true
-                }
-            ]
+            "isInteractableConditions": [{
+                "id": "grandmaGreeted",
+                "value": false
+            }],
+            "flagChangesAfterInteraction": [{
+                "id": "grandmaGreeted",
+                "value": true
+            }]
         }
     ],
     "items": []
