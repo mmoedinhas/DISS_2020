@@ -73,10 +73,6 @@ export class Actor {
         }
     }
 
-    private setCollisionsWithMap() {
-        
-    }
-
     public getId(): string {
         return this.id;
     }

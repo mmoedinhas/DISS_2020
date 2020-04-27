@@ -88,6 +88,11 @@ export class GameScene extends Phaser.Scene {
     }
 
     public setCollisionsWithAllActors(actor: Actor) {
+
+        if(this.player !== undefined  && this.player !== actor) {
+            actor.setCollisionWith(this.player, this);
+        }
+
         for(let actor2 of this.actors) {
             actor.setCollisionWith(actor2, this);
         }

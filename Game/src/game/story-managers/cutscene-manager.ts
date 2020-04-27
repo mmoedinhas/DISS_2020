@@ -43,12 +43,6 @@ export class CutsceneManager extends EventManager{
             let x = actorDesc.start[0];
             let y = actorDesc.start[1];
 
-            let bodySpecs: IBodySpecs = {
-                width: actor.body.width,
-                height: actor.body.height,
-                anchor: actor.body.anchor
-            };
-
             this.scene.addActor(new Actor(this.scene, x, y, actor));
         }
     }
