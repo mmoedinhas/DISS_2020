@@ -14,9 +14,7 @@ export class GameScene extends Phaser.Scene {
 
     private map: Phaser.Tilemaps.Tilemap;
     private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
-    private actors: Actor[] = [];
-
-    private player: Player;
+    
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private storyManager: StoryManager; 
     private vignette: Vignette;
@@ -59,60 +57,18 @@ export class GameScene extends Phaser.Scene {
         this.storyManager.act(time, delta, keysPressed);
     }
 
-    public destroyEvent() {
-        if(this.player !== undefined) {
-            this.player.destroy();
-        }
-
-        for(let actor of this.actors) {
-            actor.destroy();
-        }
-    }
-
-    public setPlayer(player: Player) {
-        this.setCollisionsWithAllActors(player);
-        this.setActorCollisionsWithMap(player);
-        player.getCameraToFollow(this);
-        
-        this.player = player;
-    }
-
-    public getPlayer(): Player {
-        return this.player;
-    }
-
     public setActorCollisionsWithMap(actor: Actor) {
         for(let layer of this.obstacles) {
             actor.setCollisionWith(layer, this);
         }
     }
 
-    public setCollisionsWithAllActors(actor: Actor) {
-
-        if(this.player !== undefined  && this.player !== actor) {
-            actor.setCollisionWith(this.player, this);
-        }
-
-        for(let actor2 of this.actors) {
-            actor.setCollisionWith(actor2, this);
-        }
-    }
-
-    public getActorWithId(actorId: string): Actor {
-        return this.actors.find(actor => actor.getId() == actorId);
-    }
+    // public getActorWithId(actorId: string): Actor {
+    //     return this.actors.find(actor => actor.getId() == actorId);
+    // }
 
     public getMap(): Phaser.Tilemaps.Tilemap {
         return this.map;
-    }
-
-    public addActor(newActor: Actor) {
-
-        this.setCollisionsWithAllActors(newActor);
-
-        this.setActorCollisionsWithMap(newActor);
-
-        this.actors.push(newActor);
     }
 
     private parseUserInput(): Phaser.Input.Keyboard.Key[] {

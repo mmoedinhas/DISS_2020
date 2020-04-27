@@ -35,7 +35,9 @@ export class StoryManager {
 
     public start(): EventManager {
 
-        this.scene.destroyEvent();
+        if(this.currEventManager !== undefined) {
+            this.currEventManager.destroy();
+        }
 
         let currEventManager: EventManager;
 

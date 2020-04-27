@@ -1,6 +1,7 @@
 import { Action } from "./action";
 import { GameScene } from "../../game-scene";
 import { DialogueScene } from "../../dialogue-scene";
+import { Actor } from "../../actor";
 
 export class Talk extends Action {
 
@@ -10,8 +11,8 @@ export class Talk extends Action {
 
     private emitter: Phaser.Events.EventEmitter; 
 
-    constructor(scene: GameScene, actorId: string, text: string) {
-        super(scene, actorId);
+    constructor(scene: GameScene, actor: Actor, text: string) {
+        super(scene, actor);
         this.onScreen = false;
 
         this.actorName = this.actor.getName();

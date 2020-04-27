@@ -1,5 +1,6 @@
 import { Action } from "./action";
 import { GameScene } from "../../game-scene";
+import { Actor } from "../../actor";
 
 export class Walk extends Action {
 
@@ -9,8 +10,8 @@ export class Walk extends Action {
     private started: boolean;
     private emitter: Phaser.Events.EventEmitter; 
     
-    constructor(scene: GameScene, actorId: string, x: integer, y: integer) {
-        super(scene, actorId);
+    constructor(scene: GameScene, actor: Actor, x: integer, y: integer) {
+        super(scene, actor);
 
         this.x = x;
         this.y = y;

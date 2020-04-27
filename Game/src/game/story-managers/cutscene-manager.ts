@@ -11,8 +11,11 @@ export class CutsceneManager extends EventManager{
     private actions: Action[] = [];
     private currActionIndex: integer;
 
+    private actors: Actor[] = [];
+
     constructor(scene: GameScene, name: string) {
         super(scene, name);
+        this.populateActors();
         this.currActionIndex = 0;
         this.instantiateActions();
     }
@@ -43,23 +46,41 @@ export class CutsceneManager extends EventManager{
             let x = actorDesc.start[0];
             let y = actorDesc.start[1];
 
-            this.scene.addActor(new Actor(this.scene, x, y, actor));
+            this.addActor(new Actor(this.scene, x, y, actor));
         }
+    }
+
+    public addActor(newActor: Actor) {
+
+        this.scene.setActorCollisionsWithMap(newActor);
+        this.actors.push(newActor);
+    }
+
+    public getActorById(actorId: string): Actor {
+        return this.actors.find(actor => actor.getId() === actorId);
     }
 
     public instantiateActions() {
         let actionsObj = this.jsonObj.actions;
 
         for(let actionObj of actionsObj) {
+
+            let actor: Actor = this.getActorById(actionObj.actorId);
             
             switch(actionObj.action) {
                 case "walk":
-                    this.actions.push(new Walk(this.scene, actionObj.actorId, actionObj.arguments.x, actionObj.arguments.y));
+                    this.actions.push(new Walk(this.scene, actor, actionObj.arguments.x, actionObj.arguments.y));
                     break;
                 case "talk":
-                    this.actions.push(new Talk(this.scene, actionObj.actorId, actionObj.arguments.text));
+                    this.actions.push(new Talk(this.scene, actor, actionObj.arguments.text));
                     break;
             }
+        }
+    }
+
+    public destroy() {
+        for(let actor of this.actors) {
+            actor.destroy();
         }
     }
 }

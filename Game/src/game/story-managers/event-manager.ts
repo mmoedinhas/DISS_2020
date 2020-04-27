@@ -11,11 +11,11 @@ export abstract class EventManager {
         this.jsonObj = scene.cache.json.get(name);
         this.scene = scene;
         this.done = false;
-        this.populateActors();
     }
 
     public abstract act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]);
     public abstract populateActors();
+    public abstract destroy();
 
     public isDone(): boolean {
         return this.done;

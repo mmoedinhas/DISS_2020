@@ -7,11 +7,11 @@ export abstract class Action {
     protected scene: GameScene;
     protected actor: Actor;
 
-    constructor(scene: GameScene, actorId: string) {
+    constructor(scene: GameScene, actor: Actor) {
         this.scene = scene;
         this.done = false;
 
-        this.actor = this.scene.getActorWithId(actorId);
+        this.actor = actor;
     }
 
     public abstract act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]);
