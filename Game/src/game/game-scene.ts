@@ -12,6 +12,9 @@ const config: Phaser.Types.Scenes.SettingsConfig = {
 
 export class GameScene extends Phaser.Scene {
 
+    public static MAX_DEPTH = 128;
+    public static MIN_DEPTH = 0;
+
     private map: Phaser.Tilemaps.Tilemap;
     private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
     
@@ -39,8 +42,6 @@ export class GameScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.storyManager.start();
-        
-        //this.player = this.initPlayer(currEvent);
 
         // if(isWebGLRenderer(this.game.renderer)) {
         //     this.vignette = this.game.renderer.addPipeline('Vignette', new Vignette(this.game));
@@ -62,10 +63,6 @@ export class GameScene extends Phaser.Scene {
             actor.setCollisionWith(layer, this);
         }
     }
-
-    // public getActorWithId(actorId: string): Actor {
-    //     return this.actors.find(actor => actor.getId() == actorId);
-    // }
 
     public getMap(): Phaser.Tilemaps.Tilemap {
         return this.map;
@@ -111,6 +108,13 @@ export class GameScene extends Phaser.Scene {
         for(let layerData of map.layers) {
 
             let depth: number = (layerData.properties as Array<object>).find(i => i['name'] === 'depth')['value'];
+
+            if(depth > 0) {
+                depth += GameScene.MAX_DEPTH + 1;
+            } else {
+                depth += GameScene.MIN_DEPTH - 1;
+            }
+
             let collidable: boolean = (layerData.properties as Array<object>).find(i => i['name'] === 'collidable')['value'];
 
             let layer: Phaser.Tilemaps.StaticTilemapLayer = map.createStaticLayer(layerData.name, tilesets).setDepth(depth);

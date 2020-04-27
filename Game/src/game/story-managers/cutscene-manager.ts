@@ -28,6 +28,8 @@ export class CutsceneManager extends EventManager{
             }
         }
 
+        this.sortActorDepths();
+
         if(this.currActionIndex < this.actions.length) {
             this.actions[this.currActionIndex].act(time, delta, keysPressed);
         } else {
@@ -81,6 +83,20 @@ export class CutsceneManager extends EventManager{
     public destroy() {
         for(let actor of this.actors) {
             actor.destroy();
+        }
+    }
+
+    private sortActorDepths() {
+        let actorsSorted: Actor[] = [...this.actors];
+
+        actorsSorted.sort((actor1, actor2) => {
+            return actor1.getY() - actor2.getY();
+        })
+
+        let depth = GameScene.MIN_DEPTH;
+        for(let actor of actorsSorted) {
+            actor.setDepth(depth);
+            depth++;
         }
     }
 }

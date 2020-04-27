@@ -16,6 +16,8 @@ export class GameplayManager extends EventManager{
 
     public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
         this.player.move(keysPressed);
+
+        this.sortActorDepths();
     }
 
     public populateActors() {
@@ -40,10 +42,19 @@ export class GameplayManager extends EventManager{
         }
     }
 
-    private addPlayer(player: Player) {
-        
-        
-        this.player = player;
+    private sortActorDepths() {
+        let actorsSorted: Actor[] = [...this.npcs];
+        actorsSorted.push(this.player);
+
+        actorsSorted.sort((actor1, actor2) => {
+            return actor1.getY() - actor2.getY();
+        })
+
+        let depth = GameScene.MIN_DEPTH;
+        for(let actor of actorsSorted) {
+            actor.setDepth(depth);
+            depth++;
+        }
     }
 
     private addNpc(newNpc: Npc) {
@@ -84,6 +95,10 @@ export class GameplayManager extends EventManager{
     }
 
     public destroy() {
+        this.player.destroy();
         
+        for(let npc of this.npcs) {
+            npc.destroy();
+        }
     }
 }

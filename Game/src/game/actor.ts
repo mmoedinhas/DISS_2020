@@ -118,4 +118,18 @@ export class Actor {
 
         moveTo.moveTo(mapCoords.x, mapCoords.y);
     }
+
+    public getY(): number {
+        return this.sprite.y;
+    }
+
+    public setDepth(depth: integer) {
+        if(depth < GameScene.MIN_DEPTH) {
+            depth = GameScene.MIN_DEPTH;
+        } else if(depth > GameScene.MAX_DEPTH) {
+            depth = GameScene.MAX_DEPTH;
+        }
+
+        this.sprite.setDepth(depth);
+    }
 }
