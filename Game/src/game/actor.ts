@@ -124,6 +124,10 @@ export class Actor {
         moveTo.moveTo(mapCoords.x, mapCoords.y);
     }
 
+    public getX(): number {
+        return this.sprite.x;
+    }
+
     public getY(): number {
         return this.sprite.y;
     }

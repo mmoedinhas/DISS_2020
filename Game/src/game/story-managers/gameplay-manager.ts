@@ -3,6 +3,7 @@ import { GameScene } from "../game-scene";
 import { Player } from "../player";
 import { Npc } from "../npc";
 import { Actor } from "../actor";
+import { ActionBox } from "../ui/action-box";
 
 export class GameplayManager extends EventManager{
 
@@ -25,6 +26,7 @@ export class GameplayManager extends EventManager{
         let allActorsArray = this.scene.cache.json.get('actors').actors;
 
         this.initPlayer(allActorsArray);
+        let actionBox = new ActionBox(this.scene, "Talk", this.player.getX(), this.player.getY() - 50);
 
         let npcsArray = this.jsonObj.npcs;
 

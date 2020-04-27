@@ -5,6 +5,7 @@ import { isWebGLRenderer } from '../utils/type-predicates';
 import { Player } from './player';
 import { Vignette } from './shaders/pipeline.js';
 import { Actor } from './actor';
+import { ActionBox } from './ui/action-box';
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
     key: 'Game',

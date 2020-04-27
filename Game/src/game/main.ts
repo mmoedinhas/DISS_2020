@@ -27,8 +27,10 @@ const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
 const actorsFile: string = paths.storyPath + 'actors.json';
 const playableCharactersFile: string = paths.storyPath + 'playable_characters.json';
 const tilesetsFile: string = paths.tilesetPath + 'tilesets.json';
+
 const dialogueBox: string = paths.uiPath + 'text-box.png';
 const dialogueArrow: string = paths.uiPath + 'dialogue-arrow.png';
+const zKey: string = paths.uiPath + 'ZKey.png';
 
 export class BootScene extends Phaser.Scene {
 
@@ -42,8 +44,11 @@ export class BootScene extends Phaser.Scene {
         this.load.json('actors', actorsFile);
         this.load.json('playable_characters', playableCharactersFile);
         this.load.json('tilesets', tilesetsFile);
+
+        // ui
         this.load.image('dialogue_box', dialogueBox);
         this.load.image('dialogue_arrow', dialogueArrow);
+        this.load.spritesheet('zkey', zKey, { frameWidth: 16, frameHeight: 15 });
 
         (this.load as any).rexWebFont({
             custom: {
