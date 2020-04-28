@@ -2,7 +2,6 @@ import { Actor } from "./actor";
 import { GameScene } from "./game-scene";
 import { Player } from "./player";
 import { ActionBox } from "./ui/action-box";
-import { isArcadeBody } from "../utils/type-predicates";
 import { IInteractable } from "./i-interactable";
 import { IDialogueLine } from "../utils/interfaces";
 

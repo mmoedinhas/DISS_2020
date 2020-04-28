@@ -16,7 +16,7 @@ const playerType: IPlayerType = {
     anger: 4,
     disgust: 4,
     fear: 5,
-    anxiety: 4,
+    anxiety: 10,
     sadness: 8,
     desire: 14,
     relaxation: 6,

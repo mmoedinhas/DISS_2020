@@ -1,3 +1,4 @@
+import * as filtrex from 'filtrex';
 import { EventManager } from "./event-manager";
 import { GameScene } from "../game-scene";
 import { Player } from "../player";
@@ -15,12 +16,14 @@ export class GameplayManager extends EventManager {
     private interactableObj: IInteractable;
     private interacting: boolean;
     private emitter: Phaser.Events.EventEmitter;
+    private flags: Map<string, boolean>;
 
     constructor(scene: GameScene, name: string, previousPlayerPos?: ICoordinates) {
         super(scene, name);
         this.previousPlayerPos = previousPlayerPos;
         this.populateActors();
         this.interacting = false;
+        this.flags = this.initFlags();
 
         this.emitter = new Phaser.Events.EventEmitter();
         this.emitter.on('dialogueEnded', this.interactionEnded, this);
@@ -30,20 +33,20 @@ export class GameplayManager extends EventManager {
         this.sortActorDepths();
         this.checkForPossibleInteraction();
 
-        if(!this.interacting) {
+        if (!this.interacting) {
 
-            if(keysPressed.includes(GameScene.interactKey) && this.interactableObj !== undefined) {
+            if (keysPressed.includes(GameScene.interactKey) && this.interactableObj !== undefined) {
 
                 this.interactableObj.interact();
                 this.interacting = true;
 
                 this.scene.scene.wake('Dialogue');
-                this.scene.scene.launch('Dialogue',{ dialogue: this.interactableObj.dialogue, emitter: this.emitter});
+                this.scene.scene.launch('Dialogue', { dialogue: this.interactableObj.dialogue, emitter: this.emitter });
             } else {
                 this.player.move(keysPressed);
             }
         }
-        
+
     }
 
     public populateActors() {
@@ -82,19 +85,37 @@ export class GameplayManager extends EventManager {
         this.checkForPossibleInteraction();
     }
 
+    private initFlags(): Map<string, boolean> {
+        const flags: Map<string, boolean> = new Map();
+        
+        let expression = this.jsonObj.endEventCondition;
+        console.log(expression);
+
+        try {
+            let filter = filtrex.compileExpression(expression);
+            console.log("filter result: " + filter({grandmaGreeted: true}));
+        } catch (err) {
+            let errTokens: string[] = err.message.split('\n');
+            let errString: string = errTokens[0] + "\n" + errTokens[1] + "\n" + errTokens[2];
+            console.log(errString);
+        }
+
+        return flags;
+    }
+
     private getDialogue(dialogueFilename: string): IDialogueLine[] {
         const dialogue: IDialogueLine[] = [];
 
         let key: string = getAssetIdFromPath(dialogueFilename);
         let dialogueObj = this.scene.cache.json.get(key);
 
-        for(let lineDesc of dialogueObj.lines) {
+        for (let lineDesc of dialogueObj.lines) {
 
             let line: IDialogueLine = {
                 author: lineDesc.author,
                 text: lineDesc.text
             };
-                dialogue.push(line);
+            dialogue.push(line);
         }
 
         return dialogue;
@@ -140,7 +161,7 @@ export class GameplayManager extends EventManager {
         for (let npc of this.npcs) {
             if (npc.isPlayerInZone()) {
 
-                if(this.interacting) {
+                if (this.interacting) {
                     npc.setActionBoxVisiblity(false);
                 } else if (this.interactableObj === undefined) {
                     this.interactableObj = npc;
@@ -151,11 +172,11 @@ export class GameplayManager extends EventManager {
 
             } else {
 
-                if(this.interactableObj == npc) {
+                if (this.interactableObj == npc) {
                     npc.setActionBoxVisiblity(false);
                     this.interactableObj = undefined;
                 }
-                
+
             }
         }
     }
@@ -168,9 +189,9 @@ export class GameplayManager extends EventManager {
         let y: number;
         let player: Player;
 
-        if(this.jsonObj.player.startPosition == "current") {
+        if (this.jsonObj.player.startPosition == "current") {
 
-            if(this.previousPlayerPos == undefined) {
+            if (this.previousPlayerPos == undefined) {
                 x = 0;
                 y = 0;
                 player = new Player(this.scene, x, y, actor, false);
