@@ -2,7 +2,7 @@ function getSchemaPath(jsonType) {
 
     let path = "";
 
-    switch(jsonType) {
+    switch (jsonType) {
         case "overall_narrative":
             path = "overall_narrative_schema.json";
             break;
@@ -14,6 +14,9 @@ function getSchemaPath(jsonType) {
             break;
         case "actors":
             path = "actors_schema.json";
+            break;
+        case "dialogue":
+            path = "dialogue_schema.json";
             break;
     }
 
