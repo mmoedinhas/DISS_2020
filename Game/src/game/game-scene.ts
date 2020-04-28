@@ -1,11 +1,9 @@
 import * as Phaser from 'phaser';
-import { StoryManager, EventType } from './story-managers/story-manager';
-import { IScene, IEvent, IBodySpecs, IStory, IPlayerType } from '../utils/interfaces';
+import { StoryManager } from './story-managers/story-manager';
+import { IScene, IEvent, IStory, IPlayerType } from '../utils/interfaces';
 import { isWebGLRenderer } from '../utils/type-predicates';
-import { Player } from './player';
 import { Vignette } from './shaders/pipeline.js';
 import { Actor } from './actor';
-import { ActionBox } from './ui/action-box';
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
     key: 'Game',
@@ -15,11 +13,12 @@ export class GameScene extends Phaser.Scene {
 
     public static MAX_DEPTH = 128;
     public static MIN_DEPTH = 0;
+    public static cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    public static interactKey: Phaser.Input.Keyboard.Key;
 
     private map: Phaser.Tilemaps.Tilemap;
     private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
-    
-    private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+
     private storyManager: StoryManager; 
     private vignette: Vignette;
 
@@ -38,9 +37,9 @@ export class GameScene extends Phaser.Scene {
     public create() {
         
         let currScene: IScene = this.storyManager.getCurrScene();
-        let currEvent: IEvent = this.storyManager.getEventAt(0, 1);
         this.map = this.initMap(currScene);
-        this.cursors = this.input.keyboard.createCursorKeys();
+        GameScene.cursors = this.input.keyboard.createCursorKeys();
+        GameScene.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
 
         this.storyManager.start();
 
@@ -73,24 +72,24 @@ export class GameScene extends Phaser.Scene {
 
         let keysPressed: Phaser.Input.Keyboard.Key[] = [];
 
-        if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
-            keysPressed.push(this.cursors.space);
+        if (Phaser.Input.Keyboard.JustDown(GameScene.interactKey)) {
+            keysPressed.push(GameScene.interactKey);
         }
 
-        if (this.cursors.left.isDown) {
-            keysPressed.push(this.cursors.left);
+        if (GameScene.cursors.left.isDown) {
+            keysPressed.push(GameScene.cursors.left);
         }
 
-        if (this.cursors.right.isDown) {
-            keysPressed.push(this.cursors.right);
+        if (GameScene.cursors.right.isDown) {
+            keysPressed.push(GameScene.cursors.right);
         }
 
-        if (this.cursors.up.isDown) {
-            keysPressed.push(this.cursors.up);
+        if (GameScene.cursors.up.isDown) {
+            keysPressed.push(GameScene.cursors.up);
         }
 
-        if (this.cursors.down.isDown) {
-            keysPressed.push(this.cursors.down);
+        if (GameScene.cursors.down.isDown) {
+            keysPressed.push(GameScene.cursors.down);
         }
 
         return keysPressed;

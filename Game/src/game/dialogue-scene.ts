@@ -24,7 +24,7 @@ export class DialogueScene extends Phaser.Scene {
         this.actorName = data.actor;
         this.emitter = data.emitter;
 
-        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
     }
 
     public create() {
@@ -38,7 +38,7 @@ export class DialogueScene extends Phaser.Scene {
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            this.dialogueBox.parseSpace();
+            this.dialogueBox.parseInput();
         }
     }
 }

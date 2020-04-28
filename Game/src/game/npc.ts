@@ -61,7 +61,11 @@ export class Npc extends Actor implements IInteractable {
         }
     }
 
-    public createInteractZone(scene: GameScene, player: Player) {
+    public interact() {
+
+    }
+
+    private createInteractZone(scene: GameScene, player: Player) {
         const Zone = Phaser.GameObjects.Zone;
 
         let width = this.sprite.width + scene.getMap().tileWidth;

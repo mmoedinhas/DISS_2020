@@ -131,7 +131,7 @@ export class DialogueBox {
         return this.done;
     }
 
-    public parseSpace() {
+    public parseInput() {
 
         let icon = this.textBox.getElement('action').setVisible(false);
         this.textBox.resetChildVisibleState(icon);

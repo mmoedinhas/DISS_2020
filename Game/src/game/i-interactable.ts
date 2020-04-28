@@ -7,5 +7,5 @@ export interface IInteractable {
     isPlayerInZone(): boolean,
     setPlayerInZone(playerInZone: boolean),
     setActionBoxVisiblity(visible: boolean),
-    createInteractZone(scene: GameScene, player: Player)
+    interact()
 }

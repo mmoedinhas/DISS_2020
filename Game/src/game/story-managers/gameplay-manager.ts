@@ -23,7 +23,13 @@ export class GameplayManager extends EventManager {
         this.checkForPossibleInteraction();
 
         if(!this.interacting) {
-            this.player.move(keysPressed);
+
+            if(keysPressed.includes(GameScene.interactKey)) {
+                this.interactableObj.interact();
+                this.interacting = true;
+            } else {
+                this.player.move(keysPressed);
+            }
         }
         
     }
@@ -48,10 +54,6 @@ export class GameplayManager extends EventManager {
 
             this.addNpc(new Npc(this.scene, x, y, actor, interactable, this.player));
         }
-    }
-
-    private pressedInteractKey(keysPressed: Phaser.Input.Keyboard.Key[]) {
-
     }
 
     private sortActorDepths() {
@@ -90,10 +92,13 @@ export class GameplayManager extends EventManager {
     }
 
     private checkForPossibleInteraction() {
+
         for (let npc of this.npcs) {
             if (npc.isPlayerInZone()) {
 
-                if (this.interactableObj === undefined) {
+                if(this.interacting) {
+                    npc.setActionBoxVisiblity(false);
+                } else if (this.interactableObj === undefined) {
                     this.interactableObj = npc;
                     npc.setActionBoxVisiblity(true);
                 }
