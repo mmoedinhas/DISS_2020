@@ -3,22 +3,29 @@ import { GameScene } from "../game-scene";
 import { Player } from "../player";
 import { Npc } from "../npc";
 import { Actor } from "../actor";
-import { ActionBox } from "../ui/action-box";
+import { IInteractable } from "../i-interactable";
 
-export class GameplayManager extends EventManager{
+export class GameplayManager extends EventManager {
 
     private npcs: Npc[] = [];
     private player: Player;
+    private interactableObj: IInteractable;
+    private interacting: boolean;
 
     constructor(scene: GameScene, name: string) {
         super(scene, name);
         this.populateActors();
+        this.interacting = false;
     }
 
-    public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
-        this.player.move(keysPressed);
-
+    public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {
         this.sortActorDepths();
+        this.checkForPossibleInteraction();
+
+        if(!this.interacting) {
+            this.player.move(keysPressed);
+        }
+        
     }
 
     public populateActors() {
@@ -26,22 +33,25 @@ export class GameplayManager extends EventManager{
         let allActorsArray = this.scene.cache.json.get('actors').actors;
 
         this.initPlayer(allActorsArray);
-        let actionBox = new ActionBox(this.scene, "Talk", this.player.getX(), this.player.getY() - 50);
 
         let npcsArray = this.jsonObj.npcs;
 
-        for(let npcDesc of npcsArray) {
+        for (let npcDesc of npcsArray) {
             let actor = allActorsArray.find(actor => actor.id == npcDesc.actorId);
             let x = npcDesc.position[0];
             let y = npcDesc.position[1];
 
             let interactable: boolean = false;
-            if(npcDesc.isInteractableConditions === "always") {
+            if (npcDesc.isInteractableConditions === "always") {
                 interactable = true;
             }
 
             this.addNpc(new Npc(this.scene, x, y, actor, interactable, this.player));
         }
+    }
+
+    private pressedInteractKey(keysPressed: Phaser.Input.Keyboard.Key[]) {
+
     }
 
     private sortActorDepths() {
@@ -53,7 +63,7 @@ export class GameplayManager extends EventManager{
         })
 
         let depth = GameScene.MIN_DEPTH;
-        for(let actor of actorsSorted) {
+        for (let actor of actorsSorted) {
             actor.setDepth(depth);
             depth++;
         }
@@ -70,12 +80,34 @@ export class GameplayManager extends EventManager{
 
     private setCollisionsWithAllActors(actor: Actor) {
 
-        if(this.player !== undefined && this.player !== actor) {
+        if (this.player !== undefined && this.player !== actor) {
             actor.setCollisionWith(this.player, this.scene);
         }
 
-        for(let actor2 of this.npcs) {
+        for (let actor2 of this.npcs) {
             actor.setCollisionWith(actor2, this.scene);
+        }
+    }
+
+    private checkForPossibleInteraction() {
+        for (let npc of this.npcs) {
+            if (npc.isPlayerInZone()) {
+
+                if (this.interactableObj === undefined) {
+                    this.interactableObj = npc;
+                    npc.setActionBoxVisiblity(true);
+                }
+
+                npc.setPlayerInZone(false);
+
+            } else {
+
+                if(this.interactableObj == npc) {
+                    npc.setActionBoxVisiblity(false);
+                    this.interactableObj = undefined;
+                }
+                
+            }
         }
     }
 
@@ -85,7 +117,7 @@ export class GameplayManager extends EventManager{
         let x = this.jsonObj.player.startPosition[0];
         let y = this.jsonObj.player.startPosition[1];
 
-        let player =  new Player(this.scene, x, y, actor);
+        let player = new Player(this.scene, x, y, actor);
 
         this.player = player;
 
@@ -98,8 +130,8 @@ export class GameplayManager extends EventManager{
 
     public destroy() {
         this.player.destroy();
-        
-        for(let npc of this.npcs) {
+
+        for (let npc of this.npcs) {
             npc.destroy();
         }
     }

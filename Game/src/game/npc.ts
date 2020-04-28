@@ -1,17 +1,25 @@
 import { Actor } from "./actor";
 import { GameScene } from "./game-scene";
 import { Player } from "./player";
+import { ActionBox } from "./ui/action-box";
+import { isArcadeBody } from "../utils/type-predicates";
+import { IInteractable } from "./i-interactable";
 
-export class Npc extends Actor {
+export class Npc extends Actor implements IInteractable {
 
     private interactable: boolean;
     private interactZone: Phaser.GameObjects.Zone;
+    private actionBox: ActionBox;
+    private playerInZone: boolean;
 
     constructor(scene: GameScene, x: integer, y: integer, actorObj: any, interactable: boolean, player: Player) {
         super(scene, x, y, actorObj);
         (this.sprite.body as Phaser.Physics.Arcade.Body).setImmovable();
         this.interactable = interactable;
         this.createInteractZone(scene, player);
+        this.playerInZone = false;
+
+        this.actionBox = new ActionBox(scene, "Talk", this.getX(), this.getY() - this.sprite.height, true);
     }
 
     public setInteractable(interactable: boolean) {
@@ -22,17 +30,42 @@ export class Npc extends Actor {
         return this.interactable;
     }
 
-    public startDialogue(): boolean {
-        console.log("I can interact with: " + this.id);
+    public isPlayerInZone(): boolean {
 
-        return false;
+        // if (isArcadeBody(this.interactZone.body)) {
+        //     if (this.interactZone.body.embedded) {
+        //         this.interactZone.body.touching.none = false;
+        //     }
+
+        //     if ((!this.interactZone.body.touching.none
+        //         || this.interactZone.body.wasTouching.none)
+        //         && this.playerInZone) {
+        //         return true;
+        //     }
+        // }
+
+        return this.playerInZone;
+
+        //return false;
     }
 
-    private createInteractZone(scene: GameScene, player: Player) {
+    public setPlayerInZone(playerInZone: boolean) {
+        this.playerInZone = playerInZone;
+    }
+
+    public setActionBoxVisiblity(visible: boolean) {
+        if(visible) {
+            this.actionBox.show()
+        } else {
+            this.actionBox.hide();
+        }
+    }
+
+    public createInteractZone(scene: GameScene, player: Player) {
         const Zone = Phaser.GameObjects.Zone;
 
         let width = this.sprite.width + scene.getMap().tileWidth;
-        let height = scene.getMap().tileHeight*2;
+        let height = scene.getMap().tileHeight * 2;
 
         let body: Phaser.Physics.Arcade.Body = this.sprite.body as Phaser.Physics.Arcade.Body;
 
@@ -42,6 +75,9 @@ export class Npc extends Actor {
         this.interactZone = new Zone(scene, x, y, width, height);
 
         scene.physics.add.existing(this.interactZone);
-        player.setOverlapWithZone(this.interactZone, scene, this.startDialogue, this);
+        player.setOverlapWithZone(this.interactZone, scene, () => {
+            this.playerInZone = true;
+            return false;
+        }, this);
     }
 }

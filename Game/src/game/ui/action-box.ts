@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 import { TextBox, Label } from 'phaser3-rex-plugins/templates/ui/ui-components.js';
-import RoundRectangle from 'phaser3-rex-plugins/plugins/roundrectangle.js';
+import BBCodeText from 'phaser3-rex-plugins/plugins/bbcodetext.js';
 
 export class ActionBox {
 
@@ -8,7 +8,8 @@ export class ActionBox {
     private action: string;
 
     // Components
-    private textBox: Label;
+    private textLabel: Label;
+    private tween: Phaser.Tweens.Tween;
 
     // CONSTS
     private fontFamily: string = 'MatchupPro';
@@ -16,7 +17,7 @@ export class ActionBox {
     private stroke: string = '#000000';
     private strokeThickness: number = 2;
 
-    constructor(scene: Phaser.Scene, action: string, x: number, y: number) {
+    constructor(scene: Phaser.Scene, action: string, x: number, y: number, hidden: boolean) {
 
         scene.anims.create({
             key: 'zKeyAnimation',
@@ -25,12 +26,26 @@ export class ActionBox {
             repeat: -1
         });
 
-        action = "Talk";
-
         this.scene = scene;
         this.action = action;
 
-        this.textBox = this.createLabel(x, y);
+        this.textLabel = this.createLabel(x, y);
+
+        if(hidden) {
+            this.hide();
+        }
+    }
+
+    public hide() {
+        let scene = this.scene as any;
+        scene.rexUI.hide(this.textLabel);
+        scene.rexUI.getTopmostSizer(this.textLabel).layout();
+    }
+
+    public show() {
+        let scene = this.scene as any;
+        scene.rexUI.show(this.textLabel);
+        scene.rexUI.getTopmostSizer(this.textLabel).layout();
     }
 
     private createLabel(x: number, y: number): Label {
@@ -38,10 +53,23 @@ export class ActionBox {
         let label = new Label(this.scene, {
             x: x,
             y: y,
+            height: 20,
+            //background: this.scene.add.image(0, 0, 'dialogue_box'),
             text: this.getActionText(this.scene, this.action),
             icon: this.getIcon(this.scene)
-            //icon: this.scene.add.existing(new RoundRectangle(this.scene, 0, 0, 0, 0, 10, 0x7b5e57))
         }).setOrigin(0.5, 1).layout();
+
+        // (this.scene as any).rexUI.hide(label);
+        // (this.scene as any).rexUI.show(label);
+
+        // this.tween = this.scene.tweens.add({
+        //     targets: label,
+        //     y: '+=10', // '+=100'
+        //     ease: 'Cubic', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+        //     duration: 700,
+        //     repeat: -1, // -1: infinity
+        //     yoyo: true
+        // });
 
         return label;
     }
@@ -61,7 +89,7 @@ export class ActionBox {
     }
 
     private getIcon(scene: Phaser.Scene): Phaser.GameObjects.Sprite {
-        let icon: Phaser.GameObjects.Sprite  = scene.add.sprite(0,0,'zkey',0);
+        let icon: Phaser.GameObjects.Sprite = scene.add.sprite(0, 0, 'zkey', 0);
         icon.anims.play('zKeyAnimation');
 
         icon.depth = 9999;

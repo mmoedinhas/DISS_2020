@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import WebfontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 
 import { GameScene } from './game-scene';
 import { IPlayerType, IStory } from '../utils/interfaces';
@@ -225,6 +226,13 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
         DialogueScene
     ],
     plugins: {
+        scene: [
+            {
+            key: 'rexUI',
+            plugin: RexUIPlugin,
+            mapping: 'rexUI'
+        }
+    ],
         global: [
             {
                 key: 'rexWebfontLoader',
