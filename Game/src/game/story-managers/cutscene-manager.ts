@@ -1,7 +1,7 @@
 import { EventManager } from "./event-manager";
 import { Action } from "./cutscene-actions/action";
 import { GameScene } from "../game-scene";
-import { IBodySpecs, IDialogueLine } from "../../utils/interfaces";
+import { IBodySpecs, IDialogueLine, ICoordinates } from "../../utils/interfaces";
 import { Actor } from "../actor";
 import { Walk } from "./cutscene-actions/walk";
 import { Talk } from "./cutscene-actions/talk";
@@ -10,6 +10,7 @@ export class CutsceneManager extends EventManager {
 
     private actions: Action[] = [];
     private currActionIndex: integer;
+    private currFocusedActor: Actor;
 
     private actors: Actor[] = [];
 
@@ -32,6 +33,7 @@ export class CutsceneManager extends EventManager {
 
         if (this.currActionIndex < this.actions.length) {
             this.actions[this.currActionIndex].act(time, delta, keysPressed);
+            this.currFocusedActor = this.actions[this.currActionIndex].getActor();
         } else {
             this.done = true;
         }
@@ -80,6 +82,13 @@ export class CutsceneManager extends EventManager {
                     }]));
                     break;
             }
+        }
+    }
+
+    public getPlayerPosition(): ICoordinates {
+        return {
+            x: this.currFocusedActor.getX(),
+            y: this.currFocusedActor.getY()
         }
     }
 

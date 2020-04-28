@@ -5,18 +5,20 @@ import { Npc } from "../npc";
 import { Actor } from "../actor";
 import { IInteractable } from "../i-interactable";
 import { getAssetIdFromPath } from "../../utils/paths";
-import { IDialogueLine } from "../../utils/interfaces";
+import { IDialogueLine, ICoordinates } from "../../utils/interfaces";
 
 export class GameplayManager extends EventManager {
 
     private npcs: Npc[] = [];
     private player: Player;
+    private previousPlayerPos: ICoordinates;
     private interactableObj: IInteractable;
     private interacting: boolean;
     private emitter: Phaser.Events.EventEmitter;
 
-    constructor(scene: GameScene, name: string) {
+    constructor(scene: GameScene, name: string, previousPlayerPos?: ICoordinates) {
         super(scene, name);
+        this.previousPlayerPos = previousPlayerPos;
         this.populateActors();
         this.interacting = false;
 
@@ -75,6 +77,7 @@ export class GameplayManager extends EventManager {
     public interactionEnded() {
         this.scene.scene.sleep('Dialogue');
         this.interacting = false;
+        this.done = true;
 
         this.checkForPossibleInteraction();
     }
@@ -163,15 +166,25 @@ export class GameplayManager extends EventManager {
 
         let x: number;
         let y: number;
+        let player: Player;
+
         if(this.jsonObj.player.startPosition == "current") {
-            x = 10;
-            y = 13;
+
+            if(this.previousPlayerPos == undefined) {
+                x = 0;
+                y = 0;
+                player = new Player(this.scene, x, y, actor, false);
+            } else {
+                x = this.previousPlayerPos.x;
+                y = this.previousPlayerPos.y;
+                player = new Player(this.scene, x, y, actor, true);
+            }
+
         } else {
             x = this.jsonObj.player.startPosition[0];
             y = this.jsonObj.player.startPosition[1];
+            player = new Player(this.scene, x, y, actor, false);
         }
-
-        let player = new Player(this.scene, x, y, actor);
 
         this.player = player;
 
@@ -180,6 +193,13 @@ export class GameplayManager extends EventManager {
         player.getCameraToFollow(this.scene);
 
         return player;
+    }
+
+    public getPlayerPosition(): ICoordinates {
+        return {
+            x: this.player.getX(),
+            y: this.player.getY()
+        }
     }
 
     public destroy() {

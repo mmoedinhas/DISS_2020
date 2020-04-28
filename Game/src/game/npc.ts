@@ -16,8 +16,8 @@ export class Npc extends Actor implements IInteractable {
     private playerInZone: boolean;
     private dialogueFilename: string;
 
-    constructor(scene: GameScene, x: integer, y: integer, actorObj: any, interactable: boolean, player: Player, dialogueFilename: string) {
-        super(scene, x, y, actorObj);
+    constructor(scene: GameScene, x: number, y: number, actorObj: any, interactable: boolean, player: Player, dialogueFilename: string, realCoordinates?: boolean) {
+        super(scene, x, y, actorObj, realCoordinates);
         (this.sprite.body as Phaser.Physics.Arcade.Body).setImmovable();
         this.interactable = interactable;
         this.createInteractZone(scene, player);

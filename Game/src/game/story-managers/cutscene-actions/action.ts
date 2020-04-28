@@ -19,4 +19,8 @@ export abstract class Action {
     public isDone() {
         return this.done;
     }
+
+    public getActor(): Actor {
+        return this.actor;
+    }
 }

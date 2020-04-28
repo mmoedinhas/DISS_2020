@@ -14,13 +14,18 @@ export class Actor {
     protected id: string;
     protected name: string;
 
-    constructor(scene: GameScene, x: integer, y: integer, actorObj: any) {
+    constructor(scene: GameScene, x: number, y: number, actorObj: any, realCoordinates?: boolean) {
 
         this.id = actorObj.id;
         this.name = actorObj.name;
+
+        if(!realCoordinates) {
+            let mapCoords: ICoordinates = toRealMapCoordinates(x, y, scene.getMap());
+            x = mapCoords.x;
+            y = mapCoords.y;
+        }
         
-        let mapCoords: ICoordinates = toRealMapCoordinates(x, y, scene.getMap());
-        this.sprite = scene.physics.add.sprite(mapCoords.x, mapCoords.y, actorObj.tilesetId, actorObj.defaultFrame).setOrigin(0.5, 1);
+        this.sprite = scene.physics.add.sprite(x, y, actorObj.tilesetId, actorObj.defaultFrame).setOrigin(0.5, 1);
         this.initBody(actorObj);
         //TODO this.createAnimations(actorObj);
     }

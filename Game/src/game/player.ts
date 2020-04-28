@@ -6,8 +6,8 @@ import { isArcadeBody } from '../utils/type-predicates';
 
 export class Player extends Actor {
 
-    constructor(scene: GameScene, x: integer, y: integer, actorObj: any) {
-        super(scene, x, y, actorObj);
+    constructor(scene: GameScene, x: integer, y: integer, actorObj: any, realCoordinates?: boolean) {
+        super(scene, x, y, actorObj, realCoordinates);
     }
 
     public move(keysPressed:Phaser.Input.Keyboard.Key[]) {

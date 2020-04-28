@@ -1,4 +1,4 @@
-import { IPlayerType, IScene, IEvent, IStory } from '../../utils/interfaces';
+import { IPlayerType, IScene, IEvent, IStory, ICoordinates } from '../../utils/interfaces';
 import { CutsceneManager } from './cutscene-manager';
 import { EventManager } from './event-manager';
 import { GameplayManager } from './gameplay-manager';
@@ -20,6 +20,8 @@ export class StoryManager {
     private currSceneIndex: integer;
     private currEventType: EventType;
 
+    private previousPlayerPos: ICoordinates;
+
     private currEventManager: EventManager;
 
     constructor(scene: GameScene, story: IStory, playerType: IPlayerType) {
@@ -30,26 +32,26 @@ export class StoryManager {
         this.currEventIndex = 0;
         this.currSceneIndex = 0;
 
-        this.updateEventType();   
+        this.updateEventType();
     }
 
     public start(): EventManager {
 
-        if(this.currEventManager !== undefined) {
+        if (this.currEventManager !== undefined) {
             this.currEventManager.destroy();
         }
 
         let currEventManager: EventManager;
 
-        switch(this.currEventType) {
+        switch (this.currEventType) {
             case EventType.GAMEPLAY:
-                currEventManager = new GameplayManager(this.scene, this.getCurrEvent().name);
+                currEventManager = new GameplayManager(this.scene, this.getCurrEvent().name, this.previousPlayerPos);
                 break;
             case EventType.CUTSCENE:
                 currEventManager = new CutsceneManager(this.scene, this.getCurrEvent().name);
                 break;
         }
-        
+
         console.log(currEventManager);
         this.currEventManager = currEventManager;
 
@@ -60,13 +62,15 @@ export class StoryManager {
 
         let scene: IScene = this.getSceneAt(this.currSceneIndex);
 
-        if(scene.events.length <= this.currEventIndex) {
+        if (scene.events.length <= this.currEventIndex) {
             return;
         }
 
+        this.previousPlayerPos = this.currEventManager.getPlayerPosition();
+
         this.currEventIndex++;
 
-        if(scene.events.length <= this.currEventIndex) {
+        if (scene.events.length <= this.currEventIndex) {
             return;
         }
 
@@ -76,7 +80,7 @@ export class StoryManager {
     }
 
     public updateEventType() {
-        switch(this.getCurrEvent().type) {
+        switch (this.getCurrEvent().type) {
             case "gameplay":
                 this.currEventType = EventType.GAMEPLAY;
                 break;
@@ -106,9 +110,9 @@ export class StoryManager {
         return this.currEventType;
     }
 
-    public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
+    public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {
 
-        if(this.currEventManager.isDone()) {
+        if (this.currEventManager.isDone()) {
             this.next();
         } else {
             this.currEventManager.act(time, delta, keysPressed);
