@@ -13,11 +13,15 @@ export class GameplayManager extends EventManager {
     private player: Player;
     private interactableObj: IInteractable;
     private interacting: boolean;
+    private emitter: Phaser.Events.EventEmitter;
 
     constructor(scene: GameScene, name: string) {
         super(scene, name);
         this.populateActors();
         this.interacting = false;
+
+        this.emitter = new Phaser.Events.EventEmitter();
+        this.emitter.on('dialogueEnded', this.interactionEnded, this);
     }
 
     public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {
@@ -26,9 +30,13 @@ export class GameplayManager extends EventManager {
 
         if(!this.interacting) {
 
-            if(keysPressed.includes(GameScene.interactKey)) {
+            if(keysPressed.includes(GameScene.interactKey) && this.interactableObj !== undefined) {
+
                 this.interactableObj.interact();
                 this.interacting = true;
+
+                this.scene.scene.wake('Dialogue');
+                this.scene.scene.launch('Dialogue',{ dialogue: this.interactableObj.dialogue, emitter: this.emitter});
             } else {
                 this.player.move(keysPressed);
             }
@@ -62,6 +70,13 @@ export class GameplayManager extends EventManager {
             let dialogue = this.getDialogue(npc.getDialogueFilename(), npcsArray);
             npc.instantiateDialogue(dialogue);
         }
+    }
+
+    public interactionEnded() {
+        this.scene.scene.sleep('Dialogue');
+        this.interacting = false;
+
+        this.checkForPossibleInteraction();
     }
 
     private getDialogue(dialogueFilename: string, actorsArray): IDialogueLine[] {

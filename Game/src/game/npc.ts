@@ -8,11 +8,12 @@ import { IDialogueLine } from "../utils/interfaces";
 
 export class Npc extends Actor implements IInteractable {
 
+    public dialogue: IDialogueLine[];
+
     private interactable: boolean;
     private interactZone: Phaser.GameObjects.Zone;
     private actionBox: ActionBox;
     private playerInZone: boolean;
-    private dialogue: IDialogueLine[];
     private dialogueFilename: string;
 
     constructor(scene: GameScene, x: integer, y: integer, actorObj: any, interactable: boolean, player: Player, dialogueFilename: string) {

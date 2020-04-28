@@ -152,7 +152,6 @@ export class DialogueBox {
         } else {
             if (this.textBox.isLastPage) {
                 if(this.isDialogueOver()) {
-                    console.log("dialogue is over");
                     this.done = true;
                 } else {
                     this.currLine++;
