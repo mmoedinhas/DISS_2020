@@ -40,22 +40,6 @@
         {
             "action": "talk",
             "arguments": {
-                "author": "Inner Clara",
-                "text": "Is it?"
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Telepathic grandma",
-                "text": "Is it >:)?"
-            },
-            "actorId": "Grandma"
-        },
-        {
-            "action": "talk",
-            "arguments": {
                 "author": "Clara",
                 "text": "I waited for this day for so long! I'm so excited!"
             },
