@@ -16,7 +16,7 @@ const playerType: IPlayerType = {
     anger: 4,
     disgust: 4,
     fear: 5,
-    anxiety: 10,
+    anxiety: 4,
     sadness: 8,
     desire: 14,
     relaxation: 6,
@@ -224,7 +224,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: true,
+            debug: false,
         }
     },
     scene: [

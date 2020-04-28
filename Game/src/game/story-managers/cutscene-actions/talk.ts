@@ -2,25 +2,22 @@ import { Action } from "./action";
 import { GameScene } from "../../game-scene";
 import { Actor } from "../../actor";
 import { IDialogueLine } from "../../../utils/interfaces";
+import { tilesetPath } from "../../../utils/paths";
 
 export class Talk extends Action {
 
     private onScreen: boolean;
     private dialogue: IDialogueLine[];
-    private actorName: string;
 
     private emitter: Phaser.Events.EventEmitter; 
 
-    constructor(scene: GameScene, actor: Actor, text: string) {
+    constructor(scene: GameScene, actor: Actor, dialogue: IDialogueLine[]) {
         super(scene, actor);
         this.onScreen = false;
 
-        this.dialogue = [
-            {
-                author: actor.getName(),
-                text: text
-            }
-        ]
+        this.dialogue = dialogue;
+
+        this.actor = actor;
 
         this.emitter = new Phaser.Events.EventEmitter();
 
@@ -30,6 +27,7 @@ export class Talk extends Action {
     public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
 
         if(!this.onScreen) {
+            this.actor.getCameraToFollow(this.scene);
             this.onScreen = true;
 
             this.scene.scene.wake('Dialogue');

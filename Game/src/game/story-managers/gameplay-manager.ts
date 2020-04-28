@@ -67,7 +67,7 @@ export class GameplayManager extends EventManager {
 
         // add dialogues
         for (let npc of this.npcs) {
-            let dialogue = this.getDialogue(npc.getDialogueFilename(), npcsArray);
+            let dialogue = this.getDialogue(npc.getDialogueFilename());
             npc.instantiateDialogue(dialogue);
         }
     }
@@ -79,34 +79,19 @@ export class GameplayManager extends EventManager {
         this.checkForPossibleInteraction();
     }
 
-    private getDialogue(dialogueFilename: string, actorsArray): IDialogueLine[] {
+    private getDialogue(dialogueFilename: string): IDialogueLine[] {
         const dialogue: IDialogueLine[] = [];
-
-        let allActors: Actor[] = [...this.npcs];
-        allActors.push(this.player);
 
         let key: string = getAssetIdFromPath(dialogueFilename);
         let dialogueObj = this.scene.cache.json.get(key);
-        
-        let participatingActors: Actor[] = [];
-        for(let actorId of dialogueObj.actorsIds) {
-            let actor: Actor = allActors.find(actor => actor.getId() === actorId);
-
-            if(actor !== undefined) {
-                participatingActors.push(actor);
-            }
-        }
 
         for(let lineDesc of dialogueObj.lines) {
-            let author: Actor = participatingActors.find(actor => actor.getId() === lineDesc.author);
 
-            if(author !== undefined) {
-                let line: IDialogueLine = {
-                    author: author.getName(),
-                    text: lineDesc.text
-                };
+            let line: IDialogueLine = {
+                author: lineDesc.author,
+                text: lineDesc.text
+            };
                 dialogue.push(line);
-            }
         }
 
         return dialogue;
@@ -175,8 +160,16 @@ export class GameplayManager extends EventManager {
     public initPlayer(actorsArray: any): Player {
 
         let actor = actorsArray.find(actor => actor.id == this.jsonObj.player.actorId);
-        let x = this.jsonObj.player.startPosition[0];
-        let y = this.jsonObj.player.startPosition[1];
+
+        let x: number;
+        let y: number;
+        if(this.jsonObj.player.startPosition == "current") {
+            x = 10;
+            y = 13;
+        } else {
+            x = this.jsonObj.player.startPosition[0];
+            y = this.jsonObj.player.startPosition[1];
+        }
 
         let player = new Player(this.scene, x, y, actor);
 

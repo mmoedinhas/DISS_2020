@@ -1,12 +1,12 @@
 import { EventManager } from "./event-manager";
 import { Action } from "./cutscene-actions/action";
 import { GameScene } from "../game-scene";
-import { IBodySpecs } from "../../utils/interfaces";
+import { IBodySpecs, IDialogueLine } from "../../utils/interfaces";
 import { Actor } from "../actor";
 import { Walk } from "./cutscene-actions/walk";
 import { Talk } from "./cutscene-actions/talk";
 
-export class CutsceneManager extends EventManager{
+export class CutsceneManager extends EventManager {
 
     private actions: Action[] = [];
     private currActionIndex: integer;
@@ -20,22 +20,22 @@ export class CutsceneManager extends EventManager{
         this.instantiateActions();
     }
 
-    public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
+    public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {
 
-        if(this.currActionIndex < this.actions.length) {
-            if(this.actions[this.currActionIndex].isDone()) {
+        if (this.currActionIndex < this.actions.length) {
+            if (this.actions[this.currActionIndex].isDone()) {
                 this.currActionIndex++;
             }
         }
 
         this.sortActorDepths();
 
-        if(this.currActionIndex < this.actions.length) {
+        if (this.currActionIndex < this.actions.length) {
             this.actions[this.currActionIndex].act(time, delta, keysPressed);
         } else {
             this.done = true;
         }
-        
+
     }
 
     public populateActors() {
@@ -43,7 +43,7 @@ export class CutsceneManager extends EventManager{
         let actorsFromEventObj = this.jsonObj.actors;
         let allActorsObj = this.scene.cache.json.get('actors').actors;
 
-        for(let actorDesc of actorsFromEventObj) {
+        for (let actorDesc of actorsFromEventObj) {
             let actor = allActorsObj.find(actor => actor.id == actorDesc.actorId);
             let x = actorDesc.start[0];
             let y = actorDesc.start[1];
@@ -65,23 +65,26 @@ export class CutsceneManager extends EventManager{
     public instantiateActions() {
         let actionsObj = this.jsonObj.actions;
 
-        for(let actionObj of actionsObj) {
+        for (let actionObj of actionsObj) {
 
             let actor: Actor = this.getActorById(actionObj.actorId);
-            
-            switch(actionObj.action) {
+
+            switch (actionObj.action) {
                 case "walk":
                     this.actions.push(new Walk(this.scene, actor, actionObj.arguments.x, actionObj.arguments.y));
                     break;
                 case "talk":
-                    this.actions.push(new Talk(this.scene, actor, actionObj.arguments.text));
+                    this.actions.push(new Talk(this.scene, actor, [{
+                        author: actionObj.arguments.author,
+                        text: actionObj.arguments.text
+                    }]));
                     break;
             }
         }
     }
 
     public destroy() {
-        for(let actor of this.actors) {
+        for (let actor of this.actors) {
             actor.destroy();
         }
     }
@@ -94,7 +97,7 @@ export class CutsceneManager extends EventManager{
         })
 
         let depth = GameScene.MIN_DEPTH;
-        for(let actor of actorsSorted) {
+        for (let actor of actorsSorted) {
             actor.setDepth(depth);
             depth++;
         }

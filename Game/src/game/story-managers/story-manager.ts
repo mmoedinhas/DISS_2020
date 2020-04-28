@@ -50,6 +50,7 @@ export class StoryManager {
                 break;
         }
         
+        console.log(currEventManager);
         this.currEventManager = currEventManager;
 
         return currEventManager;

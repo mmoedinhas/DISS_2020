@@ -24,7 +24,7 @@ export class Walk extends Action {
     public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
         if(!this.started) {
             this.started = true;
-
+            
             this.actor.moveAuto(this.scene, this.x, this.y, this.emitter);
             this.actor.getCameraToFollow(this.scene);
         }
