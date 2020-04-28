@@ -1,9 +1,5 @@
 {
-    "actorsIds": [
-        "Clara", "Grandma"
-    ],
-    "lines": [
-        {
+    "lines": [{
             "author": "Grandma",
             "text": "My my Clara, how much you've grown! Let grandma have a look at you."
         },

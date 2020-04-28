@@ -1,9 +1,6 @@
 {
-    "actorsIds": [
-        "Clara", "Guest"
-    ],
-    "lines": [
-        {
+
+    "lines": [{
             "author": "Clara",
             "text": "Merry Christmas! Enjoying the party?"
         },
