@@ -4,6 +4,8 @@ import { Player } from "../player";
 import { Npc } from "../npc";
 import { Actor } from "../actor";
 import { IInteractable } from "../i-interactable";
+import { getAssetIdFromPath } from "../../utils/paths";
+import { IDialogue, ILine } from "../../utils/interfaces";
 
 export class GameplayManager extends EventManager {
 
@@ -52,8 +54,49 @@ export class GameplayManager extends EventManager {
                 interactable = true;
             }
 
-            this.addNpc(new Npc(this.scene, x, y, actor, interactable, this.player));
+            this.addNpc(new Npc(this.scene, x, y, actor, interactable, this.player, npcDesc.dialogue));
         }
+
+        // add dialogues
+        for (let npc of this.npcs) {
+            let dialogue = this.getDialogue(npc.getDialogueFilename(), npcsArray);
+            npc.instantiateDialogue(dialogue);
+        }
+    }
+
+    private getDialogue(dialogueFilename: string, actorsArray): IDialogue {
+        const dialogue: IDialogue = {
+            actors: [],
+            dialogue: []
+        };
+
+        let allActors: Actor[] = [...this.npcs];
+        allActors.push(this.player);
+
+        let key: string = getAssetIdFromPath(dialogueFilename);
+        let dialogueObj = this.scene.cache.json.get(key);
+        
+        for(let actorId of dialogueObj.actorsIds) {
+            let actor: Actor = allActors.find(actor => actor.getId() === actorId);
+
+            if(actor !== undefined) {
+                dialogue.actors.push(actor);
+            }
+        }
+
+        for(let lineDesc of dialogueObj.lines) {
+            let author: Actor = dialogue.actors.find(actor => actor.getId() === lineDesc.author);
+
+            if(author !== undefined) {
+                let line: ILine = {
+                    author: author.getName(),
+                    text: lineDesc.text
+                };
+                dialogue.dialogue.push(line);
+            }
+        }
+
+        return dialogue;
     }
 
     private sortActorDepths() {

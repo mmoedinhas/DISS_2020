@@ -6,6 +6,7 @@ import { GameScene } from './game-scene';
 import { IPlayerType, IStory } from '../utils/interfaces';
 import * as paths from '../utils/paths';
 import { DialogueScene } from './dialogue-scene';
+import { getAssetIdFromPath } from '../utils/paths';
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
@@ -162,6 +163,7 @@ export class BootScene extends Phaser.Scene {
 
                 for (let npc of gameplayObj.npcs) {
                     this.loadActorTileset(actorsObj, tilesetsArray, npc.actorId);
+                    this.loadDialogue(npc.dialogue);
                 }
 
                 //TODO load item tilesets
@@ -191,6 +193,11 @@ export class BootScene extends Phaser.Scene {
         let tileset = tilesetsArray.find(tileset => tileset.id == tilesetKey);
 
         this.load.spritesheet(tileset.id, paths.tilesetPath + tileset.filename, { frameWidth: tileset.frameWidth, frameHeight: tileset.frameHeight });
+    }
+
+    private loadDialogue(filename: string) {
+        let key: string = getAssetIdFromPath(filename);
+        this.load.json(key, paths.dialoguePath + filename);
     }
 }
 

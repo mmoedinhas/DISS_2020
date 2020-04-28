@@ -4,6 +4,7 @@ import { Player } from "./player";
 import { ActionBox } from "./ui/action-box";
 import { isArcadeBody } from "../utils/type-predicates";
 import { IInteractable } from "./i-interactable";
+import { IDialogue } from "../utils/interfaces";
 
 export class Npc extends Actor implements IInteractable {
 
@@ -11,15 +12,25 @@ export class Npc extends Actor implements IInteractable {
     private interactZone: Phaser.GameObjects.Zone;
     private actionBox: ActionBox;
     private playerInZone: boolean;
+    private dialogue: IDialogue;
+    private dialogueFilename: string;
 
-    constructor(scene: GameScene, x: integer, y: integer, actorObj: any, interactable: boolean, player: Player) {
+    constructor(scene: GameScene, x: integer, y: integer, actorObj: any, interactable: boolean, player: Player, dialogueFilename: string) {
         super(scene, x, y, actorObj);
         (this.sprite.body as Phaser.Physics.Arcade.Body).setImmovable();
         this.interactable = interactable;
         this.createInteractZone(scene, player);
         this.playerInZone = false;
-
         this.actionBox = new ActionBox(scene, "Talk", this.getX(), this.getY() - this.sprite.height, true);
+        this.dialogueFilename = dialogueFilename;
+    }
+
+    public instantiateDialogue(dialogue: IDialogue) {
+        this.dialogue = dialogue;
+    }
+
+    public getDialogueFilename(): string {
+        return this.dialogueFilename;
     }
 
     public setInteractable(interactable: boolean) {

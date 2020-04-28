@@ -1,3 +1,5 @@
+import { Actor } from "../game/actor";
+
 export interface IEmotionalRequirement {
     parameter: string,
     condition: string,
@@ -48,4 +50,14 @@ export interface IBodySpecs {
 export interface ICoordinates {
     x: number,
     y: number
+}
+
+export interface IDialogue {
+    actors: Actor[], 
+    dialogue: ILine[]
+}
+
+export interface ILine {
+    author: string,
+    text: string
 }
