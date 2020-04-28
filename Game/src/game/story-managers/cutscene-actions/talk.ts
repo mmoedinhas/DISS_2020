@@ -1,12 +1,12 @@
 import { Action } from "./action";
 import { GameScene } from "../../game-scene";
-import { DialogueScene } from "../../dialogue-scene";
 import { Actor } from "../../actor";
+import { IDialogueLine } from "../../../utils/interfaces";
 
 export class Talk extends Action {
 
     private onScreen: boolean;
-    private text: string;
+    private dialogue: IDialogueLine[];
     private actorName: string;
 
     private emitter: Phaser.Events.EventEmitter; 
@@ -15,8 +15,12 @@ export class Talk extends Action {
         super(scene, actor);
         this.onScreen = false;
 
-        this.actorName = this.actor.getName();
-        this.text = text;
+        this.dialogue = [
+            {
+                author: actor.getName(),
+                text: text
+            }
+        ]
 
         this.emitter = new Phaser.Events.EventEmitter();
 
@@ -29,7 +33,7 @@ export class Talk extends Action {
             this.onScreen = true;
 
             this.scene.scene.wake('Dialogue');
-            this.scene.scene.launch('Dialogue',{ text: this.text, actor: this.actorName, emitter: this.emitter});
+            this.scene.scene.launch('Dialogue',{ dialogue: this.dialogue, emitter: this.emitter});
             return;
         }
     }

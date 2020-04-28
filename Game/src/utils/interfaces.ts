@@ -52,12 +52,7 @@ export interface ICoordinates {
     y: number
 }
 
-export interface IDialogue {
-    actors: Actor[], 
-    dialogue: ILine[]
-}
-
-export interface ILine {
+export interface IDialogueLine {
     author: string,
     text: string
 }

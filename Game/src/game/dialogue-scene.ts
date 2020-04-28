@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import { DialogueBox } from './ui/dialogue-box';
+import { IDialogueLine } from '../utils/interfaces';
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
     key: 'Dialogue',
@@ -10,8 +11,7 @@ export class DialogueScene extends Phaser.Scene {
     private dialogueBox: DialogueBox; 
     private spaceKey: Phaser.Input.Keyboard.Key;
 
-    private text: string;
-    private actorName: string;
+    private dialogue: IDialogueLine[];
 
     private emitter: Phaser.Events.EventEmitter;
 
@@ -20,15 +20,14 @@ export class DialogueScene extends Phaser.Scene {
     }
 
     public init(data) {
-        this.text = data.text;
-        this.actorName = data.actor;
+        this.dialogue = data.dialogue;
         this.emitter = data.emitter;
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
     }
 
     public create() {
-        this.dialogueBox = new DialogueBox(this, this.text, this.actorName);
+        this.dialogueBox = new DialogueBox(this, this.dialogue);
     }
 
     public update() {

@@ -27,7 +27,7 @@ export class StoryManager {
         this.story = story;
         this.playerType = playerType;
 
-        this.currEventIndex = 1;
+        this.currEventIndex = 0;
         this.currSceneIndex = 0;
 
         this.updateEventType();   

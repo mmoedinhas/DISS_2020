@@ -1,14 +1,15 @@
 import * as Phaser from 'phaser';
 import { TextBox } from 'phaser3-rex-plugins/templates/ui/ui-components.js';
 import BBCodeText from 'phaser3-rex-plugins/plugins/bbcodetext.js';
-import { GameScene } from '../game-scene';
+import { IDialogueLine } from '../../utils/interfaces';
+import { Actor } from '../actor';
 
 export class DialogueBox {
 
     private scene: Phaser.Scene;
 
-    private text: string;
-    private actor: string;
+    private lines: IDialogueLine[];
+    private currLine: integer;
 
     private background: Phaser.GameObjects.Image;
     private textBox: TextBox;
@@ -21,11 +22,16 @@ export class DialogueBox {
     private stroke: string = '#000000';
     private strokeThickness: number = 2;
 
-    constructor(scene: Phaser.Scene, text: string, actorName: string) {
+    constructor(scene: Phaser.Scene, lines: IDialogueLine[]) {
 
         this.scene = scene;
-        this.text = `[stroke=` + this.stroke + `]` + text + `[/stroke]`;
-        this.actor = actorName;
+        this.lines = lines;
+        this.currLine = 0;
+
+        for(let line of this.lines) {
+            line.text = `[stroke=` + this.stroke + `]` + line.text + `[/stroke]`;
+        } 
+        
         this.done = false;
 
         this.create();
@@ -35,7 +41,7 @@ export class DialogueBox {
         this.background = this.scene.add.image(320, 360, 'dialogue_box').setOrigin(0.5, 1);
         this.background.depth = 9998;
 
-        this.nameBox = this.scene.add.text(310, 270, this.actor, {
+        this.nameBox = this.scene.add.text(310, 270, this.lines[this.currLine].author, {
             fontSize: this.fontSize,
             fontFamily: 'EquipmentPro',
             maxLines: 1,
@@ -51,7 +57,7 @@ export class DialogueBox {
             wrapWidth: 500,
             fixedWidth: 500,
             fixedHeight: 70
-        }).start(this.text, 20);
+        }).start(this.lines[this.currLine].text, 20);
     }
 
     private createTextBox(x: number, y: number, config: any) {
@@ -108,6 +114,7 @@ export class DialogueBox {
             fontFamily: this.fontFamily,
             fontSize: this.fontSize,
             strokeThickness: this.strokeThickness,
+            stroke: this.stroke,
 
             wrap: {
                 mode: 'word',
@@ -127,6 +134,10 @@ export class DialogueBox {
         return image;
     }
 
+    private isDialogueOver(): boolean {
+        return this.currLine == this.lines.length - 1;
+    }
+
     public isDone(): boolean {
         return this.done;
     }
@@ -135,11 +146,20 @@ export class DialogueBox {
 
         let icon = this.textBox.getElement('action').setVisible(false);
         this.textBox.resetChildVisibleState(icon);
+        
         if (this.textBox.isTyping) {
             this.textBox.stop(true);
         } else {
             if (this.textBox.isLastPage) {
-                this.done = true;
+                if(this.isDialogueOver()) {
+                    console.log("dialogue is over");
+                    this.done = true;
+                } else {
+                    this.currLine++;
+
+                    this.nameBox.text = this.lines[this.currLine].author;
+                    this.textBox.start(this.lines[this.currLine].text, 20);
+                }
             } else {
                 this.textBox.typeNextPage();
             }

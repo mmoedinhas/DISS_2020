@@ -4,7 +4,7 @@ import { Player } from "./player";
 import { ActionBox } from "./ui/action-box";
 import { isArcadeBody } from "../utils/type-predicates";
 import { IInteractable } from "./i-interactable";
-import { IDialogue } from "../utils/interfaces";
+import { IDialogueLine } from "../utils/interfaces";
 
 export class Npc extends Actor implements IInteractable {
 
@@ -12,7 +12,7 @@ export class Npc extends Actor implements IInteractable {
     private interactZone: Phaser.GameObjects.Zone;
     private actionBox: ActionBox;
     private playerInZone: boolean;
-    private dialogue: IDialogue;
+    private dialogue: IDialogueLine[];
     private dialogueFilename: string;
 
     constructor(scene: GameScene, x: integer, y: integer, actorObj: any, interactable: boolean, player: Player, dialogueFilename: string) {
@@ -25,7 +25,7 @@ export class Npc extends Actor implements IInteractable {
         this.dialogueFilename = dialogueFilename;
     }
 
-    public instantiateDialogue(dialogue: IDialogue) {
+    public instantiateDialogue(dialogue: IDialogueLine[]) {
         this.dialogue = dialogue;
     }
 
