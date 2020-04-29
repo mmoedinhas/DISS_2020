@@ -53,6 +53,8 @@ export class GameplayManager extends EventManager {
             } else {
                 this.player.move(keysPressed);
             }
+        } else {
+            this.player.move([]);
         }
 
     }
