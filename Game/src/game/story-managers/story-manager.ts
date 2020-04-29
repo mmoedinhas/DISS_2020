@@ -1,4 +1,4 @@
-import { IPlayerType, IScene, IEvent, IStory, ICoordinates } from '../../utils/interfaces';
+import { IPlayerType, IScene, IEvent, IStory, ICoordinates, IDialogueLine } from '../../utils/interfaces';
 import { CutsceneManager } from './cutscene-manager';
 import { EventManager } from './event-manager';
 import { GameplayManager } from './gameplay-manager';
@@ -19,6 +19,7 @@ export class StoryManager {
     private currEventIndex: integer;
     private currSceneIndex: integer;
     private currEventType: EventType;
+    private done: boolean;
 
     private previousPlayerPos: ICoordinates;
 
@@ -27,6 +28,7 @@ export class StoryManager {
     constructor(scene: GameScene, story: IStory, playerType: IPlayerType) {
         this.scene = scene;
         this.story = story;
+        this.done = false;
         this.playerType = playerType;
 
         this.currEventIndex = 1;
@@ -111,8 +113,20 @@ export class StoryManager {
 
     public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {
 
+        if(this.done) {
+            return;
+        }
+
         if (this.currEventManager.isDone()) {
-            this.next();
+            if(this.next() === undefined) {
+                this.done = true;
+                this.scene.scene.wake('Dialogue');
+                let dialogue: IDialogueLine[] = [{
+                    author: "",
+                    text: "The MVP trial has ended! Thank you for playing!"
+                }];
+                this.scene.scene.launch('Dialogue', { dialogue: dialogue, emitter: undefined });
+            }
         } else {
             this.currEventManager.act(time, delta, keysPressed);
         }
