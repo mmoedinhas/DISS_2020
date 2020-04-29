@@ -79,6 +79,7 @@ export class GameplayManager extends EventManager {
         this.interacting = false;
         this.implementFlagChanges(this.interactableObj.getFlagsChangesAfterInteraction());
 
+        this.interactableObj = undefined;
         this.checkForPossibleInteraction();
     }
 
@@ -165,6 +166,8 @@ export class GameplayManager extends EventManager {
 
         for (let npc of this.npcs) {
             npc.setInteractable(this.flags);
+            if(!npc.isInteractable()) continue;
+
             if (npc.isPlayerInZone(this.scene, this.player)) {
 
                 if (this.interacting) {

@@ -7,6 +7,9 @@ function flagsMapToObj(flagsMap: Map<string, boolean | number>): Object {
         flagsObj[key] = value;
     }
 
+    flagsObj["true"] = true;
+    flagsObj["false"] = false;
+
     return flagsObj;
 }
 
