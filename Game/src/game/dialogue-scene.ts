@@ -32,7 +32,9 @@ export class DialogueScene extends Phaser.Scene {
 
     public update() {
         if(this.dialogueBox.isDone()) {
-            this.emitter.emit('dialogueEnded');
+            if(this.emitter !== undefined) {
+                this.emitter.emit('dialogueEnded');
+            }
             return;
         }
 
