@@ -1,6 +1,27 @@
 {
     "name": "happySalon_3A",
-    "endEventCondition": "guest1Greeted && guest2Greeted && guest3Greeted && grandmaGreeted",
+    "flags": [{
+            "name": "grandmaGreeted",
+            "value": false
+        },
+        {
+            "name": "noGuestsGreeted",
+            "value": 0
+        },
+        {
+            "name": "guest1Greeted",
+            "value": false
+        },
+        {
+            "name": "guest2Greeted",
+            "value": false
+        },
+        {
+            "name": "guest3Greeted",
+            "value": false
+        }
+    ],
+    "endEventCondition": "noGuestsGreeted == 3 and grandmaGreeted",
     "player": {
         "playerId": "Clara",
         "actorId": "Clara",
@@ -14,14 +35,16 @@
                 10
             ],
             "dialogue": "talkGuest.json",
-            "isInteractableConditions": [{
-                "id": "guest1Greeted",
-                "value": false
-            }],
+            "isInteractableConditions": "not guest1Greeted",
             "flagChangesAfterInteraction": [{
-                "id": "guest1Greeted",
-                "value": true
-            }]
+                    "name": "guest1Greeted",
+                    "value": "true"
+                },
+                {
+                    "name": "noGuestsGreeted",
+                    "value": "noGuestsGreeted + 1"
+                }
+            ]
         },
         {
             "actorId": "Dancer2",
@@ -30,14 +53,16 @@
                 13
             ],
             "dialogue": "talkGuest.json",
-            "isInteractableConditions": [{
-                "id": "guest2Greeted",
-                "value": false
-            }],
+            "isInteractableConditions": "not guest2Greeted",
             "flagChangesAfterInteraction": [{
-                "id": "guest2Greeted",
-                "value": true
-            }]
+                    "name": "guest2Greeted",
+                    "value": "true"
+                },
+                {
+                    "name": "noGuestsGreeted",
+                    "value": "noGuestsGreeted + 1"
+                }
+            ]
         },
         {
             "actorId": "Dancer3",
@@ -46,14 +71,16 @@
                 17
             ],
             "dialogue": "talkGuest.json",
-            "isInteractableConditions": [{
-                "id": "guest3Greeted",
-                "value": false
-            }],
+            "isInteractableConditions": "not guest3Greeted",
             "flagChangesAfterInteraction": [{
-                "id": "guest3Greeted",
-                "value": true
-            }]
+                    "name": "guest3Greeted",
+                    "value": "true"
+                },
+                {
+                    "name": "noGuestsGreeted",
+                    "value": "noGuestsGreeted + 1"
+                }
+            ]
         },
         {
             "actorId": "Grandma",
@@ -62,13 +89,10 @@
                 15
             ],
             "dialogue": "talkGrandma.json",
-            "isInteractableConditions": [{
-                "id": "grandmaGreeted",
-                "value": false
-            }],
+            "isInteractableConditions": "not grandmaGreeted",
             "flagChangesAfterInteraction": [{
-                "id": "grandmaGreeted",
-                "value": true
+                "name": "grandmaGreeted",
+                "value": "true"
             }]
         }
     ],
