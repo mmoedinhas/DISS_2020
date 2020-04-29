@@ -1,27 +1,20 @@
 {
-    "actorsIds": [
-        "Clara", "Grandma"
-    ],
-    "lines": [
+
+    "lines": [{
+            "author": "Clara",
+            "text": "Merry Christmas! Enjoying the party?"
+        },
         {
-            "author": "Grandma",
-            "text": "My my Clara, how much you've grown! Let grandma have a look at you. "
+            "author": "Guest",
+            "text": "Merry Christmas Clara! Yes, very much so! Your parents throw the best parties!"
         },
         {
             "author": "Clara",
-            "text": "Hello grandma! You think so? I don't think I've grown any taller. Do you like my new dress?"
+            "text": "I'm glad! Well, hope you continue enjoying the party. See you!"
         },
         {
-            "author": "Grandma",
-            "text": "I love it Clara. It makes me happy to see you so energetic as usual. Now, go on and enjoy the party."
-        },
-        {
-            "author": "Clara",
-            "text": "I will! And I'll show you my new dance moves in a bit, but I must find myself a nice dance partner. See you grandma!"
-        },
-        {
-            "author": "Clara",
-            "text": "(I'm happy that I was able to see grandma today. I love her very much!)"
+            "author": "Guest",
+            "text": "See you!"
         }
     ]
 }

@@ -1,77 +1,100 @@
 {
-    "name": "event1A2A",
-    "endEventCondition": "grandmaGreeted && friendGreeted",
+    "name": "happySalon_3A",
+    "flags": [{
+            "name": "grandmaGreeted",
+            "value": false
+        },
+        {
+            "name": "noGuestsGreeted",
+            "value": 0
+        },
+        {
+            "name": "guest1Greeted",
+            "value": false
+        },
+        {
+            "name": "guest2Greeted",
+            "value": false
+        },
+        {
+            "name": "guest3Greeted",
+            "value": false
+        }
+    ],
+    "endEventCondition": "noGuestsGreeted == 3 and grandmaGreeted",
     "player": {
         "playerId": "Clara",
         "actorId": "Clara",
-        "startPosition": [
-            15,
-            60
-        ]
+        "startPosition": "current"
     },
-    "enemies": [
-        {
-            "id": "Dancer",
-            "encounterPercentage": 100
-        }
-    ],
-    "npcs": [
-        {
-            "actorId": "Grandma",
+    "enemies": [],
+    "npcs": [{
+            "actorId": "Dancer1",
             "position": [
-                100,
-                100
+                3,
+                10
             ],
-            "dialogue": "dialogue.json",
-            "isInteractableConditions": [],
-            "flagChangesAfterInteraction": [
+            "dialogue": "talkGuest.json",
+            "isInteractableConditions": "not guest1Greeted",
+            "flagChangesAfterInteraction": [{
+                    "name": "guest1Greeted",
+                    "value": "true"
+                },
                 {
-                    "id": "grandmaGreeted",
-                    "value": true
+                    "name": "noGuestsGreeted",
+                    "value": "noGuestsGreeted + 1"
+                }
+            ]
+        },
+        {
+            "actorId": "Dancer2",
+            "position": [
+                14,
+                13
+            ],
+            "dialogue": "talkGuest.json",
+            "isInteractableConditions": "not guest2Greeted",
+            "flagChangesAfterInteraction": [{
+                    "name": "guest2Greeted",
+                    "value": "true"
+                },
+                {
+                    "name": "noGuestsGreeted",
+                    "value": "noGuestsGreeted + 1"
+                }
+            ]
+        },
+        {
+            "actorId": "Dancer3",
+            "position": [
+                7,
+                17
+            ],
+            "dialogue": "talkGuest.json",
+            "isInteractableConditions": "not guest3Greeted",
+            "flagChangesAfterInteraction": [{
+                    "name": "guest3Greeted",
+                    "value": "true"
+                },
+                {
+                    "name": "noGuestsGreeted",
+                    "value": "noGuestsGreeted + 1"
                 }
             ]
         },
         {
             "actorId": "Grandma",
             "position": [
-                100,
-                200
+                15,
+                15
             ],
-            "dialogue": "dialogue.json",
-            "isInteractableConditions": [],
-            "flagChangesAfterInteraction": [
-                {
-                    "id": "friendGreeted",
-                    "value": true
-                }
-            ]
+            "dialogue": "talkGrandma.json",
+            "isInteractableConditions": "not grandmaGreeted",
+            "flagChangesAfterInteraction": [{
+                "name": "grandmaGreeted",
+                "value": "true"
+            }]
         }
     ],
-    "items": [
-        {
-            "itemId": "cake",
-            "position": [
-                100,
-                100
-            ],
-            "dialogue": "cake_dialogue.json",
-            "inventoryChange": {
-                "itemId": "cake",
-                "action": "+1"
-            },
-            "isInteractableConditions": [
-                {
-                    "name": "cakeAtPartyTaken",
-                    "value": false
-                }
-            ],
-            "flagChangesAfterInteraction": [
-                {
-                    "name": "cakeAtPartyTaken",
-                    "value": true
-                }
-            ],
-            "disappears": false
-        }
-    ]
+    "items": []
 }

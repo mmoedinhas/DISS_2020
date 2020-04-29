@@ -77,7 +77,7 @@
             ]
         },
         {
-            "locationId": "salon",
+            "locationId": "salon2",
             "name": "sadSalon",
             "description": "The dance salon is decorated nicely but has cold colors and looks quite sad.",
             "map": "sad_dance_hall.json",
