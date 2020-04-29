@@ -48,6 +48,10 @@ export class ActionBox {
         scene.rexUI.getTopmostSizer(this.textLabel).layout();
     }
 
+    public destroy() {
+        this.textLabel.destroy();
+    }
+
     private createLabel(x: number, y: number): Label {
 
         let label = new Label(this.scene, {

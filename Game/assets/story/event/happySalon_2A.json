@@ -1,9 +1,14 @@
 {
     "name": "happySalon_2A",
     "flags": [{
-        "name": "grandmaGreeted",
-        "value": false
-    }],
+            "name": "grandmaGreeted",
+            "value": false
+        },
+        {
+            "name": "always",
+            "value": true
+        }
+    ],
     "endEventCondition": "grandmaGreeted",
     "player": {
         "playerId": "Clara",
@@ -21,7 +26,7 @@
                 10
             ],
             "dialogue": "notGrandma.json",
-            "isInteractableConditions": "true",
+            "isInteractableConditions": "always",
             "flagChangesAfterInteraction": []
         },
         {
@@ -31,7 +36,7 @@
                 13
             ],
             "dialogue": "notGrandma.json",
-            "isInteractableConditions": "true",
+            "isInteractableConditions": "always",
             "flagChangesAfterInteraction": []
         },
         {
@@ -41,7 +46,7 @@
                 17
             ],
             "dialogue": "notGrandma.json",
-            "isInteractableConditions": "true",
+            "isInteractableConditions": "always",
             "flagChangesAfterInteraction": []
         },
         {

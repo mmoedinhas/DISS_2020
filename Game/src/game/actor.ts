@@ -105,8 +105,8 @@ export class Actor {
 
     }
 
-    public setOverlapWithZone(zone: Phaser.GameObjects.Zone, scene: GameScene, callback: () => boolean , context: Npc) {
-        scene.physics.add.overlap(zone, this.sprite, callback, callback, context);
+    public isOverlappingWithObject(scene: GameScene, object: Phaser.Types.Physics.Arcade.ArcadeColliderType): boolean {
+        return scene.physics.overlap(object, this.sprite);
     }
 
     public moveAuto(scene: GameScene, x:integer, y:integer, emitter: Phaser.Events.EventEmitter) {

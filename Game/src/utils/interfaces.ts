@@ -56,3 +56,8 @@ export interface IDialogueLine {
     author: string,
     text: string
 }
+
+export interface IFlagChange {
+    name: string,
+    value: string
+}

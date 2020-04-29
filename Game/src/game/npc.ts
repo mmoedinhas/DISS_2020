@@ -3,7 +3,10 @@ import { GameScene } from "./game-scene";
 import { Player } from "./player";
 import { ActionBox } from "./ui/action-box";
 import { IInteractable } from "./i-interactable";
-import { IDialogueLine } from "../utils/interfaces";
+import { IDialogueLine, IFlagChange } from "../utils/interfaces";
+import * as filter from "../utils/filtrex";
+import { getAssetIdFromPath } from "../utils/paths";
+import { isArcadeBody } from "../utils/type-predicates";
 
 export class Npc extends Actor implements IInteractable {
 
@@ -13,35 +16,50 @@ export class Npc extends Actor implements IInteractable {
     private interactZone: Phaser.GameObjects.Zone;
     private actionBox: ActionBox;
     private playerInZone: boolean;
-    private dialogueFilename: string;
+    private interactableCondition: string;
+    private flagsChangesAfterInteraction: IFlagChange[];
 
-    constructor(scene: GameScene, x: number, y: number, actorObj: any, interactable: boolean, player: Player, dialogueFilename: string, realCoordinates?: boolean) {
+    constructor(scene: GameScene, x: number, y: number, actorObj: any, npcObj: any, flags: Map<string, boolean | number>, realCoordinates?: boolean) {
         super(scene, x, y, actorObj, realCoordinates);
         (this.sprite.body as Phaser.Physics.Arcade.Body).setImmovable();
-        this.interactable = interactable;
-        this.createInteractZone(scene, player);
+
+        this.interactableCondition = npcObj.isInteractableConditions;
+        this.dialogue = this.getDialogue(scene, npcObj.dialogue);
+        this.flagsChangesAfterInteraction = npcObj.flagChangesAfterInteraction;
+
+        this.setInteractable(flags);
+        this.createInteractZone(scene);
         this.playerInZone = false;
         this.actionBox = new ActionBox(scene, "Talk", this.getX(), this.getY() - this.sprite.height, true);
-        this.dialogueFilename = dialogueFilename;
     }
 
     public instantiateDialogue(dialogue: IDialogueLine[]) {
         this.dialogue = dialogue;
     }
 
-    public getDialogueFilename(): string {
-        return this.dialogueFilename;
-    }
+    public setInteractable(flags: Map<string, boolean | number>) {
 
-    public setInteractable(interactable: boolean) {
-        this.interactable = interactable;
+        let filterResult: boolean | Error = filter.boolean(this.interactableCondition, flags);
+        if (filterResult instanceof Error) {
+            console.error("Error in isInteractable flags of npc " + this.id + "\n" + filterResult.message);
+            this.interactable = false;
+            return;
+        }
+
+        this.interactable = filterResult as boolean;
     }
 
     public isInteractable(): boolean {
         return this.interactable;
     }
 
-    public isPlayerInZone(): boolean {
+    public getFlagsChangesAfterInteraction(): IFlagChange[] {
+        return this.flagsChangesAfterInteraction;
+    }
+
+    public isPlayerInZone(scene:GameScene, player: Player): boolean {
+
+        return player.isOverlappingWithObject(scene, this.interactZone);
 
         // if (isArcadeBody(this.interactZone.body)) {
         //     if (this.interactZone.body.embedded) {
@@ -55,9 +73,7 @@ export class Npc extends Actor implements IInteractable {
         //     }
         // }
 
-        return this.playerInZone;
-
-        //return false;
+        // return false;
     }
 
     public setPlayerInZone(playerInZone: boolean) {
@@ -65,18 +81,19 @@ export class Npc extends Actor implements IInteractable {
     }
 
     public setActionBoxVisiblity(visible: boolean) {
-        if(visible) {
-            this.actionBox.show()
+        if (visible) {
+            this.actionBox.show();
         } else {
             this.actionBox.hide();
         }
     }
 
-    public interact() {
-
+    public destroy() {
+        this.sprite.destroy();
+        this.actionBox.destroy();
     }
 
-    private createInteractZone(scene: GameScene, player: Player) {
+    private createInteractZone(scene: GameScene) {
         const Zone = Phaser.GameObjects.Zone;
 
         let width = this.sprite.width + scene.getMap().tileWidth;
@@ -90,9 +107,23 @@ export class Npc extends Actor implements IInteractable {
         this.interactZone = new Zone(scene, x, y, width, height);
 
         scene.physics.add.existing(this.interactZone);
-        player.setOverlapWithZone(this.interactZone, scene, () => {
-            this.playerInZone = true;
-            return false;
-        }, this);
+    }
+
+    private getDialogue(scene: GameScene, dialogueFilename: string): IDialogueLine[] {
+        const dialogue: IDialogueLine[] = [];
+
+        let key: string = getAssetIdFromPath(dialogueFilename);
+        let dialogueObj = scene.cache.json.get(key);
+
+        for (let lineDesc of dialogueObj.lines) {
+
+            let line: IDialogueLine = {
+                author: lineDesc.author,
+                text: lineDesc.text
+            };
+            dialogue.push(line);
+        }
+
+        return dialogue;
     }
 }

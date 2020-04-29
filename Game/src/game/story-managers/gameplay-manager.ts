@@ -1,4 +1,3 @@
-import * as filtrex from 'filtrex';
 import { EventManager } from "./event-manager";
 import { GameScene } from "../game-scene";
 import { Player } from "../player";
@@ -6,7 +5,8 @@ import { Npc } from "../npc";
 import { Actor } from "../actor";
 import { IInteractable } from "../i-interactable";
 import { getAssetIdFromPath } from "../../utils/paths";
-import { IDialogueLine, ICoordinates } from "../../utils/interfaces";
+import { IDialogueLine, ICoordinates, IFlagChange } from "../../utils/interfaces";
+import * as filter from "../../utils/filtrex";
 
 export class GameplayManager extends EventManager {
 
@@ -16,20 +16,29 @@ export class GameplayManager extends EventManager {
     private interactableObj: IInteractable;
     private interacting: boolean;
     private emitter: Phaser.Events.EventEmitter;
-    private flags: Map<string, boolean>;
+    private flags: Map<string, boolean | number>;
+    private endCondition: string;
 
     constructor(scene: GameScene, name: string, previousPlayerPos?: ICoordinates) {
         super(scene, name);
         this.previousPlayerPos = previousPlayerPos;
-        this.populateActors();
-        this.interacting = false;
         this.flags = this.initFlags();
+        this.populateActors();
+        
+        this.interacting = false;
+        this.endCondition = this.jsonObj.endEventCondition;
 
         this.emitter = new Phaser.Events.EventEmitter();
         this.emitter.on('dialogueEnded', this.interactionEnded, this);
     }
 
     public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {
+
+        if(this.checkForEnd()) {
+            this.done = true;
+            return;
+        }
+
         this.sortActorDepths();
         this.checkForPossibleInteraction();
 
@@ -37,7 +46,6 @@ export class GameplayManager extends EventManager {
 
             if (keysPressed.includes(GameScene.interactKey) && this.interactableObj !== undefined) {
 
-                this.interactableObj.interact();
                 this.interacting = true;
 
                 this.scene.scene.wake('Dialogue');
@@ -62,63 +70,60 @@ export class GameplayManager extends EventManager {
             let x = npcDesc.position[0];
             let y = npcDesc.position[1];
 
-            let interactable: boolean = false;
-            if (npcDesc.isInteractableConditions === "always") {
-                interactable = true;
-            }
-
-            this.addNpc(new Npc(this.scene, x, y, actor, interactable, this.player, npcDesc.dialogue));
-        }
-
-        // add dialogues
-        for (let npc of this.npcs) {
-            let dialogue = this.getDialogue(npc.getDialogueFilename());
-            npc.instantiateDialogue(dialogue);
+            this.addNpc(new Npc(this.scene, x, y, actor, npcDesc, this.flags));
         }
     }
 
     public interactionEnded() {
         this.scene.scene.sleep('Dialogue');
         this.interacting = false;
-        this.done = true;
+        this.implementFlagChanges(this.interactableObj.getFlagsChangesAfterInteraction());
 
         this.checkForPossibleInteraction();
     }
 
-    private initFlags(): Map<string, boolean> {
-        const flags: Map<string, boolean> = new Map();
-        
-        let expression = this.jsonObj.endEventCondition;
-        console.log(expression);
+    private checkForEnd(): boolean {
+        let filterResult: boolean | Error = filter.boolean(this.endCondition, this.flags);
 
-        try {
-            let filter = filtrex.compileExpression(expression);
-            console.log("filter result: " + filter({grandmaGreeted: true}));
-        } catch (err) {
-            let errTokens: string[] = err.message.split('\n');
-            let errString: string = errTokens[0] + "\n" + errTokens[1] + "\n" + errTokens[2];
-            console.log(errString);
+        if (filterResult instanceof Error) {
+            console.error("Error in end condition of event\n" + filterResult.message);
+            return false;
+        } else {
+            return filterResult;
+        }
+    }
+
+    private initFlags(): Map<string, boolean | number> {
+        const flags: Map<string, boolean | number > = new Map();
+
+        for(let flagObj of this.jsonObj.flags) {
+            flags.set(flagObj.name, flagObj.value);
         }
 
         return flags;
     }
 
-    private getDialogue(dialogueFilename: string): IDialogueLine[] {
-        const dialogue: IDialogueLine[] = [];
+    private implementFlagChanges(flagChanges: IFlagChange[]) {
 
-        let key: string = getAssetIdFromPath(dialogueFilename);
-        let dialogueObj = this.scene.cache.json.get(key);
+        console.log(flagChanges);
+        
+        for(let flagChange of flagChanges) {
 
-        for (let lineDesc of dialogueObj.lines) {
+            let filterResult: number | boolean | Error;
+            if(typeof this.flags.get(flagChange.name) == "number") {
+                filterResult = filter.number(flagChange.value, this.flags);
+            } else if(typeof this.flags.get(flagChange.name) == "boolean") {
+                filterResult = filter.boolean(flagChange.value, this.flags);
+            }
 
-            let line: IDialogueLine = {
-                author: lineDesc.author,
-                text: lineDesc.text
-            };
-            dialogue.push(line);
+            if (filterResult instanceof Error) {
+                console.error("Error in flag changes of interactable\n" + filterResult.message);
+            } else {
+                this.flags.set(flagChange.name, filterResult);
+            }
         }
 
-        return dialogue;
+        console.log(this.flags);
     }
 
     private sortActorDepths() {
@@ -159,7 +164,8 @@ export class GameplayManager extends EventManager {
     private checkForPossibleInteraction() {
 
         for (let npc of this.npcs) {
-            if (npc.isPlayerInZone()) {
+            npc.setInteractable(this.flags);
+            if (npc.isPlayerInZone(this.scene, this.player)) {
 
                 if (this.interacting) {
                     npc.setActionBoxVisiblity(false);
@@ -168,16 +174,16 @@ export class GameplayManager extends EventManager {
                     npc.setActionBoxVisiblity(true);
                 }
 
-                npc.setPlayerInZone(false);
-
             } else {
 
-                if (this.interactableObj == npc) {
+                if (this.interactableObj === npc) {
                     npc.setActionBoxVisiblity(false);
                     this.interactableObj = undefined;
                 }
 
             }
+
+            npc.setPlayerInZone(false);
         }
     }
 

@@ -1,13 +1,13 @@
-import { GameScene } from "./game-scene";
+import { IDialogueLine, IFlagChange } from "../utils/interfaces";
 import { Player } from "./player";
-import { IDialogueLine } from "../utils/interfaces";
+import { GameScene } from "./game-scene";
 
 export interface IInteractable {
     dialogue: IDialogueLine[],
-    setInteractable(interactable: boolean),
+    setInteractable(flags: Map<string, boolean | number>),
     isInteractable(): boolean,
-    isPlayerInZone(): boolean,
+    isPlayerInZone(scene: GameScene, player: Player): boolean,
     setPlayerInZone(playerInZone: boolean),
     setActionBoxVisiblity(visible: boolean),
-    interact()
+    getFlagsChangesAfterInteraction(): IFlagChange[]
 }
