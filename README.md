@@ -19,4 +19,4 @@ Contains all the code needed for the game to run in development mode
 ### For production
 1. Create `StoryViewer/.env` file according to the .env.example provided in the folder
 2. Build the game by going to the `Game` folder and running `npm run build`
-3. In `StoryViewer` folder run `npm run dev` and access the game in (http://localhost:3000/game)
+3. In `StoryViewer` folder run `npm run dev` and access the game in http://localhost:3000/game
