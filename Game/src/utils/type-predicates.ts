@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { Actor } from '../game/actor';
 
-export function isArcadeBody(body: object|Phaser.Physics.Arcade.Body|Phaser.Physics.Impact.Body): body is Phaser.Physics.Arcade.Body {
+export function isArcadeBody(body: object|Phaser.Physics.Arcade.Body|MatterJS.BodyType): body is Phaser.Physics.Arcade.Body {
     return body instanceof Phaser.Physics.Arcade.Body;
 }
 
