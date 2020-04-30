@@ -10,6 +10,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/public'))
+app.use('/game', express.static('public/dist'))
 app.use(require('./controllers'))
 
 app.listen(port, function() {
