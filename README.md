@@ -2,13 +2,13 @@
 
 Repository for my dissertation project in FEUP 2020
 
-## JSON files
+## `JSON files` folder
 Contains the documentation (schema) and examples of the JSON files that are essential to the framework
 
-## StoryViewer folder
+## `StoryViewer` folder
 Contains the code for the server that serves the framework API, the Story Viewer and the production version of the game
 
-## Game folder
+## `Game` folder
 Contains all the code needed for the game to run in development mode
 
 ## How to Run
