@@ -2,6 +2,9 @@
 
 Repository for my dissertation project in FEUP 2020
 
+## JSON files
+Contains the documentation (schema) and examples of the JSON files that are essential to the framework
+
 ## StoryViewer folder
 Contains the code for the server that serves the framework API, the Story Viewer and the production version of the game
 
@@ -10,6 +13,7 @@ Contains all the code needed for the game to run in development mode
 
 ## How to Run
 > Requirements: Node.js needs to be installed
+>> Don't forget to install node modules in both `StoryViewer` and `Game` folders by running `npm install` first
 
 ### Development Mode
 1. Create both `StoryViewer/.env` and `Game/.env` files acording to the .env.example provided in the folders
