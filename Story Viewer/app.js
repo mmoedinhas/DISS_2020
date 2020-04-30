@@ -1,6 +1,7 @@
 var express = require('express')
 var cors = require('cors')
 var bodyParser = require('body-parser')
+const { port } = require('./config')
 
 var app = express()
 
@@ -11,6 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'))
 app.use(require('./controllers'))
 
-app.listen(3000, function() {
-  console.log('Listening on port 3000...')
+app.listen(port, function() {
+    console.log("Listening on port " + port + "...")
 })

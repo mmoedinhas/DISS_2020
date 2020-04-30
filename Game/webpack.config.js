@@ -1,5 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
+dotenv.config();
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -9,13 +11,11 @@ module.exports = {
     },
 
     module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
-            }
-        ]
+        rules: [{
+            test: /\.tsx?$/,
+            use: 'ts-loader',
+            exclude: /node_modules/
+        }]
     },
 
     devtool: 'inline-source-map',
@@ -36,8 +36,7 @@ module.exports = {
     },
 
     plugins: [
-        new CopyWebpackPlugin([
-            {
+        new CopyWebpackPlugin([{
                 from: path.resolve(__dirname, '*.html'),
                 to: path.resolve(__dirname, 'dist')
             },
@@ -52,7 +51,8 @@ module.exports = {
         ]),
         new webpack.DefinePlugin({
             'typeof CANVAS_RENDERER': JSON.stringify(true),
-            'typeof WEBGL_RENDERER': JSON.stringify(true)
+            'typeof WEBGL_RENDERER': JSON.stringify(true),
+            'SERVICE_URL': JSON.stringify(process.env.SERVICE_URL)
         }),
     ],
 
