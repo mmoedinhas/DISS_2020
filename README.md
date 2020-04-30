@@ -1,6 +1,6 @@
 # DISS_2020
 
-Repository for my dissertation project in FEUP 2020
+Repository for my dissertation project at FEUP 2020
 
 ## `JSON files` folder
 Contains the documentation (schema) and examples of the JSON files that are essential to the framework
