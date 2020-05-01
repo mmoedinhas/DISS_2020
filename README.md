@@ -3,6 +3,8 @@ DISS_2020
 
 Repository for my dissertation project at FEUP 2020
 
+> It's recommended to test the MVP in [dev mode](#development-mode) so that different player types can be tested ([testing different player types]()) 
+
 `JSON files` folder
 ------
 Contains the documentation (schema) and examples of the JSON files that are essential to the framework
@@ -46,3 +48,7 @@ How to Run
 3. In `StoryViewer` folder run `npm run dev`
 4. Access the game in **http://<span></span>localhost:<YOUR_PORT_OF_CHOICE_IN_ENV>/game**
 5. Access the Story Viewer in **http://<span></span>localhost:<YOUR_PORT_OF_CHOICE_IN_ENV>**
+
+Testing different player types
+------
+Since there's no form for that yet (sorry) you have to do it in the code. In the file `Game/src/game/main.ts` modify the "playerType" variable to different values for different stories. So far there's two branches: one with anxiety > 8 and a default. To reload the game, just save the changes in the file (the dev server has hot-reload).
