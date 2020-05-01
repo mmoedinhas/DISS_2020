@@ -1,12 +1,13 @@
 import * as Phaser from 'phaser';
 import WebfontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
-import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
-
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'; 
 import { GameScene } from './game-scene';
 import { IPlayerType, IStory } from '../utils/interfaces';
 import * as paths from '../utils/paths';
 import { DialogueScene } from './dialogue-scene';
 import { getAssetIdFromPath } from '../utils/paths';
+
+declare let SERVICE_URL: string;
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
@@ -23,7 +24,7 @@ const playerType: IPlayerType = {
     happiness: 10
 }
 
-const frameworkUrl: string = "http://localhost:3000/json/";
+const frameworkUrl: string = SERVICE_URL + "/json/";
 
 const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
 const actorsFile: string = paths.storyPath + 'actors.json';
