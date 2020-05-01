@@ -15,15 +15,16 @@ Contains the code for the server that serves the framework API, the Story Viewer
 Handles requests to the framework. Main usage case is sending the overall narrative file and user profile and receiving an organized story to display to the user.
 
 ### Story Viewer
-Viewing tool for the story. When uploading a overall story file, it displays the story in a graph
-It also validates uploaded json files against a chosen schema
+Viewing tool for the story. When uploading a overall story file, it displays the story in a graph.
+
+It also validates uploaded JSON files against a chosen schema.
 
 `Game` folder
 ------
 Contains all the code needed for the game to run in development mode
 
 ### Game Controls
-**Arrows:** move
+**Arrow keys:** move
 
 **Z:** interact
 
