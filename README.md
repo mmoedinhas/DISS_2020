@@ -3,7 +3,7 @@ DISS_2020
 
 Repository for my dissertation project at FEUP 2020
 
-> It's recommended to test the MVP in [dev mode](#development-mode) so that different player types can be tested ([testing different player types]()) 
+> It's recommended to test the MVP in [dev mode](#development-mode) so that different player types can be tested ([testing different player types](#testing-different-player-types)) 
 
 `JSON files` folder
 ------
