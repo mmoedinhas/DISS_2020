@@ -1,0 +1,76 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "required": [
+        "anger",
+        "disgust",
+        "fear",
+        "anxiety",
+        "sadness",
+        "desire",
+        "relaxation",
+        "happiness"
+    ],
+    "properties": {
+        "anger": {
+            "$id": "#/properties/anger",
+            "type": "integer",
+            "title": "Anger",
+            "description": "The amount of anger that the player is feeling.",
+            "default": 0
+        },
+        "disgust": {
+            "$id": "#/properties/disgust",
+            "type": "integer",
+            "title": "Disgust",
+            "description": "The amount of disgust that the player is feeling.",
+            "default": 0
+        },
+        "fear": {
+            "$id": "#/properties/fear",
+            "type": "integer",
+            "title": "Fear",
+            "description": "The amount of fear that the player is feeling.",
+            "default": 0
+        },
+        "anxiety": {
+            "$id": "#/properties/anxiety",
+            "type": "integer",
+            "title": "Anxiety",
+            "description": "The amount of anxiety that the player is feeling.",
+            "default": 0
+        },
+        "sadness": {
+            "$id": "#/properties/sadness",
+            "type": "integer",
+            "title": "Sadness",
+            "description": "The amount of sadness that the player is feeling.",
+            "default": 0
+        },
+        "desire": {
+            "$id": "#/properties/desire",
+            "type": "integer",
+            "title": "Desire",
+            "description": "The amount of desire that the player is feeling.",
+            "default": 0
+        },
+        "relaxation": {
+            "$id": "#/properties/relaxation",
+            "type": "integer",
+            "title": "Relaxation",
+            "description": "The amount of relaxation that the player is feeling.",
+            "default": 0
+        },
+        "happiness": {
+            "$id": "#/properties/happiness",
+            "type": "integer",
+            "title": "Happiness",
+            "description": "The amount of happiness that the player is feeling.",
+            "default": 0
+        }
+    }
+}
