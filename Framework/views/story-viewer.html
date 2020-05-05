@@ -35,58 +35,15 @@
 </head>
 
 <body>
-    <div id="validation">
-        <form id="validationForm" enctype="multipart/form-data">
-            <input type="file" name="jsonFile" />
-            <select id="jsonType" name="jsonType">
-        <option value="overall_narrative">Overall narrative</option>
-        <option value="cutscene">Cutscene</option>
-        <option value="gameplay">Gameplay</option>
-        <option value="actors">Actors</option>
-        <option value="dialogue">Dialogue</option>
-      </select>
-            <input id="submit" type="button" value="Validate JSON" />
-        </form>
-    </div>
     <button id="createGraph" type="button" onclick="showGraph()">Show Graph</button>
     <div id="content"></div>
     <script>
-        $('#submit').on('click', function() {
-            $.ajax({
-
-                url: 'json/validate',
-                type: 'POST',
-                data: new FormData(document.getElementById("validationForm")),
-                cache: false,
-                contentType: false,
-                processData: false,
-
-                error: function(err) {
-                    const p = document.createElement('p');
-                    p.textContent = err.responseText;
-                    document.getElementById('content').appendChild(p);
-                },
-
-                success: function(result) {
-
-                    const p = document.createElement('p');
-                    p.textContent = result;
-
-                    if (result !== "Valid json") {
-                        p.textContent = JSON.stringify(result);
-                    }
-
-                    document.getElementById('content').appendChild(p);
-                }
-            });
-        });
-
         function showGraph() {
 
             let content = document.getElementById("content");
             content.innerHTML = '';
 
-            const requestURL = './json/overall_narrative.json';
+            const requestURL = './story-viewer/overall_narrative.json';
 
             let request = new XMLHttpRequest();
             request.open('GET', requestURL);
