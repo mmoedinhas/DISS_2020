@@ -24,7 +24,7 @@ const playerType: IPlayerType = {
     happiness: 10
 }
 
-const frameworkUrl: string = SERVICE_URL + "/framework/";
+const frameworkUrl: string = SERVICE_URL + "/";
 
 const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
 const actorsFile: string = paths.storyPath + 'actors.json';
