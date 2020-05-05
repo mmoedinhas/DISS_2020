@@ -36,7 +36,7 @@ Contains all the code needed for the game to run in development mode
 How to Run
 ------
 > Requirements: Node.js needs to be installed
->> Don't forget to install node modules in both `Framework`, `Game` and `StoryViewer` folders by running `npm install` first
+>> Don't forget to install node modules in `Framework`, `Game` and `StoryViewer` folders by running `npm install` first
 
 ### Story Viewer
 1. Create `StoryViewer/.env` file according to the .env.example provided in the folder
