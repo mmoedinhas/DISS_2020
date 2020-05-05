@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Story Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta http-equiv="cleartype" content="on">
+    <script src="libs/sigma/sigma.min.js"></script>
+    <script src="libs/sigma/plugins/sigma.renderers.customShapes.min.js"></script>
+    <script src="libs/sigma/plugins/sigma.renderers.edgeLabels.min.js"></script>
+    <script src="libs/jquery-3.5.0.min.js"></script>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: absolute;
+        }
+        
+        #content {
+            flex: 1;
+        }
+        
+        button {
+            align-self: flex-start;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="createGraph" type="button" onclick="showGraph()">Show Graph</button>
+    <div id="content"></div>
+    <script>
+        function showGraph() {
+
+            let content = document.getElementById("content");
+            content.innerHTML = '';
+
+            const requestURL = './story-viewer/overall_narrative.json';
+
+            let request = new XMLHttpRequest();
+            request.open('GET', requestURL);
+            request.responseType = 'json';
+            request.send();
+
+            request.onload = function() {
+                if (request.status == 404) {
+                    const p = document.createElement('p');
+                    p.textContent = "Couldn't find narrative file";
+                    document.querySelector('#content').appendChild(p);
+                    return;
+                }
+
+                const graphObject = request.response;
+
+                console.log(graphObject.graph);
+                console.log(graphObject.errors);
+                createGraph(graphObject.graph);
+            }
+        }
+
+        function createGraph(graph) {
+            sigma.utils.pkg('sigma.canvas.nodes');
+            sigma.utils.pkg('sigma.canvas.edges');
+
+            let s = new sigma({
+                graph: graph,
+                renderer: {
+                    container: document.getElementById('content'),
+                    type: sigma.renderers.canvas
+                },
+                settings: {
+                    edgeLabelSize: 'proportional',
+                    defaultEdgeLabelSize: 12,
+                    defaultEdgeType: 'curvedArrow',
+                    minEdgeSize: 2,
+                    maxEdgeSize: 2,
+                    minNodeSize: 10,
+                    maxNodeSize: 10,
+                    defaultEdgeColor: '#000000'
+                }
+            });
+            s.cameras[0].goTo({
+                x: 0,
+                y: 0,
+                angle: 0,
+                ratio: 1
+            });
+
+            CustomShapes.init(s);
+            s.refresh();
+        }
+    </script>
+</body>
+
+</html>

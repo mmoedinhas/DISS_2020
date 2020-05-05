@@ -1,0 +1,52 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "lines"
+    ],
+    "properties": {
+        "lines": {
+            "$id": "#/properties/lines",
+            "type": "array",
+            "title": "Lines",
+            "description": "An array of all the dialogue lines, in order of appearance",
+            "default": [],
+            "items": {
+                "$id": "#/properties/lines/items",
+                "type": "object",
+                "title": "Line",
+                "description": "The object representation of a line",
+                "default": {},
+                "required": [
+                    "author",
+                    "text"
+                ],
+                "properties": {
+                    "author": {
+                        "$id": "#/properties/lines/items/properties/author",
+                        "type": "string",
+                        "title": "Author",
+                        "description": "The author that says the line",
+                        "default": "",
+                        "examples": [
+                            "Grandma"
+                        ]
+                    },
+                    "text": {
+                        "$id": "#/properties/lines/items/properties/text",
+                        "type": "string",
+                        "title": "Text",
+                        "description": "The text of the line",
+                        "default": "",
+                        "examples": [
+                            "My my Clara, how much you've grown! Let grandma have a look at you. "
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

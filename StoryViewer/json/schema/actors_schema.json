@@ -1,0 +1,229 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "actors"
+    ],
+    "properties": {
+        "actors": {
+            "$id": "#/properties/actors",
+            "type": "array",
+            "title": "Actors",
+            "description": "A list of all the actors in the game (protagonists, NPCs, enemies)",
+            "default": [],
+            "items": {
+                "$id": "#/properties/actors/items",
+                "type": "object",
+                "title": "Actor",
+                "description": "The representation of an actor",
+                "default": {},
+                "required": [
+                    "id",
+                    "name",
+                    "tilesetId",
+                    "defaultFrame",
+                    "animations",
+                    "body"
+                ],
+                "properties": {
+                    "id": {
+                        "$id": "#/properties/actors/items/properties/id",
+                        "type": "string",
+                        "title": "Id",
+                        "description": "The unique ID for this actor",
+                        "default": "",
+                        "examples": [
+                            "Clara"
+                        ]
+                    },
+                    "name": {
+                        "$id": "#/properties/actors/items/properties/name",
+                        "type": "string",
+                        "title": "Name",
+                        "description": "The actor's name",
+                        "default": "",
+                        "examples": [
+                            "Clara"
+                        ]
+                    },
+                    "tilesetId": {
+                        "$id": "#/properties/actors/items/properties/tilesetId",
+                        "type": "string",
+                        "title": "Tileset",
+                        "description": "The name/id of the tileset containing the sprites for this actor",
+                        "default": "",
+                        "examples": [
+                            "girls"
+                        ]
+                    },
+                    "defaultFrame": {
+                        "$id": "#/properties/actors/items/properties/initFrame",
+                        "type": "integer",
+                        "title": "Init Frame",
+                        "description": "The default/initial frame of this actor.",
+                        "default": 0
+                    },
+                    "animations": {
+                        "$id": "#/properties/actors/items/properties/animations",
+                        "type": "array",
+                        "title": "animations",
+                        "description": "A list of the animations for the actor",
+                        "default": [],
+                        "items": {
+                            "$id": "#/properties/actors/items/properties/animations/items",
+                            "type": "object",
+                            "title": "Animation",
+                            "description": "A representation of an animation",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "frameRate": 10.0,
+                                    "key": "left",
+                                    "repeat": -1.0,
+                                    "frames": [
+                                        12.0,
+                                        13.0,
+                                        12.0,
+                                        11.0
+                                    ]
+                                },
+                                {
+                                    "key": "right",
+                                    "repeat": -1.0,
+                                    "frames": [
+                                        25.0,
+                                        26.0,
+                                        25.0,
+                                        24.0
+                                    ],
+                                    "frameRate": 10.0
+                                },
+                                {
+                                    "frameRate": 10.0,
+                                    "key": "up",
+                                    "repeat": -1.0,
+                                    "frames": [
+                                        37.0,
+                                        38.0,
+                                        37.0,
+                                        36.0
+                                    ]
+                                },
+                                {
+                                    "frameRate": 10.0,
+                                    "key": "down",
+                                    "repeat": -1.0,
+                                    "frames": [
+                                        1.0,
+                                        2.0,
+                                        1.0,
+                                        0.0
+                                    ]
+                                }
+                            ],
+                            "required": [
+                                "key",
+                                "frames",
+                                "frameRate",
+                                "repeat"
+                            ],
+                            "properties": {
+                                "key": {
+                                    "$id": "#/properties/actors/items/properties/animations/items/properties/key",
+                                    "type": "string",
+                                    "title": "Key",
+                                    "description": "The animation unique key",
+                                    "default": "",
+                                    "examples": [
+                                        "left"
+                                    ]
+                                },
+                                "frames": {
+                                    "$id": "#/properties/actors/items/properties/animations/items/properties/frames",
+                                    "type": "array",
+                                    "title": "Frames",
+                                    "description": "The frames in the tileset required for the animation",
+                                    "default": [],
+                                    "items": {
+                                        "$id": "#/properties/actors/items/properties/animations/items/properties/frames/items",
+                                        "type": "integer",
+                                        "title": "Frame",
+                                        "description": "The index corresponding to the desired frame in the tileset",
+                                        "default": 0,
+                                        "examples": [
+                                            12,
+                                            13,
+                                            12,
+                                            11
+                                        ]
+                                    }
+                                },
+                                "frameRate": {
+                                    "$id": "#/properties/actors/items/properties/animations/items/properties/frameRate",
+                                    "type": "integer",
+                                    "title": "Framerate",
+                                    "description": "The framerate of the animation",
+                                    "default": 0,
+                                    "examples": [
+                                        10
+                                    ]
+                                },
+                                "repeat": {
+                                    "$id": "#/properties/actors/items/properties/animations/items/properties/repeat",
+                                    "type": "integer",
+                                    "title": "Repeat",
+                                    "description": "Number of times the animation should repeat. -1 if animation should loop forever",
+                                    "default": 0,
+                                    "examples": [
+                                        -1
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "body": {
+                        "$id": "#/properties/actors/items/properties/body",
+                        "type": "object",
+                        "title": "Body",
+                        "description": "Description of the physics body of this actor",
+                        "default": {},
+                        "required": [
+                            "height",
+                            "width",
+                            "anchor"
+                        ],
+                        "properties": {
+                            "height": {
+                                "$id": "#/properties/actors/items/properties/body/properties/height",
+                                "type": "integer",
+                                "title": "Height",
+                                "description": "The height of the physics body, as a percentage of the height of the sprite.",
+                                "default": 100,
+                                "minimum": 1
+                            },
+                            "width": {
+                                "$id": "#/properties/actors/items/properties/body/properties/width",
+                                "type": "integer",
+                                "title": "Width",
+                                "description": "The width of the physics body, as a percentage of the width of the sprite.",
+                                "default": 100,
+                                "minimum": 1
+                            },
+                            "anchor": {
+                                "$id": "#/properties/actors/items/properties/body/properties/anchor",
+                                "type": "string",
+                                "title": "Anchor",
+                                "description": "The anchor to which the sprite center will be calculated.",
+                                "default": "",
+                                "pattern": "^((left|right|center)-(top|bottom|center))$"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
