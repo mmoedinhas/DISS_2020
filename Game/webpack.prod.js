@@ -11,12 +11,12 @@ module.exports = merge(common, {
     mode: 'production',
     devtool: 'source-map',
     output: {
-        path: path.resolve(__dirname, '../StoryViewer/public/dist')
+        path: path.resolve(__dirname, '../Framework/public/dist')
     },
     plugins: [
         new CopyWebpackPlugin([{
             from: path.resolve(__dirname, 'assets', '**', '*'),
-            to: path.resolve(__dirname, '../StoryViewer/public/dist')
+            to: path.resolve(__dirname, '../Framework/public/dist')
         }]),
         new webpack.DefinePlugin({
             'typeof CANVAS_RENDERER': JSON.stringify(true),

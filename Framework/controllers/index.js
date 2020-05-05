@@ -7,6 +7,18 @@ let validateJson = require('../helpers/validateJson.js');
 let createGraph = require('../helpers/createGraph.js');
 let buildStory = require('../helpers/storyBuilder.js');
 
+router.get('/', function(req, res) {
+    try {
+        if (fs.existsSync(path.join(__dirname + '/../public/dist'))) {
+            res.sendFile(path.join(__dirname + '/../views/game.html'))
+        } else {
+            res.sendFile(path.join(__dirname + '/../views/index.html'));
+        }
+    } catch (err) {
+        console.error(err)
+    }
+})
+
 router.post('/', function(req, res) {
     let playerType = req.body.playerType;
     let data = req.body.data;
