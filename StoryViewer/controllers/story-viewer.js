@@ -5,6 +5,7 @@ const multer = require('multer');
 
 const createGraph = require('../helpers/createGraph.js');
 const fileHandler = require('../helpers/handleJsonFilesForGraph');
+const createStoryLine = require('../helpers/createStoryLine');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -74,10 +75,9 @@ router.post('/story-line', upload.single('playerProfileFile'), function(req, res
         return;
     }
 
-    // create story line here
-    //let graph = createGraph(files.overallNarrative);
+    let oldGraph = JSON.parse(req.body.overallStoryGraph);
+    objToSend.graph = createStoryLine(files.playerProfile, oldGraph);
 
-    objToSend.graph = JSON.parse(req.body.overallStoryGraph);
     res.send(objToSend);
 })
 

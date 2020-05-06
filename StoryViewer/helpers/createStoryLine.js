@@ -1,12 +1,20 @@
 let EmotionalValidator = require('./emotionalValidator.js');
 
-function buildStory(playerType, graph) {
+const palette = {
+    blue: '#8ecce6',
+    purple: '#d5cdea',
+    pink: '#fae2ef',
+    yellow: '#fcf8e9',
+    grey: '#d0d5db',
+    dead: '#dbdbdb'
+};
 
-    const story = {
-        scenes: []
-    }
+function createStoryLine(playerType, graph) {
 
-    const scenesNodes = [];
+    paintAllGray(graph);
+    return graph;
+
+    const scenesNodes = getScenes(graph, playerType);
 
     let firstSceneNode = getFirstScene(graph, playerType);
     scenesNodes.push(firstSceneNode);
@@ -16,7 +24,20 @@ function buildStory(playerType, graph) {
         story.scenes.push(sceneNode.obj);
     }
 
-    return story;
+    return graph;
+}
+
+function paintAllGray(graph) {
+
+    for (node of graph.nodes) {
+        node.color = palette['dead']
+        node.labelColor = palette['dead']
+    }
+
+    for (edge of graph.edges) {
+        edge.color = palette['dead']
+        edge.labelColor = palette['dead']
+    }
 }
 
 function sortByPriority(nodes) {
@@ -39,6 +60,10 @@ function getNextNodes(node, graph) {
 function getEdgesFromNode(node, graph) {
     let edges = graph.edges.filter(edge => edge.source === node.id);
     return edges;
+}
+
+function getScenes(graph, playerType) {
+
 }
 
 function getFirstScene(graph, playerType) {
@@ -86,4 +111,4 @@ function getNextEventNode(node, graph, playerType) {
     return undefined;
 }
 
-module.exports = buildStory;
+module.exports = createStoryLine;
