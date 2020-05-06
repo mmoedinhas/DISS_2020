@@ -93,6 +93,7 @@
                 <input type="file" name="playerProfileFile" id="playerProfileFile" />
                 <input id="createGraph" type="button" value="Show Story Graph" />
             </form>
+            <button id="exampleButton" type="button">Show Example Graph</button>
         </div>
         <div id="graphBox" class="box">
             <h2 id="graphTitle">Graph</h2>
@@ -119,27 +120,33 @@
                 processData: false,
 
                 error: function(err) {
-                    const p = document.createElement('p');
-                    p.textContent = err.responseText;
-                    document.getElementById('graph').appendChild(p);
+                    showErrors([err.responseText]);
                 },
 
                 success: function(result) {
 
-                    let errors = document.getElementById("errors");
-                    errors.innerHTML = "";
-                    let h2 = document.createElement('h2');
-                    h2.textContent = "Errors";
-                    errors.appendChild(h2);
-
-                    for (error of result.errors) {
-                        const p = document.createElement('p');
-                        p.textContent = error;
-                        errors.appendChild(p);
-                    }
-
+                    showErrors(result.errors);
                     createGraph(result.graph);
                 }
+            });
+        });
+
+        $('#exampleButton').on('click', function() {
+            $.ajax({
+
+                url: 'story-viewer/example',
+                type: 'GET',
+
+                error: function(err) {
+                    showErrors([err.responseText]);
+                },
+
+                success: function(result) {
+
+                    showErrors(result.errors);
+                    createGraph(result.graph);
+                }
+
             });
         });
 
@@ -178,6 +185,24 @@
 
             CustomShapes.init(s);
             s.refresh();
+        }
+
+        function showErrors(errorsArray) {
+
+            let graph = document.getElementById("graph");
+            graph.innerHTML = "";
+
+            let errors = document.getElementById("errors");
+            errors.innerHTML = "";
+            let h2 = document.createElement('h2');
+            h2.textContent = "Errors";
+            errors.appendChild(h2);
+
+            for (error of errorsArray) {
+                const p = document.createElement('p');
+                p.textContent = error;
+                errors.appendChild(p);
+            }
         }
     </script>
 </body>
