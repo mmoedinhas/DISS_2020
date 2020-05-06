@@ -194,6 +194,10 @@
 
                     showErrors(result.errors);
                     createGraph(result.graph);
+                },
+
+                complete: function() {
+                    $("#overallNarrativeFile").val("");
                 }
 
             });

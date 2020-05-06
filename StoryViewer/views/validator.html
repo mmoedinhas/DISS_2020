@@ -35,7 +35,7 @@
 <body>
     <div id="validation">
         <form id="validationForm" enctype="multipart/form-data">
-            <input type="file" name="jsonFile" />
+            <input type="file" id="jsonFile" name="jsonFile" />
             <select id="jsonType" name="jsonType">
         <option value="overall_narrative">Overall narrative</option>
         <option value="cutscene">Cutscene</option>
@@ -74,6 +74,10 @@
                     }
 
                     document.getElementById('results').appendChild(p);
+                },
+
+                complete: function() {
+                    $("#jsonType").val("");
                 }
             });
         });
