@@ -75,3 +75,35 @@ exports.handleOverallNarrativeFile = function(overallNarrativeFile) {
 
     return returnObj;
 }
+
+exports.handlePlayerProfileFile = function(playerProfileFile) {
+
+    let returnObj = {
+        playerProfile: undefined,
+        errors: []
+    }
+
+    schemaObjs = openJsonFiles([
+        path.join(__dirname + '/../json/schema/player_profile_schema.json')
+    ]);
+
+    if (schemaObjs.errors.length !== 0) {
+        returnObj.errors = schemaObjs.errors;
+        return returnObj;
+    }
+
+    let playerProfileSchema = schemaObjs.objs[0];
+
+    let playerProfile = JSON.parse(playerProfileFile.buffer.toString());
+
+    let validationResults = validateJson(playerProfile, playerProfileSchema);
+
+    if (validationResults !== "valid") {
+        returnObj.errors.push("Errors in player profile file:\n" + JSON.stringify(validationResults));
+        return returnObj;
+    }
+
+    returnObj.playerProfile = playerProfile;
+
+    return returnObj;
+}

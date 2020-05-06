@@ -47,6 +47,7 @@
             color: red;
             font-size: 0.8em;
             display: none;
+            overflow: scroll;
         }
         
         .form-field {
@@ -114,7 +115,7 @@
         <div id="uploadOverallStory">
             <form id="uploadOverallStoryForm" enctype="multipart/form-data">
                 <label for="overallNarrativeFile">Overall narrative file: </label>
-                <input type="file" name="overallNarrativeFile" id="overallNarrativeFile" />
+                <input type="file" name="overallNarrativeFile" id="overallNarrativeFile" accept=".json" />
                 <input id="createGraph" type="button" value="Show Story Graph" />
             </form>
             <button id="exampleButton" type="button">Show Example Graph</button>
@@ -130,7 +131,7 @@
             <form id="uploadPlayerProfileForm" enctype="multipart/form-data">
                 <div class="form-field vertical">
                     <label for="playerProfileFile">Player profile file: </label>
-                    <input type="file" name="playerProfileFile" id="playerProfileFile" />
+                    <input type="file" name="playerProfileFile" id="playerProfileFile" accept=".json" />
                 </div>
 
                 <div class="form-field">
@@ -162,13 +163,19 @@
                 processData: false,
 
                 error: function(err) {
-                    showErrors([err.responseText]);
+
+                    console.log(err);
+                    //showErrors([err.responseText]);
                 },
 
                 success: function(result) {
 
                     showErrors(result.errors);
                     createGraph(result.graph);
+                },
+
+                complete: function() {
+                    $("#overallNarrativeFile").val("");
                 }
             });
         });
@@ -180,7 +187,7 @@
                 type: 'GET',
 
                 error: function(err) {
-                    showErrors([err.responseText]);
+                    //showErrors([err.responseText]);
                 },
 
                 success: function(result) {
@@ -218,13 +225,17 @@
                 processData: false,
 
                 error: function(err) {
-                    showOptionErrors([err.responseText]);
+                    //showOptionErrors([err.responseText]);
                 },
 
                 success: function(result) {
 
                     showOptionErrors(result.errors);
                     createGraph(result.graph);
+                },
+
+                complete: function() {
+                    $("#playerProfileFile").val("");
                 }
             });
         });

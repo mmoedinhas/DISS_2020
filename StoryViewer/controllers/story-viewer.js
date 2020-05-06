@@ -66,14 +66,13 @@ router.post('/story-line', upload.single('playerProfileFile'), function(req, res
         return;
     }
 
-    //validate player profile file here
-    // let files = fileHandler.handleOverallNarrativeFile(req.file);
+    let files = fileHandler.handlePlayerProfileFile(req.file);
 
-    // if (files.errors.length !== 0) {
-    //     objToSend.errors = files.errors;
-    //     res.send(objToSend);
-    //     return;
-    // }
+    if (files.errors.length !== 0) {
+        objToSend.errors = files.errors;
+        res.send(objToSend);
+        return;
+    }
 
     // create story line here
     //let graph = createGraph(files.overallNarrative);
