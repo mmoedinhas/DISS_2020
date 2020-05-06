@@ -43,7 +43,22 @@
             margin-bottom: 16px;
         }
         
-        #upload {
+        .error {
+            color: red;
+            font-size: 0.8em;
+            display: none;
+        }
+        
+        .form-field {
+            display: flex;
+            margin-bottom: 16px;
+        }
+        
+        .vertical {
+            flex-flow: column;
+        }
+        
+        #uploadOverallStory {
             flex: 0 1 auto;
             margin-bottom: 8px;
         }
@@ -76,6 +91,17 @@
             flex: 1;
         }
         
+        #uploadPlayerProfileForm {
+            display: flex;
+            flex-flow: column;
+            height: 80%;
+        }
+        
+        #createStoryLineButton {
+            align-self: center;
+            margin-top: auto;
+        }
+        
         #errors {
             flex: 1;
             overflow-y: scroll;
@@ -85,12 +111,10 @@
 
 <body>
     <div id="graphWindow">
-        <div id="upload">
-            <form id="uploadForm" enctype="multipart/form-data">
+        <div id="uploadOverallStory">
+            <form id="uploadOverallStoryForm" enctype="multipart/form-data">
                 <label for="overallNarrativeFile">Overall narrative file: </label>
                 <input type="file" name="overallNarrativeFile" id="overallNarrativeFile" />
-                <label for="playerProfileFile">Player profile file: </label>
-                <input type="file" name="playerProfileFile" id="playerProfileFile" />
                 <input id="createGraph" type="button" value="Show Story Graph" />
             </form>
             <button id="exampleButton" type="button">Show Example Graph</button>
@@ -103,18 +127,36 @@
     <div id="sideBox">
         <div id="options" class="box side-box">
             <h2>Options</h2>
+            <form id="uploadPlayerProfileForm" enctype="multipart/form-data">
+                <div class="form-field vertical">
+                    <label for="playerProfileFile">Player profile file: </label>
+                    <input type="file" name="playerProfileFile" id="playerProfileFile" />
+                </div>
+
+                <div class="form-field">
+                    <label for="defaultStoryLine">Default story line: </label>
+                    <input type="checkbox" id="defaultStoryLine" name="defaultStoryLine">
+                </div>
+
+                <input type="hidden" id="overallStoryGraphHolder" name="overallStoryGraph">
+                <p id="optionErrors" class="error"></p>
+
+                <input id="createStoryLineButton" type="button" value="Show Story Line" />
+            </form>
         </div>
         <div id="errors" class="box side-box">
             <h2>Errors</h2>
         </div>
     </div>
     <script>
+        let hiddenGraphHolder;
+
         $('#createGraph').on('click', function() {
             $.ajax({
 
-                url: 'story-viewer/',
+                url: 'story-viewer/graph',
                 type: 'POST',
-                data: new FormData(document.getElementById("uploadForm")),
+                data: new FormData(document.getElementById("uploadOverallStoryForm")),
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -134,7 +176,7 @@
         $('#exampleButton').on('click', function() {
             $.ajax({
 
-                url: 'story-viewer/example',
+                url: 'story-viewer/graph/example',
                 type: 'GET',
 
                 error: function(err) {
@@ -150,11 +192,53 @@
             });
         });
 
+        $('#createStoryLineButton').on('click', function() {
+
+            hideOptionErrors();
+
+            if (hasErrors()) {
+                showOptionErrors(["Please fix graph errors first"]);
+                return;
+            }
+
+            if (hiddenGraphHolder == undefined) {
+                showOptionErrors(["Please create a story graph first"]);
+                return;
+            }
+
+            document.getElementById("overallStoryGraphHolder").value = hiddenGraphHolder;
+
+            $.ajax({
+
+                url: 'story-viewer/story-line',
+                type: 'POST',
+                data: new FormData(document.getElementById("uploadPlayerProfileForm")),
+                cache: false,
+                contentType: false,
+                processData: false,
+
+                error: function(err) {
+                    showOptionErrors([err.responseText]);
+                },
+
+                success: function(result) {
+
+                    showOptionErrors(result.errors);
+                    createGraph(result.graph);
+                }
+            });
+        });
+
         function createGraph(graph) {
 
             if (graph === undefined) {
                 return;
             }
+
+            let graphElem = document.getElementById("graph");
+            graphElem.innerHTML = "";
+
+            hiddenGraphHolder = JSON.stringify(graph);
 
             sigma.utils.pkg('sigma.canvas.nodes');
             sigma.utils.pkg('sigma.canvas.edges');
@@ -189,9 +273,6 @@
 
         function showErrors(errorsArray) {
 
-            let graph = document.getElementById("graph");
-            graph.innerHTML = "";
-
             let errors = document.getElementById("errors");
             errors.innerHTML = "";
             let h2 = document.createElement('h2');
@@ -203,6 +284,45 @@
                 p.textContent = error;
                 errors.appendChild(p);
             }
+        }
+
+        function appendErrors(errorsArray) {
+            let errors = document.getElementById("errors");
+
+            for (error of errorsArray) {
+                const p = document.createElement('p');
+                p.textContent = error;
+                errors.appendChild(p);
+            }
+        }
+
+        function showOptionErrors(errorsArray) {
+
+            let errors = document.getElementById("optionErrors");
+            errors.innerHTML = "";
+
+            for (let i = 0; i < errorsArray.length; i++) {
+                errors.innerHTML += errorsArray[i];
+
+                if (i < errorsArray.length - 1) {
+                    errors.innerHTML += "\n";
+                }
+            }
+
+            if (errors.innerHTML != "") {
+                errors.style.display = "inline";
+            }
+        }
+
+        function hideOptionErrors() {
+            let errors = document.getElementById("optionErrors");
+            errors.style.display = "none";
+        }
+
+        function hasErrors() {
+            let errors = document.getElementById("errors");
+
+            return errors.children.length > 1;
         }
     </script>
 </body>

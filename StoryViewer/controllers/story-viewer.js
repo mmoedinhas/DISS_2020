@@ -4,19 +4,19 @@ const path = require('path');
 const multer = require('multer');
 
 const createGraph = require('../helpers/createGraph.js');
-const handleJsonFilesForGraph = require('../helpers/handleJsonFilesForGraph');
+const fileHandler = require('../helpers/handleJsonFilesForGraph');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.get('/example', function(req, res) {
+router.get('/graph/example', function(req, res) {
 
     let objToSend = {
         graph: undefined,
         errors: []
     };
 
-    let files = handleJsonFilesForGraph();
+    let files = fileHandler.handleOverallNarrativeFile();
 
     if (files.errors.length !== 0) {
         objToSend.errors = files.errors;
@@ -28,22 +28,20 @@ router.get('/example', function(req, res) {
     res.send(graph);
 })
 
-var uploadFormat = upload.fields([{ name: 'overallNarrativeFile', maxCount: 1 }, { name: 'playerProfileFile', maxCount: 1 }])
-router.post('/', uploadFormat, function(req, res) {
+router.post('/graph', upload.single('overallNarrativeFile'), function(req, res) {
 
     let objToSend = {
         graph: undefined,
         errors: []
     };
 
-    if (req.files['overallNarrativeFile'] === undefined || req.files['overallNarrativeFile'][0].mimetype !== "application/json" ||
-        req.files['playerProfileFile'] === undefined || req.files['playerProfileFile'][0].mimetype !== "application/json") {
+    if (req.file === undefined || req.file.mimetype !== "application/json") {
         objToSend.errors.push('Error: Please upload valid json files');
         res.send(objToSend);
         return;
     }
 
-    let files = handleJsonFilesForGraph(req.files['overallNarrativeFile'][0], req.files['playerProfileFile'][0]);
+    let files = fileHandler.handleOverallNarrativeFile(req.file);
 
     if (files.errors.length !== 0) {
         objToSend.errors = files.errors;
@@ -53,6 +51,35 @@ router.post('/', uploadFormat, function(req, res) {
 
     let graph = createGraph(files.overallNarrative);
     res.send(graph);
+})
+
+router.post('/story-line', upload.single('playerProfileFile'), function(req, res) {
+
+    let objToSend = {
+        graph: undefined,
+        errors: []
+    };
+
+    if (req.file === undefined || req.file.mimetype !== "application/json") {
+        objToSend.errors.push('Error: Please upload valid json files');
+        res.send(objToSend);
+        return;
+    }
+
+    //validate player profile file here
+    // let files = fileHandler.handleOverallNarrativeFile(req.file);
+
+    // if (files.errors.length !== 0) {
+    //     objToSend.errors = files.errors;
+    //     res.send(objToSend);
+    //     return;
+    // }
+
+    // create story line here
+    //let graph = createGraph(files.overallNarrative);
+
+    objToSend.graph = JSON.parse(req.body.overallStoryGraph);
+    res.send(objToSend);
 })
 
 router.get('/', function(req, res) {
