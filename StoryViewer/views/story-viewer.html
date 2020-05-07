@@ -235,7 +235,7 @@
                 success: function(result) {
 
                     showOptionErrors(result.errors);
-                    createGraph(result.graph);
+                    createGraph(result.graph, true);
                 },
 
                 complete: function() {
@@ -244,7 +244,7 @@
             });
         });
 
-        function createGraph(graph) {
+        function createGraph(graph, isStoryLine) {
 
             if (graph === undefined) {
                 return;
@@ -253,7 +253,9 @@
             let graphElem = document.getElementById("graph");
             graphElem.innerHTML = "";
 
-            hiddenGraphHolder = JSON.stringify(graph);
+            if (!isStoryLine) {
+                hiddenGraphHolder = JSON.stringify(graph);
+            }
 
             sigma.utils.pkg('sigma.canvas.nodes');
             sigma.utils.pkg('sigma.canvas.edges');

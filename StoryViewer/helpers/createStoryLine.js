@@ -9,19 +9,22 @@ const palette = {
     dead: '#dbdbdb'
 };
 
-let nodesToPaint = [];
-
 function createStoryLine(playerType, graph) {
 
     paintAllGray(graph);
 
     const scenesNodes = getScenes(graph, playerType);
-    nodesToPaint = [...scenesNodes];
+    let nodesToPaintIds = [];
 
     for (sceneNode of scenesNodes) {
-        sceneNode.obj.events = getOrganizedEvents(playerType, sceneNode, graph);
-        story.scenes.push(sceneNode.obj);
+        nodesToPaintIds.push(sceneNode.id);
+        let ids = getOrganizedEventsIds(playerType, sceneNode, graph);
+        nodesToPaintIds = nodesToPaintIds.concat(ids);
     }
+
+    paintOriginalColor(graph, nodesToPaintIds);
+
+    console.log(nodesToPaintIds);
 
     return graph;
 }
@@ -29,15 +32,50 @@ function createStoryLine(playerType, graph) {
 function paintAllGray(graph) {
 
     for (node of graph.nodes) {
+
+        if (node.id == "start") {
+            continue;
+        }
+
         node.oldColor = node.color;
         node.color = palette['dead'];
         node.labelColor = palette['dead'];
     }
 
     for (edge of graph.edges) {
+
+        if (edge.source == "start") {
+            continue;
+        }
+
         edge.oldColor = edge.color;
         edge.color = palette['dead'];
         edge.labelColor = palette['dead'];
+    }
+}
+
+function paintOriginalColor(graph, nodesToPaintIds) {
+
+    for (id of nodesToPaintIds) {
+        let node = graph.nodes.find(node => node.id == id);
+        node.color = node.oldColor;
+        node.labelColor = undefined;
+
+        if (isScene(node)) {
+            let edge = graph.edges.find(edge => edge.target == node.id);
+            let locationNode = graph.nodes.find(node => node.id == edge.source);
+
+            locationNode.color = locationNode.oldColor;
+            locationNode.labelColor = undefined;
+
+            edge.color = edge.oldColor;
+            edge.labelColor = undefined;
+        } else {
+            let edge = graph.edges.find(edge => edge.target == node.id && nodesToPaintIds.includes(edge.source));
+
+            edge.color = edge.oldColor;
+            edge.labelColor = undefined;
+        }
     }
 }
 
@@ -63,28 +101,12 @@ function getEdgesFromNode(node, graph) {
     return edges;
 }
 
-function getFirstScene(graph, playerType) {
-    let startNode = graph.nodes.find(node => node.id === 'start');
-    let firstLocation = getNextNodes(startNode, graph)[0];
-    let firstScenes = getNextNodes(firstLocation, graph);
-
-    sortByPriority(firstScenes);
-
-    let emotionalVal = new EmotionalValidator(playerType);
-    for (let node of firstScenes) {
-        let scene = node.obj;
-        if (emotionalVal.matches(scene.emotionalRequirements)) {
-            return node;
-        }
-    }
-}
-
 function getScenes(graph, playerType) {
     let scenes = [];
 
-    let locationNodes = graph.nodes.find(node => isLocation(node));
+    let locationNodes = graph.nodes.filter(node => isLocation(node));
     for (locationNode of locationNodes) {
-        let locationScenes = getNextNodes(startNode, graph);
+        let locationScenes = getNextNodes(locationNode, graph);
         sortByPriority(locationScenes);
 
         let emotionalVal = new EmotionalValidator(playerType);
@@ -92,6 +114,7 @@ function getScenes(graph, playerType) {
             let scene = node.obj;
             if (emotionalVal.matches(scene.emotionalRequirements)) {
                 scenes.push(node);
+                break;
             }
         }
     }
@@ -99,36 +122,21 @@ function getScenes(graph, playerType) {
     return scenes;
 }
 
-function isScene(node) {
-    return node.id.indexOf("scene_") == 0;
-}
-
 function isLocation(node) {
     return node.id.indexOf("location_") == 0;
 }
 
-function getFirstScene(graph, playerType) {
-    let startNode = graph.nodes.find(node => node.id === 'start');
-    let firstScenes = getNextNodes(startNode, graph);
-
-    sortByPriority(firstScenes);
-
-    let emotionalVal = new EmotionalValidator(playerType);
-    for (let node of firstScenes) {
-        let scene = node.obj;
-        if (emotionalVal.matches(scene.emotionalRequirements)) {
-            return node;
-        }
-    }
+function isScene(node) {
+    return node.id.indexOf("scene_") == 0;
 }
 
-function getOrganizedEvents(playerType, scene, graph) {
+function getOrganizedEventsIds(playerType, scene, graph) {
     let organizedEvents = [];
 
     let nextEventNode = getNextEventNode(scene, graph, playerType);
     while (nextEventNode != undefined) {
 
-        organizedEvents.push(nextEventNode.obj);
+        organizedEvents.push(nextEventNode.id);
 
         nextEventNode = getNextEventNode(nextEventNode, graph, playerType);
     }
