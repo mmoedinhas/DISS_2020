@@ -24,8 +24,6 @@ function createStoryLine(playerType, graph, isDefault) {
 
     paintOriginalColor(graph, nodesToPaintIds);
 
-    console.log(nodesToPaintIds);
-
     return graph;
 }
 

@@ -21,7 +21,6 @@ function openJsonFiles(filepaths) {
             jsonObjs.objs.push(obj);
         } catch (err) {
             let filename = getFilenameFromPath(filepath);
-            console.log(err);
             jsonObjs.errors.push('Error: ' + filename + ' file not found');
         }
     }
