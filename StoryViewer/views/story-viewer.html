@@ -136,7 +136,7 @@
 
                 <div class="form-field">
                     <label for="defaultStoryLine">Default story line: </label>
-                    <input type="checkbox" id="defaultStoryLine" name="defaultStoryLine">
+                    <input type="checkbox" id="defaultStoryLine" name="defaultStoryLine" value="isDefaultStoryLine">
                 </div>
 
                 <input type="hidden" id="overallStoryGraphHolder" name="overallStoryGraph">
@@ -244,6 +244,19 @@
             });
         });
 
+        $('#defaultStoryLine').on('click', function() {
+
+            hideOptionErrors();
+
+            if (this.checked) {
+                $("#playerProfileFile").val("");
+                $("#playerProfileFile").prop('disabled', true);
+            } else {
+                $("#playerProfileFile").val("");
+                $("#playerProfileFile").prop('disabled', false);
+            }
+        });
+
         function createGraph(graph, isStoryLine) {
 
             if (graph === undefined) {
@@ -326,7 +339,7 @@
                 }
             }
 
-            if (errors.innerHTML != "") {
+            if (errorsArray.length != 0) {
                 errors.style.display = "inline";
             }
         }

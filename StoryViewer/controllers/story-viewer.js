@@ -61,22 +61,28 @@ router.post('/story-line', upload.single('playerProfileFile'), function(req, res
         errors: []
     };
 
-    if (req.file === undefined || req.file.mimetype !== "application/json") {
-        objToSend.errors.push('Error: Please upload valid json files');
-        res.send(objToSend);
-        return;
-    }
+    let playerProfile, isDefault = req.body.defaultStoryLine === "isDefaultStoryLine";
 
-    let files = fileHandler.handlePlayerProfileFile(req.file);
+    if (!isDefault) {
+        if (req.file === undefined || req.file.mimetype !== "application/json") {
+            objToSend.errors.push('Error: Please upload valid json files');
+            res.send(objToSend);
+            return;
+        }
 
-    if (files.errors.length !== 0) {
-        objToSend.errors = files.errors;
-        res.send(objToSend);
-        return;
+        let files = fileHandler.handlePlayerProfileFile(req.file);
+
+        if (files.errors.length !== 0) {
+            objToSend.errors = files.errors;
+            res.send(objToSend);
+            return;
+        }
+
+        playerProfile = files.playerProfile;
     }
 
     let oldGraph = JSON.parse(req.body.overallStoryGraph);
-    objToSend.graph = createStoryLine(files.playerProfile, oldGraph);
+    objToSend.graph = createStoryLine(playerProfile, oldGraph, isDefault);
 
     res.send(objToSend);
 })

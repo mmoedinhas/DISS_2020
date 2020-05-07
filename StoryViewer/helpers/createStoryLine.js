@@ -9,16 +9,16 @@ const palette = {
     dead: '#dbdbdb'
 };
 
-function createStoryLine(playerType, graph) {
+function createStoryLine(playerType, graph, isDefault) {
 
     paintAllGray(graph);
 
-    const scenesNodes = getScenes(graph, playerType);
+    const scenesNodes = getScenes(graph, playerType, isDefault);
     let nodesToPaintIds = [];
 
     for (sceneNode of scenesNodes) {
         nodesToPaintIds.push(sceneNode.id);
-        let ids = getOrganizedEventsIds(playerType, sceneNode, graph);
+        let ids = getOrganizedEventsIds(playerType, sceneNode, graph, isDefault);
         nodesToPaintIds = nodesToPaintIds.concat(ids);
     }
 
@@ -101,7 +101,7 @@ function getEdgesFromNode(node, graph) {
     return edges;
 }
 
-function getScenes(graph, playerType) {
+function getScenes(graph, playerType, isDefault) {
     let scenes = [];
 
     let locationNodes = graph.nodes.filter(node => isLocation(node));
@@ -109,12 +109,22 @@ function getScenes(graph, playerType) {
         let locationScenes = getNextNodes(locationNode, graph);
         sortByPriority(locationScenes);
 
-        let emotionalVal = new EmotionalValidator(playerType);
-        for (let node of locationScenes) {
-            let scene = node.obj;
-            if (emotionalVal.matches(scene.emotionalRequirements)) {
-                scenes.push(node);
-                break;
+        if (isDefault) {
+            for (let node of locationScenes) {
+                let scene = node.obj;
+                if (scene.emotionalRequirements.length === 0) {
+                    scenes.push(node);
+                    break;
+                }
+            }
+        } else {
+            let emotionalVal = new EmotionalValidator(playerType);
+            for (let node of locationScenes) {
+                let scene = node.obj;
+                if (emotionalVal.matches(scene.emotionalRequirements)) {
+                    scenes.push(node);
+                    break;
+                }
             }
         }
     }
@@ -130,30 +140,40 @@ function isScene(node) {
     return node.id.indexOf("scene_") == 0;
 }
 
-function getOrganizedEventsIds(playerType, scene, graph) {
+function getOrganizedEventsIds(playerType, scene, graph, isDefault) {
     let organizedEvents = [];
 
-    let nextEventNode = getNextEventNode(scene, graph, playerType);
+    let nextEventNode = getNextEventNode(scene, graph, playerType, isDefault);
     while (nextEventNode != undefined) {
 
         organizedEvents.push(nextEventNode.id);
 
-        nextEventNode = getNextEventNode(nextEventNode, graph, playerType);
+        nextEventNode = getNextEventNode(nextEventNode, graph, playerType, isDefault);
     }
 
     return organizedEvents;
 }
 
-function getNextEventNode(node, graph, playerType) {
+function getNextEventNode(node, graph, playerType, isDefault) {
     let nextNodes = getNextNodes(node, graph);
     sortByPriority(nextNodes);
 
-    let emotionalVal = new EmotionalValidator(playerType);
-    for (let node of nextNodes) {
+    if (isDefault) {
+        for (let node of nextNodes) {
 
-        let event = node.obj;
-        if (emotionalVal.matches(event.emotionalRequirements)) {
-            return node;
+            let event = node.obj;
+            if (event.emotionalRequirements.length == 0) {
+                return node;
+            }
+        }
+    } else {
+        let emotionalVal = new EmotionalValidator(playerType);
+        for (let node of nextNodes) {
+
+            let event = node.obj;
+            if (emotionalVal.matches(event.emotionalRequirements)) {
+                return node;
+            }
         }
     }
 

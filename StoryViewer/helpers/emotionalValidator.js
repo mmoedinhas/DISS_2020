@@ -22,7 +22,7 @@ class EmotionalValidator {
             let parameter = emotionalRequirement.parameter;
             let value = emotionalRequirement.value;
 
-            if(!evaluator(this.playerType[parameter],value)) {
+            if (!evaluator(this.playerType[parameter], value)) {
                 allTrue = false;
                 break;
             }
