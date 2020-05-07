@@ -43,7 +43,8 @@ function getEdgesFromNode(node, graph) {
 
 function getFirstScene(graph, playerType) {
     let startNode = graph.nodes.find(node => node.id === 'start');
-    let firstScenes = getNextNodes(startNode, graph);
+    let firstLocation = getNextNodes(startNode, graph)[0];
+    let firstScenes = getNextNodes(firstLocation, graph);
 
     sortByPriority(firstScenes);
 

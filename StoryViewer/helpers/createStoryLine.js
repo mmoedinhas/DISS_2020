@@ -64,6 +64,22 @@ function getEdgesFromNode(node, graph) {
     return edges;
 }
 
+function getFirstScene(graph, playerType) {
+    let startNode = graph.nodes.find(node => node.id === 'start');
+    let firstLocation = getNextNodes(startNode, graph)[0];
+    let firstScenes = getNextNodes(firstLocation, graph);
+
+    sortByPriority(firstScenes);
+
+    let emotionalVal = new EmotionalValidator(playerType);
+    for (let node of firstScenes) {
+        let scene = node.obj;
+        if (emotionalVal.matches(scene.emotionalRequirements)) {
+            return node;
+        }
+    }
+}
+
 function getScenes(graph, playerType) {
     // TODO finish this
 }
