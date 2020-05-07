@@ -9,15 +9,14 @@ const palette = {
     dead: '#dbdbdb'
 };
 
+let nodesToPaint = [];
+
 function createStoryLine(playerType, graph) {
 
     paintAllGray(graph);
-    return graph;
 
     const scenesNodes = getScenes(graph, playerType);
-
-    let firstSceneNode = getFirstScene(graph, playerType);
-    scenesNodes.push(firstSceneNode);
+    nodesToPaint = [...scenesNodes];
 
     for (sceneNode of scenesNodes) {
         sceneNode.obj.events = getOrganizedEvents(playerType, sceneNode, graph);
@@ -81,11 +80,31 @@ function getFirstScene(graph, playerType) {
 }
 
 function getScenes(graph, playerType) {
-    // TODO finish this
+    let scenes = [];
+
+    let locationNodes = graph.nodes.find(node => isLocation(node));
+    for (locationNode of locationNodes) {
+        let locationScenes = getNextNodes(startNode, graph);
+        sortByPriority(locationScenes);
+
+        let emotionalVal = new EmotionalValidator(playerType);
+        for (let node of locationScenes) {
+            let scene = node.obj;
+            if (emotionalVal.matches(scene.emotionalRequirements)) {
+                scenes.push(node);
+            }
+        }
+    }
+
+    return scenes;
 }
 
 function isScene(node) {
     return node.id.indexOf("scene_") == 0;
+}
+
+function isLocation(node) {
+    return node.id.indexOf("location_") == 0;
 }
 
 function getFirstScene(graph, playerType) {
