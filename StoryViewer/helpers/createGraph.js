@@ -19,6 +19,10 @@ const palette = {
 let x = 0.0;
 let y = 0.0;
 
+const wrap = (s, w) => s.replace(
+    new RegExp(`(?![^\\n]{1,${w}}$)([^\\n]{1,${w}})\\s`, 'g'), '$1\n'
+);
+
 function createGraph(jsonObj) {
 
     errors = [];
@@ -30,6 +34,7 @@ function createGraph(jsonObj) {
     graph.nodes.push({
         id: "start",
         label: "Start",
+        longLabel: "Start",
         type: 'star',
         x: x,
         y: y,
@@ -108,6 +113,7 @@ function drawLocationNode(locationY, locationId, parentId) {
     graph.nodes.push({
         id: nodeId,
         label: "Location: " + locationId,
+        longLabel: "Location: " + locationId,
         type: 'circle',
         x: x,
         y: y,
@@ -132,10 +138,13 @@ function drawLocationNode(locationY, locationId, parentId) {
 function parseScene(sceneX, sceneY, scene, parentId) {
 
     let id = getSceneId(scene);
+    let label = "Scene: " + scene['name'];
+    let longLabel = label + "\n\n" + wrap(scene['description'], label.length);
 
     graph.nodes.push({
         id: id,
-        label: "Scene: " + scene['name'],
+        label: label,
+        longLabel: longLabel,
         type: 'circle',
         x: x,
         y: sceneY,
@@ -216,7 +225,8 @@ function drawGraphAfterEvent(scene, event, coords) {
 
             graph.nodes.push({
                 id: currEventProperties.id,
-                label: currEvent['name'],
+                label: currEventProperties.label,
+                longLabel: currEventProperties.longLabel,
                 type: currEventProperties.type,
                 x: coords.x,
                 y: y,
@@ -345,20 +355,26 @@ function getEventNodeProperties(event) {
     let properties = {
         type: 'cross',
         color: palette['yellow'],
-        id: ''
+        id: '',
+        label: '',
+        longLabel: ''
     }
 
     if (event['type'] == 'cutscene') {
+        properties.label = "Cutscene: ";
         properties.type = 'square';
         properties.color = palette['purple'];
         properties.id = 'cutscene_';
     } else if (event['type'] == 'gameplay') {
+        properties.label = "Gameplay: ";
         properties.type = 'diamond';
         properties.color = palette['pink'];
         properties.id = 'gameplay_';
     }
 
     properties.id += event['name'];
+    properties.label += event['name'];
+    properties.longLabel = properties.label + "\n\n" + wrap(event['description'], properties.label.length);
 
     return properties;
 }

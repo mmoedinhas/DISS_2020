@@ -30,13 +30,15 @@ function createStoryLine(playerType, graph) {
 function paintAllGray(graph) {
 
     for (node of graph.nodes) {
-        node.color = palette['dead']
-        node.labelColor = palette['dead']
+        node.oldColor = node.color;
+        node.color = palette['dead'];
+        node.labelColor = palette['dead'];
     }
 
     for (edge of graph.edges) {
-        edge.color = palette['dead']
-        edge.labelColor = palette['dead']
+        edge.oldColor = edge.color;
+        edge.color = palette['dead'];
+        edge.labelColor = palette['dead'];
     }
 }
 
@@ -63,7 +65,11 @@ function getEdgesFromNode(node, graph) {
 }
 
 function getScenes(graph, playerType) {
+    // TODO finish this
+}
 
+function isScene(node) {
+    return node.id.indexOf("scene_") == 0;
 }
 
 function getFirstScene(graph, playerType) {
