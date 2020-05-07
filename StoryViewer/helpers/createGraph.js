@@ -8,6 +8,7 @@ const graph = {
 let errors = [];
 
 const palette = {
+    darkBlue: "#3aa5d2",
     blue: '#8ecce6',
     purple: '#d5cdea',
     pink: '#fae2ef',
@@ -29,7 +30,7 @@ function createGraph(jsonObj) {
     graph.nodes.push({
         id: "start",
         label: "Start",
-        type: 'circle',
+        type: 'star',
         x: x,
         y: y,
         size: 1,
@@ -38,6 +39,8 @@ function createGraph(jsonObj) {
 
     y += 0.1;
 
+    let locationsIds = getLocationsIds(jsonObj);
+
     const firstScenes = jsonObj['scenes'].filter(scene => jsonObj['firstLocation'] === scene['locationId']);
 
     if (firstScenes.length == 0) {
@@ -45,18 +48,39 @@ function createGraph(jsonObj) {
         addError(error);
     }
 
-    for (scene of firstScenes) {
-        parseScene(scene, 'start');
-    }
+    for (locationId of locationsIds) {
 
-    const otherScenes = jsonObj['scenes'].filter(scene => !firstScenes.includes(scene));
-    for (scene of otherScenes) {
-        parseScene(scene);
+        let locationY = 0;
+
+        if (locationId == jsonObj['firstLocation']) {
+            locationY = drawLocationNode(y, locationId, 'start');
+        } else {
+            locationY = drawLocationNode(y, locationId);
+        }
+
+        let locationScenes = jsonObj['scenes'].filter(scene => locationId === scene['locationId']);
+
+        for (scene of locationScenes) {
+            parseScene(x, locationY, scene, getLocationNodeId(locationId));
+        }
     }
 
     return { graph: graph, errors: errors };
 }
 
+function getLocationsIds(jsonObj) {
+    let locationsIds = [];
+
+    locationsIds.push(jsonObj['firstLocation']);
+
+    for (scene of jsonObj['scenes']) {
+        if (!locationsIds.includes(scene['locationId'])) {
+            locationsIds.push(scene['locationId']);
+        }
+    }
+
+    return locationsIds;
+}
 
 function getFirstEvents(scene) {
     let events = scene['events'];
@@ -77,15 +101,41 @@ function getFirstEvents(scene) {
     return firstEvents;
 }
 
-function parseScene(scene, parentId) {
+function drawLocationNode(locationY, locationId, parentId) {
 
-    let sceneY = y;
-    let sceneX = x;
+    let nodeId = getLocationNodeId(locationId);
+
+    graph.nodes.push({
+        id: nodeId,
+        label: "Location: " + locationId,
+        type: 'circle',
+        x: x,
+        y: y,
+        size: 1,
+        color: palette['darkBlue']
+    })
+
+    if (parentId !== undefined) {
+        graph.edges.push({
+            id: getEdgeId(parentId, nodeId),
+            source: parentId,
+            target: nodeId,
+            size: 1
+        })
+    }
+
+    locationY += 0.1;
+
+    return locationY;
+}
+
+function parseScene(sceneX, sceneY, scene, parentId) {
+
     let id = getSceneId(scene);
 
     graph.nodes.push({
         id: id,
-        label: scene['name'],
+        label: "Scene: " + scene['name'],
         type: 'circle',
         x: x,
         y: sceneY,
@@ -319,6 +369,11 @@ function isFirstEvent(event, scene) {
 
 function getSceneId(scene) {
     let id = 'scene_' + scene['name'];
+    return id;
+}
+
+function getLocationNodeId(locationId) {
+    let id = 'location_' + locationId;
     return id;
 }
 
