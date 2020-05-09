@@ -358,17 +358,16 @@ function getEventNodeProperties(event) {
     if (event['type'] == 'cutscene') {
         properties.label = "Cutscene: ";
         properties.type = 'square';
-        properties.color = palette['purple'];
         properties.id = 'cutscene_';
     } else if (event['type'] == 'gameplay') {
         properties.label = "Gameplay: ";
         properties.type = 'diamond';
-        properties.color = palette['pink'];
         properties.id = 'gameplay_';
     }
 
     properties.id += event['name'];
     properties.label += event['name'];
+    properties.color = palette['purple'];
     properties.longLabel = properties.label + "\n\n" + wrap(event['description'], properties.label.length);
 
     return properties;
