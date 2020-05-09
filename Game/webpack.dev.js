@@ -8,6 +8,11 @@ dotenv.config();
 
 module.exports = merge(common, {
 
+    entry: {
+        app: './src/main-dev.ts',
+        vendors: ['phaser']
+    },
+
     output: {
         path: path.resolve(__dirname, 'dist')
     },

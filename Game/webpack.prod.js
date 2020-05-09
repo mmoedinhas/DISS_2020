@@ -8,6 +8,11 @@ dotenv.config();
 
 module.exports = merge(common, {
 
+    entry: {
+        app: './src/main.ts',
+        vendors: ['phaser']
+    },
+
     mode: 'production',
     devtool: 'source-map',
     output: {

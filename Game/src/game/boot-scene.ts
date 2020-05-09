@@ -16,7 +16,7 @@ const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
 };
 
-const playerType: IPlayerType = {
+export const playerType: IPlayerType = {
     anger: 4,
     disgust: 4,
     fear: 5,
@@ -26,6 +26,8 @@ const playerType: IPlayerType = {
     relaxation: 6,
     happiness: 10
 }
+
+export let graph;
 
 const frameworkUrl: string = FRAMEWORK_URL + "/";
 
@@ -214,7 +216,7 @@ export class BootScene extends Phaser.Scene {
     }
 }
 
-const gameConfig: Phaser.Types.Core.GameConfig = {
+export const gameConfig: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     scale: {
         parent: 'content',
@@ -262,5 +264,3 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
         ]
     }
 }
-
-export const game = new Phaser.Game(gameConfig);
