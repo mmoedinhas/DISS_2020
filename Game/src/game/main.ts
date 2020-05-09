@@ -10,6 +10,8 @@ import { getAssetIdFromPath } from '../utils/paths';
 declare const FRAMEWORK_URL: string;
 declare const DEBUG: boolean;
 
+const physicsDebug: boolean = false;
+
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
 };
@@ -61,20 +63,25 @@ export class BootScene extends Phaser.Scene {
             }
         });
 
+        if(DEBUG) {
+            this.load.on('webfontactive', function (fileObj, familyName) {
+                console.log('loaded font: ' + familyName)
+            });
+    
+            this.load.on('webfontinactive', function (fileObj, familyName) {
+                console.log('couldn\'t load font: ' + familyName)
+            });
+        }
         
-        this.load.on('webfontactive', function (fileObj, familyName) {
-            console.log('loaded font: ' + familyName)
-        });
-
-        this.load.on('webfontinactive', function (fileObj, familyName) {
-            console.log('couldn\'t load font: ' + familyName)
-        });
     }
 
     public create() {
 
         this.getStory().then((response) => {
-            console.log(response);
+
+            if(DEBUG) {
+                console.log(response);
+            }
 
             this.registry.set('story', response);
             this.registry.set('playerType', playerType);
@@ -83,14 +90,18 @@ export class BootScene extends Phaser.Scene {
             let scene: Phaser.Scenes.ScenePlugin = this.scene;
 
             this.load.on('complete', () => {
-                console.log("load complete for " + this.load.totalComplete + " files");
+                if(DEBUG) {
+                    console.log("load complete for " + this.load.totalComplete + " files");
+                }
                 scene.start('Game');
             });
 
             this.load.start();
 
         }).catch((response) => {
-            console.log(response);
+            if(DEBUG) {
+                console.log(response);
+            }
         })
     }
 
@@ -226,7 +237,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: false,
+            debug: DEBUG && physicsDebug,
         }
     },
     scene: [
