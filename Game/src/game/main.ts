@@ -7,7 +7,8 @@ import * as paths from '../utils/paths';
 import { DialogueScene } from './dialogue-scene';
 import { getAssetIdFromPath } from '../utils/paths';
 
-declare let SERVICE_URL: string;
+declare const FRAMEWORK_URL: string;
+declare const DEBUG: boolean;
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
@@ -24,7 +25,7 @@ const playerType: IPlayerType = {
     happiness: 10
 }
 
-const frameworkUrl: string = SERVICE_URL + "/";
+const frameworkUrl: string = FRAMEWORK_URL + "/";
 
 const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
 const actorsFile: string = paths.storyPath + 'actors.json';
