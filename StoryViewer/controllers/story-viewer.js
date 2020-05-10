@@ -87,16 +87,6 @@ router.post('/story-line', upload.single('playerProfileFile'), function(req, res
     res.send(objToSend);
 })
 
-router.post('/debug', function(req, res) {
-    console.log(req.body);
-    res.json({ cenas: "cenas" });
-})
-
-router.get('/debug/:id', function(req, res) {
-    console.log(req.params.id);
-    res.sendFile(path.join(__dirname + '/../views/story-viewer.html'));
-});
-
 router.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/../views/story-viewer.html'));
 })
