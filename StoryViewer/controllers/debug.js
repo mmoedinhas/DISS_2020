@@ -3,7 +3,8 @@ const router = express.Router();
 const path = require('path');
 
 router.post('/', function(req, res) {
-    //console.log(req.body);
+
+    console.log(req.body);
     res.json({ id: 123 });
 })
 

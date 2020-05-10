@@ -83,11 +83,14 @@ export class BootScene extends Phaser.Scene {
 
             if(DEBUG) {
                 console.log(response);
+                graph = response['graph'];
+                let debugViewButton: HTMLInputElement = document.getElementById("storyViewLink") as HTMLInputElement;
+                debugViewButton.disabled = false;
             }
 
-            this.registry.set('story', response);
+            this.registry.set('story', response['story']);
             this.registry.set('playerType', playerType);
-            this.loadAllEventFiles(response as IStory);
+            this.loadAllEventFiles(response['story'] as IStory);
 
             let scene: Phaser.Scenes.ScenePlugin = this.scene;
 

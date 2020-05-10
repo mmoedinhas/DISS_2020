@@ -6,6 +6,8 @@ const debugUrl: string = STORYVIEWER_URL + "/debug";
 
 const debugButton: HTMLInputElement = document.getElementById('storyViewLink') as HTMLInputElement;
 
+let storyId: string;
+
 debugButton.onclick = function () {
     debugButton.disabled = true;
     let request: XMLHttpRequest = new XMLHttpRequest();
@@ -15,16 +17,18 @@ debugButton.onclick = function () {
 
     let body = {
         playerType: playerType,
-        graph: graph
+        graph: graph,
+        id: storyId
     };
     request.send(JSON.stringify(body));
 
     request.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE) {
             if(this.status === 200) {
+                storyId = request.response.id;
                 debugButton.disabled = false;
                 let linkToStoryViewer: HTMLElement = document.getElementById("linkToStoryViewer");
-                let queryString: string = '?' + querystring.stringify({id: request.response.id})
+                let queryString: string = '?' + querystring.stringify({id: storyId})
                 linkToStoryViewer.setAttribute("href", debugUrl + queryString);
                 linkToStoryViewer.click();
             } else {
