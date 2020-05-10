@@ -32,7 +32,7 @@ debugButton.onclick = function () {
                 linkToStoryViewer.setAttribute("href", debugUrl + queryString);
                 linkToStoryViewer.click();
             } else {
-                console.log(request);
+                console.log(request.response);
             }
         }
     }
