@@ -20,155 +20,52 @@
 
 <body>
     <div id="graphWindow">
-        <div id="uploadOverallStory">
-            <form id="uploadOverallStoryForm" enctype="multipart/form-data">
-                <label for="overallNarrativeFile">Overall narrative file: </label>
-                <input type="file" name="overallNarrativeFile" id="overallNarrativeFile" accept=".json" />
-                <input id="createGraph" type="button" value="Show Story Graph" />
-            </form>
-            <button id="exampleButton" type="button">Show Example Graph</button>
-        </div>
         <div id="graphBox" class="box">
-            <h2 id="graphTitle">Graph</h2>
+            <h2 id="graphTitle">Graph - Debug View</h2>
             <div id="graph"></div>
         </div>
     </div>
     <div id="sideBox">
-        <div id="options" class="box side-box">
-            <h2>Options</h2>
-            <form id="uploadPlayerProfileForm" enctype="multipart/form-data">
-                <div class="form-field vertical">
-                    <label for="playerProfileFile">Player profile file: </label>
-                    <input type="file" name="playerProfileFile" id="playerProfileFile" accept=".json" />
-                </div>
-
-                <div class="form-field">
-                    <label for="defaultStoryLine">Default story line: </label>
-                    <input type="checkbox" id="defaultStoryLine" name="defaultStoryLine" value="isDefaultStoryLine">
-                </div>
-
-                <input type="hidden" id="overallStoryGraphHolder" name="overallStoryGraph">
-                <p id="optionErrors" class="error"></p>
-
-                <input id="createStoryLineButton" type="button" value="Show Story Line" />
-            </form>
+        <div id="playerProfile" class="box side-box">
+            <h2>Player Profile</h2>
+            <p id="anger">anger: </p>
+            <p id="disgust">disgust: </p>
+            <p id="fear">fear: </p>
+            <p id="anxiety">anxiety: </p>
+            <p id="sadness">sadness: </p>
+            <p id="desire">desire: </p>
+            <p id="relaxation">relaxation: </p>
+            <p id="happiness">happiness: </p>
         </div>
         <div id="errors" class="box side-box">
             <h2>Errors</h2>
         </div>
     </div>
     <script>
-        let hiddenGraphHolder;
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const debugMode = urlParams.get('debugMode');
+        const storyId = urlParams.get('id');
 
-        $('#createGraph').on('click', function() {
-            $.ajax({
+        $.ajax({
 
-                url: 'story-viewer/graph',
-                type: 'POST',
-                data: new FormData(document.getElementById("uploadOverallStoryForm")),
-                cache: false,
-                contentType: false,
-                processData: false,
+            url: 'debug/' + storyId,
+            type: 'GET',
 
-                error: function(err) {
+            error: function(err) {
+                showErrors([err.responseText]);
+            },
 
-                    console.log(err);
-                    //showErrors([err.responseText]);
-                },
+            success: function(result) {
 
-                success: function(result) {
+                let graph = result.graph;
 
-                    showErrors(result.errors);
-                    createGraph(result.graph);
-                },
-
-                complete: function() {
-                    $("#overallNarrativeFile").val("");
-                }
-            });
-        });
-
-        $('#exampleButton').on('click', function() {
-            $.ajax({
-
-                url: 'story-viewer/graph/example',
-                type: 'GET',
-
-                error: function(err) {
-                    //showErrors([err.responseText]);
-                },
-
-                success: function(result) {
-
-                    showErrors(result.errors);
-                    createGraph(result.graph);
-                },
-
-                complete: function() {
-                    $("#overallNarrativeFile").val("");
-                }
-
-            });
-        });
-
-        $('#createStoryLineButton').on('click', function() {
-
-            hideOptionErrors();
-
-            if (hasErrors()) {
-                showOptionErrors(["Please fix graph errors first"]);
-                return;
-            }
-
-            if (hiddenGraphHolder == undefined) {
-                showOptionErrors(["Please create a story graph first"]);
-                return;
-            }
-
-            document.getElementById("overallStoryGraphHolder").value = hiddenGraphHolder;
-
-            $.ajax({
-
-                url: 'story-viewer/story-line',
-                type: 'POST',
-                data: new FormData(document.getElementById("uploadPlayerProfileForm")),
-                cache: false,
-                contentType: false,
-                processData: false,
-
-                error: function(err) {
-                    //showOptionErrors([err.responseText]);
-                },
-
-                success: function(result) {
-
-                    showOptionErrors(result.errors);
-                    createGraph(result.graph, true);
-                },
-
-                complete: function() {
-                    $("#playerProfileFile").val("");
-                }
-            });
-        });
-
-        $('#defaultStoryLine').on('click', function() {
-
-            hideOptionErrors();
-
-            if (this.checked) {
-                $("#playerProfileFile").val("");
-                $("#playerProfileFile").prop('disabled', true);
-            } else {
-                $("#playerProfileFile").val("");
-                $("#playerProfileFile").prop('disabled', false);
+                showErrors(graph.errors);
+                createGraph(graph.graph);
+                showPlayerProfile(result.playerType);
             }
         });
 
-        function createGraph(graph, isStoryLine) {
+        function createGraph(graph) {
 
             if (graph === undefined) {
                 return;
@@ -176,10 +73,6 @@
 
             let graphElem = document.getElementById("graph");
             graphElem.innerHTML = "";
-
-            if (!isStoryLine) {
-                hiddenGraphHolder = JSON.stringify(graph);
-            }
 
             sigma.utils.pkg('sigma.canvas.nodes');
             sigma.utils.pkg('sigma.canvas.edges');
@@ -212,6 +105,12 @@
             s.refresh();
         }
 
+        function showPlayerProfile(playerProfile) {
+            for (let [key, value] of Object.entries(playerProfile)) {
+                document.getElementById(key).innerHTML = key + ": " + value;
+            }
+        }
+
         function showErrors(errorsArray) {
 
             let errors = document.getElementById("errors");
@@ -235,29 +134,6 @@
                 p.textContent = error;
                 errors.appendChild(p);
             }
-        }
-
-        function showOptionErrors(errorsArray) {
-
-            let errors = document.getElementById("optionErrors");
-            errors.innerHTML = "";
-
-            for (let i = 0; i < errorsArray.length; i++) {
-                errors.innerHTML += errorsArray[i];
-
-                if (i < errorsArray.length - 1) {
-                    errors.innerHTML += "\n";
-                }
-            }
-
-            if (errorsArray.length != 0) {
-                errors.style.display = "inline";
-            }
-        }
-
-        function hideOptionErrors() {
-            let errors = document.getElementById("optionErrors");
-            errors.style.display = "none";
         }
 
         function hasErrors() {

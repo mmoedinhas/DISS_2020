@@ -106,6 +106,8 @@ export class BootScene extends Phaser.Scene {
         }).catch((response) => {
             if(DEBUG) {
                 console.log(response);
+                let errorText: HTMLElement = document.getElementById("error");
+                errorText.style.display = "block";
             }
         })
     }
