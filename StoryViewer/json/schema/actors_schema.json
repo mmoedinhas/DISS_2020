@@ -70,60 +70,14 @@
                         "$id": "#/properties/actors/items/properties/animations",
                         "type": "array",
                         "title": "animations",
-                        "description": "A list of the animations for the actor",
+                        "description": "A list of the animations for the actor. The keys \"right\", \"left\", \"top\" and \"down\" are reserved for walking animations.",
                         "default": [],
                         "items": {
                             "$id": "#/properties/actors/items/properties/animations/items",
                             "type": "object",
                             "title": "Animation",
-                            "description": "A representation of an animation",
+                            "description": "A representation of an animation. To define walking animations, declare 4 animations with the \"right\", \"left\", \"top\" and \"down\" keys",
                             "default": {},
-                            "examples": [
-                                {
-                                    "frameRate": 10.0,
-                                    "key": "left",
-                                    "repeat": -1.0,
-                                    "frames": [
-                                        12.0,
-                                        13.0,
-                                        12.0,
-                                        11.0
-                                    ]
-                                },
-                                {
-                                    "key": "right",
-                                    "repeat": -1.0,
-                                    "frames": [
-                                        25.0,
-                                        26.0,
-                                        25.0,
-                                        24.0
-                                    ],
-                                    "frameRate": 10.0
-                                },
-                                {
-                                    "frameRate": 10.0,
-                                    "key": "up",
-                                    "repeat": -1.0,
-                                    "frames": [
-                                        37.0,
-                                        38.0,
-                                        37.0,
-                                        36.0
-                                    ]
-                                },
-                                {
-                                    "frameRate": 10.0,
-                                    "key": "down",
-                                    "repeat": -1.0,
-                                    "frames": [
-                                        1.0,
-                                        2.0,
-                                        1.0,
-                                        0.0
-                                    ]
-                                }
-                            ],
                             "required": [
                                 "key",
                                 "frames",
@@ -135,7 +89,7 @@
                                     "$id": "#/properties/actors/items/properties/animations/items/properties/key",
                                     "type": "string",
                                     "title": "Key",
-                                    "description": "The animation unique key",
+                                    "description": "The animation key",
                                     "default": "",
                                     "examples": [
                                         "left"
@@ -177,9 +131,7 @@
                                     "title": "Repeat",
                                     "description": "Number of times the animation should repeat. -1 if animation should loop forever",
                                     "default": 0,
-                                    "examples": [
-                                        -1
-                                    ]
+                                    "examples": [-1]
                                 }
                             }
                         }
