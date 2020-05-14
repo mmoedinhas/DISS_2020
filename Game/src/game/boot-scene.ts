@@ -1,12 +1,13 @@
 import * as Phaser from 'phaser';
 import WebfontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
-import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'; 
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 import { GameScene } from './game-scene';
 import { IPlayerType, IStory } from '../utils/interfaces';
 import * as paths from '../utils/paths';
 import { DialogueScene } from './dialogue-scene';
 import { getAssetIdFromPath } from '../utils/paths';
 
+declare const STORYVIEWER_URL: string;
 declare const FRAMEWORK_URL: string;
 declare const DEBUG: boolean;
 
@@ -27,7 +28,7 @@ export const playerType: IPlayerType = {
     happiness: 10
 }
 
-export let graph;
+export let storyId;
 
 const frameworkUrl: string = FRAMEWORK_URL + "/";
 
@@ -65,27 +66,32 @@ export class BootScene extends Phaser.Scene {
             }
         });
 
-        if(DEBUG) {
+        if (DEBUG) {
             this.load.on('webfontactive', function (fileObj, familyName) {
                 console.log('loaded font: ' + familyName)
             });
-    
+
             this.load.on('webfontinactive', function (fileObj, familyName) {
                 console.log('couldn\'t load font: ' + familyName)
             });
         }
-        
+
     }
 
     public create() {
 
-        this.getStory().then((response) => {
+        this.getStory().then(async (response) => {
 
-            if(DEBUG) {
+            if (DEBUG) {
                 console.log(response);
-                graph = response['graph'];
-                let debugViewButton: HTMLInputElement = document.getElementById("storyViewLink") as HTMLInputElement;
-                debugViewButton.disabled = false;
+
+                try {
+                    await this.sendDebugInfo(response['graph']);
+                } catch (err) {
+                    console.log(err);
+                }
+
+                this.registry.set('storyId', storyId);
             }
 
             this.registry.set('story', response['story']);
@@ -95,7 +101,7 @@ export class BootScene extends Phaser.Scene {
             let scene: Phaser.Scenes.ScenePlugin = this.scene;
 
             this.load.on('complete', () => {
-                if(DEBUG) {
+                if (DEBUG) {
                     console.log("load complete for " + this.load.totalComplete + " files");
                 }
                 scene.start('Game');
@@ -104,7 +110,7 @@ export class BootScene extends Phaser.Scene {
             this.load.start();
 
         }).catch((response) => {
-            if(DEBUG) {
+            if (DEBUG) {
                 console.log(response);
                 let errorText: HTMLElement = document.getElementById("error");
                 errorText.style.display = "block";
@@ -219,6 +225,38 @@ export class BootScene extends Phaser.Scene {
         let key: string = getAssetIdFromPath(filename);
         this.load.json(key, paths.dialoguePath + filename);
     }
+
+    private sendDebugInfo(graph: any): Promise<Object> {
+        let debugViewButton: HTMLInputElement = document.getElementById("storyViewLink") as HTMLInputElement;
+
+        let request: XMLHttpRequest = new XMLHttpRequest();
+
+        return new Promise<Object>(function (resolve, reject) {
+            console.log("url: " + STORYVIEWER_URL);
+            request.open("POST", STORYVIEWER_URL + "/debug");
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            request.responseType = 'json';
+
+            let body = {
+                playerType: playerType,
+                graph: graph,
+                id: storyId
+            };
+            request.send(JSON.stringify(body));
+
+            request.onreadystatechange = function () {
+                if (this.readyState === XMLHttpRequest.DONE) {
+                    if (this.status === 200) {
+                        storyId = request.response.id;
+                        debugViewButton.disabled = false;
+                        resolve();
+                    } else {
+                        reject(request.response);
+                    }
+                }
+            }
+        })
+    }
 }
 
 export const gameConfig: Phaser.Types.Core.GameConfig = {
@@ -255,11 +293,11 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
     plugins: {
         scene: [
             {
-            key: 'rexUI',
-            plugin: RexUIPlugin,
-            mapping: 'rexUI'
-        }
-    ],
+                key: 'rexUI',
+                plugin: RexUIPlugin,
+                mapping: 'rexUI'
+            }
+        ],
         global: [
             {
                 key: 'rexWebfontLoader',

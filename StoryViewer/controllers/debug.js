@@ -25,11 +25,13 @@ router.post('/', function(req, res) {
     fs.open(filename, 'wx', (err, fd) => {
         if (err) {
             if (err.code === 'EEXIST') {
-                console.error(filename + ' already exists');
+                console.log(filename + ' already exists');
+                res.json({ id: id });
                 return;
             }
 
-            console.error(err);
+            console.log(err);
+            res.status(500).json({ error: "Error creating db file" });
             return;
         }
 
@@ -41,24 +43,28 @@ router.post('/', function(req, res) {
         fs.writeFile(filename, JSON.stringify(content), function(err) {
             if (err) {
                 console.log(err);
+                res.status(500).json({ error: "Error writing to db file" });
+                return;
             }
+            res.json({ id: id });
         });
     });
-
-    res.json({ id: id });
 })
 
 router.put('/:id', function(req, res) {
     if (!req.body.currEvent) {
+        console.log("Couldn't find currEvent in put request")
+        res.send();
         return;
     }
 
     let id = req.params.id;
 
     let filename = dbPath + ID.getFilename(id);
-    fs.open(filename, 'w+', (err, fd) => {
+    fs.open(filename, 'r+', (err, fd) => {
         if (err) {
-            console.error(err);
+            console.log(err);
+            res.send();
             return;
         }
 
@@ -70,6 +76,7 @@ router.put('/:id', function(req, res) {
             if (err) {
                 console.log(err);
             }
+            res.send();
         });
     });
 });
@@ -80,7 +87,7 @@ router.get('/:id', function(req, res) {
     let filename = dbPath + ID.getFilename(id);
     fs.open(filename, 'r', (err, fd) => {
         if (err) {
-            console.error(err);
+            console.log(err);
             res.status(500).json({ error: "Couldn't fetch graph details" });
             return;
         }
