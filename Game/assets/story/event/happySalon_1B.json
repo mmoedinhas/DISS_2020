@@ -2,23 +2,38 @@
     "name": "happySalon_1B",
     "actors": [{
             "actorId": "Clara",
-            "start": [8, 4]
+            "start": [
+                8,
+                4
+            ]
         },
         {
             "actorId": "Dancer1",
-            "start": [3, 10]
+            "start": [
+                3,
+                10
+            ]
         },
         {
             "actorId": "Dancer2",
-            "start": [14, 13]
+            "start": [
+                14,
+                13
+            ]
         },
         {
             "actorId": "Dancer3",
-            "start": [7, 17]
+            "start": [
+                7,
+                17
+            ]
         },
         {
             "actorId": "Grandma",
-            "start": [15, 15]
+            "start": [
+                15,
+                15
+            ]
         }
     ],
     "actions": [{
@@ -26,6 +41,14 @@
             "arguments": {
                 "x": 2,
                 "y": 0
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": 1
             },
             "actorId": "Clara"
         },
