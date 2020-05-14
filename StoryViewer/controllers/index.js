@@ -4,6 +4,7 @@ var path = require('path');
 
 router.use('/validator', require('./validator'))
 router.use('/story-viewer', require('./story-viewer'))
+router.use('/debug', require('./debug'))
 
 router.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/../views/index.html'));

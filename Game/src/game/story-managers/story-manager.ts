@@ -3,11 +3,16 @@ import { CutsceneManager } from './cutscene-manager';
 import { EventManager } from './event-manager';
 import { GameplayManager } from './gameplay-manager';
 import { GameScene } from '../game-scene';
+import { boolean } from '../../utils/filtrex';
 
 export enum EventType {
     CUTSCENE,
     GAMEPLAY
 }
+
+declare const DEBUG: boolean;
+declare const STORYVIEWER_URL: string;
+const debugUrl: string = STORYVIEWER_URL + "/debug";
 
 export class StoryManager {
 
@@ -15,6 +20,7 @@ export class StoryManager {
 
     private playerType: IPlayerType;
     private story: IStory;
+    private storyId: string;
 
     private currEventIndex: integer;
     private currSceneIndex: integer;
@@ -24,13 +30,15 @@ export class StoryManager {
 
     private currEventManager: EventManager;
 
-    constructor(scene: GameScene, story: IStory, playerType: IPlayerType) {
+    constructor(scene: GameScene, story: IStory, playerType: IPlayerType, storyId?: string) {
         this.scene = scene;
         this.story = story;
         this.playerType = playerType;
 
-        this.currEventIndex = 1;
+        this.currEventIndex = 0;
         this.currSceneIndex = 0;
+
+        this.storyId = storyId ? storyId : "";
 
         this.updateEventType();
     }
@@ -53,6 +61,10 @@ export class StoryManager {
         }
 
         this.currEventManager = currEventManager;
+
+        if (DEBUG) {
+            this.sendCurrEvent(this.getCurrEvent().name);
+        }
 
         return currEventManager;
     }
@@ -116,5 +128,16 @@ export class StoryManager {
         } else {
             this.currEventManager.act(time, delta, keysPressed);
         }
+    }
+
+    private sendCurrEvent(currEvent: string) {
+        let request: XMLHttpRequest = new XMLHttpRequest();
+        request.open("PUT", debugUrl + "/" + this.storyId);
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+        let body = {
+            currEvent: currEvent
+        };
+        request.send(JSON.stringify(body));
     }
 }

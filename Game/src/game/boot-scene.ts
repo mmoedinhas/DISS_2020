@@ -1,19 +1,23 @@
 import * as Phaser from 'phaser';
 import WebfontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
-import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'; 
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 import { GameScene } from './game-scene';
 import { IPlayerType, IStory } from '../utils/interfaces';
 import * as paths from '../utils/paths';
 import { DialogueScene } from './dialogue-scene';
 import { getAssetIdFromPath } from '../utils/paths';
 
-declare let SERVICE_URL: string;
+declare const STORYVIEWER_URL: string;
+declare const FRAMEWORK_URL: string;
+declare const DEBUG: boolean;
+
+const physicsDebug: boolean = false;
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
 };
 
-const playerType: IPlayerType = {
+export const playerType: IPlayerType = {
     anger: 4,
     disgust: 4,
     fear: 5,
@@ -24,7 +28,9 @@ const playerType: IPlayerType = {
     happiness: 10
 }
 
-const frameworkUrl: string = SERVICE_URL + "/";
+export let storyId;
+
+const frameworkUrl: string = FRAMEWORK_URL + "/";
 
 const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
 const actorsFile: string = paths.storyPath + 'actors.json';
@@ -60,36 +66,55 @@ export class BootScene extends Phaser.Scene {
             }
         });
 
-        
-        this.load.on('webfontactive', function (fileObj, familyName) {
-            console.log('loaded font: ' + familyName)
-        });
+        if (DEBUG) {
+            this.load.on('webfontactive', function (fileObj, familyName) {
+                console.log('loaded font: ' + familyName)
+            });
 
-        this.load.on('webfontinactive', function (fileObj, familyName) {
-            console.log('couldn\'t load font: ' + familyName)
-        });
+            this.load.on('webfontinactive', function (fileObj, familyName) {
+                console.log('couldn\'t load font: ' + familyName)
+            });
+        }
+
     }
 
     public create() {
 
-        this.getStory().then((response) => {
-            console.log(response);
+        this.getStory().then(async (response) => {
 
-            this.registry.set('story', response);
+            if (DEBUG) {
+                console.log(response);
+
+                try {
+                    await this.sendDebugInfo(response['graph']);
+                } catch (err) {
+                    console.log(err);
+                }
+
+                this.registry.set('storyId', storyId);
+            }
+
+            this.registry.set('story', response['story']);
             this.registry.set('playerType', playerType);
-            this.loadAllEventFiles(response as IStory);
+            this.loadAllEventFiles(response['story'] as IStory);
 
             let scene: Phaser.Scenes.ScenePlugin = this.scene;
 
             this.load.on('complete', () => {
-                console.log("load complete for " + this.load.totalComplete + " files");
+                if (DEBUG) {
+                    console.log("load complete for " + this.load.totalComplete + " files");
+                }
                 scene.start('Game');
             });
 
             this.load.start();
 
         }).catch((response) => {
-            console.log(response);
+            if (DEBUG) {
+                console.log(response);
+                let errorText: HTMLElement = document.getElementById("error");
+                errorText.style.display = "block";
+            }
         })
     }
 
@@ -200,9 +225,41 @@ export class BootScene extends Phaser.Scene {
         let key: string = getAssetIdFromPath(filename);
         this.load.json(key, paths.dialoguePath + filename);
     }
+
+    private sendDebugInfo(graph: any): Promise<Object> {
+        let debugViewButton: HTMLInputElement = document.getElementById("storyViewLink") as HTMLInputElement;
+
+        let request: XMLHttpRequest = new XMLHttpRequest();
+
+        return new Promise<Object>(function (resolve, reject) {
+            console.log("url: " + STORYVIEWER_URL);
+            request.open("POST", STORYVIEWER_URL + "/debug");
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            request.responseType = 'json';
+
+            let body = {
+                playerType: playerType,
+                graph: graph,
+                id: storyId
+            };
+            request.send(JSON.stringify(body));
+
+            request.onreadystatechange = function () {
+                if (this.readyState === XMLHttpRequest.DONE) {
+                    if (this.status === 200) {
+                        storyId = request.response.id;
+                        debugViewButton.disabled = false;
+                        resolve();
+                    } else {
+                        reject(request.response);
+                    }
+                }
+            }
+        })
+    }
 }
 
-const gameConfig: Phaser.Types.Core.GameConfig = {
+export const gameConfig: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     scale: {
         parent: 'content',
@@ -225,7 +282,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: false,
+            debug: DEBUG && physicsDebug,
         }
     },
     scene: [
@@ -236,11 +293,11 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     plugins: {
         scene: [
             {
-            key: 'rexUI',
-            plugin: RexUIPlugin,
-            mapping: 'rexUI'
-        }
-    ],
+                key: 'rexUI',
+                plugin: RexUIPlugin,
+                mapping: 'rexUI'
+            }
+        ],
         global: [
             {
                 key: 'rexWebfontLoader',
@@ -250,5 +307,3 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
         ]
     }
 }
-
-export const game = new Phaser.Game(gameConfig);

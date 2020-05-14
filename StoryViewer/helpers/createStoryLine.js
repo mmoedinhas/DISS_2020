@@ -6,10 +6,11 @@ const palette = {
     pink: '#fae2ef',
     yellow: '#fcf8e9',
     grey: '#d0d5db',
-    dead: '#dbdbdb'
+    dead: '#dbdbdb',
+    orange: '#ffb875'
 };
 
-function createStoryLine(playerType, graph, isDefault) {
+function createStoryLine(playerType, graph, isDefault, currEventName) {
 
     paintAllGray(graph);
 
@@ -23,6 +24,12 @@ function createStoryLine(playerType, graph, isDefault) {
     }
 
     paintOriginalColor(graph, nodesToPaintIds);
+
+    if (currEventName) {
+        let currNode = graph.nodes.find(node => node.id.includes(currEventName));
+        currNode.color = palette['orange'];
+        currNode.size = 20;
+    }
 
     return graph;
 }
@@ -38,6 +45,7 @@ function paintAllGray(graph) {
         node.oldColor = node.color;
         node.color = palette['dead'];
         node.labelColor = palette['dead'];
+        node.size = 1;
     }
 
     for (edge of graph.edges) {

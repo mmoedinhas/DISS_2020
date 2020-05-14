@@ -9,6 +9,8 @@ const config: Phaser.Types.Scenes.SettingsConfig = {
     key: 'Game',
 };
 
+declare const DEBUG: boolean;
+
 export class GameScene extends Phaser.Scene {
 
     public static MAX_DEPTH = 128;
@@ -19,7 +21,7 @@ export class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap;
     private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
 
-    private storyManager: StoryManager; 
+    private storyManager: StoryManager;
     private vignette: Vignette;
 
     constructor() {
@@ -27,15 +29,20 @@ export class GameScene extends Phaser.Scene {
     }
 
     public init() {
-        
+
         let story: IStory = this.registry.get('story');
         let playerType: IPlayerType = this.registry.get('playerType');
 
-        this.storyManager = new StoryManager(this, story, playerType);
+        if (DEBUG) {
+            let storyId: string = this.registry.get('storyId');
+            this.storyManager = new StoryManager(this, story, playerType, storyId);
+        } else {
+            this.storyManager = new StoryManager(this, story, playerType);
+        }
     }
 
     public create() {
-        
+
         let currScene: IScene = this.storyManager.getCurrScene();
         this.map = this.initMap(currScene);
         GameScene.cursors = this.input.keyboard.createCursorKeys();
@@ -54,12 +61,12 @@ export class GameScene extends Phaser.Scene {
 
     public update(time: number, delta: number) {
 
-        let keysPressed:Phaser.Input.Keyboard.Key[]  = this.parseUserInput();
+        let keysPressed: Phaser.Input.Keyboard.Key[] = this.parseUserInput();
         this.storyManager.act(time, delta, keysPressed);
     }
 
     public setActorCollisionsWithMap(actor: Actor) {
-        for(let layer of this.obstacles) {
+        for (let layer of this.obstacles) {
             actor.setCollisionWith(layer, this);
         }
     }
@@ -96,20 +103,20 @@ export class GameScene extends Phaser.Scene {
     }
 
     private initMap(currScene: IScene): Phaser.Tilemaps.Tilemap {
-        
-        let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({key: currScene.name});
+
+        let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({ key: currScene.name });
 
         let tilesets: Phaser.Tilemaps.Tileset[] = [];
 
-        for(let tilesetData of map.tilesets) {
+        for (let tilesetData of map.tilesets) {
             tilesets.push(map.addTilesetImage(tilesetData.name));
         }
 
-        for(let layerData of map.layers) {
+        for (let layerData of map.layers) {
 
             let depth: number = (layerData.properties as Array<object>).find(i => i['name'] === 'depth')['value'];
 
-            if(depth > 0) {
+            if (depth > 0) {
                 depth += GameScene.MAX_DEPTH + 1;
             } else {
                 depth += GameScene.MIN_DEPTH - 1;
@@ -119,7 +126,7 @@ export class GameScene extends Phaser.Scene {
 
             let layer: Phaser.Tilemaps.StaticTilemapLayer = map.createStaticLayer(layerData.name, tilesets).setDepth(depth);
 
-            if(collidable) {
+            if (collidable) {
                 layer.setCollisionByExclusion([-1]);
                 this.obstacles.push(layer);
             }
@@ -130,8 +137,8 @@ export class GameScene extends Phaser.Scene {
 
     private applyPipeline() {
         this.vignette.setFloat2('resolution', this.game.config.width, this.game.config.height);
-        this.vignette.setFloat1('r',0.3);
-        this.vignette.setFloat1('b',0.6);
+        this.vignette.setFloat1('r', 0.3);
+        this.vignette.setFloat1('b', 0.6);
         this.vignette.setFloat1('tx', 0.5);
         this.vignette.setFloat1('ty', 0.5);
         this.vignette.setFloat1('bright', 1.0);
@@ -143,5 +150,5 @@ export class GameScene extends Phaser.Scene {
         this.vignette.setFloat1('bgblue', 1.0);
         this.cameras.main.setRenderToTexture(this.vignette);
     }
-    
+
 }

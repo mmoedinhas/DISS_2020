@@ -12,7 +12,6 @@
     <script src="libs/sigma/plugins/sigma.renderers.customShapes.min.js"></script>
     <script src="libs/sigma/plugins/sigma.renderers.edgeLabels.min.js"></script>
     <script src="libs/jquery-3.5.0.min.js"></script>
-    <script src="libs/url-search-params.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -59,9 +58,6 @@
     </div>
     <script>
         let hiddenGraphHolder;
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const debugMode = urlParams.get('debugMode');
 
         $('#createGraph').on('click', function() {
             $.ajax({

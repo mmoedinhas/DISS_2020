@@ -8,6 +8,11 @@ dotenv.config();
 
 module.exports = merge(common, {
 
+    entry: {
+        app: './src/main.ts',
+        vendors: ['phaser']
+    },
+
     mode: 'production',
     devtool: 'source-map',
     output: {
@@ -21,7 +26,8 @@ module.exports = merge(common, {
         new webpack.DefinePlugin({
             'typeof CANVAS_RENDERER': JSON.stringify(true),
             'typeof WEBGL_RENDERER': JSON.stringify(true),
-            'SERVICE_URL': JSON.stringify('..')
+            'FRAMEWORK_URL': JSON.stringify('..'),
+            'DEBUG': JSON.stringify(false)
         }),
     ],
 });

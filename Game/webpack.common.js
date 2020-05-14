@@ -1,8 +1,4 @@
 module.exports = {
-    entry: {
-        app: './src/game/main.ts',
-        vendors: ['phaser']
-    },
 
     module: {
         rules: [{

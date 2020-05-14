@@ -8,6 +8,8 @@ import { getAssetIdFromPath } from "../../utils/paths";
 import { IDialogueLine, ICoordinates, IFlagChange } from "../../utils/interfaces";
 import * as filter from "../../utils/filtrex";
 
+declare const DEBUG: boolean;
+
 export class GameplayManager extends EventManager {
 
     private npcs: Npc[] = [];
@@ -108,7 +110,9 @@ export class GameplayManager extends EventManager {
 
     private implementFlagChanges(flagChanges: IFlagChange[]) {
 
-        console.log(flagChanges);
+        if(DEBUG) {
+            console.log(flagChanges);
+        }
         
         for(let flagChange of flagChanges) {
 
@@ -126,7 +130,9 @@ export class GameplayManager extends EventManager {
             }
         }
 
-        console.log(this.flags);
+        if(DEBUG) {
+            console.log(this.flags);
+        }
     }
 
     private sortActorDepths() {

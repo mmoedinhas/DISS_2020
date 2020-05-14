@@ -71,7 +71,10 @@ router.post('/', function(req, res) {
                 return;
             }
 
-            res.send(story);
+            res.send({
+                graph: graph,
+                story: story
+            });
 
         } else {
             let error = {

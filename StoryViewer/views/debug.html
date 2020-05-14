@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Debug View</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta http-equiv="cleartype" content="on">
+    <script src="libs/sigma/sigma.min.js"></script>
+    <script src="libs/sigma/plugins/sigma.renderers.customShapes.min.js"></script>
+    <script src="libs/sigma/plugins/sigma.renderers.edgeLabels.min.js"></script>
+    <script src="libs/jquery-3.5.0.min.js"></script>
+    <script src="libs/url-search-params.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="graphWindow">
+        <div id="graphBox" class="box">
+            <h2 id="graphTitle">Graph - Debug View</h2>
+            <p>Curr event: <span id="currEvent"></span></p>
+            <div id="graph"></div>
+        </div>
+    </div>
+    <div id="sideBox">
+        <div id="playerProfile" class="box side-box">
+            <h2>Player Profile</h2>
+            <p id="anger">anger: </p>
+            <p id="disgust">disgust: </p>
+            <p id="fear">fear: </p>
+            <p id="anxiety">anxiety: </p>
+            <p id="sadness">sadness: </p>
+            <p id="desire">desire: </p>
+            <p id="relaxation">relaxation: </p>
+            <p id="happiness">happiness: </p>
+        </div>
+        <div id="errors" class="box side-box">
+            <h2>Errors</h2>
+        </div>
+    </div>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const storyId = urlParams.get('id');
+        let drawingGraph = false;
+
+        let currEventElem = document.getElementById("currEvent");
+        let s;
+
+        $.ajax({
+
+            url: 'debug/' + storyId,
+            type: 'GET',
+
+            error: function(err) {
+                showErrors([err.responseText]);
+            },
+
+            success: function(result) {
+
+                let graph = result.graph;
+
+                drawingGraph = true;
+
+                if (result.currEvent) {
+                    currEventElem.innerHTML = result.currEvent;
+                }
+
+                showErrors(graph.errors);
+                createGraph(graph.graph);
+                showPlayerProfile(result.playerType);
+
+                drawingGraph = false;
+            }
+        });
+
+        const interval = setInterval(function() {
+
+            if (drawingGraph) {
+                return;
+            }
+
+            $.ajax({
+
+                url: 'debug/' + storyId,
+                type: 'GET',
+
+                error: function(err) {
+                    showErrors([err.responseText]);
+                },
+
+                success: function(result) {
+
+                    let graph = result.graph;
+
+                    drawingGraph = true;
+
+                    if (result.currEvent) {
+                        currEventElem.innerHTML = result.currEvent;
+                    }
+
+                    updateGraph(graph.graph);
+
+                    drawingGraph = false;
+                }
+            });
+        }, 1000);
+
+        function createGraph(graph) {
+
+            if (graph === undefined) {
+                return;
+            }
+
+            let graphElem = document.getElementById("graph");
+            graphElem.innerHTML = "";
+
+            sigma.utils.pkg('sigma.canvas.nodes');
+            sigma.utils.pkg('sigma.canvas.edges');
+
+            s = new sigma({
+                graph: graph,
+                renderer: {
+                    container: document.getElementById('graph'),
+                    type: sigma.renderers.canvas
+                },
+                settings: {
+                    edgeLabelSize: 'proportional',
+                    defaultEdgeLabelSize: 12,
+                    defaultEdgeType: 'curvedArrow',
+                    minEdgeSize: 2,
+                    maxEdgeSize: 2,
+                    minNodeSize: 10,
+                    maxNodeSize: 20,
+                    defaultEdgeColor: '#000000'
+                }
+            });
+            s.cameras[0].goTo({
+                x: 0,
+                y: 0,
+                angle: 0,
+                ratio: 0.8
+            });
+
+            CustomShapes.init(s);
+            s.refresh();
+        }
+
+        function updateGraph(newGraph) {
+            console.log("updating graph")
+            for (let oldNode of s.graph.nodes()) {
+                let newNode = newGraph.nodes.find(node => node.id === oldNode.id);
+                oldNode.color = newNode.color;
+                oldNode.labelColor = newNode.labelColor;
+                oldNode.size = newNode.size;
+            }
+
+            for (let oldEdge of s.graph.edges()) {
+                let newEdge = newGraph.edges.find(edge => edge.id === oldEdge.id);
+                oldEdge.color = newEdge.color;
+                oldEdge.labelColor = newEdge.labelColor;
+            }
+
+            s.refresh();
+        }
+
+        function showPlayerProfile(playerProfile) {
+            for (let [key, value] of Object.entries(playerProfile)) {
+                document.getElementById(key).innerHTML = key + ": " + value;
+            }
+        }
+
+        function showErrors(errorsArray) {
+
+            let errors = document.getElementById("errors");
+            errors.innerHTML = "";
+            let h2 = document.createElement('h2');
+            h2.textContent = "Errors";
+            errors.appendChild(h2);
+
+            for (error of errorsArray) {
+                const p = document.createElement('p');
+                p.textContent = error;
+                errors.appendChild(p);
+            }
+        }
+
+        function appendErrors(errorsArray) {
+            let errors = document.getElementById("errors");
+
+            for (error of errorsArray) {
+                const p = document.createElement('p');
+                p.textContent = error;
+                errors.appendChild(p);
+            }
+        }
+
+        function hasErrors() {
+            let errors = document.getElementById("errors");
+
+            return errors.children.length > 1;
+        }
+    </script>
+</body>
+
+</html>
