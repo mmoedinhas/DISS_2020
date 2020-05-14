@@ -95,7 +95,7 @@ router.get('/:id', function(req, res) {
         let content = JSON.parse(fs.readFileSync(filename, 'utf8'));
 
         if (content.graph.errors.length == 0) {
-            content.graph.graph = createStoryLine(content.playerType, content.graph.graph, false);
+            content.graph.graph = createStoryLine(content.playerType, content.graph.graph, false, content.currEvent);
         }
 
         res.json(content);

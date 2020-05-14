@@ -20,9 +20,9 @@
 
 <body>
     <div id="graphWindow">
-        <p>Curr event: <span id="currEvent"></span></p>
         <div id="graphBox" class="box">
             <h2 id="graphTitle">Graph - Debug View</h2>
+            <p>Curr event: <span id="currEvent"></span></p>
             <div id="graph"></div>
         </div>
     </div>
@@ -108,7 +108,7 @@
                     drawingGraph = false;
                 }
             });
-        }, 5000);
+        }, 1000);
 
         function createGraph(graph) {
 
@@ -135,7 +135,7 @@
                     minEdgeSize: 2,
                     maxEdgeSize: 2,
                     minNodeSize: 10,
-                    maxNodeSize: 10,
+                    maxNodeSize: 20,
                     defaultEdgeColor: '#000000'
                 }
             });
@@ -156,6 +156,7 @@
                 let newNode = newGraph.nodes.find(node => node.id === oldNode.id);
                 oldNode.color = newNode.color;
                 oldNode.labelColor = newNode.labelColor;
+                oldNode.size = newNode.size;
             }
 
             for (let oldEdge of s.graph.edges()) {
