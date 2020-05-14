@@ -16,9 +16,10 @@ router.post('/validate', upload.single('jsonFile'), function(req, res) {
 
     if (filename === "") {
         res.status(500).send("Error: Invalid schema type");
+        return;
     }
 
-    if (req.file.mimetype !== "application/json") {
+    if (!req.file || req.file.mimetype !== "application/json") {
         res.status(500).send("Error: Invalid json file");
         return;
     }

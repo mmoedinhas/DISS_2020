@@ -37,12 +37,12 @@
         <form id="validationForm" enctype="multipart/form-data">
             <input type="file" id="jsonFile" name="jsonFile" />
             <select id="jsonType" name="jsonType">
-        <option value="overall_narrative">Overall narrative</option>
-        <option value="cutscene">Cutscene</option>
-        <option value="gameplay">Gameplay</option>
-        <option value="actors">Actors</option>
-        <option value="dialogue">Dialogue</option>
-      </select>
+                <option value="overall_narrative">Overall narrative</option>
+                <option value="cutscene">Cutscene</option>
+                <option value="gameplay">Gameplay</option>
+                <option value="actors">Actors</option>
+                <option value="dialogue">Dialogue</option>
+            </select>
             <input id="submit" type="button" value="Validate JSON" />
         </form>
     </div>
@@ -77,7 +77,7 @@
                 },
 
                 complete: function() {
-                    $("#jsonType").val("");
+                    $("#jsonFile").val("");
                 }
             });
         });
