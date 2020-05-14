@@ -88,7 +88,9 @@ export class BootScene extends Phaser.Scene {
                 try {
                     await this.sendDebugInfo(response['graph']);
                 } catch (err) {
-                    console.log(err);
+                    if(err) {
+                        console.log(err);
+                    }
                 }
 
                 this.registry.set('storyId', storyId);
@@ -232,7 +234,6 @@ export class BootScene extends Phaser.Scene {
         let request: XMLHttpRequest = new XMLHttpRequest();
 
         return new Promise<Object>(function (resolve, reject) {
-            console.log("url: " + STORYVIEWER_URL);
             request.open("POST", STORYVIEWER_URL + "/debug");
             request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             request.responseType = 'json';

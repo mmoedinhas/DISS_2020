@@ -32,11 +32,11 @@ export interface IStory {
 
 export interface IPlayerType {
     anger: integer,
-    disgust: integer, 
+    disgust: integer,
     fear: integer,
-    anxiety: integer, 
-    sadness: integer, 
-    desire: integer, 
+    anxiety: integer,
+    sadness: integer,
+    desire: integer,
     relaxation: integer,
     happiness: integer
 }
@@ -60,4 +60,11 @@ export interface IDialogueLine {
 export interface IFlagChange {
     name: string,
     value: string
+}
+
+export interface IAnimation {
+    key: string,
+    frames: integer[],
+    frameRate: integer,
+    repeat: integer
 }

@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import MoveTo from 'phaser3-rex-plugins/plugins/moveto.js';
 
-import { IBodySpecs, ICoordinates } from '../utils/interfaces';
+import { IBodySpecs, ICoordinates, IAnimation } from '../utils/interfaces';
 import { isArcadeBody, isActor, isStaticMapLayer } from '../utils/type-predicates';
 import { toRealMapCoordinates, toTileMapCoordinates } from '../utils/coordinates';
 import { GameScene } from './game-scene';
@@ -27,7 +27,7 @@ export class Actor {
         
         this.sprite = scene.physics.add.sprite(x, y, actorObj.tilesetId, actorObj.defaultFrame).setOrigin(0.5, 1);
         this.initBody(actorObj);
-        //TODO this.createAnimations(actorObj);
+        this.createAnimations(actorObj.tilesetId, actorObj.animations, scene);
     }
 
     private initBody(actorObj: any) {
@@ -77,6 +77,22 @@ export class Actor {
             this.sprite.body.setSize(newWidth, newHeight);
             this.sprite.body.setOffset(xOffset, yOffset);
         }
+    }
+
+    private createAnimations(tilesetId: string, animations: IAnimation[], scene: GameScene) {
+        
+        for(let animation of animations) {
+            scene.anims.create({
+                key: this.id + "_" + animation.key,
+                frames: scene.anims.generateFrameNumbers(tilesetId, { frames: animation.frames }),
+                frameRate: animation.frameRate,
+                repeat: animation.repeat
+            });
+        }
+    }
+
+    public getAnimationKey(key: string): string {
+        return this.id + "_" + key;
     }
 
     public getId(): string {

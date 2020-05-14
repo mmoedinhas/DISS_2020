@@ -37,5 +37,21 @@ export class Player extends Actor {
         if(isKeyPressed(keysPressed, keyboard.KeyCodes.RIGHT)) {
             body.setVelocityX(this.velocity);
         }
+
+        if(body.velocity.x != 0) {
+            if(body.velocity.x < 0) {
+                this.sprite.anims.play(this.getAnimationKey("left"), true);
+            } else {
+                this.sprite.anims.play(this.getAnimationKey("right"), true);
+            }
+        } else if(body.velocity.y != 0) {
+            if(body.velocity.y < 0) {
+                this.sprite.anims.play(this.getAnimationKey("up"), true);
+            } else {
+                this.sprite.anims.play(this.getAnimationKey("down"), true);
+            }
+        } else {
+            this.sprite.anims.stop();
+        }
     }
 }
