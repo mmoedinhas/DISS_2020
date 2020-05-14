@@ -95,6 +95,14 @@ export class Actor {
         return this.id + "_" + key;
     }
 
+    public playAnimation(key: string) {
+        this.sprite.anims.play(this.getAnimationKey(key), true);
+    }
+
+    public stopAnimation() {
+        this.sprite.anims.stop();
+    }
+
     public getId(): string {
         return this.id;
     }

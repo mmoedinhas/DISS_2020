@@ -24,13 +24,31 @@ export class Walk extends Action {
     public act(time: number, delta: number, keysPressed:Phaser.Input.Keyboard.Key[]) {
         if(!this.started) {
             this.started = true;
-            
+
+            this.playWalkingAnimation();
             this.actor.moveAuto(this.scene, this.x, this.y, this.emitter);
             this.actor.getCameraToFollow(this.scene);
         }
     }
 
+    public playWalkingAnimation() {
+        if(this.x != 0) {
+            if(this.x < 0) {
+                this.actor.playAnimation("left");
+            } else {
+                this.actor.playAnimation("right");
+            }
+        } else if(this.y != 0) {
+            if(this.y < 0) {
+                this.actor.playAnimation("up");
+            } else {
+                this.actor.playAnimation("down");
+            }
+        }
+    }
+
     public stopWalkingHandler() {
+        this.actor.stopAnimation();
         this.done = true;
     }
 }
