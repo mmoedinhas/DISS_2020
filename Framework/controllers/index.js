@@ -7,6 +7,8 @@ let validateJson = require('../helpers/validateJson.js');
 let createGraph = require('../helpers/createGraph.js');
 let buildStory = require('../helpers/storyBuilder.js');
 
+let Player = require('../models/player');
+
 router.get('/', function(req, res) {
     try {
         if (fs.existsSync(path.join(__dirname + '/../public/dist'))) {
@@ -19,70 +21,81 @@ router.get('/', function(req, res) {
     }
 })
 
-router.post('/', function(req, res) {
+router.post('/', async function(req, res) {
     let playerType = req.body.playerType;
     let data = req.body.data;
 
-    fs.readFile(path.join(__dirname + '/../json/schema/overall_narrative_schema.json'), 'utf8', (err2, schemaString) => {
-        if (err2) {
+    let schema;
+    try {
+        const schemaString = await fs.promises.readFile(path.join(__dirname + '/../json/schema/overall_narrative_schema.json'), 'utf-8');
+        schema = JSON.parse(schemaString);
+    } catch (err) {
+        let error = {
+            error: "Schema file not found."
+        };
+        res.send(error);
+        return;
+    }
+
+    let result = validateJson(data, schema);
+
+    if (result === "valid") {
+        let graph = createGraph(data);
+
+        if (graph.errors.length != 0) {
             let error = {
-                error: "Schema file not found."
-            };
+                error: graph.errors
+            }
             res.send(error);
             return;
         }
 
-        let schema = JSON.parse(schemaString);
-        let result = validateJson(data, schema);
+        let story = buildStory(playerType, graph.graph);
 
-        if (result === "valid") {
-            let graph = createGraph(data);
-
-            if (graph.errors.length != 0) {
-                let error = {
-                    error: graph.errors
-                }
-                res.send(error);
-                return;
-            }
-
-            let story = buildStory(playerType, graph.graph);
-
-            if (story.scenes.length == 0) {
-                let error = {
-                    error: "Story has no scenes."
-                }
-                res.send(error);
-                return;
-            }
-
-            let errors = [];
-            for (scene of story.scenes) {
-                if (scene.events.length == 0) {
-                    errors.push("Scene " + scene.name + " has no events.");
-                }
-            }
-
-            if (errors.length != 0) {
-                let error = {
-                    error: errors
-                }
-                res.send(error);
-                return;
-            }
-
-            res.send({
-                graph: graph,
-                story: story
-            });
-
-        } else {
+        if (story.scenes.length == 0) {
             let error = {
-                error: result
-            };
-            res.json(error);
+                error: "Story has no scenes."
+            }
+            res.send(error);
+            return;
         }
-    });
+
+        let errors = [];
+        for (scene of story.scenes) {
+            if (scene.events.length == 0) {
+                errors.push("Scene " + scene.name + " has no events.");
+            }
+        }
+
+        if (errors.length != 0) {
+            let error = {
+                error: errors
+            }
+            res.send(error);
+            return;
+        }
+
+        // try {
+        //     await Player.create(playerType);
+        // } catch (err) {
+        //     let error = {
+        //         error: err.message
+        //     }
+        //     res.send(error);
+        //     return;
+        // }
+
+        res.send({
+            graph: graph,
+            story: story
+        });
+
+    } else {
+        let error = {
+            error: result
+        };
+        res.json(error);
+    }
 })
 
 module.exports = router
