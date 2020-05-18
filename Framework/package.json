@@ -3,16 +3,22 @@
     "version": "1.0.0",
     "description": "Framework that, given an affective player profile and an overall story file, creates a personalized story",
     "scripts": {
+        "build": "webpack",
         "dev": "nodemon -r dotenv/config app.js"
     },
+    "main": "dist/webpack-numbers.js",
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "ajv": "^6.12.0",
+        "ajv": "^6.12.0"
+    },
+    "devDependencies": {
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
-        "express": "^4.17.1",
         "dotenv": "^8.2.0",
-        "nodemon": "^2.0.3"
+        "express": "^4.17.1",
+        "nodemon": "^2.0.3",
+        "webpack": "^4.43.0",
+        "webpack-cli": "^3.3.11"
     }
 }

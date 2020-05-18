@@ -1,5 +1,3 @@
-const path = require('path');
-const fs = require('fs');
 const validateJson = require('./validateJson.js');
 const createGraph = require('./createGraph.js');
 const buildStory = require('./storyBuilder.js');

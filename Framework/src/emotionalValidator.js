@@ -1,16 +1,16 @@
 class EmotionalValidator {
 
-    evaluators = {
-        ">": function(x, y) { return x > y; },
-        "<": function(x, y) { return x < y; },
-        ">=": function(x, y) { return x >= y; },
-        "<=": function(x, y) { return x <= y; },
-        "=": function(x, y) { return x == y; },
-        "!=": function(x, y) { return x != y; }
-    };
-
     constructor(playerType) {
         this.playerType = playerType;
+
+        this.evaluators = {
+            ">": function(x, y) { return x > y; },
+            "<": function(x, y) { return x < y; },
+            ">=": function(x, y) { return x >= y; },
+            "<=": function(x, y) { return x <= y; },
+            "=": function(x, y) { return x == y; },
+            "!=": function(x, y) { return x != y; }
+        };
     }
 
     matches(emotionalRequirements) {
@@ -22,7 +22,7 @@ class EmotionalValidator {
             let parameter = emotionalRequirement.parameter;
             let value = emotionalRequirement.value;
 
-            if(!evaluator(this.playerType[parameter],value)) {
+            if (!evaluator(this.playerType[parameter], value)) {
                 allTrue = false;
                 break;
             }

@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-let framework = require('../framework/main.js');
+let framework = require('../src/main.js');
 
 router.post('/', function(req, res) {
     let playerType = req.body.playerType;
