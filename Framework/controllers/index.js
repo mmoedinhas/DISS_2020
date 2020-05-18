@@ -7,20 +7,6 @@ let validateJson = require('../helpers/validateJson.js');
 let createGraph = require('../helpers/createGraph.js');
 let buildStory = require('../helpers/storyBuilder.js');
 
-let Player = require('../models/player');
-
-router.get('/', function(req, res) {
-    try {
-        if (fs.existsSync(path.join(__dirname + '/../public/dist'))) {
-            res.sendFile(path.join(__dirname + '/../views/game.html'))
-        } else {
-            res.sendFile(path.join(__dirname + '/../views/index.html'));
-        }
-    } catch (err) {
-        console.error(err)
-    }
-})
-
 router.post('/', async function(req, res) {
     let playerType = req.body.playerType;
     let data = req.body.data;
@@ -74,16 +60,6 @@ router.post('/', async function(req, res) {
             res.send(error);
             return;
         }
-
-        // try {
-        //     await Player.create(playerType);
-        // } catch (err) {
-        //     let error = {
-        //         error: err.message
-        //     }
-        //     res.send(error);
-        //     return;
-        // }
 
         res.send({
             graph: graph,
