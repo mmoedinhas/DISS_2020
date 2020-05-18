@@ -82,6 +82,8 @@ export class BootScene extends Phaser.Scene {
 
         this.getStory().then(async (response) => {
 
+            let story = response;
+
             if (DEBUG) {
                 console.log(response);
 
@@ -94,11 +96,12 @@ export class BootScene extends Phaser.Scene {
                 }
 
                 this.registry.set('storyId', storyId);
+                story = response['story'];
             }
 
-            this.registry.set('story', response['story']);
+            this.registry.set('story', story);
             this.registry.set('playerType', playerType);
-            this.loadAllEventFiles(response['story'] as IStory);
+            this.loadAllEventFiles(story as IStory);
 
             let scene: Phaser.Scenes.ScenePlugin = this.scene;
 
@@ -132,7 +135,8 @@ export class BootScene extends Phaser.Scene {
 
             let body = {
                 playerType: playerType,
-                data: overallNarrativeObj
+                data: overallNarrativeObj,
+                debug: DEBUG
             };
             request.send(JSON.stringify(body));
 
