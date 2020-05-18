@@ -4,7 +4,7 @@ let validateJson = require('../framework/validateJson.js');
 let createGraph = require('../framework/createGraph.js');
 let buildStory = require('../framework/storyBuilder.js');
 
-async function createStoryLine(playerType, overallStoryData, debug) {
+async function framework(playerType, overallStoryData, debug) {
 
     if (!playerType || !overallStoryData) {
         let error = {
@@ -80,4 +80,4 @@ async function createStoryLine(playerType, overallStoryData, debug) {
     }
 }
 
-module.exports = createStoryLine;
+module.exports = framework;
