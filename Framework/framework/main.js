@@ -1,26 +1,16 @@
-let path = require('path');
-let fs = require('fs');
-let validateJson = require('../framework/validateJson.js');
-let createGraph = require('../framework/createGraph.js');
-let buildStory = require('../framework/storyBuilder.js');
+const path = require('path');
+const fs = require('fs');
+const validateJson = require('./validateJson.js');
+const createGraph = require('./createGraph.js');
+const buildStory = require('./storyBuilder.js');
+const schema = require("./overallNarrativeSchema.js");
 
-async function framework(playerType, overallStoryData, debug) {
+function framework(playerType, overallStoryData, debug) {
 
     if (!playerType || !overallStoryData) {
         let error = {
             error: "Invalid player type / overall story data!"
         }
-        return error;
-    }
-
-    let schema;
-    try {
-        const schemaString = await fs.promises.readFile(path.join(__dirname + '/../json/schema/overall_narrative_schema.json'), 'utf-8');
-        schema = JSON.parse(schemaString);
-    } catch (err) {
-        let error = {
-            error: "Schema file not found."
-        };
         return error;
     }
 

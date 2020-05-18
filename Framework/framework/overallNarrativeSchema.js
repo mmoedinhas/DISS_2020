@@ -1,4 +1,4 @@
-{
+module.exports = {
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "http://example.com/example.json",
     "type": "object",
@@ -31,83 +31,74 @@
                 "title": "Scene",
                 "description": "The overview representation of a scene",
                 "default": {},
-                "examples": [
-                    {
-                        "locationId": "salon",
-                        "name": "happySalon",
-                        "description": "The dance salon looks well lit and nicely decorated with warm colors.",
-                        "map": "dance_hall",
-                        "priority": 2,
-                        "emotionalRequirements": [],
-                        "transitions": [
-                            {
-                                "unlockedOnEventsEnding": [
-                                    "happySalon_3A"
-                                ],
-                                "toLocation": "hugeSalon",
-                                "name": "happySalonToHugeSalon"
-                            }
+                "examples": [{
+                    "locationId": "salon",
+                    "name": "happySalon",
+                    "description": "The dance salon looks well lit and nicely decorated with warm colors.",
+                    "map": "dance_hall",
+                    "priority": 2,
+                    "emotionalRequirements": [],
+                    "transitions": [{
+                        "unlockedOnEventsEnding": [
+                            "happySalon_3A"
                         ],
-                        "firstEvents": [
-                            "happySalon_1A",
-                            "happySalon_1B"
-                        ],
-                        "events": [
-                            {
-                                "name": "happySalon_1A",
-                                "description": "Clara is excited and happy for the Christmas party.",
-                                "type": "cutscene",
-                                "priority": 2,
-                                "emotionalRequirements": [],
-                                "nextEvents": [
-                                    "happySalon_2A",
-                                    "happySalon_3A"
-                                ]
-                            },
-                            {
-                                "name": "happySalon_1B",
-                                "description": "Clara is happy for the party but is somewhat nervous.",
-                                "type": "cutscene",
-                                "priority": 1,
-                                "emotionalRequirements": [
-                                    {
-                                        "parameter": "anxiety",
-                                        "condition": ">",
-                                        "value": 8
-                                    }
-                                ],
-                                "nextEvents": [
-                                    "happySalon_2A",
-                                    "happySalon_3A"
-                                ]
-                            },
-                            {
-                                "name": "happySalon_2A",
-                                "description": "Since she is nervous, she only wants to talk to her Grandma first.",
-                                "type": "gameplay",
-                                "priority": 1,
-                                "emotionalRequirements": [
-                                    {
-                                        "parameter": "anxiety",
-                                        "condition": ">",
-                                        "value": 8
-                                    }
-                                ],
-                                "nextEvents": [
-                                    "happySalon_3A"
-                                ]
-                            },
-                            {
-                                "name": "happySalon_3A",
-                                "description": "Time to talk to other guests and check the cake.",
-                                "type": "gameplay",
-                                "priority": 2,
-                                "emotionalRequirements": [],
-                                "nextEvents": []
-                            }
-                        ]
-                    }
-                ],
+                        "toLocation": "hugeSalon",
+                        "name": "happySalonToHugeSalon"
+                    }],
+                    "firstEvents": [
+                        "happySalon_1A",
+                        "happySalon_1B"
+                    ],
+                    "events": [{
+                            "name": "happySalon_1A",
+                            "description": "Clara is excited and happy for the Christmas party.",
+                            "type": "cutscene",
+                            "priority": 2,
+                            "emotionalRequirements": [],
+                            "nextEvents": [
+                                "happySalon_2A",
+                                "happySalon_3A"
+                            ]
+                        },
+                        {
+                            "name": "happySalon_1B",
+                            "description": "Clara is happy for the party but is somewhat nervous.",
+                            "type": "cutscene",
+                            "priority": 1,
+                            "emotionalRequirements": [{
+                                "parameter": "anxiety",
+                                "condition": ">",
+                                "value": 8
+                            }],
+                            "nextEvents": [
+                                "happySalon_2A",
+                                "happySalon_3A"
+                            ]
+                        },
+                        {
+                            "name": "happySalon_2A",
+                            "description": "Since she is nervous, she only wants to talk to her Grandma first.",
+                            "type": "gameplay",
+                            "priority": 1,
+                            "emotionalRequirements": [{
+                                "parameter": "anxiety",
+                                "condition": ">",
+                                "value": 8
+                            }],
+                            "nextEvents": [
+                                "happySalon_3A"
+                            ]
+                        },
+                        {
+                            "name": "happySalon_3A",
+                            "description": "Time to talk to other guests and check the cake.",
+                            "type": "gameplay",
+                            "priority": 2,
+                            "emotionalRequirements": [],
+                            "nextEvents": []
+                        }
+                    ]
+                }],
                 "required": [
                     "locationId",
                     "name",
@@ -182,13 +173,11 @@
                             "title": "Requirement",
                             "description": "The representation of an emotional requirement",
                             "default": {},
-                            "examples": [
-                                {
-                                    "parameter": "anger",
-                                    "value": 8.0,
-                                    "condition": ">="
-                                }
-                            ],
+                            "examples": [{
+                                "parameter": "anger",
+                                "value": 8.0,
+                                "condition": ">="
+                            }],
                             "required": [
                                 "parameter",
                                 "condition",
@@ -248,16 +237,14 @@
                             "title": "Transition",
                             "description": "Description of a possible transition from scene A to scene B",
                             "default": {},
-                            "examples": [
-                                {
-                                    "unlockedOnEventsEnding": [
-                                        "sadSalon_1A",
-                                        "sadSalon_1B"
-                                    ],
-                                    "toLocation": "hugeSalon",
-                                    "name": "sadSalonToHugeSalon"
-                                }
-                            ],
+                            "examples": [{
+                                "unlockedOnEventsEnding": [
+                                    "sadSalon_1A",
+                                    "sadSalon_1B"
+                                ],
+                                "toLocation": "hugeSalon",
+                                "name": "sadSalonToHugeSalon"
+                            }],
                             "required": [
                                 "toLocation",
                                 "name"
@@ -342,31 +329,26 @@
                             "title": "Event",
                             "description": "An overview representation of an event",
                             "default": {},
-                            "examples": [
-                                {
+                            "examples": [{
                                     "name": "event1A1A",
                                     "description": "Small description",
                                     "priority": 1.0,
-                                    "emotionalRequirements": [
-                                        {
-                                            "value": 8.0,
-                                            "condition": ">=",
-                                            "parameter": "anger"
-                                        }
-                                    ],
+                                    "emotionalRequirements": [{
+                                        "value": 8.0,
+                                        "condition": ">=",
+                                        "parameter": "anger"
+                                    }],
                                     "nextEvents": [
                                         "event1A2"
                                     ],
                                     "type": "cutscene"
                                 },
                                 {
-                                    "emotionalRequirements": [
-                                        {
-                                            "value": 8.0,
-                                            "condition": ">=",
-                                            "parameter": "anger"
-                                        }
-                                    ],
+                                    "emotionalRequirements": [{
+                                        "value": 8.0,
+                                        "condition": ">=",
+                                        "parameter": "anger"
+                                    }],
                                     "type": "cutscene",
                                     "name": "event1A1B",
                                     "description": "Small description",
@@ -448,13 +430,11 @@
                                         "title": "Requirement",
                                         "description": "The representation of an emotional requirement",
                                         "default": {},
-                                        "examples": [
-                                            {
-                                                "value": 8.0,
-                                                "condition": ">=",
-                                                "parameter": "anger"
-                                            }
-                                        ],
+                                        "examples": [{
+                                            "value": 8.0,
+                                            "condition": ">=",
+                                            "parameter": "anger"
+                                        }],
                                         "required": [
                                             "parameter",
                                             "condition",
