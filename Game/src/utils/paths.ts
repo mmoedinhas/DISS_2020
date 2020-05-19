@@ -9,7 +9,7 @@ export const tilesetPath: string = 'assets/tileset/';
 
 export function getAssetIdFromPath(path: string): string {
     let slashIndex = (path.lastIndexOf('/') === -1) ? 0 : path.lastIndexOf('/');
-    let id: string = path.slice(slashIndex + 1, path.lastIndexOf('.'));
+    let id: string = path.slice(slashIndex, path.lastIndexOf('.'));
     return id;
 }
 
