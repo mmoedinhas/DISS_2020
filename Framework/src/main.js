@@ -1,9 +1,20 @@
 const validateJson = require('./validateJson.js');
 const createGraph = require('./createGraph.js');
 const buildStory = require('./storyBuilder.js');
-const schema = require("./overallNarrativeSchema.js");
 
-function framework(playerType, overallStoryData, debug) {
+const schemas = {
+    "overall-narrative": require("./schema/overallNarrativeSchema.js"),
+    "actors": require("./schema/actorsSchema.js"),
+    "cutscene": require("./schema/cutsceneSchema.js"),
+    "dialogue": require("./schema/dialogueSchema.js"),
+    "enemies": require("./schema/enemiesSchema.js"),
+    "gameplay": require("./schema/gameplaySchema.js"),
+    "items": require("./schema/itemsSchema.js"),
+    "player-profile": require("./schema/playerProfileSchema.js"),
+    "tilesets": require("./schema/tilesetsSchema.js")
+}
+
+exports.createStoryLine = function(playerType, overallStoryData, debug) {
 
     if (!playerType || !overallStoryData) {
         let error = {
@@ -12,7 +23,7 @@ function framework(playerType, overallStoryData, debug) {
         return error;
     }
 
-    let result = validateJson(overallStoryData, schema);
+    let result = validateJson(overallStoryData, schemas["overall-narrative"]);
 
     if (result === "valid") {
         let graph = createGraph(overallStoryData);
@@ -68,4 +79,20 @@ function framework(playerType, overallStoryData, debug) {
     }
 }
 
-module.exports = framework;
+exports.validateNarrativeFile = function(fileType, data) {
+
+    if (!schemas[fileType]) {
+        return {
+            error: "Invalid file type"
+        }
+    }
+
+    if (!data) {
+        return {
+            error: "Invalid file data"
+        }
+    }
+
+    let result = validateJson(data, schemas[fileType]);
+    return result;
+}

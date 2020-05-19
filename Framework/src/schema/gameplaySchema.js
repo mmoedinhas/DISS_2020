@@ -1,0 +1,328 @@
+module.exports = {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://diss2020.com/gameplay.schema.json",
+    "type": "object",
+    "title": "Gameplay",
+    "description": "The description of a game gameplay event",
+    "required": [
+        "name",
+        "flags",
+        "endEventCondition",
+        "player",
+        "enemies",
+        "npcs",
+        "items"
+    ],
+    "properties": {
+        "name": {
+            "$id": "#/properties/name",
+            "type": "string",
+            "title": "Name",
+            "description": "The name/id of the gameplay event. Should be unique"
+        },
+        "flags": {
+            "$id": "#/properties/flags",
+            "type": "array",
+            "title": "Flags",
+            "description": "The flags that will be used in this gameplay event and their initial values",
+            "items": {
+                "$id": "#/properties/flags/items",
+                "type": "object",
+                "title": "Flag initialization",
+                "description": "The declaration and initialization of a flag",
+                "required": [
+                    "name",
+                    "value"
+                ],
+                "properties": {
+                    "name": {
+                        "$id": "#/properties/flags/items/properties/name",
+                        "type": "string",
+                        "title": "Name",
+                        "description": "The flag name. Must be unique from all the flags in this event."
+                    },
+                    "value": {
+                        "$id": "#/properties/flags/items/properties/value",
+                        "type": [
+                            "number",
+                            "boolean"
+                        ],
+                        "title": "Value",
+                        "description": "The inital value of the flag. Can be a boolean or a number"
+                    }
+                }
+            }
+        },
+        "endEventCondition": {
+            "$id": "#/properties/endEventCondition",
+            "type": "string",
+            "title": "End Event Condition",
+            "description": "The condition for this event to end. Should be a valid expression according to the filtrex parser and containing flags that were previously declared for this event"
+        },
+        "player": {
+            "$id": "#/properties/player",
+            "type": "object",
+            "title": "Player",
+            "description": "The description of the player character",
+            "required": [
+                "playerId",
+                "actorId",
+                "startPosition"
+            ],
+            "properties": {
+                "playerId": {
+                    "$id": "#/properties/player/properties/playerId",
+                    "type": "string",
+                    "title": "Player ID",
+                    "description": "The Id for this player"
+                },
+                "actorId": {
+                    "$id": "#/properties/player/properties/actorId",
+                    "type": "string",
+                    "title": "The actor ID",
+                    "description": "The id of the actor (previously declared in actors.json) to be used for this player"
+                },
+                "startPosition": {
+                    "$id": "#/properties/player/properties/startPosition",
+                    "type": [
+                        "array",
+                        "string"
+                    ],
+                    "title": "Start Position",
+                    "description": "The start position of the player in the map. Can be the previous position where the player left off in the last event (keyword: current) or coordinates to a specific position",
+                    "pattern": "^current$",
+                    "items": {
+                        "$id": "#/properties/player/properties/startPosition/items",
+                        "type": "integer",
+                        "title": "Coordinate",
+                        "description": "The first element of the array is the X coordinate and the second is the Y coordinate (in map coordinates)"
+                    }
+                }
+            }
+        },
+        "enemies": {
+            "$id": "#/properties/enemies",
+            "type": "array",
+            "title": "Enemies",
+            "description": "The list of possible enemy encounters in this event",
+            "items": {
+                "$id": "#/properties/enemies/items",
+                "type": "object",
+                "title": "Enemy encounter",
+                "description": "The details of an encounter",
+                "required": [
+                    "id",
+                    "encounterPercentage"
+                ],
+                "properties": {
+                    "id": {
+                        "$id": "#/properties/enemies/items/properties/id",
+                        "type": "string",
+                        "title": "ID",
+                        "description": "The id of the enemy (previously declared in the enemies.json file) to be encountered"
+                    },
+                    "encounterPercentage": {
+                        "$id": "#/properties/enemies/items/properties/encounterPercentage",
+                        "type": "integer",
+                        "title": "Encounter percentage",
+                        "description": "The probability of the player finding this enemy of all the enemies available. If there is only one enemy, then the percentage should be 100"
+                    }
+                }
+            }
+        },
+        "npcs": {
+            "$id": "#/properties/npcs",
+            "type": "array",
+            "title": "NPCs",
+            "description": "A list of the NPCs available in this event",
+            "items": {
+                "$id": "#/properties/npcs/items",
+                "type": "object",
+                "title": "NPC",
+                "description": "The description of the NPC",
+                "required": [
+                    "actorId",
+                    "position",
+                    "dialogue",
+                    "isInteractableConditions",
+                    "flagChangesAfterInteraction"
+                ],
+                "properties": {
+                    "actorId": {
+                        "$id": "#/properties/npcs/items/properties/actorId",
+                        "type": "string",
+                        "title": "Actor ID",
+                        "description": "The Id of the actor (previously declared in actors.json) to be used for this npc"
+                    },
+                    "position": {
+                        "$id": "#/properties/npcs/items/properties/position",
+                        "type": "array",
+                        "title": "Position",
+                        "description": "The position of this NPC",
+                        "items": {
+                            "$id": "#/properties/npcs/items/properties/position/items",
+                            "type": "integer",
+                            "title": "Coordinate",
+                            "description": "The first element of the array is the X coordinate and the second is the Y coordinate (in map coordinates)"
+                        }
+                    },
+                    "dialogue": {
+                        "$id": "#/properties/npcs/items/properties/dialogue",
+                        "type": "string",
+                        "title": "Dialogue",
+                        "description": "The file containing the dialogue for this NPC"
+                    },
+                    "isInteractableConditions": {
+                        "$id": "#/properties/npcs/items/properties/isInteractableConditions",
+                        "type": "string",
+                        "title": "Is Interactable Conditions",
+                        "description": "The condition for this npc to be interactable. Should be a valid expression according to the filtrex parser and can contain flags that were previously declared for this event"
+                    },
+                    "flagChangesAfterInteraction": {
+                        "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction",
+                        "type": "array",
+                        "title": "Flag Changes After Interaction",
+                        "description": "A list of the flag changes after this interaction",
+                        "items": {
+                            "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items",
+                            "type": "object",
+                            "title": "Flag change",
+                            "description": "Which flag and how will it change",
+                            "required": [
+                                "name",
+                                "value"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items/properties/name",
+                                    "type": "string",
+                                    "title": "Name",
+                                    "description": "The name of the flag. Should be previously declared in this file"
+                                },
+                                "value": {
+                                    "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items/properties/value",
+                                    "type": "string",
+                                    "title": "Value",
+                                    "description": "The value that the flag should change to. Should be a valid expression according to the filtrex parser and can contain flags that were previously declared for this event"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "items": {
+            "$id": "#/properties/items",
+            "type": "array",
+            "title": "Items",
+            "description": "A list of the items available in this event",
+            "items": {
+                "$id": "#/properties/items/items",
+                "type": "object",
+                "title": "Item",
+                "description": "The representation of an item",
+                "required": [
+                    "itemId",
+                    "position",
+                    "dialogue",
+                    "inventoryChange",
+                    "isInteractableConditions",
+                    "flagChangesAfterInteraction",
+                    "disappears"
+                ],
+                "properties": {
+                    "itemId": {
+                        "$id": "#/properties/items/items/properties/itemId",
+                        "type": "string",
+                        "title": "Item Id",
+                        "description": "The id of the item (previously declared in items.json) to be used for this item"
+                    },
+                    "position": {
+                        "$id": "#/properties/items/items/properties/position",
+                        "type": "array",
+                        "title": "Position",
+                        "description": "The position of this item in the map",
+                        "items": {
+                            "$id": "#/properties/items/items/properties/position/items",
+                            "type": "integer",
+                            "title": "Coordinate",
+                            "description": "The first element of the array is the X coordinate and the second is the Y coordinate (in map coordinates)"
+                        }
+                    },
+                    "dialogue": {
+                        "$id": "#/properties/items/items/properties/dialogue",
+                        "type": "string",
+                        "title": "Dialogue",
+                        "description": "The dialogue file containing possible dialogue with this item. Can be null"
+                    },
+                    "inventoryChange": {
+                        "$id": "#/properties/items/items/properties/inventoryChange",
+                        "type": "object",
+                        "title": "Inventory Change",
+                        "description": "Description of a possible inventory change after interaction with the item",
+                        "required": [
+                            "itemId",
+                            "action"
+                        ],
+                        "properties": {
+                            "itemId": {
+                                "$id": "#/properties/items/items/properties/inventoryChange/properties/itemId",
+                                "type": "string",
+                                "title": "Item ID",
+                                "description": "The item id (previously declared in inventory_items.json) that will be changed in inventory"
+                            },
+                            "action": {
+                                "$id": "#/properties/items/items/properties/inventoryChange/properties/action",
+                                "type": "string",
+                                "title": "Action",
+                                "description": "The kind of change to do in the inventory. Can be \"+n\" or \"-n\", where n is the number of items added or subtracted"
+                            }
+                        }
+                    },
+                    "isInteractableConditions": {
+                        "$id": "#/properties/items/items/properties/isInteractableConditions",
+                        "type": "string",
+                        "title": "Is Interactable Conditions",
+                        "description": "The condition for this item to be interactable. Should be a valid expression according to the filtrex parser and can contain flags that were previously declared for this event"
+                    },
+                    "flagChangesAfterInteraction": {
+                        "$id": "#/properties/items/items/properties/flagChangesAfterInteraction",
+                        "type": "array",
+                        "title": "Flag Changes After Interaction",
+                        "description": "A list of the flag changes after this interaction",
+                        "items": {
+                            "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items",
+                            "type": "object",
+                            "title": "Flag change",
+                            "description": "Which flag and how will it change",
+                            "required": [
+                                "name",
+                                "value"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items/properties/name",
+                                    "type": "string",
+                                    "title": "Name",
+                                    "description": "The name of the flag. Should be previously declared in this file"
+                                },
+                                "value": {
+                                    "$id": "#/properties/npcs/items/properties/flagChangesAfterInteraction/items/properties/value",
+                                    "type": "string",
+                                    "title": "Value",
+                                    "description": "The value that the flag should change to. Should be a valid expression according to the filtrex parser and can contain flags that were previously declared for this event"
+                                }
+                            }
+                        }
+                    },
+                    "disappears": {
+                        "$id": "#/properties/items/items/properties/disappears",
+                        "type": "boolean",
+                        "title": "Disappears",
+                        "description": "A boolean to know if the graphic of the item should disappear from the map if it was interacted with"
+                    }
+                }
+            }
+        }
+    }
+}

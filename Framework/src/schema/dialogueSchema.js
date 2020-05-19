@@ -1,0 +1,42 @@
+module.exports = {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://diss2020.com/dialogue.schema.json",
+    "type": "object",
+    "title": "Dialogue",
+    "description": "The description of an in-game dialogue",
+    "required": [
+        "lines"
+    ],
+    "properties": {
+        "lines": {
+            "$id": "#/properties/lines",
+            "type": "array",
+            "title": "Lines",
+            "description": "An array of all the dialogue lines, in order of appearance",
+            "items": {
+                "$id": "#/properties/lines/items",
+                "type": "object",
+                "title": "Line",
+                "description": "The object representation of a line",
+                "required": [
+                    "author",
+                    "text"
+                ],
+                "properties": {
+                    "author": {
+                        "$id": "#/properties/lines/items/properties/author",
+                        "type": "string",
+                        "title": "Author",
+                        "description": "The author that says the line"
+                    },
+                    "text": {
+                        "$id": "#/properties/lines/items/properties/text",
+                        "type": "string",
+                        "title": "Text",
+                        "description": "The text of the line"
+                    }
+                }
+            }
+        }
+    }
+}
