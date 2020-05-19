@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import * as Framework from '../framework/story-framework.js';
 import WebfontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 import { GameScene } from './game-scene';
@@ -8,7 +9,6 @@ import { DialogueScene } from './dialogue-scene';
 import { getAssetIdFromPath } from '../utils/paths';
 
 declare const STORYVIEWER_URL: string;
-declare const FRAMEWORK_URL: string;
 declare const DEBUG: boolean;
 
 const physicsDebug: boolean = false;
@@ -78,78 +78,62 @@ export class BootScene extends Phaser.Scene {
 
     }
 
-    public create() {
+    public async create() {
 
-        this.getStory().then(async (response) => {
-
-            let story = response;
-
+        let response;
+        try {
+            response = this.getStory();
+        } catch (err) {
             if (DEBUG) {
-                console.log(response);
-
-                try {
-                    await this.sendDebugInfo(response['graph']);
-                } catch (err) {
-                    if(err) {
-                        console.log(err);
-                    }
-                }
-
-                this.registry.set('storyId', storyId);
-                story = response['story'];
-            }
-
-            this.registry.set('story', story);
-            this.registry.set('playerType', playerType);
-            this.loadAllEventFiles(story as IStory);
-
-            let scene: Phaser.Scenes.ScenePlugin = this.scene;
-
-            this.load.on('complete', () => {
-                if (DEBUG) {
-                    console.log("load complete for " + this.load.totalComplete + " files");
-                }
-                scene.start('Game');
-            });
-
-            this.load.start();
-
-        }).catch((response) => {
-            if (DEBUG) {
-                console.log(response);
+                console.log(err);
                 let errorText: HTMLElement = document.getElementById("error");
                 errorText.style.display = "block";
             }
-        })
-    }
+            return;
+        }
 
-    private getStory(): Promise<Object> {
-        let overallNarrativeObj = this.cache.json.get('overall_narrative');
+        let story = response;
+        
+        if (DEBUG) {
+            console.log(response);
 
-        let request: XMLHttpRequest = new XMLHttpRequest();
-
-        return new Promise<Object>(function (resolve, reject) {
-            request.open("POST", frameworkUrl);
-            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            request.responseType = 'json';
-
-            let body = {
-                playerType: playerType,
-                data: overallNarrativeObj,
-                debug: DEBUG
-            };
-            request.send(JSON.stringify(body));
-
-            request.onreadystatechange = function () {
-                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    if (request.response['error'] !== undefined) {
-                        reject(request.response);
-                    } else {
-                        resolve(request.response);
-                    }
+            try {
+                await this.sendDebugInfo(response['graph']);
+            } catch (err) {
+                if(err) {
+                    console.log(err);
                 }
             }
-        })
+
+            this.registry.set('storyId', storyId);
+            story = response['story'];
+        }
+
+        this.registry.set('story', story);
+        this.registry.set('playerType', playerType);
+        this.loadAllEventFiles(story as IStory);
+
+        let scene: Phaser.Scenes.ScenePlugin = this.scene;
+
+        this.load.on('complete', () => {
+            if (DEBUG) {
+                console.log("load complete for " + this.load.totalComplete + " files");
+            }
+            scene.start('Game');
+        });
+
+        this.load.start();
+    }
+
+    private getStory(): any {
+        let overallNarrativeObj = this.cache.json.get('overall_narrative');
+
+        let response = Framework.createStoryLine(playerType, overallNarrativeObj, DEBUG);
+        if (response['error'] !== undefined) {
+            throw response;
+        }
+
+        return response;
     }
 
     private loadAllEventFiles(story: IStory) {
@@ -230,6 +214,10 @@ export class BootScene extends Phaser.Scene {
     private loadDialogue(filename: string) {
         let key: string = getAssetIdFromPath(filename);
         this.load.json(key, paths.dialoguePath + filename);
+    }
+
+    private validateFile() {
+
     }
 
     private sendDebugInfo(graph: any): Promise<Object> {
