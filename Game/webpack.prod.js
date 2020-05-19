@@ -26,7 +26,6 @@ module.exports = merge(common, {
         new webpack.DefinePlugin({
             'typeof CANVAS_RENDERER': JSON.stringify(true),
             'typeof WEBGL_RENDERER': JSON.stringify(true),
-            'FRAMEWORK_URL': JSON.stringify('..'),
             'DEBUG': JSON.stringify(false)
         }),
     ],
