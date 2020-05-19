@@ -42,6 +42,7 @@ const zKey: string = paths.uiPath + 'ZKey.png';
 export class BootScene extends Phaser.Scene {
 
     private fileValidations: Promise<boolean>[] = [];
+    private loadedFiles: string[] = [];
 
     constructor() {
         super(BootSceneConfig);
@@ -161,6 +162,12 @@ export class BootScene extends Phaser.Scene {
     }
 
     private loadCutsceneFiles(key: string, filename: string) {
+
+        if(this.loadedFiles.includes(key)) {
+            return;
+        }
+
+        this.loadedFiles.push(key);
         this.load.json(key, paths.eventsPath + filename).on('filecomplete', async function (givenKey) {
             if (givenKey === key) {
 
@@ -182,6 +189,12 @@ export class BootScene extends Phaser.Scene {
     }
 
     private loadGameplayFiles(key: string, filename: string) {
+        
+        if(this.loadedFiles.includes(key)) {
+            return;
+        }
+
+        this.loadedFiles.push(key);
         this.load.json(key, paths.eventsPath + filename).on('filecomplete', async function (givenKey) {
             if (givenKey === key) {
 
@@ -209,6 +222,12 @@ export class BootScene extends Phaser.Scene {
     }
 
     private loadMap(key: string, filename: string) {
+        
+        if(this.loadedFiles.includes(key)) {
+            return;
+        }
+
+        this.loadedFiles.push(key);
         this.load.tilemapTiledJSON(key, paths.mapsPath + filename).on('filecomplete', function (givenKey) {
             if (givenKey === key) {
 
@@ -227,6 +246,12 @@ export class BootScene extends Phaser.Scene {
         let actor = actorsObj.actors.find(actor => actor.id == actorId);
         let tilesetKey = actor.tilesetId;
 
+        if(this.loadedFiles.includes(tilesetKey)) {
+            return;
+        }
+
+        this.loadedFiles.push(tilesetKey);
+
         let tileset = tilesetsArray.find(tileset => tileset.id == tilesetKey);
 
         if (!tileset) {
@@ -242,6 +267,12 @@ export class BootScene extends Phaser.Scene {
 
     private loadDialogue(filename: string) {
         let key: string = getAssetIdFromPath(filename);
+        
+        if(this.loadedFiles.includes(key)) {
+            return;
+        }
+
+        this.loadedFiles.push(key);
         
         this.load.json(key, paths.dialoguePath + filename).on('filecomplete', async function (givenKey) {
             if(givenKey === key) {
@@ -263,7 +294,7 @@ export class BootScene extends Phaser.Scene {
                 let response = Framework.validateNarrativeFile(fileType, fileContent);
                 if (response !== 'valid') {
                     if (DEBUG) {
-                        writeErrorToConsole("error in file " + fileName + "\n" + JSON.stringify(response));
+                        writeErrorToConsole("error in file " + fileName + ".json\n" + JSON.stringify(response));
                     }
                     resolve(false);
                 } else {
