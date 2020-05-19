@@ -10,7 +10,7 @@ export enum EventType {
     GAMEPLAY
 }
 
-declare const DEBUG: boolean;
+declare const STORYVIEWER_DEBUGGING: boolean;
 declare const STORYVIEWER_URL: string;
 const debugUrl: string = STORYVIEWER_URL + "/debug";
 
@@ -62,7 +62,7 @@ export class StoryManager {
 
         this.currEventManager = currEventManager;
 
-        if (DEBUG) {
+        if (STORYVIEWER_DEBUGGING) {
             this.sendCurrEvent(this.getCurrEvent().name);
         }
 

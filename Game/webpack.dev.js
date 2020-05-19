@@ -39,7 +39,8 @@ module.exports = merge(common, {
             'typeof CANVAS_RENDERER': JSON.stringify(true),
             'typeof WEBGL_RENDERER': JSON.stringify(true),
             'STORYVIEWER_URL': JSON.stringify(process.env.STORYVIEWER_URL),
-            'DEBUG': JSON.stringify(true)
+            'STORYVIEWER_DEBUGGING': JSON.stringify(JSON.parse(process.env.STORYVIEWER_DEBUGGING)),
+            'DEBUG': JSON.stringify(true),
         }),
     ],
 });

@@ -9,7 +9,7 @@ const config: Phaser.Types.Scenes.SettingsConfig = {
     key: 'Game',
 };
 
-declare const DEBUG: boolean;
+declare const STORYVIEWER_DEBUGGING: boolean;
 
 export class GameScene extends Phaser.Scene {
 
@@ -33,7 +33,7 @@ export class GameScene extends Phaser.Scene {
         let story: IStory = this.registry.get('story');
         let playerType: IPlayerType = this.registry.get('playerType');
 
-        if (DEBUG) {
+        if (STORYVIEWER_DEBUGGING) {
             let storyId: string = this.registry.get('storyId');
             this.storyManager = new StoryManager(this, story, playerType, storyId);
         } else {
