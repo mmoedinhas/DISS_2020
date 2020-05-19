@@ -1,24 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://diss2020.com/tilesets.schema.json",
     "type": "array",
-    "title": "The Root Schema",
-    "description": "The root schema comprises the entire JSON document.",
-    "default": [],
-    "additionalItems": true,
+    "title": "Tilesets",
+    "description": "A list of all the tilesets used in the game",
     "items": {
         "type": "object",
         "title": "Tileset",
         "description": "An object description of a tileset.",
-        "default": {},
-        "examples": [
-            {
-                "frameWidth": 39.0,
-                "id": "girls",
-                "frameHeight": 54.0,
-                "filename": "girls.png"
-            }
-        ],
-        "additionalProperties": true,
         "required": [
             "id",
             "filename",
@@ -29,38 +18,22 @@
             "id": {
                 "type": "string",
                 "title": "Id",
-                "description": "The id of this tileset. Must be unique",
-                "default": "",
-                "examples": [
-                    "girls"
-                ]
+                "description": "The id of this tileset. Must be unique"
             },
             "filename": {
                 "type": "string",
                 "title": "Filename",
-                "description": "The filename where this tileset is",
-                "default": "",
-                "examples": [
-                    "girls.png"
-                ]
+                "description": "The filename where this tileset is"
             },
             "frameWidth": {
                 "type": "integer",
                 "title": "Frame width",
-                "description": "The width of each frame",
-                "default": 0,
-                "examples": [
-                    39.0
-                ]
+                "description": "The width of each frame"
             },
             "frameHeight": {
                 "type": "integer",
                 "title": "Frame Height",
-                "description": "The height of each frame",
-                "default": 0,
-                "examples": [
-                    54.0
-                ]
+                "description": "The height of each frame"
             }
         }
     }

@@ -1,9 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "http://example.com/example.json",
+    "$id": "http://diss2020.com/items.schema.json",
     "type": "object",
-    "title": "The Root Schema",
-    "description": "The root schema comprises the entire JSON document.",
+    "title": "Items",
+    "description": "A list of all game items that the player can pick and add to the inventory",
     "required": [
         "items"
     ],
@@ -13,21 +13,11 @@
             "type": "array",
             "title": "Items",
             "description": "A list of all the items in this game",
-            "default": [],
             "items": {
                 "$id": "#/properties/items/items",
                 "type": "object",
                 "title": "Item",
                 "description": "The description of an item",
-                "default": {},
-                "examples": [
-                    {
-                        "tileset": "items.png",
-                        "name": "Piece of Cake",
-                        "frame": 1.0,
-                        "itemId": "cake"
-                    }
-                ],
                 "required": [
                     "itemId",
                     "name",
@@ -39,41 +29,25 @@
                         "$id": "#/properties/items/items/properties/itemId",
                         "type": "string",
                         "title": "Item id",
-                        "description": "The id for this item. Should be unique",
-                        "default": "",
-                        "examples": [
-                            "cake"
-                        ]
+                        "description": "The id for this item. Should be unique"
                     },
                     "name": {
                         "$id": "#/properties/items/items/properties/name",
                         "type": "string",
                         "title": "Name",
-                        "description": "The name of this item as seen by the player",
-                        "default": "",
-                        "examples": [
-                            "Piece of Cake"
-                        ]
+                        "description": "The name of this item as seen by the player"
                     },
                     "tileset": {
                         "$id": "#/properties/items/items/properties/tileset",
                         "type": "string",
                         "title": "Tileset",
-                        "description": "The id/name of tileset where the graphics for this item can be found",
-                        "default": "",
-                        "examples": [
-                            "items.png"
-                        ]
+                        "description": "The id/name of tileset where the graphics for this item can be found"
                     },
                     "frame": {
                         "$id": "#/properties/items/items/properties/frame",
                         "type": "integer",
                         "title": "Frame",
-                        "description": "The specific frame in the tileset where the item is",
-                        "default": 0,
-                        "examples": [
-                            1
-                        ]
+                        "description": "The specific frame in the tileset where the item is"
                     }
                 }
             }

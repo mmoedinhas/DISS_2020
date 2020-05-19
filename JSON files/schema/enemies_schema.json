@@ -187,7 +187,6 @@
                         "type": "array",
                         "title": "Behaviors",
                         "description": "The \"AI\" of the enemy: a list of behaviors ordered by priority",
-                        "default": [],
                         "items": {
                             "$id": "#/properties/enemies/items/properties/behaviors/items",
                             "type": "object",
@@ -204,7 +203,6 @@
                                     "type": "array",
                                     "title": "Conditions",
                                     "description": "The activation conditions for the enemy to conduct this behavior",
-                                    "default": [],
                                     "items": {
                                         "$id": "#/properties/enemies/items/properties/behaviors/items/properties/conditions/items",
                                         "type": "object",

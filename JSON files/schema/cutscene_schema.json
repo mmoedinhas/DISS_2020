@@ -21,7 +21,6 @@
             "type": "array",
             "title": "Actors",
             "description": "A list of the actors present in the event",
-            "default": [],
             "items": {
                 "$id": "#/properties/actors/items",
                 "type": "object",

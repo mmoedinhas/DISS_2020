@@ -105,7 +105,6 @@
             "type": "array",
             "title": "Enemies",
             "description": "The list of possible enemy encounters in this event",
-            "default": [],
             "items": {
                 "$id": "#/properties/enemies/items",
                 "type": "object",
@@ -136,7 +135,6 @@
             "type": "array",
             "title": "NPCs",
             "description": "A list of the NPCs available in this event",
-            "default": [],
             "items": {
                 "$id": "#/properties/npcs/items",
                 "type": "object",
@@ -161,7 +159,6 @@
                         "type": "array",
                         "title": "Position",
                         "description": "The position of this NPC",
-                        "default": [],
                         "items": {
                             "$id": "#/properties/npcs/items/properties/position/items",
                             "type": "integer",
@@ -245,7 +242,6 @@
                         "type": "array",
                         "title": "Position",
                         "description": "The position of this item in the map",
-                        "default": [],
                         "items": {
                             "$id": "#/properties/items/items/properties/position/items",
                             "type": "integer",
