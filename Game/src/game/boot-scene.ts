@@ -9,6 +9,7 @@ import { DialogueScene } from './dialogue-scene';
 import { getAssetIdFromPath } from '../utils/paths';
 
 declare const STORYVIEWER_URL: string;
+declare const STORYVIEWER_DEBUGGING: boolean;
 declare const DEBUG: boolean;
 
 const physicsDebug: boolean = false;
@@ -32,7 +33,6 @@ export let storyId;
 
 const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
 const actorsFile: string = paths.storyPath + 'actors.json';
-const playableCharactersFile: string = paths.storyPath + 'playable_characters.json';
 const tilesetsFile: string = paths.tilesetPath + 'tilesets.json';
 
 const dialogueBox: string = paths.uiPath + 'text-box.png';
@@ -40,6 +40,8 @@ const dialogueArrow: string = paths.uiPath + 'dialogue-arrow.png';
 const zKey: string = paths.uiPath + 'ZKey.png';
 
 export class BootScene extends Phaser.Scene {
+
+    private fileValidations: Promise<boolean>[] = [];
 
     constructor() {
         super(BootSceneConfig);
@@ -49,7 +51,6 @@ export class BootScene extends Phaser.Scene {
         //load main story files
         this.load.json('overall_narrative', overallNarrativeFile);
         this.load.json('actors', actorsFile);
-        this.load.json('playable_characters', playableCharactersFile);
         this.load.json('tilesets', tilesetsFile);
 
         // ui
@@ -78,6 +79,10 @@ export class BootScene extends Phaser.Scene {
 
     public async create() {
 
+        if(!await this.areMainStoryFilesValid()) {
+            return;
+        }
+
         let response;
         try {
             response = this.getStory();
@@ -95,16 +100,18 @@ export class BootScene extends Phaser.Scene {
         if (DEBUG) {
             console.log(response);
 
-            try {
-                await this.sendDebugInfo(response['graph']);
-            } catch (err) {
-                if(err) {
-                    console.log(err);
+            if(STORYVIEWER_DEBUGGING) {
+                try {
+                    await this.sendDebugInfo(response['graph']);
+                } catch (err) {
+                    if(err) {
+                        console.log(err);
+                    }
                 }
-            }
-
-            this.registry.set('storyId', storyId);
-            story = response['story'];
+    
+                this.registry.set('storyId', storyId);
+                story = response['story'];
+            } 
         }
 
         this.registry.set('story', story);
@@ -113,11 +120,15 @@ export class BootScene extends Phaser.Scene {
 
         let scene: Phaser.Scenes.ScenePlugin = this.scene;
 
-        this.load.on('complete', () => {
+        this.load.on('complete', async () => {
             if (DEBUG) {
                 console.log("load complete for " + this.load.totalComplete + " files");
             }
-            scene.start('Game');
+            let validationResults: boolean[] = await Promise.all(this.fileValidations);
+            console.log(validationResults);
+            if(!validationResults.includes(false)) {
+                scene.start('Game');
+            }
         });
 
         this.load.start();
@@ -126,7 +137,7 @@ export class BootScene extends Phaser.Scene {
     private getStory(): any {
         let overallNarrativeObj = this.cache.json.get('overall_narrative');
 
-        let response = Framework.createStoryLine(playerType, overallNarrativeObj, DEBUG);
+        let response = Framework.createStoryLine(playerType, overallNarrativeObj, STORYVIEWER_DEBUGGING);
         if (response['error'] !== undefined) {
             throw response;
         }
@@ -152,8 +163,15 @@ export class BootScene extends Phaser.Scene {
     }
 
     private loadCutsceneFiles(key: string, filename: string) {
-        this.load.json(key, paths.eventsPath + filename).on('filecomplete', function (givenKey) {
+        this.load.json(key, paths.eventsPath + filename).on('filecomplete', async function (givenKey) {
             if (givenKey === key) {
+
+                let validFile = this.validateFile(key, "cutscene", key);
+                this.fileValidations.push(validFile);
+                if(!await validFile) {
+                    return;
+                }
+
                 let cutsceneObj = this.cache.json.get(key);
                 let actorsObj = this.cache.json.get('actors');
                 let tilesetsArray = this.cache.json.get('tilesets');
@@ -166,8 +184,15 @@ export class BootScene extends Phaser.Scene {
     }
 
     private loadGameplayFiles(key: string, filename: string) {
-        this.load.json(key, paths.eventsPath + filename).on('filecomplete', function (givenKey) {
+        this.load.json(key, paths.eventsPath + filename).on('filecomplete', async function (givenKey) {
             if (givenKey === key) {
+
+                let validFile = this.validateFile(key, "gameplay", key);
+                this.fileValidations.push(validFile);
+                if(!await validFile) {
+                    return;
+                }
+
                 let gameplayObj = this.cache.json.get(key);
                 let actorsObj = this.cache.json.get('actors');
                 let tilesetsArray = this.cache.json.get('tilesets');
@@ -214,8 +239,49 @@ export class BootScene extends Phaser.Scene {
         this.load.json(key, paths.dialoguePath + filename);
     }
 
-    private validateFile() {
+    private validateFile(fileName: string, fileType: string, fileKey: string): Promise<boolean> {
+        let fileContent = this.cache.json.get(fileKey);
+        return new Promise<boolean>(function (resolve, reject) {
+            try {
+                let response = Framework.validateNarrativeFile(fileType, fileContent);
+                if(response !== 'valid') {
+                    if(DEBUG) {
+                        console.log("error in file " + fileName + "\n" + JSON.stringify(response));
+                        let errorText: HTMLElement = document.getElementById("error");
+                        errorText.style.display = "block";
+                    }
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
 
+    private areMainStoryFilesValid(): Promise<boolean> {
+        let mainStoryFilesValidations: Promise<Object>[] = [
+            this.validateFile("actors", "actors", "actors"),
+            this.validateFile("tilesets", "tilesets", "tilesets")
+        ];
+        
+        return Promise.all(mainStoryFilesValidations).then(function(responses) {
+
+            if(responses.includes(false)) {
+                return false;
+            } else {
+                return true;
+            }
+            
+        }).catch(function(err) {
+            if (DEBUG) {
+                console.log(err);
+                let errorText: HTMLElement = document.getElementById("error");
+                errorText.style.display = "block";
+                return false;
+            }
+        });
     }
 
     private sendDebugInfo(graph: any): Promise<Object> {
