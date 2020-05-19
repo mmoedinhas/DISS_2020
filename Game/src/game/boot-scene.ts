@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import * as Framework from '../framework/story-framework.js';
+import * as Framework from '../framework/story-framework';
 import WebfontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 import { GameScene } from './game-scene';
@@ -29,8 +29,6 @@ export const playerType: IPlayerType = {
 }
 
 export let storyId;
-
-const frameworkUrl: string = FRAMEWORK_URL + "/";
 
 const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
 const actorsFile: string = paths.storyPath + 'actors.json';
