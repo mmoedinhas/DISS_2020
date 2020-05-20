@@ -28,7 +28,7 @@ Validates uploaded JSON files against a chosen schema
 Contains all the code needed for the game to run in development mode
 
 ### Debugging with Story Viewer
-A debug view of the story is available for development of the game. It shows the graph of the current story and the current story node that the player is in. For more information on how to enable this debugging tool, see [this](hello)
+A debug view of the story is available for development of the game. It shows the graph of the current story and the current story node that the player is in. For more information on how to enable this debugging tool, see [this](#game---development-mode)
 
 ### Game Controls
 **Arrow keys:** move
