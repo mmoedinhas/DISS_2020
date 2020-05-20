@@ -1,4 +1,3 @@
-import * as Framework from "./story-framework.js";
 import { IPlayerType } from "../utils/interfaces.js";
 
 declare module './story-framework.js' {
