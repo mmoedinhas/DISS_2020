@@ -12,7 +12,8 @@ export enum EventType {
 
 declare const STORYVIEWER_DEBUGGING: boolean;
 declare const STORYVIEWER_URL: string;
-const debugUrl: string = STORYVIEWER_URL + "/debug";
+
+const debugUrl: string = STORYVIEWER_DEBUGGING ? STORYVIEWER_URL + "/debug" : "";
 
 export class StoryManager {
 

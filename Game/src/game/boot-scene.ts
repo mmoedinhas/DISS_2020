@@ -123,8 +123,13 @@ export class BootScene extends Phaser.Scene {
             if (DEBUG) {
                 console.log("load complete for " + this.load.totalComplete + " files");
             }
+            
             let validationResults: boolean[] = await Promise.all(this.fileValidations);
-            console.log(validationResults);
+
+            if(DEBUG) {
+                console.log(validationResults);
+            }
+            
             if (!validationResults.includes(false)) {
                 scene.start('Game');
             }

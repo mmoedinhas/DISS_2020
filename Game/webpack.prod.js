@@ -20,13 +20,19 @@ module.exports = merge(common, {
     },
     plugins: [
         new CopyWebpackPlugin([{
-            from: path.resolve(__dirname, 'assets', '**', '*'),
-            to: path.resolve(__dirname, './dist')
-        }]),
+                from: path.resolve(__dirname, 'assets', '**', '*'),
+                to: path.resolve(__dirname, './dist')
+            },
+            {
+                from: path.resolve(__dirname, 'index-prod.html'),
+                to: path.resolve(__dirname, './dist/index.html')
+            }
+        ]),
         new webpack.DefinePlugin({
             'typeof CANVAS_RENDERER': JSON.stringify(true),
             'typeof WEBGL_RENDERER': JSON.stringify(true),
-            'DEBUG': JSON.stringify(false)
+            'DEBUG': JSON.stringify(false),
+            'STORYVIEWER_DEBUGGING': JSON.stringify(false)
         }),
     ],
 });
