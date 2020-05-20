@@ -1,0 +1,136 @@
+{
+    "name": "happySalon_1B",
+    "actors": [{
+            "actorId": "Clara",
+            "start": [
+                8,
+                4
+            ]
+        },
+        {
+            "actorId": "Dancer1",
+            "start": [
+                3,
+                10
+            ]
+        },
+        {
+            "actorId": "Dancer2",
+            "start": [
+                14,
+                13
+            ]
+        },
+        {
+            "actorId": "Dancer3",
+            "start": [
+                7,
+                17
+            ]
+        },
+        {
+            "actorId": "Grandma",
+            "start": [
+                15,
+                15
+            ]
+        }
+    ],
+    "actions": [{
+            "action": "walk",
+            "arguments": {
+                "x": 2,
+                "y": 0
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": 1
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "It's finally Christmas!"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I waited for this day for so long! I'm so excited!"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I can see the guests already arrived. Oh my, I haven't seen everyone for so long..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I'm so nervous, what if they don't remember who I am anymore?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "... I really don't want to be awkward ..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Why am I so nervous?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "For now, let's just say hello to everyone and see how things go."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": 6
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Wait, I see grandma over there! I'll go over to her, maybe she can help."
+            },
+            "actorId": "Clara"
+        }
+    ]
+}
