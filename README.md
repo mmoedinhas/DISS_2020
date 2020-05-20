@@ -9,10 +9,9 @@ Contains the documentation (schema) and examples of the JSON files that are esse
 
 `Framework` folder
 ------
-Contains the code for the server that serves the framework API and the production version of the game
+Contains the framework code.
 
-### Framework API
-Handles requests to the framework. Main usage case is sending the overall narrative file and user profile and receiving an organized story to display to the user
+The framework is responsible for receiving the overall narrative file and user profile and returning an organized story to display to the user. Also validates other story files.
 
 `StoryViewer` folder
 ------
@@ -27,6 +26,9 @@ Validates uploaded JSON files against a chosen schema
 `Game` folder
 ------
 Contains all the code needed for the game to run in development mode
+
+### Debugging with Story Viewer
+A debug view of the story is available for development of the game. It shows the graph of the current story and the current story node that the player is in. For more information on how to enable this debugging tool, see [this](hello)
 
 ### Game Controls
 **Arrow keys:** move
@@ -44,14 +46,17 @@ How to Run
 3. Access the Story Viewer and the validator in **http://<span></span>localhost:<YOUR_PORT_OF_CHOICE_IN_ENV>**
 
 ### Game - Development Mode
-1. Create both `Framework/.env` and `Game/.env` files acording to the .env.example provided in the folders
-    * Make sure the ports match in both env files
-2. In `Framework` folder run `npm run dev` to start the framework API server
+1. Create a `Game/.env` file acording to the .env.example provided in the folder
+    * STORYVIEWER_DEBUGGING -- this variable should be set to true if you want to use the Story Viewer for debugging
+    * STORYVIEWER_URL -- if STORYVIEWER_DEBUGGING=true, then this variable should contain the url where the story viewer is being served
+2. (If you don't want to debug using the Story Viewer, skip this step) Start the Story Viewer server as explained above
 3. In `Game` folder run `npm run dev` to start the dev server of the game
 4. Access the game in **http://<span></span>localhost:8080</span>**
 
-### Game - Production Mode
-1. Create `Framework/.env` file according to the .env.example provided in the folder
-2. Build the game by going to the `Game` folder and running `npm run build`
-3. In `Framework` folder run `npm run dev`
-4. Access the game in **http://<span></span>localhost:<YOUR_PORT_OF_CHOICE_IN_FRAMEWORK_ENV>**
+### Build a production ready version of the game
+1. In `Game` folder run `npm run build`
+2. The resultant files are available in `Game/dist` folder
+
+### Build a production ready version of the framework
+1. In `Framework` folder run `npm run build`
+2. The resultant files are available in `Framework/dist`
