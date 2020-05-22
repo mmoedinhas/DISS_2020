@@ -11,9 +11,11 @@ var surveyJSON = {
             "navigationButtonsVisibility": "show"
         },
         {
-            "name": "game",
+            "name": "play_session_1",
             "elements": [{
-                "type": "game"
+                "type": "game",
+                "name": "game",
+                "title": "Play session 1"
             }],
             "readOnly": true,
             "navigationButtonsVisibility": "show"

@@ -41,6 +41,8 @@ var widget = {
     htmlTemplate: '<div id="game"></div>',
     //The main function, rendering and two-way binding
     afterRender: function(question, el) {
+        // TODO get stuff from survey.data
+        Game.newGame("game");
         // //el is our root element in htmlTemplate, is "div" in our case
         // //get the text element
         // var text = el.getElementsByTagName("input")[0];
