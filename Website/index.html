@@ -3,32 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Game</title>
+    <title>Survey</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <meta http-equiv="cleartype" content="on">
-    <style>
-        html,
-        body,
-        canvas {
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: hidden !important;
-        }
-        
-        #content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <link href="https://surveyjs.azureedge.net/1.7.7/survey.css" type="text/css" rel="stylesheet" />
+    <script src="https://surveyjs.azureedge.net/1.7.7/survey.jquery.min.js"></script>
 </head>
 
 <body>
-    <div id="content"></div>
-    <script src="game/app.bundle.js"></script>
-    <script src="game/1.app.bundle.js"></script>
+    <div id="surveyContainer"></div>
+    <script src="./survey.js"></script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
