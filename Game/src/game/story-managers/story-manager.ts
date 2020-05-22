@@ -22,6 +22,7 @@ export class StoryManager {
     private playerType: IPlayerType;
     private story: IStory;
     private storyId: string;
+    private done: boolean;
 
     private currEventIndex: integer;
     private currSceneIndex: integer;
@@ -35,6 +36,7 @@ export class StoryManager {
         this.scene = scene;
         this.story = story;
         this.playerType = playerType;
+        this.done = false;
 
         this.currEventIndex = 0;
         this.currSceneIndex = 0;
@@ -123,6 +125,10 @@ export class StoryManager {
     }
 
     public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {
+
+        if(this.done) {
+            return;
+        }
 
         if (this.currEventManager.isDone()) {
             this.next();
