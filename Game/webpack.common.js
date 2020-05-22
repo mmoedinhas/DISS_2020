@@ -13,7 +13,8 @@ module.exports = {
     },
 
     output: {
-        filename: 'app.bundle.js'
+        filename: 'app.bundle.js',
+        library: 'Game'
     },
 
     optimization: {

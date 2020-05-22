@@ -1,18 +1,12 @@
 import * as Phaser from 'phaser';
 import * as Framework from '../framework/story-framework';
-import WebfontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
-import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
-import { GameScene } from './game-scene';
 import { IPlayerType, IStory } from '../utils/interfaces';
 import * as paths from '../utils/paths';
-import { DialogueScene } from './dialogue-scene';
 import { getAssetIdFromPath } from '../utils/paths';
 
 declare const STORYVIEWER_URL: string;
 declare const STORYVIEWER_DEBUGGING: boolean;
 declare const DEBUG: boolean;
-
-const physicsDebug: boolean = false;
 
 const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
@@ -368,54 +362,5 @@ export class BootScene extends Phaser.Scene {
         console.log(error);
         let errorText: HTMLElement = document.getElementById("error");
         errorText.style.display = "block";
-    }
-}
-
-export const gameConfig: Phaser.Types.Core.GameConfig = {
-    type: Phaser.AUTO,
-    scale: {
-        parent: 'content',
-        mode: Phaser.Scale.FIT,
-        width: 640,
-        height: 360,
-        min: {
-            width: 320,
-            height: 240
-        },
-        max: {
-            width: 640,
-            height: 360
-        }
-    },
-    render: {
-        pixelArt: true
-    },
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 0 },
-            debug: DEBUG && physicsDebug,
-        }
-    },
-    scene: [
-        BootScene,
-        GameScene,
-        DialogueScene
-    ],
-    plugins: {
-        scene: [
-            {
-                key: 'rexUI',
-                plugin: RexUIPlugin,
-                mapping: 'rexUI'
-            }
-        ],
-        global: [
-            {
-                key: 'rexWebfontLoader',
-                plugin: WebfontLoaderPlugin,
-                start: true
-            },
-        ]
     }
 }
