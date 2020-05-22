@@ -1,3 +1,4 @@
+import * as Phaser from 'phaser';
 import { storyId, BootScene } from './game/boot-scene';
 import WebfontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
