@@ -24,7 +24,7 @@
             justify-content: center;
         }
         
-        #error {
+        .error {
             color: red;
             font-size: 0.8em;
             display: none;
@@ -34,7 +34,9 @@
 
 <body>
     <button id="storyViewLink" type="button" disabled>Debug View</button>
-    <p id="error">There are errors in the graph. Open console for details.</p>
+    <p class="error" id="graph-error">There are errors in the graph. Open console for details.</p>
+    <p class="error" id="connection-error">Couldn't establish connection with Story Viewer.</p>
+    <p class="error" id="general-error">Something happened. Open console for details.</p>
     <a id="linkToStoryViewer" style="display: none" target="_blank"></a>
     <div id="content"></div>
     <div id="eventSender" style="display: none;"></div>

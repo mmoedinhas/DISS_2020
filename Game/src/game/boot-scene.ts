@@ -12,17 +12,6 @@ const BootSceneConfig: Phaser.Types.Scenes.SettingsConfig = {
     key: 'BootScene',
 };
 
-export const playerType: IPlayerType = {
-    anger: 4,
-    disgust: 4,
-    fear: 5,
-    anxiety: 10,
-    sadness: 8,
-    desire: 14,
-    relaxation: 6,
-    happiness: 10
-}
-
 export let storyId;
 
 const overallNarrativeFile: string = paths.storyPath + 'overall_narrative.json';
@@ -37,6 +26,7 @@ export class BootScene extends Phaser.Scene {
 
     private fileValidations: Promise<boolean>[] = [];
     private loadedFiles: string[] = [];
+    private playerType: IPlayerType;
 
     constructor() {
         super(BootSceneConfig);
@@ -78,12 +68,18 @@ export class BootScene extends Phaser.Scene {
             return;
         }
 
+        this.playerType = this.registry.get("playerType");
+
+        if(!this.isPlayerTypeValid(this.playerType)) {
+            return;
+        }
+
         let response;
         try {
             response = this.getStory();
         } catch (err) {
             if (DEBUG) {
-                this.writeErrorToConsole(JSON.stringify(err));
+                this.writeErrorToConsole(JSON.stringify(err), "graph");
             }
             return;
         }
@@ -98,7 +94,7 @@ export class BootScene extends Phaser.Scene {
                     await this.sendDebugInfo(response['graph']);
                 } catch (err) {
                     if (err) {
-                        this.writeErrorToConsole(JSON.stringify(err));
+                        this.writeErrorToConsole(JSON.stringify(err), "connection");
                     }
                 }
 
@@ -108,7 +104,6 @@ export class BootScene extends Phaser.Scene {
         }
 
         this.registry.set('story', story);
-        this.registry.set('playerType', playerType);
         this.loadAllEventFiles(story as IStory);
 
         let scene: Phaser.Scenes.ScenePlugin = this.scene;
@@ -135,7 +130,7 @@ export class BootScene extends Phaser.Scene {
     private getStory(): any {
         let overallNarrativeObj = this.cache.json.get('overall_narrative');
 
-        let response = Framework.createStoryLine(playerType, overallNarrativeObj, STORYVIEWER_DEBUGGING);
+        let response = Framework.createStoryLine(this.playerType, overallNarrativeObj, STORYVIEWER_DEBUGGING);
         if (response['error'] !== undefined) {
             throw response;
         }
@@ -305,6 +300,18 @@ export class BootScene extends Phaser.Scene {
         });
     }
 
+    private isPlayerTypeValid(playerType: any): boolean {
+        let response = Framework.validateNarrativeFile("player-profile", playerType);
+        if (response !== 'valid') {
+            if (DEBUG) {
+                this.writeErrorToConsole("error in provided player profile" + JSON.stringify(response));
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private areMainStoryFilesValid(): Promise<boolean> {
         let mainStoryFilesValidations: Promise<Object>[] = [
             this.validateFile("actors", "actors", "actors"),
@@ -331,6 +338,7 @@ export class BootScene extends Phaser.Scene {
         let debugViewButton: HTMLInputElement = document.getElementById("storyViewLink") as HTMLInputElement;
 
         let request: XMLHttpRequest = new XMLHttpRequest();
+        let playerType = this.playerType;
 
         return new Promise<Object>(function (resolve, reject) {
             request.open("POST", STORYVIEWER_URL + "/debug");
@@ -342,6 +350,7 @@ export class BootScene extends Phaser.Scene {
                 graph: graph,
                 id: storyId
             };
+
             request.send(JSON.stringify(body));
 
             request.onreadystatechange = function () {
@@ -358,9 +367,19 @@ export class BootScene extends Phaser.Scene {
         })
     }
 
-    private writeErrorToConsole(error: string) {
-        console.log(error);
-        let errorText: HTMLElement = document.getElementById("error");
+    private writeErrorToConsole(error: string, type?: string) {
+
+        let errorText: HTMLElement;
+        if(type == "graph") {
+            errorText = document.getElementById("graph-error");
+            console.log(error);
+        } else if(type == "connection") {
+            errorText = document.getElementById("connection-error");
+        } else {
+            errorText = document.getElementById("general-error");
+            console.log(error);
+        }
+        
         errorText.style.display = "block";
     }
 }
