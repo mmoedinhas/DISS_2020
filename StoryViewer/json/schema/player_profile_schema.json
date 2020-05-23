@@ -4,16 +4,7 @@
     "type": "object",
     "title": "Player Profile",
     "description": "The affective profile of a player",
-    "required": [
-        "anger",
-        "disgust",
-        "fear",
-        "anxiety",
-        "sadness",
-        "desire",
-        "relaxation",
-        "happiness"
-    ],
+    "additionalProperties": false,
     "properties": {
         "anger": {
             "$id": "#/properties/anger",
