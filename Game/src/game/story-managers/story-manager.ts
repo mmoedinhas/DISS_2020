@@ -3,7 +3,6 @@ import { CutsceneManager } from './cutscene-manager';
 import { EventManager } from './event-manager';
 import { GameplayManager } from './gameplay-manager';
 import { GameScene } from '../game-scene';
-import { boolean } from '../../utils/filtrex';
 
 export enum EventType {
     CUTSCENE,
@@ -77,6 +76,7 @@ export class StoryManager {
         let scene: IScene = this.getSceneAt(this.currSceneIndex);
 
         if (scene.events.length <= this.currEventIndex) {
+            this.done = true;
             return;
         }
 
@@ -122,6 +122,10 @@ export class StoryManager {
 
     public getCurrentEventType(): EventType {
         return this.currEventType;
+    }
+
+    public isDone(): boolean {
+        return this.done;
     }
 
     public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {

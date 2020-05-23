@@ -37,11 +37,17 @@
     <p id="error">There are errors in the graph. Open console for details.</p>
     <a id="linkToStoryViewer" style="display: none" target="_blank"></a>
     <div id="content"></div>
+    <div id="eventSender" style="display: none;"></div>
 
     <script src="vendors.app.bundle.js"></script>
     <script src="app.bundle.js"></script>
     <script>
-        Game.newGame();
+        let eventSender = document.getElementById('eventSender');
+
+        eventSender.addEventListener('endGame', function() {
+            alert("Game ended");
+        })
+        Game.newGame(eventSender);
     </script>
 </body>
 

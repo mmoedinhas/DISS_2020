@@ -23,6 +23,9 @@ export class GameScene extends Phaser.Scene {
 
     private storyManager: StoryManager;
     private vignette: Vignette;
+    private doneDomElem: HTMLElement;
+    private endEvent: Event;
+    private sentEvent: boolean = false;
 
     constructor() {
         super(config);
@@ -32,6 +35,9 @@ export class GameScene extends Phaser.Scene {
 
         let story: IStory = this.registry.get('story');
         let playerType: IPlayerType = this.registry.get('playerType');
+        
+        this.doneDomElem = this.registry.get('doneDomElem');
+        this.endEvent = new Event('endGame');
 
         if (STORYVIEWER_DEBUGGING) {
             let storyId: string = this.registry.get('storyId');
@@ -60,6 +66,16 @@ export class GameScene extends Phaser.Scene {
     }
 
     public update(time: number, delta: number) {
+
+        if(this.storyManager.isDone()) {
+
+            if(!this.sentEvent && this.doneDomElem) {
+                this.sentEvent = true;
+                console.log("dispatching end event");
+                this.doneDomElem.dispatchEvent(this.endEvent);
+            }
+            return;
+        }
 
         let keysPressed: Phaser.Input.Keyboard.Key[] = this.parseUserInput();
         this.storyManager.act(time, delta, keysPressed);

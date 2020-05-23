@@ -57,7 +57,10 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
     }
 }
 
-export function newGame(parent?: string) {
+export function newGame(doneDomElem?: HTMLElement, parent?: string) {
+
     gameConfig.scale.parent = parent ? parent : gameConfig.scale.parent;
-    new Phaser.Game(gameConfig);
+    let game: Phaser.Game = new Phaser.Game(gameConfig);
+
+    game.registry.set("doneDomElem", doneDomElem);
 }
