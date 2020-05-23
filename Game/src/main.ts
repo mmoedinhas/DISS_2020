@@ -8,17 +8,6 @@ import { BootScene } from './game/boot-scene';
 declare const DEBUG: boolean;
 const physicsDebug: boolean = false;
 
-const playerType = {
-    anger: 4,
-    disgust: 4,
-    fear: 5,
-    anxiety: 10,
-    sadness: 8,
-    desire: 14,
-    relaxation: 6,
-    happiness: 10
-}
-
 const gameConfig: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     scale: {
@@ -68,13 +57,12 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     }
 }
 
-export function newGame(options: {doneDomElem?: HTMLElement, parent?: string, playerProfile?: Object} = {}) {
-
-    if(!options.playerProfile) options.playerProfile = playerType;
+export function newGame(options: {doneDomElem?: HTMLElement, parent?: string, playerProfile?: Object} = {playerProfile: {}}) {
 
     gameConfig.scale.parent = options.parent ? options.parent : gameConfig.scale.parent;
     let game: Phaser.Game = new Phaser.Game(gameConfig);
+    let playerProfile = options.playerProfile ? options.playerProfile : {};
 
     game.registry.set("doneDomElem", options.doneDomElem);
-    game.registry.set("playerType", options.playerProfile);
+    game.registry.set("playerType", playerProfile);
 }
