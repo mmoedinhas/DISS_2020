@@ -71,7 +71,6 @@ export class GameScene extends Phaser.Scene {
 
             if(!this.sentEvent && this.doneDomElem) {
                 this.sentEvent = true;
-                console.log("dispatching end event");
                 this.doneDomElem.dispatchEvent(this.endEvent);
             }
             return;

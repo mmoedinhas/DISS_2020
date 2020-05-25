@@ -39,17 +39,19 @@
     <p class="error" id="general-error">Something happened. Open console for details.</p>
     <a id="linkToStoryViewer" style="display: none" target="_blank"></a>
     <div id="content"></div>
-    <div id="eventSender" style="display: none;"></div>
 
     <script src="vendors.app.bundle.js"></script>
     <script src="app.bundle.js"></script>
     <script>
-        let eventSender = document.getElementById('eventSender');
+        let eventSender = document.getElementById('content');
 
         eventSender.addEventListener('endGame', function() {
             alert("Game ended");
         })
-        Game.newGame(eventSender);
+        Game.newGame({
+            doneDomElem: eventSender,
+            parent: "content"
+        });
     </script>
 </body>
 

@@ -23,8 +23,7 @@ var widget = {
 
         el.addEventListener('endGame', function() {
             console.log("ended game");
-            // TODO put game logs here
-            // question.value = "hello";
+            question.value = Game.getLogs();
             survey.currentPage.navigationButtonsVisibility = "show";
         });
 

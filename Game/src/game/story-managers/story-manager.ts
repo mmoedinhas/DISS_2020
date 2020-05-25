@@ -81,16 +81,13 @@ export class StoryManager {
 
         let scene: IScene = this.getSceneAt(this.currSceneIndex);
 
-        if (scene.events.length <= this.currEventIndex) {
-            this.done = true;
-            return;
-        }
-
         this.previousPlayerPos = this.currEventManager.getPlayerPosition();
 
         this.currEventIndex++;
 
         if (scene.events.length <= this.currEventIndex) {
+            this.done = true;
+            Logging.endGame(this.scene);
             return;
         }
 
