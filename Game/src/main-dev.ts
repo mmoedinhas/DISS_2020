@@ -70,12 +70,27 @@ debugButton.onclick = function () {
     linkToStoryViewer.click();
 }
 
+let game: Phaser.Game;
+
 export function newGame(options: {doneDomElem?: HTMLElement, parent?: string, playerProfile?: Object} = {playerProfile: {}}) {
 
     gameConfig.scale.parent = options.parent ? options.parent : gameConfig.scale.parent;
-    let game: Phaser.Game = new Phaser.Game(gameConfig);
+    game = new Phaser.Game(gameConfig);
     let playerProfile = options.playerProfile ? options.playerProfile : {};
 
     game.registry.set("doneDomElem", options.doneDomElem);
     game.registry.set("playerType", playerProfile);
+}
+
+export function getLogs(): string[] {
+    
+    if(game) {
+        let logs: string[] = game.registry.get("logs");
+        if(!logs) {
+            return [];
+        }
+        return logs;
+    }
+
+    return [];
 }
