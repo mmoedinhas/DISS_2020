@@ -22,16 +22,6 @@ var surveyJSON = {
             "readOnly": true,
             "navigationButtonsVisibility": "show"
         },
-        {
-            "name": "play_session_1",
-            "elements": [{
-                "type": "game",
-                "name": "play_session_1_logs",
-                "title": "Play session 1"
-            }],
-            "readOnly": true,
-            "navigationButtonsVisibility": "hide"
-        },
         // {
         //     "name": "personal_information",
         //     "elements": [{
@@ -321,7 +311,17 @@ var surveyJSON = {
         //         ]
         //     }],
         //     "title": "This module will ask you questions about your affective profile as of now"
-        // }
+        // },
+        {
+            "name": "play_session_1",
+            "elements": [{
+                "type": "game",
+                "name": "play_session_1_logs",
+                "title": "Play session 1"
+            }],
+            "readOnly": true,
+            "navigationButtonsVisibility": "hide"
+        }
     ],
     "showPrevButton": false,
     "showQuestionNumbers": "off",
