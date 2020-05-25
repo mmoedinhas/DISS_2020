@@ -5,14 +5,6 @@ function sendDataToServer(survey) {
 
 var survey = new Survey.Model(surveyJSON);
 
-var nextBtnDisableHandler = function(survey) {
-    if (survey.currentPage.name.includes("play_session")) {
-        survey.currentPage.navigationButtonsVisibility = "hide";
-    }
-};
-
-survey.onAfterRenderPage.add(nextBtnDisableHandler);
-
 $("#surveyContainer").Survey({
     model: survey,
     onComplete: sendDataToServer

@@ -1,3 +1,15 @@
+// game session template
+// {
+//     "name": "play_session_1",
+//     "elements": [{
+//         "type": "game",
+//         "name": "play_session_1_logs",
+//         "title": "Play session 1"
+//     }],
+//     "readOnly": true,
+//     "navigationButtonsVisibility": "hide"
+// },
+
 var surveyJSON = {
     "title": "Affective Narratives for Engagement in Digital Games",
     "pages": [{
@@ -14,11 +26,11 @@ var surveyJSON = {
             "name": "play_session_1",
             "elements": [{
                 "type": "game",
-                "name": "game",
+                "name": "play_session_1_logs",
                 "title": "Play session 1"
             }],
             "readOnly": true,
-            "navigationButtonsVisibility": "show"
+            "navigationButtonsVisibility": "hide"
         },
         // {
         //     "name": "personal_information",
