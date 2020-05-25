@@ -3,6 +3,7 @@ import { CutsceneManager } from './cutscene-manager';
 import { EventManager } from './event-manager';
 import { GameplayManager } from './gameplay-manager';
 import { GameScene } from '../game-scene';
+import * as Logging from '../../utils/logging';
 
 export enum EventType {
     CUTSCENE,
@@ -42,6 +43,9 @@ export class StoryManager {
 
         this.storyId = storyId ? storyId : "";
 
+        Logging.initLogging(this.scene);
+        Logging.startGame(this.scene);
+
         this.updateEventType();
     }
 
@@ -67,6 +71,8 @@ export class StoryManager {
         if (STORYVIEWER_DEBUGGING) {
             this.sendCurrEvent(this.getCurrEvent().name);
         }
+
+        Logging.startEvent(this.scene, this.getCurrEvent());
 
         return currEventManager;
     }
@@ -135,6 +141,7 @@ export class StoryManager {
         }
 
         if (this.currEventManager.isDone()) {
+            Logging.endEvent(this.scene, this.getCurrEvent());
             this.next();
         } else {
             this.currEventManager.act(time, delta, keysPressed);

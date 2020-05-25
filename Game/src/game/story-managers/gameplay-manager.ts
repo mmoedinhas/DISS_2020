@@ -7,6 +7,7 @@ import { IInteractable } from "../i-interactable";
 import { getAssetIdFromPath } from "../../utils/paths";
 import { IDialogueLine, ICoordinates, IFlagChange } from "../../utils/interfaces";
 import * as filter from "../../utils/filtrex";
+import * as Logging from "../../utils/logging";
 
 declare const DEBUG: boolean;
 
@@ -133,6 +134,8 @@ export class GameplayManager extends EventManager {
         if(DEBUG) {
             console.log(this.flags);
         }
+
+        Logging.flagChange(this.scene, this.flags);
     }
 
     private sortActorDepths() {
