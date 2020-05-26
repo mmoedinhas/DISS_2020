@@ -57,11 +57,11 @@ var surveyJSON = {
                     title: "Is English your mother language?",
                     isRequired: true,
                     choices: [{
-                            value: "yes",
+                            value: "english",
                             text: "Yes"
                         },
                         {
-                            value: "no",
+                            value: "not_english",
                             text: "No"
                         }
                     ]
