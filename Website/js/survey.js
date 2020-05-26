@@ -72,11 +72,11 @@ var surveyJSON = {
                     title: "Do you play video game regularly? (>= 6 hours a week)",
                     isRequired: true,
                     choices: [{
-                            value: "yes",
+                            value: "regularly",
                             text: "Yes"
                         },
                         {
-                            value: "no",
+                            value: "not_regularly",
                             text: "No"
                         }
                     ]
