@@ -61,7 +61,7 @@ var survey = new Survey.Model(surveyJSON);
 
 survey.onAfterRenderQuestion.add(function(survey, { question, htmlElement }) {
 
-    if (question.name == "deq") {
+    if (question.name == "deq" || question.name.includes("game_exp_core_module_") || question.name.includes("game_exp_post_game_module_")) {
         var header = htmlElement.getElementsByTagName("table")[0];
         htmlElement.classList.add("no-overflow")
         header.classList.add("sticky");
