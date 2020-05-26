@@ -318,7 +318,8 @@ var surveyJSON = {
             "elements": [{
                 "type": "game",
                 "name": "play_session_1_logs",
-                "title": "Play session 1"
+                "title": "Play session 1",
+                "defaultValue": true
             }],
             "readOnly": true,
             "navigationButtonsVisibility": "hide"

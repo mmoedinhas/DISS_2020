@@ -23,7 +23,9 @@ var widget = {
 
         let playerProfile = {};
 
-        if (survey.data.deq) {
+        console.log(question.defaultValue);
+
+        if (survey.data.deq && !question.defaultValue) {
             playerProfile = calculatePlayerData(survey.data.deq);
         }
 
