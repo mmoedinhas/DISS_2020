@@ -20,15 +20,12 @@ var widget = {
 
     afterRender: function(question, el) {
         // TODO get stuff from survey.data
-        console.log(survey.data);
 
         let playerProfile = {};
 
         if (survey.data.deq) {
-            //TODO calculate player data here
+            playerProfile = calculatePlayerData(survey.data.deq);
         }
-
-        survey.data.playerProfile = playerProfile;
 
         el.addEventListener('endGame', function() {
             console.log("ended game");
@@ -39,6 +36,7 @@ var widget = {
         Game.newGame({
             parent: "game",
             doneDomElem: el,
+            playerProfile: playerProfile
         });
     }
 }
