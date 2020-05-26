@@ -19,18 +19,14 @@ var widget = {
     htmlTemplate: '<div id="game"></div>',
 
     afterRender: function(question, el) {
-        // TODO get stuff from survey.data
 
         let playerProfile = {};
-
-        console.log(question.defaultValue);
 
         if (survey.data.deq && !question.defaultValue) {
             playerProfile = calculatePlayerData(survey.data.deq);
         }
 
         el.addEventListener('endGame', function() {
-            console.log("ended game");
             question.value = Game.getLogs();
             survey.currentPage.navigationButtonsVisibility = "show";
         });
