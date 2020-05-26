@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS player;
+
 CREATE TABLE player (
   p_id INTEGER PRIMARY KEY,
   p_default_first INTEGER NOT NULL,
@@ -7,6 +9,7 @@ CREATE TABLE player (
   p_favorite_genre TEXT NOT NULL,
   p_important_narrative INTEGER NOT NULL,
   p_deq TEXT NOT NULL,
+  p_affective_profile TEXT NOT NULL,
   p_logs_1 TEXT NOT NULL,
   p_logs_2 TEXT NOT NULL,
   p_game_exp_core_module_1 TEXT NOT NULL,

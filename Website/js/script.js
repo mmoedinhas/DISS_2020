@@ -53,8 +53,27 @@ function calculatePlayerData(deq) {
 }
 
 function sendDataToServer(survey) {
-    //send Ajax request to your web server.
-    console.log("The results are:" + JSON.stringify(survey.data) + "\n" + JSON.stringify({ playerProfile: calculatePlayerData(survey.data.deq) }));
+
+    let data = {...survey.data };
+    data.playerProfile = calculatePlayerData(survey.data.deq);
+
+    console.log("The results are:" + JSON.stringify(data));
+
+    $.ajax({
+
+        url: './action_add_player.php',
+        type: 'POST',
+        data: data,
+        contentType: json,
+
+        error: function(err) {
+            console.log(err);
+        },
+
+        success: function(result) {
+            console.log(result);
+        }
+    });
 }
 
 var survey = new Survey.Model(surveyJSON);
