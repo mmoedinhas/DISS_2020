@@ -71,6 +71,8 @@ export function newGame(options: {doneDomElem?: HTMLElement, parent?: string, pl
 }
 
 export function endGame() {
+    game.scene.getScene("Game").plugins.removeScenePlugin("rexUI");
+    //console.log("destroyed plugins");
     game.destroy(false);
 }
 
