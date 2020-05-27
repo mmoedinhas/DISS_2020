@@ -70,7 +70,7 @@ export class BootScene extends Phaser.Scene {
 
         this.playerType = this.registry.get("playerType");
 
-        if(!this.isPlayerTypeValid(this.playerType)) {
+        if (!this.isPlayerTypeValid(this.playerType)) {
             return;
         }
 
@@ -112,13 +112,13 @@ export class BootScene extends Phaser.Scene {
             if (DEBUG) {
                 console.log("load complete for " + this.load.totalComplete + " files");
             }
-            
+
             let validationResults: boolean[] = await Promise.all(this.fileValidations);
 
-            if(DEBUG) {
+            if (DEBUG) {
                 console.log(validationResults);
             }
-            
+
             if (!validationResults.includes(false)) {
                 scene.start('Game');
             }
@@ -157,7 +157,7 @@ export class BootScene extends Phaser.Scene {
 
     private loadCutsceneFiles(key: string, filename: string) {
 
-        if(this.loadedFiles.includes(key)) {
+        if (this.loadedFiles.includes(key)) {
             return;
         }
 
@@ -183,8 +183,8 @@ export class BootScene extends Phaser.Scene {
     }
 
     private loadGameplayFiles(key: string, filename: string) {
-        
-        if(this.loadedFiles.includes(key)) {
+
+        if (this.loadedFiles.includes(key)) {
             return;
         }
 
@@ -216,18 +216,20 @@ export class BootScene extends Phaser.Scene {
     }
 
     private loadMap(key: string, filename: string) {
-        
-        if(this.loadedFiles.includes(key)) {
+
+        if (this.loadedFiles.includes(key)) {
             return;
         }
 
         this.loadedFiles.push(key);
-        this.load.tilemapTiledJSON(key, paths.mapsPath + filename).on('filecomplete', function (givenKey) {
-            if (givenKey === key) {
+        this.load.tilemapTiledJSON(key, paths.mapsPath + filename);
+        this.load.json(key + "_json", paths.mapsPath + filename).on('filecomplete', function (givenKey) {
+            if (givenKey === key + "_json") {
 
-                let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({ key: key });
+                let map = this.cache.json.get(key + "_json");
+                console.log(map);
                 for (let tileset of map.tilesets) {
-                    let filename = paths.mapTilesPath + tileset.name + '.png';
+                    let filename = paths.mapTilesPath + paths.getFilenameFromPath(tileset.image);
 
                     this.load.image(tileset.name, filename);
                 }
@@ -240,7 +242,7 @@ export class BootScene extends Phaser.Scene {
         let actor = actorsObj.actors.find(actor => actor.id == actorId);
         let tilesetKey = actor.tilesetId;
 
-        if(this.loadedFiles.includes(tilesetKey)) {
+        if (this.loadedFiles.includes(tilesetKey)) {
             return;
         }
 
@@ -256,21 +258,21 @@ export class BootScene extends Phaser.Scene {
             }
         }
 
-        this.load.spritesheet(tilesetKey, paths.tilesetPath + tileset.filename, { frameWidth: tileset.frameWidth, frameHeight: tileset.frameHeight });       
+        this.load.spritesheet(tilesetKey, paths.tilesetPath + tileset.filename, { frameWidth: tileset.frameWidth, frameHeight: tileset.frameHeight });
     }
 
     private loadDialogue(filename: string) {
         let key: string = getAssetIdFromPath(filename);
-        
-        if(this.loadedFiles.includes(key)) {
+
+        if (this.loadedFiles.includes(key)) {
             return;
         }
 
         this.loadedFiles.push(key);
-        
+
         this.load.json(key, paths.dialoguePath + filename).on('filecomplete', async function (givenKey) {
-            if(givenKey === key) {
-                
+            if (givenKey === key) {
+
                 let validFile = this.validateFile(key, "dialogue", key);
                 this.fileValidations.push(validFile);
                 if (!await validFile) {
@@ -370,16 +372,16 @@ export class BootScene extends Phaser.Scene {
     private writeErrorToConsole(error: string, type?: string) {
 
         let errorText: HTMLElement;
-        if(type == "graph") {
+        if (type == "graph") {
             errorText = document.getElementById("graph-error");
             console.log(error);
-        } else if(type == "connection") {
+        } else if (type == "connection") {
             errorText = document.getElementById("connection-error");
         } else {
             errorText = document.getElementById("general-error");
             console.log(error);
         }
-        
+
         errorText.style.display = "block";
     }
 }
