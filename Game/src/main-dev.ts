@@ -82,6 +82,10 @@ export function newGame(options: {doneDomElem?: HTMLElement, parent?: string, pl
     game.registry.set("playerType", playerProfile);
 }
 
+export function endGame() {
+    game.destroy(false);
+}
+
 export function getLogs(): string[] {
     
     if(game) {
