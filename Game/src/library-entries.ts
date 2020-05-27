@@ -68,12 +68,10 @@ export function newGame(options: {doneDomElem?: HTMLElement, parent?: string, pl
 
     game.registry.set("doneDomElem", options.doneDomElem);
     game.registry.set("playerType", playerProfile);
-    game.input.enabled = true;
 }
 
 export function endGame() {
-    //game.destroy(false);
-    game.input.enabled = false;
+    game.destroy(false);
 }
 
 export function getLogs(): string[] {
