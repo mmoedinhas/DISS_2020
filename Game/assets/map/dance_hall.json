@@ -226,7 +226,7 @@
         {
          "columns":8,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/sprites\/By Author\/Lanea Zimmerman\/castle.png",
+         "image":"..\/mapTiles\/castle.png",
          "imageheight":608,
          "imagewidth":256,
          "margin":0,
@@ -249,7 +249,7 @@
         {
          "columns":8,
          "firstgid":153,
-         "image":"..\/..\/..\/..\/sprites\/By Author\/Lanea Zimmerman\/stairs.png",
+         "image":"..\/mapTiles\/stairs.png",
          "imageheight":352,
          "imagewidth":256,
          "margin":0,
