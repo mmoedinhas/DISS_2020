@@ -29,6 +29,7 @@ var widget = {
         el.addEventListener('endGame', function() {
             question.value = Game.getLogs();
             survey.currentPage.navigationButtonsVisibility = "show";
+            Game.endGame();
         });
 
         Game.newGame({
