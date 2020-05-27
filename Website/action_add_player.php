@@ -1,11 +1,21 @@
 <?php
-  include_once('database/db_diss2020.php');
 
-  $rcp_id = $_POST['rcp_id'];
-  $ing_name = $_POST['ing_name'];
-  $ing_quantity = $_POST['ing_quantity'];
+if ($_SERVER['REQUEST_METHOD'] != 'POST' && realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME'])) {
+  /* 
+     Up to you which header to send, some prefer 404 even if 
+     the files does exist for security
+  */
+  header('HTTP/1.0 403 Forbidden', TRUE, 404);
 
-  addIngredient($rcp_id, $ing_name, $ing_quantity);
+  /* choose the appropriate page to redirect users */
+  die(header('location: ./index.php'));
+}
 
-  header('Location: view_recipe.php?rcp_id=' . $rcp_id);
-?>
+include_once('database/db_diss2020.php');
+
+if (($return = addPlayer($_POST)) != 'success') {
+  echo json_encode(['code' => 500, 'msg' => $return]);
+  exit();
+}
+
+echo json_encode(['code' => 200]);

@@ -57,21 +57,31 @@ function sendDataToServer(survey) {
     let data = {...survey.data };
     data.playerProfile = calculatePlayerData(survey.data.deq);
 
-    console.log("The results are:" + JSON.stringify(data));
+    //console.log("The results are:" + JSON.stringify(data));
+
+    data.deq = JSON.stringify(data.deq);
+    data.playerProfile = JSON.stringify(data.playerProfile);
+    data.play_session_1_logs = JSON.stringify(data.play_session_1_logs);
+    data.play_session_2_logs = JSON.stringify(data.play_session_2_logs);
+    data.game_exp_core_module_1 = JSON.stringify(data.game_exp_core_module_1);
+    data.game_exp_core_module_2 = JSON.stringify(data.game_exp_core_module_2);
+    data.game_exp_post_game_module_1 = JSON.stringify(data.game_exp_post_game_module_1);
+    data.game_exp_post_game_module_2 = JSON.stringify(data.game_exp_post_game_module_2);
 
     $.ajax({
 
         url: './action_add_player.php',
         type: 'POST',
         data: data,
-        contentType: json,
+        dataType: 'json',
 
         error: function(err) {
-            console.log(err);
+            //console.log(err);
         },
 
         success: function(result) {
-            console.log(result);
+
+            //console.log(result);
         }
     });
 }
