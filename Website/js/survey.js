@@ -53,7 +53,7 @@ var surveyJSON = {
                 {
                     type: "radiogroup",
                     name: "language",
-                    title: "Is English your mother language?",
+                    title: "Is English your native language?",
                     isRequired: true,
                     choices: [{
                             value: "english",
