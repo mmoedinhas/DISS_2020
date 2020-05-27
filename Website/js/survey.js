@@ -83,7 +83,7 @@ var surveyJSON = {
                 {
                     type: "radiogroup",
                     name: "favorite_games",
-                    visibleIf: "{play_games} = 'yes'",
+                    visibleIf: "{play_games} = 'regularly'",
                     title: "What is your favorite game genre?",
                     isRequired: true,
                     hasOther: true,
@@ -133,7 +133,7 @@ var surveyJSON = {
                 {
                     type: "rating",
                     name: "important_narrative",
-                    visibleIf: "{play_games} = 'yes'",
+                    visibleIf: "{play_games} = 'regularly'",
                     title: "How important is the narrative in a game to you?",
                     isRequired: true,
                     minRateDescription: "Not important at all",
