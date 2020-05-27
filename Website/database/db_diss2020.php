@@ -1,4 +1,16 @@
 <?php
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME'])) {
+    /* 
+       Up to you which header to send, some prefer 404 even if 
+       the files does exist for security
+    */
+    header('HTTP/1.0 403 Forbidden', TRUE, 404);
+
+    /* choose the appropriate page to redirect users */
+    die(header('location: ../index.php'));
+}
+
 include_once('database/connection.php');
 
 function addPlayer($post)
@@ -19,10 +31,10 @@ function addPlayer($post)
             $post['version_reflected_most'], $post['open_answer_version_reflected_most'] ?? null,
             $post['games_like_this_in_the_future'], $post['open_answer_games_like_this_in_the_future'] ?? null
         ));
-        
+
         return 'success';
     } catch (PDOException $e) {
-        return'Error adding player: ' . $e->getMessage();
+        return 'Error adding player: ' . $e->getMessage();
     }
 
     //   p_age TEXT NOT NULL,
