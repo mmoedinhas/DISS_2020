@@ -29,6 +29,24 @@
             font-size: 0.8em;
             display: none;
         }
+        
+        body {
+            display: flex;
+            flex-flow: column;
+        }
+        
+        #storyViewLink,
+        #graph-error,
+        #connection-error,
+        #general-error {
+            flex: 0 1 auto;
+            align-self: flex-start;
+        }
+        
+        #game {
+            flex: 1 1 auto;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
@@ -38,7 +56,10 @@
     <p class="error" id="connection-error">Couldn't establish connection with Story Viewer.</p>
     <p class="error" id="general-error">Something happened. Open console for details.</p>
     <a id="linkToStoryViewer" style="display: none" target="_blank"></a>
-    <div id="content"></div>
+    <div id="game">
+        <div id="content"></div>
+    </div>
+
 
     <script src="vendors.app.bundle.js"></script>
     <script src="app.bundle.js"></script>
