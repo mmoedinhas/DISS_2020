@@ -227,7 +227,6 @@ export class BootScene extends Phaser.Scene {
             if (givenKey === key + "_json") {
 
                 let map = this.cache.json.get(key + "_json");
-                console.log(map);
                 for (let tileset of map.tilesets) {
                     let filename = paths.mapTilesPath + paths.getFilenameFromPath(tileset.image);
 
