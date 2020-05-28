@@ -18,8 +18,16 @@ var surveyJSON = {
         {
           type: 'html',
           name: 'introduction',
-          html:
-            '<p>Hello! My name is Matilde and I\'m  a college student, trying to obtain my master\'s degree in Informatics and Computer Engineering at Faculty of Engineering of Porto\'s University (FEUP). I would like to request your help for my dissertation project "Affective Narratives for Engagement in Digital Games". It consists on researching and creating a framework that helps build game narratives that take into account the player\'s feelings and emotions (in other words, "affective profile"). It\'s main objective is to help the creation of video game experiences that are more personal to the user and hopefully more enjoyable.</p><p>I apologize in advance to mobile users as <span style="font-weight:bold">this experience is only available on PC.</span></p><p>You will start by answering two small questionnaires, which will acquire some personal details and your affective profile. Then, you will have two short play sessions of the game I developed, each followed by some questions about the game. In the end, there\'s a final questionnaire with some questions about the experience as a whole.</p><p>The whole experience should not take more than 30 mins. The questionnaires are completely anonymous and all the data gathered here will be exclusively used for academic purposes. </p><p>I really appreciate your help. Thank you!</p> ',
+          html: `<p>My dissertation project "Affective Narratives for Engagement in Digital Games" consists on researching and creating a framework that helps build game narratives that take into account the player\'s affective profile, in other words, the player's feelings and emotions. Its main objective is to help the creation of video game experiences that are more personal to the user and hopefully more enjoyable. I would like to request your help to test this framework, by answering this questionnaire.</p>
+            <p>I apologize in advance to mobile users as <span style="font-weight:bold">this experience is only available on PC.</span></p>
+            <p>This questionnaire should not take more than 30 mins. It is divided in 3 steps: </p>
+            <ul>
+            <li> The first step consists in gathering some general information, such as age and gaming habits and your affective profile. </li>
+            <li> The second step consists in playing two versions of a small game, one whose narrative is tailored to your affective profile and another with a default narrative, in a random order. After each play session, your experience will be collected through a questionnaire. </li>
+            <li> The third step consists in answering some brief questions about the experience as a whole.
+            </ul>
+            <p>This questionnaire is completely anonymous and all the gathered data will be exclusively used for academic purposes. If any questions or problems arise please contact me via email at <b>up201504208@fe.up.pt</b>.</p>
+            <p>Thank you for your help!</p>`,
         },
       ],
       readOnly: true,
@@ -159,7 +167,7 @@ var surveyJSON = {
           name: 'deq',
           title: 'Discrete Emotions Questionnaire',
           description:
-            'As of now, to what extent did you experience/are experiencing these emotions?',
+            'As of now, to what extent did you experience/are experiencing these emotions? Please answer as honestly as possible.',
           isRequired: true,
           columns: [
             {
@@ -324,8 +332,8 @@ var surveyJSON = {
           isAllRowRequired: true,
         },
       ],
-      title:
-        'The following questions aim at calculating your affective profile. Please answer as honestly as possible.',
+      title: 'The following module aims at calculating your affective profile.',
+      description: 'A description of this module',
     },
     {
       name: 'play_session_1',
@@ -929,7 +937,9 @@ var surveyJSON = {
         'This final module will ask some questions about the general experience.',
     },
   ],
-  showPrevButton: false,
+  showPrevButton: true,
   showQuestionNumbers: 'off',
   requiredText: '(required)',
+  firstPageIsStarted: true,
+  showProgressBar: 'top',
 };

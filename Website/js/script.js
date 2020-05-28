@@ -142,6 +142,18 @@ function startSurvey(isDefaultFirst) {
 
   survey = new Survey.Model(surveyJSON);
 
+  survey.onCurrentPageChanged.add(function (
+    survey,
+    { oldCurrentPage, newCurrentPage, isNextPage, isPrevPage }
+  ) {
+    console.log(survey.showPrevButton);
+    if (newCurrentPage.name == 'deq_page') {
+      survey.showPrevButton = true;
+    } else {
+      survey.showPrevButton = false;
+    }
+  });
+
   survey.onAfterRenderQuestion.add(function (
     survey,
     { question, htmlElement }
