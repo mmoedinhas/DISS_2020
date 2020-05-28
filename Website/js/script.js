@@ -1,107 +1,167 @@
 function calculatePlayerData(deq) {
-    const deqValues = {
-        "anger": "anger",
-        "wanting": "desire",
-        "dread": "anxiety",
-        "sad": "sadness",
-        "easygoing": "relaxation",
-        "grossed_out": "disgust",
-        "happy": "happiness",
-        "terror": "fear",
-        "rage": "anger",
-        "grief": "sadness",
-        "nausea": "disgust",
-        "anxiety": "anxiety",
-        "chilled_out": "relaxation",
-        "desire": "desire",
-        "nervous": "anxiety",
-        "lonely": "sadness",
-        "scared": "fear",
-        "mad": "anger",
-        "satisfaction": "happiness",
-        "sickened": "disgust",
-        "empty": "sadness",
-        "craving": "desire",
-        "panic": "fear",
-        "longing": "desire",
-        "calm": "relaxation",
-        "fear": "fear",
-        "relaxation": "relaxation",
-        "revulsion": "disgust",
-        "worry": "anxiety",
-        "enjoyment": "happiness",
-        "pissed_of": "anger",
-        "liking": "happiness"
-    }
+  const deqValues = {
+    anger: 'anger',
+    wanting: 'desire',
+    dread: 'anxiety',
+    sad: 'sadness',
+    easygoing: 'relaxation',
+    grossed_out: 'disgust',
+    happy: 'happiness',
+    terror: 'fear',
+    rage: 'anger',
+    grief: 'sadness',
+    nausea: 'disgust',
+    anxiety: 'anxiety',
+    chilled_out: 'relaxation',
+    desire: 'desire',
+    nervous: 'anxiety',
+    lonely: 'sadness',
+    scared: 'fear',
+    mad: 'anger',
+    satisfaction: 'happiness',
+    sickened: 'disgust',
+    empty: 'sadness',
+    craving: 'desire',
+    panic: 'fear',
+    longing: 'desire',
+    calm: 'relaxation',
+    fear: 'fear',
+    relaxation: 'relaxation',
+    revulsion: 'disgust',
+    worry: 'anxiety',
+    enjoyment: 'happiness',
+    pissed_of: 'anger',
+    liking: 'happiness',
+  };
 
-    const playerProfile = {
-        "anger": 0,
-        "disgust": 0,
-        "fear": 0,
-        "anxiety": 0,
-        "sadness": 0,
-        "desire": 0,
-        "relaxation": 0,
-        "happiness": 0
-    }
+  const playerProfile = {
+    anger: 0,
+    disgust: 0,
+    fear: 0,
+    anxiety: 0,
+    sadness: 0,
+    desire: 0,
+    relaxation: 0,
+    happiness: 0,
+  };
 
-    for (const key of Object.keys(deq)) {
-        playerProfile[deqValues[key]] += parseInt(deq[key]);
-    }
+  for (const key of Object.keys(deq)) {
+    playerProfile[deqValues[key]] += parseInt(deq[key]);
+  }
 
-    return playerProfile;
+  return playerProfile;
 }
 
 function sendDataToServer(survey) {
+  let data = { ...survey.data };
+  data.playerProfile = calculatePlayerData(survey.data.deq);
 
-    let data = {...survey.data };
-    data.playerProfile = calculatePlayerData(survey.data.deq);
+  data.defaultFirst = surveyJSON.pages
+    .find((page) => page.name === 'play_session_1')
+    .elements.find((element) => element.type === 'game').defaultValue;
 
-    //console.log("The results are:" + JSON.stringify(data));
+  // console.log('The results are:' + JSON.stringify(data));
 
-    data.deq = JSON.stringify(data.deq);
-    data.playerProfile = JSON.stringify(data.playerProfile);
-    data.play_session_1_logs = JSON.stringify(data.play_session_1_logs);
-    data.play_session_2_logs = JSON.stringify(data.play_session_2_logs);
-    data.game_exp_core_module_1 = JSON.stringify(data.game_exp_core_module_1);
-    data.game_exp_core_module_2 = JSON.stringify(data.game_exp_core_module_2);
-    data.game_exp_post_game_module_1 = JSON.stringify(data.game_exp_post_game_module_1);
-    data.game_exp_post_game_module_2 = JSON.stringify(data.game_exp_post_game_module_2);
+  data.deq = JSON.stringify(data.deq);
+  data.playerProfile = JSON.stringify(data.playerProfile);
+  data.play_session_1_logs = JSON.stringify(data.play_session_1_logs);
+  data.play_session_2_logs = JSON.stringify(data.play_session_2_logs);
+  data.game_exp_core_module_1 = JSON.stringify(data.game_exp_core_module_1);
+  data.game_exp_core_module_2 = JSON.stringify(data.game_exp_core_module_2);
+  data.game_exp_post_game_module_1 = JSON.stringify(
+    data.game_exp_post_game_module_1
+  );
+  data.game_exp_post_game_module_2 = JSON.stringify(
+    data.game_exp_post_game_module_2
+  );
 
-    $.ajax({
+  $.ajax({
+    url: './action_add_player.php',
+    type: 'POST',
+    data: data,
+    dataType: 'json',
 
-        url: './action_add_player.php',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
+    error: function (err) {
+      //console.log(err);
+    },
 
-        error: function(err) {
-            //console.log(err);
-        },
-
-        success: function(result) {
-
-            //console.log(result);
-        }
-    });
+    success: function (result) {
+      //console.log(result);
+    },
+  });
 }
 
-var survey = new Survey.Model(surveyJSON);
+var survey;
 
-survey.onAfterRenderQuestion.add(function(survey, { question, htmlElement }) {
+$.ajax({
+  url: './action_get_last_player.php',
+  type: 'GET',
 
-    if (question.name == "deq" || question.name.includes("game_exp_core_module_") || question.name.includes("game_exp_post_game_module_")) {
-        var header = htmlElement.getElementsByTagName("table")[0];
-        htmlElement.classList.add("no-overflow")
-        header.classList.add("sticky");
-        survey.questionErrorLocation = "top";
-    } else {
-        survey.questionErrorLocation = "bottom";
+  error: function (err) {
+    // console.log(err);
+    startSurvey(true);
+  },
+
+  success: function (result) {
+    // console.log(result);
+    if (result) {
+      try {
+        result = JSON.parse(result);
+      } catch (e) {
+        // console.log(e);
+        startSurvey(true);
+        return;
+      }
     }
 
-})
-
-$("#surveyContainer").Survey({
-    model: survey,
-    onComplete: sendDataToServer
+    if (result.code == 200) {
+      startSurvey(result.isDefault);
+    } else {
+      startSurvey(true);
+    }
+  },
 });
+
+function startSurvey(isDefaultFirst) {
+  let game1 = surveyJSON.pages
+    .find((page) => page.name === 'play_session_1')
+    .elements.find((element) => element.type === 'game');
+  let game2 = surveyJSON.pages
+    .find((page) => page.name === 'play_session_2')
+    .elements.find((element) => element.type === 'game');
+
+  if (isDefaultFirst) {
+    // console.log('is default first');
+    game1.defaultValue = true;
+    game2.defaultValue = false;
+  } else {
+    // console.log('is not default first');
+    game1.defaultValue = false;
+    game2.defaultValue = true;
+  }
+
+  survey = new Survey.Model(surveyJSON);
+
+  survey.onAfterRenderQuestion.add(function (
+    survey,
+    { question, htmlElement }
+  ) {
+    if (
+      question.name == 'deq' ||
+      question.name.includes('game_exp_core_module_') ||
+      question.name.includes('game_exp_post_game_module_')
+    ) {
+      var header = htmlElement.getElementsByTagName('table')[0];
+      htmlElement.classList.add('no-overflow');
+      header.classList.add('sticky');
+      survey.questionErrorLocation = 'top';
+    } else {
+      survey.questionErrorLocation = 'bottom';
+    }
+  });
+
+  $('#surveyContainer').Survey({
+    model: survey,
+    onComplete: sendDataToServer,
+  });
+}
