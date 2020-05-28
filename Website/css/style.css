@@ -27,6 +27,14 @@
   background-color: #e7e7e7;
 }
 
+.sticky {
+  width: auto !important;
+}
+
+.sticky td {
+  text-align: center;
+}
+
 .no-overflow {
   overflow: visible !important;
 }
