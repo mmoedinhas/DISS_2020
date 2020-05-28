@@ -49,7 +49,7 @@ export class DialogueBox {
             color: "#e8c840",
             stroke: this.stroke,
             strokeThickness: this.strokeThickness,
-        }).setOrigin(0.5, 1).setResolution(20);
+        }).setOrigin(0.5, 1);
 
         this.nameBox.depth = 9999;
 
@@ -120,8 +120,7 @@ export class DialogueBox {
                 mode: 'word',
                 width: wrapWidth
             },
-            maxLines: 2,
-            resolution: 20
+            maxLines: 2
         });
 
         txt.depth = 9999;

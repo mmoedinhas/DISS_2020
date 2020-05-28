@@ -85,7 +85,7 @@ export class ActionBox {
             strokeThickness: this.strokeThickness,
             stroke: this.stroke,
             maxLines: 1
-        }).setResolution(20);
+        });
 
         txt.depth = 9999;
 
