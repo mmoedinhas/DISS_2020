@@ -15,6 +15,6 @@ export function getAssetIdFromPath(path: string): string {
 
 export function getFilenameFromPath(path: string): string {
     let slashIndex = (path.lastIndexOf('/') === -1) ? 0 : path.lastIndexOf('/');
-    let filename: string = path.slice(slashIndex + 1);
+    let filename: string = path.slice(slashIndex);
     return filename;
 }
