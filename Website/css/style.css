@@ -1,50 +1,76 @@
+#game {
+  display: flex;
+  justify-content: center;
+}
+
 #game canvas {
-    border-style: outset;
+  border-style: outset;
+  width: 80%;
 }
 
 .sticky thead th,
 .sticky thead td {
-    position: sticky;
-    top: 0;
-    background-color: #f4f4f4;
-    z-index: 1;
+  position: sticky;
+  top: 0;
+  background-color: #f4f4f4;
+  z-index: 1;
 }
 
 .sticky thead th::after,
 .sticky thead td::after {
-    content: "";
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background-color: #e7e7e7;
+  content: '';
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #e7e7e7;
 }
 
 .no-overflow {
-    overflow: visible !important;
+  overflow: visible !important;
 }
 
 .game-controls {
-    width: auto !important;
+  width: auto !important;
 }
 
 .game-controls th,
 .game-controls td {
-    border-bottom: 1px solid #e7e7e7;
-    padding-top: 15px;
-    padding-bottom: 15px;
+  border-bottom: 1px solid #e7e7e7;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .game-controls th {
-    text-align: left;
+  text-align: left;
 }
 
-.game-controls tr>td:first-child {
-    padding-right: 15px;
-    text-align: center;
+.game-controls tr > td:first-child {
+  padding-right: 15px;
+  text-align: center;
 }
 
 .game-controls p {
-    margin: 0;
+  margin: 0;
 }
+
+/* #surveyContainer.game,
+#surveyContainer.game .sv_main,
+#surveyContainer.game form {
+  height: 100%;
+}
+
+#surveyContainer.game .sv_container {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+#surveyContainer.game .sv_header {
+  flex: 0 1 auto;
+}
+
+#surveyContainer.game .sv_body {
+  flex: 1 1 auto;
+} */

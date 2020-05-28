@@ -146,6 +146,9 @@ function startSurvey(isDefaultFirst) {
     survey,
     { question, htmlElement }
   ) {
+    let surveyContainer = document.getElementById('surveyContainer');
+    surveyContainer.classList.remove('game');
+
     if (
       question.name == 'deq' ||
       question.name.includes('game_exp_core_module_') ||
@@ -157,6 +160,12 @@ function startSurvey(isDefaultFirst) {
       survey.questionErrorLocation = 'top';
     } else {
       survey.questionErrorLocation = 'bottom';
+    }
+
+    if (question.name.includes('_logs')) {
+      let surveyContainer = document.getElementById('surveyContainer');
+      surveyContainer.classList.add('game');
+      htmlElement.classList.add('game');
     }
   });
 
