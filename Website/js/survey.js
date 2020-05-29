@@ -166,8 +166,8 @@ var surveyJSON = {
           type: 'matrix',
           name: 'deq',
           title: 'Discrete Emotions Questionnaire',
-          description:
-            'As of now, to what extent did you experience/are experiencing these emotions? Please answer as honestly as possible.',
+          description: `Take some time to think how you've been feeling the past week up until now and which emotions you experienced. 
+            Then, with that in mind, read each word and rate them according to how strongly you felt or are still feeling that emotion. Please answer as honestly as possible.`,
           isRequired: true,
           columns: [
             {
@@ -332,8 +332,8 @@ var surveyJSON = {
           isAllRowRequired: true,
         },
       ],
-      title: 'The following module aims at calculating your affective profile.',
-      description: 'A description of this module',
+      title:
+        'The answers given in this module will be used to calculate your affective profile.',
     },
     {
       name: 'play_session_1',

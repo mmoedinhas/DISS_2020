@@ -91,6 +91,16 @@ function sendDataToServer(survey) {
   });
 }
 
+function setupPageSelector(survey) {
+  var selector = document.getElementById('pageSelector');
+  for (var i = 0; i < survey.visiblePages.length; i++) {
+    var option = document.createElement('option');
+    option.value = i;
+    option.text = 'Page ' + (i + 1);
+    selector.add(option);
+  }
+}
+
 var survey;
 
 $.ajax({
@@ -185,4 +195,6 @@ function startSurvey(isDefaultFirst) {
     model: survey,
     onComplete: sendDataToServer,
   });
+
+  setupPageSelector(survey);
 }
