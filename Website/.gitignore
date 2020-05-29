@@ -1,3 +1,4 @@
 */*.db
 .vscode
 */*.db-journal
+.htaccess
