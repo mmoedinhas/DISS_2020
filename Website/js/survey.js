@@ -790,6 +790,12 @@ var surveyJSON = {
           name: 'open_answer_games_like_this_in_the_future',
           title: 'Why?',
         },
+        {
+          type: 'comment',
+          name: 'suggestions',
+          title:
+            'If you have any suggestions or opinions regarding the questionnaires, the game or the experience as a whole, please write them here.',
+        },
       ],
       title:
         'This final module will ask some questions about the general experience.',

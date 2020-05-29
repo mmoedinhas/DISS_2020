@@ -7,7 +7,7 @@ function addPlayer($post)
     global $dbh;
 
     try {
-        $stmt = $dbh->prepare('INSERT INTO player VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt = $dbh->prepare('INSERT INTO player VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $stmt->execute(array(
             $post['defaultFirst'] ?? null,
             $post['age'] ?? null, $post['language'] ?? null, $post['play_games'] ?? null,
@@ -19,7 +19,8 @@ function addPlayer($post)
             $post['main_character_opinion_1'] ?? null, $post['main_character_opinion_2'] ?? null,
             $post['version_liked_most'] ?? null, $post['open_answer_version_liked_most'] ?? null,
             $post['version_reflected_most'] ?? null, $post['open_answer_version_reflected_most'] ?? null,
-            $post['games_like_this_in_the_future'] ?? null, $post['open_answer_games_like_this_in_the_future'] ?? null
+            $post['games_like_this_in_the_future'] ?? null, $post['open_answer_games_like_this_in_the_future'] ?? null,
+            $post['suggestions'] ?? null
         ));
 
         return 'success';

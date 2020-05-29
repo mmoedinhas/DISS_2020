@@ -25,5 +25,6 @@ CREATE TABLE player (
   p_version_reflected_most TEXT NOT NULL,
   p_open_answer_version_reflected_most TEXT,
   p_games_like_this_in_the_future TEXT NOT NULL,
-  p_open_answer_games_like_this_in_the_future TEXT
+  p_open_answer_games_like_this_in_the_future TEXT,
+  p_suggestions TEXT
 );
