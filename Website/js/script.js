@@ -180,9 +180,9 @@ function startSurvey(isDefaultFirst) {
     }
 
     if (question.name.includes('_logs')) {
-      let surveyContainer = document.getElementById('surveyContainer');
-      surveyContainer.classList.add('game');
       htmlElement.classList.add('game');
+      let panel = document.getElementsByClassName('sv_p_container')[0];
+      panel.classList.add('game');
     }
   });
 
