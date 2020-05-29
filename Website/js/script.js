@@ -128,6 +128,10 @@ function startSurvey(isDefaultFirst) {
     } else {
       survey.showPrevButton = false;
     }
+
+    if (oldCurrentPage.name.includes('play_session_')) {
+      Game.endGame();
+    }
   });
 
   survey.onAfterRenderQuestion.add(function (
