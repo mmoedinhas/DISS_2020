@@ -716,6 +716,10 @@ var surveyJSON = {
               value: '2',
               text: '2nd version',
             },
+            {
+              value: 'none',
+              text: "I didn't like any of the versions",
+            },
           ],
         },
         {
@@ -727,7 +731,7 @@ var surveyJSON = {
           type: 'radiogroup',
           name: 'version_reflected_most',
           title:
-            'Which version of the game did you think reflected you the most?',
+            'Which version of the game did you think reflected you or your emotions the most?',
           isRequired: true,
           choices: [
             {
@@ -737,6 +741,10 @@ var surveyJSON = {
             {
               value: '2',
               text: '2nd version',
+            },
+            {
+              value: 'none',
+              text: 'None of the versions reflected me or my emotions',
             },
           ],
         },

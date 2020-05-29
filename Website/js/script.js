@@ -45,8 +45,10 @@ function calculatePlayerData(deq) {
     happiness: 0,
   };
 
-  for (const key of Object.keys(deq)) {
-    playerProfile[deqValues[key]] += parseInt(deq[key]);
+  if (deq) {
+    for (const key of Object.keys(deq)) {
+      playerProfile[deqValues[key]] += parseInt(deq[key]);
+    }
   }
 
   return playerProfile;
