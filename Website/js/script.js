@@ -62,7 +62,7 @@ function sendDataToServer(survey) {
     .find((page) => page.name === 'play_session_1')
     .elements.find((element) => element.type === 'game').defaultValue;
 
-  // console.log('The results are:' + JSON.stringify(data));
+  //console.log('The results are:' + JSON.stringify(data));
 
   data.deq = JSON.stringify(data.deq);
   data.playerProfile = JSON.stringify(data.playerProfile);
@@ -104,12 +104,12 @@ $.ajax({
   type: 'GET',
 
   error: function (err) {
-    // console.log(err);
+    //console.log(err);
     startSurvey(true);
   },
 
   success: function (result) {
-    // console.log(result);
+    //console.log(result);
     if (result) {
       try {
         result = JSON.parse(result);
