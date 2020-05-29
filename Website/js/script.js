@@ -1,3 +1,5 @@
+const DEBUG = true;
+
 function calculatePlayerData(deq) {
   const deqValues = {
     anger: 'anger',
@@ -97,37 +99,6 @@ function setupPageSelector(survey) {
   }
 }
 
-var survey;
-
-$.ajax({
-  url: './action_get_last_player.php',
-  type: 'GET',
-
-  error: function (err) {
-    //console.log(err);
-    startSurvey(true);
-  },
-
-  success: function (result) {
-    //console.log(result);
-    if (result) {
-      try {
-        result = JSON.parse(result);
-      } catch (e) {
-        // console.log(e);
-        startSurvey(true);
-        return;
-      }
-    }
-
-    if (result.code == 200) {
-      startSurvey(result.isDefault);
-    } else {
-      startSurvey(true);
-    }
-  },
-});
-
 function startSurvey(isDefaultFirst) {
   let game1 = surveyJSON.pages
     .find((page) => page.name === 'play_session_1')
@@ -191,5 +162,45 @@ function startSurvey(isDefaultFirst) {
     onComplete: sendDataToServer,
   });
 
-  setupPageSelector(survey);
+  if (DEBUG) {
+    setupPageSelector(survey);
+  }
 }
+
+var survey;
+
+if (DEBUG) {
+  let debugDiv = document.getElementById('debug');
+  debugDiv.style.display = 'block';
+  debugDiv.innerHTML = `<p>Go to page directly without validation:</p>
+  <select id="pageSelector" onchange="survey.currentPageNo = this.value"></select>`;
+}
+
+$.ajax({
+  url: './action_get_last_player.php',
+  type: 'GET',
+
+  error: function (err) {
+    //console.log(err);
+    startSurvey(true);
+  },
+
+  success: function (result) {
+    //console.log(result);
+    if (result) {
+      try {
+        result = JSON.parse(result);
+      } catch (e) {
+        // console.log(e);
+        startSurvey(true);
+        return;
+      }
+    }
+
+    if (result.code == 200) {
+      startSurvey(result.isDefault);
+    } else {
+      startSurvey(true);
+    }
+  },
+});

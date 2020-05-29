@@ -17,8 +17,9 @@
     </head>
 
     <body>
-        <p>Go to page directly without validation:</p>
-        <select id="pageSelector" onchange="survey.currentPageNo = this.value"></select>
+        <div id="debug" style="display: none;">
+        </div>
+
         <div id="surveyContainer"></div>
 
         <script type="text/javascript" src="./game/1.app.bundle.js"></script>
