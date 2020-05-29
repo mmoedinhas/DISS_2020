@@ -25,7 +25,7 @@ function addPlayer($post)
             $post['favorite_games'] ?? null, $post['important_narrative'] ?? null, $post['deq'],
             $post['playerProfile'], $post['play_session_1_logs'], $post['play_session_2_logs'],
             $post['game_exp_core_module_1'], $post['game_exp_core_module_2'],
-            $post['game_exp_post_game_module_1'], $post['game_exp_post_game_module_2'],
+            $post['post_game_opinion_1'], $post['post_game_opinion_2'],
             $post['open_answer_game_exp_1'] ?? null, $post['open_answer_game_exp_2'] ?? null,
             $post['main_character_opinion_1'] ?? null, $post['main_character_opinion_2'] ?? null,
             $post['version_liked_most'], $post['open_answer_version_liked_most'] ?? null,

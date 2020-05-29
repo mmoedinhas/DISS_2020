@@ -68,12 +68,6 @@ function sendDataToServer(survey) {
   data.play_session_2_logs = JSON.stringify(data.play_session_2_logs);
   data.game_exp_core_module_1 = JSON.stringify(data.game_exp_core_module_1);
   data.game_exp_core_module_2 = JSON.stringify(data.game_exp_core_module_2);
-  data.game_exp_post_game_module_1 = JSON.stringify(
-    data.game_exp_post_game_module_1
-  );
-  data.game_exp_post_game_module_2 = JSON.stringify(
-    data.game_exp_post_game_module_2
-  );
 
   $.ajax({
     url: './action_add_player.php',
@@ -156,7 +150,6 @@ function startSurvey(isDefaultFirst) {
     survey,
     { oldCurrentPage, newCurrentPage, isNextPage, isPrevPage }
   ) {
-    console.log(survey.showPrevButton);
     if (newCurrentPage.name == 'deq_page') {
       survey.showPrevButton = true;
     } else {

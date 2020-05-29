@@ -369,7 +369,7 @@ var surveyJSON = {
         },
       ],
       title: 'In this module you will play one version of the game.',
-      navigationButtonsVisibility: 'show',
+      navigationButtonsVisibility: 'hide',
     },
     {
       name: 'game_exp_1',
@@ -499,92 +499,9 @@ var surveyJSON = {
           isAllRowRequired: true,
         },
         {
-          type: 'matrix',
-          name: 'game_exp_post_game_module_1',
-          title:
-            'Please indicate how you felt AFTER you finished playing the game for each of these items',
-          isRequired: true,
-          columns: [
-            {
-              value: '0',
-              text: 'Not at all',
-            },
-            {
-              value: '1',
-              text: 'Slightly',
-            },
-            {
-              value: '2',
-              text: 'Moderately',
-            },
-            {
-              value: '3',
-              text: 'Fairly  ',
-            },
-            {
-              value: '4',
-              text: 'Extremely',
-            },
-          ],
-          rows: [
-            {
-              value: '1',
-              text: 'I felt revived',
-            },
-            {
-              value: '2',
-              text: 'I felt bad',
-            },
-            {
-              value: '4',
-              text: 'I felt guilty',
-            },
-            {
-              value: '5',
-              text: 'It felt like a victory',
-            },
-            {
-              value: '6',
-              text: 'I found it a waste of time',
-            },
-            {
-              value: '7',
-              text: 'I felt energised',
-            },
-            {
-              value: '8',
-              text: 'I felt satisfied',
-            },
-            {
-              value: '10',
-              text: 'I felt exhausted',
-            },
-            {
-              value: '11',
-              text: 'I felt that I could have done more useful things',
-            },
-            {
-              value: '12',
-              text: 'I felt powerful',
-            },
-            {
-              value: '13',
-              text: 'I felt weary',
-            },
-            {
-              value: '14',
-              text: 'I felt regret',
-            },
-            {
-              value: '15',
-              text: 'I felt ashamed',
-            },
-            {
-              value: '16',
-              text: 'I felt proud',
-            },
-          ],
-          isAllRowRequired: true,
+          type: 'comment',
+          name: 'post_game_opinion_1',
+          title: 'In your own words, how did you feel AFTER playing the game?',
         },
         {
           type: 'comment',
@@ -764,92 +681,9 @@ var surveyJSON = {
           isAllRowRequired: true,
         },
         {
-          type: 'matrix',
-          name: 'game_exp_post_game_module_2',
-          title:
-            'Please indicate how you felt AFTER you finished playing the game for each of these items',
-          isRequired: true,
-          columns: [
-            {
-              value: '0',
-              text: 'Not at all',
-            },
-            {
-              value: '1',
-              text: 'Slightly',
-            },
-            {
-              value: '2',
-              text: 'Moderately',
-            },
-            {
-              value: '3',
-              text: 'Fairly  ',
-            },
-            {
-              value: '4',
-              text: 'Extremely',
-            },
-          ],
-          rows: [
-            {
-              value: '1',
-              text: 'I felt revived',
-            },
-            {
-              value: '2',
-              text: 'I felt bad',
-            },
-            {
-              value: '4',
-              text: 'I felt guilty',
-            },
-            {
-              value: '5',
-              text: 'It felt like a victory',
-            },
-            {
-              value: '6',
-              text: 'I found it a waste of time',
-            },
-            {
-              value: '7',
-              text: 'I felt energised',
-            },
-            {
-              value: '8',
-              text: 'I felt satisfied',
-            },
-            {
-              value: '10',
-              text: 'I felt exhausted',
-            },
-            {
-              value: '11',
-              text: 'I felt that I could have done more useful things',
-            },
-            {
-              value: '12',
-              text: 'I felt powerful',
-            },
-            {
-              value: '13',
-              text: 'I felt weary',
-            },
-            {
-              value: '14',
-              text: 'I felt regret',
-            },
-            {
-              value: '15',
-              text: 'I felt ashamed',
-            },
-            {
-              value: '16',
-              text: 'I felt proud',
-            },
-          ],
-          isAllRowRequired: true,
+          type: 'comment',
+          name: 'post_game_opinion_2',
+          title: 'In your own words, how did you feel AFTER playing the game?',
         },
         {
           type: 'comment',
