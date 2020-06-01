@@ -142,7 +142,19 @@ export class IntroScene extends Phaser.Scene {
 				this.textBox.stop(true);
 			} else {
 				if (this.textBox.isLastPage) {
-					this.scene.start('Game');
+					this.cameras.main.fade(
+						500,
+						0,
+						0,
+						0,
+						false,
+						function (camera, progress) {
+							if (progress >= 1) {
+								this.scene.start('Game');
+							}
+						},
+						this
+					);
 				} else {
 					this.textBox.typeNextPage();
 				}

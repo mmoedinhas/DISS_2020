@@ -60,6 +60,8 @@ export class EndScene extends Phaser.Scene {
 				fontSize: '25px',
 			}
 		);
+
+		this.cameras.main.fadeFrom(500);
 	}
 
 	private createLabel(x: number, y: number, text: string, config?: any): Label {
