@@ -1,10 +1,7 @@
 import * as Phaser from 'phaser';
 import { StoryManager } from './story-managers/story-manager';
-import { IScene, IEvent, IStory, IPlayerType } from '../utils/interfaces';
-import { isWebGLRenderer } from '../utils/type-predicates';
-import { Vignette } from './shaders/pipeline.js';
+import { IScene, IStory, IPlayerType } from '../utils/interfaces';
 import { Actor } from './actor';
-import { BootScene } from './boot-scene';
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
 	key: 'Game',
@@ -23,10 +20,6 @@ export class GameScene extends Phaser.Scene {
 	private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
 
 	private storyManager: StoryManager;
-	private vignette: Vignette;
-	private doneDomElem: HTMLElement;
-	private endEvent: Event;
-	private sentEvent: boolean = false;
 
 	constructor() {
 		super(config);
@@ -35,9 +28,6 @@ export class GameScene extends Phaser.Scene {
 	public init() {
 		let story: IStory = this.registry.get('story');
 		let playerType: IPlayerType = this.registry.get('playerType');
-
-		this.doneDomElem = this.registry.get('doneDomElem');
-		this.endEvent = new Event('endGame');
 
 		if (STORYVIEWER_DEBUGGING) {
 			let storyId: string = this.registry.get('storyId');
@@ -57,11 +47,6 @@ export class GameScene extends Phaser.Scene {
 
 		this.storyManager.start();
 
-		// if(isWebGLRenderer(this.game.renderer)) {
-		//     this.vignette = this.game.renderer.addPipeline('Vignette', new Vignette(this.game));
-		//     this.applyPipeline();
-		// }
-
 		this.cameras.main.setBounds(
 			0,
 			0,
@@ -73,10 +58,7 @@ export class GameScene extends Phaser.Scene {
 
 	public update(time: number, delta: number) {
 		if (this.storyManager.isDone()) {
-			if (!this.sentEvent && this.doneDomElem) {
-				this.sentEvent = true;
-				this.doneDomElem.dispatchEvent(this.endEvent);
-			}
+			this.scene.start('End');
 			return;
 		}
 
@@ -157,25 +139,5 @@ export class GameScene extends Phaser.Scene {
 		}
 
 		return map;
-	}
-
-	private applyPipeline() {
-		this.vignette.setFloat2(
-			'resolution',
-			this.game.config.width,
-			this.game.config.height
-		);
-		this.vignette.setFloat1('r', 0.3);
-		this.vignette.setFloat1('b', 0.6);
-		this.vignette.setFloat1('tx', 0.5);
-		this.vignette.setFloat1('ty', 0.5);
-		this.vignette.setFloat1('bright', 1.0);
-		this.vignette.setFloat1('red', 1.0);
-		this.vignette.setFloat1('green', 1.0);
-		this.vignette.setFloat1('blue', 1.0);
-		this.vignette.setFloat1('bgred', 1.0);
-		this.vignette.setFloat1('bggreen', 1.0);
-		this.vignette.setFloat1('bgblue', 1.0);
-		this.cameras.main.setRenderToTexture(this.vignette);
 	}
 }

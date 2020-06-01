@@ -1,6 +1,5 @@
 import * as Phaser from 'phaser';
 import { Label } from 'phaser3-rex-plugins/templates/ui/ui-components.js';
-import BBCodeText from 'phaser3-rex-plugins/plugins/bbcodetext.js';
 import { ActionBox } from './ui/action-box';
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
