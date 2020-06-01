@@ -28,17 +28,27 @@ export class IntroScene extends Phaser.Scene {
 		);
 
 		this.text =
-			'You are Clara, the daughter of a wealthy family. Today is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests. How is Clara going to handle this responsibility?';
+			'You are Clara, the daughter of a wealthy family.\nToday is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests.\n\nHow is Clara going to handle this responsibility?';
 		this.text = this.text =
 			`[stroke=` + this.stroke + `]` + this.text + `[/stroke]`;
 	}
 
 	public create() {
+		let background = this.add
+			.image(
+				this.cameras.main.centerX,
+				this.cameras.main.centerY,
+				'dialogue_box_big'
+			)
+			.setOrigin(0.5, 0.5);
+
 		this.textBox = this.createTextBox(
-			this.cameras.main.centerX - 290,
+			this.cameras.main.centerX,
 			this.cameras.main.centerY,
 			{
 				wrapWidth: 500,
+				fixedWidth: 500,
+				fixedHeight: 300,
 			}
 		).start(this.text, 50);
 	}
@@ -59,15 +69,15 @@ export class IntroScene extends Phaser.Scene {
 			action: this.getArrow(),
 
 			space: {
-				left: 20,
+				left: 40,
 				right: 20,
-				top: 20,
+				top: 60,
 				bottom: 20,
 				icon: 10,
 				text: 60,
 			},
 		})
-			.setOrigin(0, 0.5)
+			.setOrigin(0.5, 0.5)
 			.layout();
 
 		textBox.on(
