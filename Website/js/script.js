@@ -1,3 +1,5 @@
+const DEBUG = true;
+
 function calculatePlayerData(deq) {
   const deqValues = {
     anger: 'anger',
@@ -45,8 +47,10 @@ function calculatePlayerData(deq) {
     happiness: 0,
   };
 
-  for (const key of Object.keys(deq)) {
-    playerProfile[deqValues[key]] += parseInt(deq[key]);
+  if (deq) {
+    for (const key of Object.keys(deq)) {
+      playerProfile[deqValues[key]] += parseInt(deq[key]);
+    }
   }
 
   return playerProfile;
@@ -60,7 +64,7 @@ function sendDataToServer(survey) {
     .find((page) => page.name === 'play_session_1')
     .elements.find((element) => element.type === 'game').defaultValue;
 
-  // console.log('The results are:' + JSON.stringify(data));
+  //console.log('The results are:' + JSON.stringify(data));
 
   data.deq = JSON.stringify(data.deq);
   data.playerProfile = JSON.stringify(data.playerProfile);
@@ -68,12 +72,6 @@ function sendDataToServer(survey) {
   data.play_session_2_logs = JSON.stringify(data.play_session_2_logs);
   data.game_exp_core_module_1 = JSON.stringify(data.game_exp_core_module_1);
   data.game_exp_core_module_2 = JSON.stringify(data.game_exp_core_module_2);
-  data.game_exp_post_game_module_1 = JSON.stringify(
-    data.game_exp_post_game_module_1
-  );
-  data.game_exp_post_game_module_2 = JSON.stringify(
-    data.game_exp_post_game_module_2
-  );
 
   $.ajax({
     url: './action_add_player.php',
@@ -91,36 +89,15 @@ function sendDataToServer(survey) {
   });
 }
 
-var survey;
-
-$.ajax({
-  url: './action_get_last_player.php',
-  type: 'GET',
-
-  error: function (err) {
-    // console.log(err);
-    startSurvey(true);
-  },
-
-  success: function (result) {
-    // console.log(result);
-    if (result) {
-      try {
-        result = JSON.parse(result);
-      } catch (e) {
-        // console.log(e);
-        startSurvey(true);
-        return;
-      }
-    }
-
-    if (result.code == 200) {
-      startSurvey(result.isDefault);
-    } else {
-      startSurvey(true);
-    }
-  },
-});
+function setupPageSelector(survey) {
+  var selector = document.getElementById('pageSelector');
+  for (var i = 0; i < survey.visiblePages.length; i++) {
+    var option = document.createElement('option');
+    option.value = i;
+    option.text = 'Page ' + (i + 1);
+    selector.add(option);
+  }
+}
 
 function startSurvey(isDefaultFirst) {
   let game1 = surveyJSON.pages
@@ -141,6 +118,21 @@ function startSurvey(isDefaultFirst) {
   }
 
   survey = new Survey.Model(surveyJSON);
+
+  survey.onCurrentPageChanged.add(function (
+    survey,
+    { oldCurrentPage, newCurrentPage, isNextPage, isPrevPage }
+  ) {
+    if (newCurrentPage.name == 'deq_page') {
+      survey.showPrevButton = true;
+    } else {
+      survey.showPrevButton = false;
+    }
+
+    if (oldCurrentPage.name.includes('play_session_')) {
+      Game.endGame();
+    }
+  });
 
   survey.onAfterRenderQuestion.add(function (
     survey,
@@ -163,9 +155,9 @@ function startSurvey(isDefaultFirst) {
     }
 
     if (question.name.includes('_logs')) {
-      let surveyContainer = document.getElementById('surveyContainer');
-      surveyContainer.classList.add('game');
       htmlElement.classList.add('game');
+      let panel = document.getElementsByClassName('sv_p_container')[0];
+      panel.classList.add('game');
     }
   });
 
@@ -173,4 +165,46 @@ function startSurvey(isDefaultFirst) {
     model: survey,
     onComplete: sendDataToServer,
   });
+
+  if (DEBUG) {
+    setupPageSelector(survey);
+  }
 }
+
+var survey;
+
+if (DEBUG) {
+  let debugDiv = document.getElementById('debug');
+  debugDiv.style.display = 'block';
+  debugDiv.innerHTML = `<p>Go to page directly without validation:</p>
+  <select id="pageSelector" onchange="survey.currentPageNo = this.value"></select>`;
+}
+
+$.ajax({
+  url: './action_get_last_player.php',
+  type: 'GET',
+
+  error: function (err) {
+    //console.log(err);
+    startSurvey(true);
+  },
+
+  success: function (result) {
+    //console.log(result);
+    if (result) {
+      try {
+        result = JSON.parse(result);
+      } catch (e) {
+        // console.log(e);
+        startSurvey(true);
+        return;
+      }
+    }
+
+    if (result.code == 200) {
+      startSurvey(result.isDefault);
+    } else {
+      startSurvey(true);
+    }
+  },
+});

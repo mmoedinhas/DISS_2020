@@ -8,6 +8,26 @@
   width: 80%;
 }
 
+.sv_qstn.game {
+  background-color: white !important;
+}
+
+.sv_p_container.game > h4 {
+  color: white;
+  background-color: #1ab394;
+  margin-top: 0 !important;
+  padding-top: 1.5em !important;
+}
+
+.sv_p_container.game > h4:hover {
+  color: white;
+  background-color: #179d82;
+}
+
+.sv_p_container.game > div {
+  background-color: #f4f4f4 !important;
+}
+
 .sticky thead th,
 .sticky thead td {
   position: sticky;
@@ -25,6 +45,14 @@
   bottom: 0;
   left: 0;
   background-color: #e7e7e7;
+}
+
+.sticky {
+  width: auto !important;
+}
+
+.sticky td {
+  text-align: center;
 }
 
 .no-overflow {
@@ -54,23 +82,3 @@
 .game-controls p {
   margin: 0;
 }
-
-/* #surveyContainer.game,
-#surveyContainer.game .sv_main,
-#surveyContainer.game form {
-  height: 100%;
-}
-
-#surveyContainer.game .sv_container {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-}
-
-#surveyContainer.game .sv_header {
-  flex: 0 1 auto;
-}
-
-#surveyContainer.game .sv_body {
-  flex: 1 1 auto;
-} */

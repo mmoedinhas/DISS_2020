@@ -17,6 +17,9 @@
     </head>
 
     <body>
+        <div id="debug" style="display: none;">
+        </div>
+
         <div id="surveyContainer"></div>
 
         <script type="text/javascript" src="./game/1.app.bundle.js"></script>

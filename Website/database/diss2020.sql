@@ -14,16 +14,17 @@ CREATE TABLE player (
   p_logs_2 TEXT NOT NULL,
   p_game_exp_core_module_1 TEXT NOT NULL,
   p_game_exp_core_module_2 TEXT NOT NULL,
-  p_game_exp_post_game_module_1 TEXT NOT NULL,
-  p_game_exp_post_game_module_2 TEXT NOT NULL,
+  p_post_game_opinion_1 TEXT,
+  p_post_game_opinion_2 TEXT,
   p_open_answer_game_exp_1 TEXT,
   p_open_answer_game_exp_2 TEXT,
   p_main_character_opinion_1 TEXT,
   p_main_character_opinion_2 TEXT,
-  p_version_liked_most INTEGER NOT NULL,
+  p_version_liked_most TEXT NOT NULL,
   p_open_answer_version_liked_most TEXT,
-  p_version_reflected_most INTEGER NOT NULL,
+  p_version_reflected_most TEXT NOT NULL,
   p_open_answer_version_reflected_most TEXT,
-  p_games_like_this_in_the_future INTEGER NOT NULL,
-  p_open_answer_games_like_this_in_the_future TEXT
+  p_games_like_this_in_the_future TEXT NOT NULL,
+  p_open_answer_games_like_this_in_the_future TEXT,
+  p_suggestions TEXT
 );
