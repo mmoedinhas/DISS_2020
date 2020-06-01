@@ -17,24 +17,24 @@
             padding: 0 !important;
             overflow: hidden !important;
         }
-        
+
         #content {
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
+
         .error {
             color: red;
             font-size: 0.8em;
             display: none;
         }
-        
+
         body {
             display: flex;
             flex-flow: column;
         }
-        
+
         #storyViewLink,
         #graph-error,
         #connection-error,
@@ -42,7 +42,7 @@
             flex: 0 1 auto;
             align-self: flex-start;
         }
-        
+
         #game {
             flex: 1 1 auto;
             margin-bottom: 20px;
@@ -65,10 +65,6 @@
     <script src="app.bundle.js"></script>
     <script>
         let eventSender = document.getElementById('content');
-
-        eventSender.addEventListener('endGame', function() {
-            alert("Game ended");
-        })
         Game.newGame({
             doneDomElem: eventSender,
             parent: "content"

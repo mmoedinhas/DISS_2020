@@ -19,6 +19,8 @@ export class GameScene extends Phaser.Scene {
 	private map: Phaser.Tilemaps.Tilemap;
 	private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
 
+	private isGameEnded: boolean = false;
+
 	private storyManager: StoryManager;
 
 	constructor() {
@@ -54,11 +56,29 @@ export class GameScene extends Phaser.Scene {
 			this.map.heightInPixels
 		);
 		this.cameras.main.roundPixels = true;
+
+		this.cameras.main.fadeFrom(500);
 	}
 
 	public update(time: number, delta: number) {
+		if (this.isGameEnded) {
+			return;
+		}
 		if (this.storyManager.isDone()) {
-			this.scene.start('End');
+			this.isGameEnded = true;
+			this.cameras.main.fade(
+				500,
+				0,
+				0,
+				0,
+				false,
+				function (camera, progress) {
+					if (progress >= 1) {
+						this.scene.start('End');
+					}
+				},
+				this
+			);
 			return;
 		}
 
