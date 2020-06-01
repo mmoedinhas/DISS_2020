@@ -5,6 +5,7 @@ import { GameScene } from './game/game-scene';
 import { BootScene } from './game/boot-scene';
 import { DialogueScene } from './game/dialogue-scene';
 import { IntroScene } from './game/intro-scene';
+import { TutorialScene } from './game/tutorial-scene';
 
 declare const DEBUG: boolean;
 
@@ -35,7 +36,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
 			debug: DEBUG && physicsDebug,
 		},
 	},
-	scene: [BootScene, GameScene, DialogueScene, IntroScene],
+	scene: [BootScene, GameScene, DialogueScene, IntroScene, TutorialScene],
 	plugins: {
 		scene: [
 			{

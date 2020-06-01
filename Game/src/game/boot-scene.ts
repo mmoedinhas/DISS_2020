@@ -19,6 +19,7 @@ const actorsFile: string = paths.storyPath + 'actors.json';
 const tilesetsFile: string = paths.tilesetPath + 'tilesets.json';
 
 const dialogueBox: string = paths.uiPath + 'text-box.png';
+const bigDialogueBox: string = paths.uiPath + 'text-box-big.png';
 const dialogueArrow: string = paths.uiPath + 'dialogue-arrow.png';
 const zKey: string = paths.uiPath + 'ZKey.png';
 const loading: string = paths.uiPath + 'loading.png';
@@ -130,7 +131,7 @@ export class BootScene extends Phaser.Scene {
 			}
 
 			if (!validationResults.includes(false)) {
-				this.scene.start('Introduction');
+				this.scene.start('Tutorial');
 			}
 		});
 	}
@@ -145,6 +146,7 @@ export class BootScene extends Phaser.Scene {
 		this.load.image('dialogue_box', dialogueBox);
 		this.load.image('dialogue_arrow', dialogueArrow);
 		this.load.spritesheet('zkey', zKey, { frameWidth: 16, frameHeight: 15 });
+		this.load.image('dialogue_box_big', bigDialogueBox);
 
 		(this.load as any).rexWebFont({
 			custom: {
