@@ -64,7 +64,9 @@ function sendDataToServer(survey) {
     .find((page) => page.name === 'play_session_1')
     .elements.find((element) => element.type === 'game').defaultValue;
 
-  //console.log('The results are:' + JSON.stringify(data));
+  if (DEBUG) {
+    console.log('The results are:' + JSON.stringify(data));
+  }
 
   data.deq = JSON.stringify(data.deq);
   data.playerProfile = JSON.stringify(data.playerProfile);
@@ -80,11 +82,15 @@ function sendDataToServer(survey) {
     dataType: 'json',
 
     error: function (err) {
-      //console.log(err);
+      if (DEBUG) {
+        console.log(err);
+      }
     },
 
     success: function (result) {
-      //console.log(result);
+      if (DEBUG) {
+        console.log(result);
+      }
     },
   });
 }
@@ -108,11 +114,15 @@ function startSurvey(isDefaultFirst) {
     .elements.find((element) => element.type === 'game');
 
   if (isDefaultFirst) {
-    // console.log('is default first');
+    if (DEBUG) {
+      console.log('is default first');
+    }
     game1.defaultValue = true;
     game2.defaultValue = false;
   } else {
-    // console.log('is not default first');
+    if (DEBUG) {
+      console.log('is not default first');
+    }
     game1.defaultValue = false;
     game2.defaultValue = true;
   }
@@ -185,17 +195,26 @@ $.ajax({
   type: 'GET',
 
   error: function (err) {
-    //console.log(err);
+    if (DEBUG) {
+      console.log(err);
+    }
+
     startSurvey(true);
   },
 
   success: function (result) {
-    //console.log(result);
+    if (DEBUG) {
+      console.log(result);
+    }
+
     if (result) {
       try {
         result = JSON.parse(result);
       } catch (e) {
-        // console.log(e);
+        if (DEBUG) {
+          console.log(e);
+        }
+
         startSurvey(true);
         return;
       }
