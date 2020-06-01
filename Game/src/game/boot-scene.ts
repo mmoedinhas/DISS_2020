@@ -130,7 +130,7 @@ export class BootScene extends Phaser.Scene {
 			}
 
 			if (!validationResults.includes(false)) {
-				this.scene.start('Game');
+				this.scene.start('Introduction');
 			}
 		});
 	}

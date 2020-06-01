@@ -4,166 +4,178 @@ import { IScene, IEvent, IStory, IPlayerType } from '../utils/interfaces';
 import { isWebGLRenderer } from '../utils/type-predicates';
 import { Vignette } from './shaders/pipeline.js';
 import { Actor } from './actor';
+import { BootScene } from './boot-scene';
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
-    key: 'Game',
+	key: 'Game',
 };
 
 declare const STORYVIEWER_DEBUGGING: boolean;
 
 export class GameScene extends Phaser.Scene {
+	public static MAX_DEPTH = 128;
+	public static MIN_DEPTH = 0;
 
-    public static MAX_DEPTH = 128;
-    public static MIN_DEPTH = 0;
-    public static cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-    public static interactKey: Phaser.Input.Keyboard.Key;
+	public static cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+	public static interactKey: Phaser.Input.Keyboard.Key;
 
-    private map: Phaser.Tilemaps.Tilemap;
-    private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
+	private map: Phaser.Tilemaps.Tilemap;
+	private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
 
-    private storyManager: StoryManager;
-    private vignette: Vignette;
-    private doneDomElem: HTMLElement;
-    private endEvent: Event;
-    private sentEvent: boolean = false;
+	private storyManager: StoryManager;
+	private vignette: Vignette;
+	private doneDomElem: HTMLElement;
+	private endEvent: Event;
+	private sentEvent: boolean = false;
 
-    constructor() {
-        super(config);
-    }
+	constructor() {
+		super(config);
+	}
 
-    public init() {
+	public init() {
+		let story: IStory = this.registry.get('story');
+		let playerType: IPlayerType = this.registry.get('playerType');
 
-        let story: IStory = this.registry.get('story');
-        let playerType: IPlayerType = this.registry.get('playerType');
-        
-        this.doneDomElem = this.registry.get('doneDomElem');
-        this.endEvent = new Event('endGame');
+		this.doneDomElem = this.registry.get('doneDomElem');
+		this.endEvent = new Event('endGame');
 
-        if (STORYVIEWER_DEBUGGING) {
-            let storyId: string = this.registry.get('storyId');
-            this.storyManager = new StoryManager(this, story, playerType, storyId);
-        } else {
-            this.storyManager = new StoryManager(this, story, playerType);
-        }
-    }
+		if (STORYVIEWER_DEBUGGING) {
+			let storyId: string = this.registry.get('storyId');
+			this.storyManager = new StoryManager(this, story, playerType, storyId);
+		} else {
+			this.storyManager = new StoryManager(this, story, playerType);
+		}
+	}
 
-    public create() {
+	public create() {
+		let currScene: IScene = this.storyManager.getCurrScene();
+		this.map = this.initMap(currScene);
+		GameScene.cursors = this.input.keyboard.createCursorKeys();
+		GameScene.interactKey = this.input.keyboard.addKey(
+			Phaser.Input.Keyboard.KeyCodes.Z
+		);
 
-        let currScene: IScene = this.storyManager.getCurrScene();
-        this.map = this.initMap(currScene);
-        GameScene.cursors = this.input.keyboard.createCursorKeys();
-        GameScene.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+		this.storyManager.start();
 
-        this.storyManager.start();
+		// if(isWebGLRenderer(this.game.renderer)) {
+		//     this.vignette = this.game.renderer.addPipeline('Vignette', new Vignette(this.game));
+		//     this.applyPipeline();
+		// }
 
-        // if(isWebGLRenderer(this.game.renderer)) {
-        //     this.vignette = this.game.renderer.addPipeline('Vignette', new Vignette(this.game));
-        //     this.applyPipeline();
-        // }
+		this.cameras.main.setBounds(
+			0,
+			0,
+			this.map.widthInPixels,
+			this.map.heightInPixels
+		);
+		this.cameras.main.roundPixels = true;
+	}
 
-        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-        this.cameras.main.roundPixels = true;
-    }
+	public update(time: number, delta: number) {
+		if (this.storyManager.isDone()) {
+			if (!this.sentEvent && this.doneDomElem) {
+				this.sentEvent = true;
+				this.doneDomElem.dispatchEvent(this.endEvent);
+			}
+			return;
+		}
 
-    public update(time: number, delta: number) {
+		let keysPressed: Phaser.Input.Keyboard.Key[] = this.parseUserInput();
+		this.storyManager.act(time, delta, keysPressed);
+	}
 
-        if(this.storyManager.isDone()) {
+	public setActorCollisionsWithMap(actor: Actor) {
+		for (let layer of this.obstacles) {
+			actor.setCollisionWith(layer, this);
+		}
+	}
 
-            if(!this.sentEvent && this.doneDomElem) {
-                this.sentEvent = true;
-                this.doneDomElem.dispatchEvent(this.endEvent);
-            }
-            return;
-        }
+	public getMap(): Phaser.Tilemaps.Tilemap {
+		return this.map;
+	}
 
-        let keysPressed: Phaser.Input.Keyboard.Key[] = this.parseUserInput();
-        this.storyManager.act(time, delta, keysPressed);
-    }
+	private parseUserInput(): Phaser.Input.Keyboard.Key[] {
+		let keysPressed: Phaser.Input.Keyboard.Key[] = [];
 
-    public setActorCollisionsWithMap(actor: Actor) {
-        for (let layer of this.obstacles) {
-            actor.setCollisionWith(layer, this);
-        }
-    }
+		if (Phaser.Input.Keyboard.JustDown(GameScene.interactKey)) {
+			keysPressed.push(GameScene.interactKey);
+		}
 
-    public getMap(): Phaser.Tilemaps.Tilemap {
-        return this.map;
-    }
+		if (GameScene.cursors.left.isDown) {
+			keysPressed.push(GameScene.cursors.left);
+		}
 
-    private parseUserInput(): Phaser.Input.Keyboard.Key[] {
+		if (GameScene.cursors.right.isDown) {
+			keysPressed.push(GameScene.cursors.right);
+		}
 
-        let keysPressed: Phaser.Input.Keyboard.Key[] = [];
+		if (GameScene.cursors.up.isDown) {
+			keysPressed.push(GameScene.cursors.up);
+		}
 
-        if (Phaser.Input.Keyboard.JustDown(GameScene.interactKey)) {
-            keysPressed.push(GameScene.interactKey);
-        }
+		if (GameScene.cursors.down.isDown) {
+			keysPressed.push(GameScene.cursors.down);
+		}
 
-        if (GameScene.cursors.left.isDown) {
-            keysPressed.push(GameScene.cursors.left);
-        }
+		return keysPressed;
+	}
 
-        if (GameScene.cursors.right.isDown) {
-            keysPressed.push(GameScene.cursors.right);
-        }
+	private initMap(currScene: IScene): Phaser.Tilemaps.Tilemap {
+		let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({
+			key: currScene.name,
+		});
 
-        if (GameScene.cursors.up.isDown) {
-            keysPressed.push(GameScene.cursors.up);
-        }
+		let tilesets: Phaser.Tilemaps.Tileset[] = [];
 
-        if (GameScene.cursors.down.isDown) {
-            keysPressed.push(GameScene.cursors.down);
-        }
+		for (let tilesetData of map.tilesets) {
+			tilesets.push(map.addTilesetImage(tilesetData.name));
+		}
 
-        return keysPressed;
-    }
+		for (let layerData of map.layers) {
+			let depth: number = (layerData.properties as Array<object>).find(
+				(i) => i['name'] === 'depth'
+			)['value'];
 
-    private initMap(currScene: IScene): Phaser.Tilemaps.Tilemap {
+			if (depth > 0) {
+				depth += GameScene.MAX_DEPTH + 1;
+			} else {
+				depth += GameScene.MIN_DEPTH - 1;
+			}
 
-        let map: Phaser.Tilemaps.Tilemap = this.make.tilemap({ key: currScene.name });
+			let collidable: boolean = (layerData.properties as Array<object>).find(
+				(i) => i['name'] === 'collidable'
+			)['value'];
 
-        let tilesets: Phaser.Tilemaps.Tileset[] = [];
+			let layer: Phaser.Tilemaps.StaticTilemapLayer = map
+				.createStaticLayer(layerData.name, tilesets)
+				.setDepth(depth);
 
-        for (let tilesetData of map.tilesets) {
-            tilesets.push(map.addTilesetImage(tilesetData.name));
-        }
+			if (collidable) {
+				layer.setCollisionByExclusion([-1]);
+				this.obstacles.push(layer);
+			}
+		}
 
-        for (let layerData of map.layers) {
+		return map;
+	}
 
-            let depth: number = (layerData.properties as Array<object>).find(i => i['name'] === 'depth')['value'];
-
-            if (depth > 0) {
-                depth += GameScene.MAX_DEPTH + 1;
-            } else {
-                depth += GameScene.MIN_DEPTH - 1;
-            }
-
-            let collidable: boolean = (layerData.properties as Array<object>).find(i => i['name'] === 'collidable')['value'];
-
-            let layer: Phaser.Tilemaps.StaticTilemapLayer = map.createStaticLayer(layerData.name, tilesets).setDepth(depth);
-
-            if (collidable) {
-                layer.setCollisionByExclusion([-1]);
-                this.obstacles.push(layer);
-            }
-        }
-
-        return map;
-    }
-
-    private applyPipeline() {
-        this.vignette.setFloat2('resolution', this.game.config.width, this.game.config.height);
-        this.vignette.setFloat1('r', 0.3);
-        this.vignette.setFloat1('b', 0.6);
-        this.vignette.setFloat1('tx', 0.5);
-        this.vignette.setFloat1('ty', 0.5);
-        this.vignette.setFloat1('bright', 1.0);
-        this.vignette.setFloat1('red', 1.0);
-        this.vignette.setFloat1('green', 1.0);
-        this.vignette.setFloat1('blue', 1.0);
-        this.vignette.setFloat1('bgred', 1.0);
-        this.vignette.setFloat1('bggreen', 1.0);
-        this.vignette.setFloat1('bgblue', 1.0);
-        this.cameras.main.setRenderToTexture(this.vignette);
-    }
-
+	private applyPipeline() {
+		this.vignette.setFloat2(
+			'resolution',
+			this.game.config.width,
+			this.game.config.height
+		);
+		this.vignette.setFloat1('r', 0.3);
+		this.vignette.setFloat1('b', 0.6);
+		this.vignette.setFloat1('tx', 0.5);
+		this.vignette.setFloat1('ty', 0.5);
+		this.vignette.setFloat1('bright', 1.0);
+		this.vignette.setFloat1('red', 1.0);
+		this.vignette.setFloat1('green', 1.0);
+		this.vignette.setFloat1('blue', 1.0);
+		this.vignette.setFloat1('bgred', 1.0);
+		this.vignette.setFloat1('bggreen', 1.0);
+		this.vignette.setFloat1('bgblue', 1.0);
+		this.cameras.main.setRenderToTexture(this.vignette);
+	}
 }

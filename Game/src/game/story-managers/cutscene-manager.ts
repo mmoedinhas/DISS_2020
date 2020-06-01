@@ -1,114 +1,128 @@
-import { EventManager } from "./event-manager";
-import { Action } from "./cutscene-actions/action";
-import { GameScene } from "../game-scene";
-import { IBodySpecs, IDialogueLine, ICoordinates } from "../../utils/interfaces";
-import { Actor } from "../actor";
-import { Walk } from "./cutscene-actions/walk";
-import { Talk } from "./cutscene-actions/talk";
+import { EventManager } from './event-manager';
+import { Action } from './cutscene-actions/action';
+import { GameScene } from '../game-scene';
+import { BootScene } from '../boot-scene';
+import {
+	IBodySpecs,
+	IDialogueLine,
+	ICoordinates,
+} from '../../utils/interfaces';
+import { Actor } from '../actor';
+import { Walk } from './cutscene-actions/walk';
+import { Talk } from './cutscene-actions/talk';
 
 export class CutsceneManager extends EventManager {
+	private actions: Action[] = [];
+	private currActionIndex: integer;
+	private currFocusedActor: Actor;
 
-    private actions: Action[] = [];
-    private currActionIndex: integer;
-    private currFocusedActor: Actor;
+	private actors: Actor[] = [];
 
-    private actors: Actor[] = [];
+	constructor(scene: GameScene, name: string) {
+		super(scene, name);
+		this.populateActors();
+		this.currActionIndex = 0;
+		this.instantiateActions();
+	}
 
-    constructor(scene: GameScene, name: string) {
-        super(scene, name);
-        this.populateActors();
-        this.currActionIndex = 0;
-        this.instantiateActions();
-    }
+	public act(
+		time: number,
+		delta: number,
+		keysPressed: Phaser.Input.Keyboard.Key[]
+	) {
+		if (this.currActionIndex < this.actions.length) {
+			if (this.actions[this.currActionIndex].isDone()) {
+				this.currActionIndex++;
+			}
+		}
 
-    public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {
+		this.sortActorDepths();
 
-        if (this.currActionIndex < this.actions.length) {
-            if (this.actions[this.currActionIndex].isDone()) {
-                this.currActionIndex++;
-            }
-        }
+		if (this.currActionIndex < this.actions.length) {
+			this.actions[this.currActionIndex].act(time, delta, keysPressed);
+			this.currFocusedActor = this.actions[this.currActionIndex].getActor();
+		} else {
+			this.done = true;
+		}
+	}
 
-        this.sortActorDepths();
+	public populateActors() {
+		let actorsFromEventObj = this.jsonObj.actors;
+		let allActorsObj = this.scene.cache.json.get('actors').actors;
 
-        if (this.currActionIndex < this.actions.length) {
-            this.actions[this.currActionIndex].act(time, delta, keysPressed);
-            this.currFocusedActor = this.actions[this.currActionIndex].getActor();
-        } else {
-            this.done = true;
-        }
+		for (let actorDesc of actorsFromEventObj) {
+			let actor = allActorsObj.find((actor) => actor.id == actorDesc.actorId);
+			let x = actorDesc.start[0];
+			let y = actorDesc.start[1];
 
-    }
+			this.addActor(new Actor(this.scene, x, y, actor));
+		}
+	}
 
-    public populateActors() {
+	public addActor(newActor: Actor) {
+		this.scene.setActorCollisionsWithMap(newActor);
+		this.actors.push(newActor);
+	}
 
-        let actorsFromEventObj = this.jsonObj.actors;
-        let allActorsObj = this.scene.cache.json.get('actors').actors;
+	public getActorById(actorId: string): Actor {
+		return this.actors.find((actor) => actor.getId() === actorId);
+	}
 
-        for (let actorDesc of actorsFromEventObj) {
-            let actor = allActorsObj.find(actor => actor.id == actorDesc.actorId);
-            let x = actorDesc.start[0];
-            let y = actorDesc.start[1];
+	public instantiateActions() {
+		let actionsObj = this.jsonObj.actions;
 
-            this.addActor(new Actor(this.scene, x, y, actor));
-        }
-    }
+		for (let actionObj of actionsObj) {
+			let actor: Actor = this.getActorById(actionObj.actorId);
 
-    public addActor(newActor: Actor) {
+			switch (actionObj.action) {
+				case 'walk':
+					this.actions.push(
+						new Walk(
+							this.scene,
+							actor,
+							actionObj.arguments.x,
+							actionObj.arguments.y
+						)
+					);
+					break;
+				case 'talk':
+					this.actions.push(
+						new Talk(this.scene, actor, [
+							{
+								author: actionObj.arguments.author,
+								text: actionObj.arguments.text,
+							},
+						])
+					);
+					break;
+			}
+		}
+	}
 
-        this.scene.setActorCollisionsWithMap(newActor);
-        this.actors.push(newActor);
-    }
+	public getPlayerPosition(): ICoordinates {
+		return {
+			x: this.currFocusedActor.getX(),
+			y: this.currFocusedActor.getY(),
+		};
+	}
 
-    public getActorById(actorId: string): Actor {
-        return this.actors.find(actor => actor.getId() === actorId);
-    }
+	public destroy() {
+		for (let actor of this.actors) {
+			actor.destroy();
+		}
+	}
 
-    public instantiateActions() {
-        let actionsObj = this.jsonObj.actions;
+	private sortActorDepths() {
+		let actorsSorted: Actor[] = [...this.actors];
 
-        for (let actionObj of actionsObj) {
+		actorsSorted.sort((actor1, actor2) => {
+			return actor1.getY() - actor2.getY();
+		});
 
-            let actor: Actor = this.getActorById(actionObj.actorId);
-
-            switch (actionObj.action) {
-                case "walk":
-                    this.actions.push(new Walk(this.scene, actor, actionObj.arguments.x, actionObj.arguments.y));
-                    break;
-                case "talk":
-                    this.actions.push(new Talk(this.scene, actor, [{
-                        author: actionObj.arguments.author,
-                        text: actionObj.arguments.text
-                    }]));
-                    break;
-            }
-        }
-    }
-
-    public getPlayerPosition(): ICoordinates {
-        return {
-            x: this.currFocusedActor.getX(),
-            y: this.currFocusedActor.getY()
-        }
-    }
-
-    public destroy() {
-        for (let actor of this.actors) {
-            actor.destroy();
-        }
-    }
-
-    private sortActorDepths() {
-        let actorsSorted: Actor[] = [...this.actors];
-
-        actorsSorted.sort((actor1, actor2) => {
-            return actor1.getY() - actor2.getY();
-        })
-
-        let depth = GameScene.MIN_DEPTH;
-        for (let actor of actorsSorted) {
-            actor.setDepth(depth);
-            depth++;
-        }
-    }
+		let depth = GameScene.MIN_DEPTH;
+		for (let actor of actorsSorted) {
+			actor.setDepth(depth);
+			depth++;
+		}
+	}
 }
