@@ -170,6 +170,8 @@ export class StoryManager {
 					false,
 					function (camera, progress) {
 						if (progress >= 1) {
+							Logging.endEvent(this.scene, this.getCurrEvent());
+							this.next();
 							this.scene.cameras.main.fadeFrom(
 								250,
 								0,
@@ -178,8 +180,6 @@ export class StoryManager {
 								true,
 								function (camera, progress) {
 									if (progress >= 1) {
-										Logging.endEvent(this.scene, this.getCurrEvent());
-										this.next();
 										this.fadingCamera = false;
 									}
 								},
