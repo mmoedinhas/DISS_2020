@@ -65,9 +65,20 @@
     <script src="app.bundle.js"></script>
     <script>
         let eventSender = document.getElementById('content');
+        let playerProfile = {
+            anger: 4,
+            disgust: 4,
+            fear: 5,
+            anxiety: 10,
+            sadness: 8,
+            desire: 14,
+            relaxation: 6,
+            happiness: 10,
+        };
         Game.newGame({
             doneDomElem: eventSender,
-            parent: "content"
+            parent: "content",
+            playerProfile: playerProfile
         });
     </script>
 </body>

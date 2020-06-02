@@ -10,7 +10,7 @@ import { EndScene } from './game/end-scene';
 
 declare const DEBUG: boolean;
 
-const physicsDebug: boolean = true;
+const physicsDebug: boolean = false;
 
 const gameWidth: number = 640;
 const gameHeight: number = 360;
@@ -65,17 +65,6 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
 
 let game: Phaser.Game;
 
-let player_profile = {
-	anger: 4,
-	disgust: 4,
-	fear: 5,
-	anxiety: 10,
-	sadness: 8,
-	desire: 14,
-	relaxation: 6,
-	happiness: 10,
-};
-
 export function newGame(
 	options: {
 		doneDomElem?: HTMLElement;
@@ -89,9 +78,7 @@ export function newGame(
 		? options.parent
 		: gameConfig.scale.parent;
 	game = new Phaser.Game(gameConfig);
-	let playerProfile = options.playerProfile
-		? options.playerProfile
-		: player_profile;
+	let playerProfile = options.playerProfile ? options.playerProfile : {};
 
 	game.registry.set('doneDomElem', options.doneDomElem);
 	game.registry.set('playerType', playerProfile);
