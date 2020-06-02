@@ -71,7 +71,7 @@ export class GameScene extends Phaser.Scene {
 				0,
 				0,
 				0,
-				false,
+				true,
 				function (camera, progress) {
 					if (progress >= 1) {
 						this.scene.start('End');
