@@ -40,7 +40,7 @@
             "actorId": "Grandma",
             "start": [
                 17,
-                14
+                15
             ]
         }
     ],
@@ -134,12 +134,20 @@
             "actorId": "Clara"
         },
         {
+            "action": "walk",
+            "arguments": {
+                "x": -4,
+                "y": 0
+            },
+            "actorId": "Grandma"
+        },
+        {
             "action": "talk",
             "arguments": {
                 "author": "Clara",
                 "text": "Wait, I see grandma over there! I'll go over to her, maybe she can help."
             },
-            "actorId": "Clara"
+            "actorId": "Grandma"
         }
     ]
 }

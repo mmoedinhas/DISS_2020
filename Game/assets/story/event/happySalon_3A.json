@@ -101,7 +101,7 @@
             "actorId": "Grandma",
             "position": [
                 17,
-                14
+                15
             ],
             "dialogue": "talkGrandma.json",
             "isInteractableConditions": "not grandmaGreeted",
