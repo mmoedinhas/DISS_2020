@@ -1,5 +1,5 @@
 {
-    "name": "happySalon_1B",
+    "name": "sadSalon_1B",
     "actors": [
         {
             "actorId": "Clara",
@@ -9,38 +9,31 @@
             ]
         },
         {
-            "actorId": "Uncle",
+            "actorId": "Dancer1",
             "start": [
                 3,
-                11
+                10
             ]
         },
         {
-            "actorId": "Guest2",
+            "actorId": "Dancer2",
             "start": [
-                18,
-                12
+                14,
+                13
             ]
         },
         {
-            "actorId": "Guest3",
+            "actorId": "Dancer3",
             "start": [
-                17,
-                11
-            ]
-        },
-        {
-            "actorId": "Guest1",
-            "start": [
-                5,
-                15
+                7,
+                17
             ]
         },
         {
             "actorId": "Grandma",
             "start": [
-                17,
-                14
+                15,
+                15
             ]
         }
     ],
@@ -54,26 +47,26 @@
             "actorId": "Clara"
         },
         {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Mother and Father told me I have to attend their silly Christmas party."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I really REALLY don't feel like attending, but I don't want to disappoint them..."
+            },
+            "actorId": "Clara"
+        },
+        {
             "action": "walk",
             "arguments": {
                 "x": 0,
                 "y": 1
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "It's finally Christmas!"
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "I waited for this day for so long! I'm so excited!"
             },
             "actorId": "Clara"
         },
@@ -121,7 +114,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "For now, let's just say hello to everyone and see how things go."
+                "text": "Ok, remember Mother and Father. You can't disappoint them. Come on, deep breaths..."
             },
             "actorId": "Clara"
         },

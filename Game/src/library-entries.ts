@@ -10,7 +10,7 @@ import { EndScene } from './game/end-scene';
 
 declare const DEBUG: boolean;
 
-const physicsDebug: boolean = false;
+const physicsDebug: boolean = true;
 
 const gameWidth: number = 640;
 const gameHeight: number = 360;
