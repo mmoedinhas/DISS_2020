@@ -63,7 +63,7 @@
                 17,
                 14
             ],
-            "dialogue": "talkGrandma.json",
+            "dialogue": "nervousTalkGrandma.json",
             "isInteractableConditions": "not grandmaGreeted",
             "flagChangesAfterInteraction": [
                 {
