@@ -88,7 +88,8 @@ export class GameplayManager extends EventManager {
 			let x = npcDesc.position[0];
 			let y = npcDesc.position[1];
 
-			this.addNpc(new Npc(this.scene, x, y, actor, npcDesc, this.flags));
+			let npc = new Npc(this.scene, x, y, actor, npcDesc, this.flags);
+			this.addNpc(npc);
 		}
 	}
 
@@ -110,7 +111,11 @@ export class GameplayManager extends EventManager {
 		);
 
 		if (filterResult instanceof Error) {
-			console.error('Error in end condition of event\n' + filterResult.message);
+			if (DEBUG) {
+				console.error(
+					'Error in end condition of event\n' + filterResult.message
+				);
+			}
 			return false;
 		} else {
 			return filterResult;
@@ -173,7 +178,6 @@ export class GameplayManager extends EventManager {
 
 	private addNpc(newNpc: Npc) {
 		this.setCollisionsWithAllActors(newNpc);
-
 		this.scene.setActorCollisionsWithMap(newNpc);
 
 		this.npcs.push(newNpc);

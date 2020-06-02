@@ -1,4 +1,10 @@
-import { IPlayerType, IScene, IEvent, IStory, ICoordinates } from '../../utils/interfaces';
+import {
+	IPlayerType,
+	IScene,
+	IEvent,
+	IStory,
+	ICoordinates,
+} from '../../utils/interfaces';
 import { CutsceneManager } from './cutscene-manager';
 import { EventManager } from './event-manager';
 import { GameplayManager } from './gameplay-manager';
@@ -6,153 +12,197 @@ import { GameScene } from '../game-scene';
 import * as Logging from '../../utils/logging';
 
 export enum EventType {
-    CUTSCENE,
-    GAMEPLAY
+	CUTSCENE,
+	GAMEPLAY,
 }
 
 declare const STORYVIEWER_DEBUGGING: boolean;
 declare const STORYVIEWER_URL: string;
 
-const debugUrl: string = STORYVIEWER_DEBUGGING ? STORYVIEWER_URL + "/debug" : "";
+const debugUrl: string = STORYVIEWER_DEBUGGING
+	? STORYVIEWER_URL + '/debug'
+	: '';
 
 export class StoryManager {
+	private scene: GameScene;
 
-    private scene: GameScene;
+	private playerType: IPlayerType;
+	private story: IStory;
+	private storyId: string;
+	private done: boolean;
+	private fadingCamera: boolean = false;
 
-    private playerType: IPlayerType;
-    private story: IStory;
-    private storyId: string;
-    private done: boolean;
+	private currEventIndex: integer;
+	private currSceneIndex: integer;
+	private currEventType: EventType;
 
-    private currEventIndex: integer;
-    private currSceneIndex: integer;
-    private currEventType: EventType;
+	private previousPlayerPos: ICoordinates;
 
-    private previousPlayerPos: ICoordinates;
+	private currEventManager: EventManager;
 
-    private currEventManager: EventManager;
+	constructor(
+		scene: GameScene,
+		story: IStory,
+		playerType: IPlayerType,
+		storyId?: string
+	) {
+		this.scene = scene;
+		this.story = story;
+		this.playerType = playerType;
+		this.done = false;
 
-    constructor(scene: GameScene, story: IStory, playerType: IPlayerType, storyId?: string) {
-        this.scene = scene;
-        this.story = story;
-        this.playerType = playerType;
-        this.done = false;
+		this.currEventIndex = 0;
+		this.currSceneIndex = 0;
 
-        this.currEventIndex = 0;
-        this.currSceneIndex = 0;
+		this.storyId = storyId ? storyId : '';
 
-        this.storyId = storyId ? storyId : "";
+		Logging.initLogging(this.scene);
+		Logging.startGame(this.scene);
 
-        Logging.initLogging(this.scene);
-        Logging.startGame(this.scene);
+		this.updateEventType();
+	}
 
-        this.updateEventType();
-    }
+	public start(): EventManager {
+		if (this.currEventManager !== undefined) {
+			this.currEventManager.destroy();
+			this.currEventManager = null;
+		}
 
-    public start(): EventManager {
+		let currEventManager: EventManager;
 
-        if (this.currEventManager !== undefined) {
-            this.currEventManager.destroy();
-        }
+		switch (this.currEventType) {
+			case EventType.GAMEPLAY:
+				currEventManager = new GameplayManager(
+					this.scene,
+					this.getCurrEvent().name,
+					this.previousPlayerPos
+				);
+				break;
+			case EventType.CUTSCENE:
+				currEventManager = new CutsceneManager(
+					this.scene,
+					this.getCurrEvent().name
+				);
+				break;
+		}
 
-        let currEventManager: EventManager;
+		this.currEventManager = currEventManager;
 
-        switch (this.currEventType) {
-            case EventType.GAMEPLAY:
-                currEventManager = new GameplayManager(this.scene, this.getCurrEvent().name, this.previousPlayerPos);
-                break;
-            case EventType.CUTSCENE:
-                currEventManager = new CutsceneManager(this.scene, this.getCurrEvent().name);
-                break;
-        }
+		if (STORYVIEWER_DEBUGGING) {
+			this.sendCurrEvent(this.getCurrEvent().name);
+		}
 
-        this.currEventManager = currEventManager;
+		Logging.startEvent(this.scene, this.getCurrEvent());
 
-        if (STORYVIEWER_DEBUGGING) {
-            this.sendCurrEvent(this.getCurrEvent().name);
-        }
+		return currEventManager;
+	}
 
-        Logging.startEvent(this.scene, this.getCurrEvent());
+	public next(): EventManager {
+		let scene: IScene = this.getSceneAt(this.currSceneIndex);
 
-        return currEventManager;
-    }
+		this.previousPlayerPos = this.currEventManager.getPlayerPosition();
 
-    public next(): EventManager {
+		this.currEventIndex++;
 
-        let scene: IScene = this.getSceneAt(this.currSceneIndex);
+		if (scene.events.length <= this.currEventIndex) {
+			this.done = true;
+			Logging.endGame(this.scene);
+			return;
+		}
 
-        this.previousPlayerPos = this.currEventManager.getPlayerPosition();
+		this.updateEventType();
 
-        this.currEventIndex++;
+		return this.start();
+	}
 
-        if (scene.events.length <= this.currEventIndex) {
-            this.done = true;
-            Logging.endGame(this.scene);
-            return;
-        }
+	public updateEventType() {
+		switch (this.getCurrEvent().type) {
+			case 'gameplay':
+				this.currEventType = EventType.GAMEPLAY;
+				break;
+			case 'cutscene':
+				this.currEventType = EventType.CUTSCENE;
+				break;
+		}
+	}
 
-        this.updateEventType();
+	public getEventAt(sceneIndex: integer, eventIndex: integer): IEvent {
+		return this.story.scenes[sceneIndex].events[eventIndex];
+	}
 
-        return this.start();
-    }
+	public getSceneAt(sceneIndex: integer): IScene {
+		return this.story.scenes[sceneIndex];
+	}
 
-    public updateEventType() {
-        switch (this.getCurrEvent().type) {
-            case "gameplay":
-                this.currEventType = EventType.GAMEPLAY;
-                break;
-            case "cutscene":
-                this.currEventType = EventType.CUTSCENE;
-                break;
-        }
-    }
+	public getCurrScene(): IScene {
+		return this.getSceneAt(this.currSceneIndex);
+	}
 
-    public getEventAt(sceneIndex: integer, eventIndex: integer): IEvent {
-        return this.story.scenes[sceneIndex].events[eventIndex];
-    }
+	public getCurrEvent(): IEvent {
+		return this.getEventAt(this.currSceneIndex, this.currEventIndex);
+	}
 
-    public getSceneAt(sceneIndex: integer): IScene {
-        return this.story.scenes[sceneIndex];
-    }
+	public getCurrentEventType(): EventType {
+		return this.currEventType;
+	}
 
-    public getCurrScene(): IScene {
-        return this.getSceneAt(this.currSceneIndex);
-    }
+	public isDone(): boolean {
+		return this.done;
+	}
 
-    public getCurrEvent(): IEvent {
-        return this.getEventAt(this.currSceneIndex, this.currEventIndex);
-    }
+	public act(
+		time: number,
+		delta: number,
+		keysPressed: Phaser.Input.Keyboard.Key[]
+	) {
+		if (this.done) {
+			return;
+		}
 
-    public getCurrentEventType(): EventType {
-        return this.currEventType;
-    }
+		if (this.currEventManager.isDone()) {
+			if (!this.fadingCamera) {
+				this.fadingCamera = true;
+				this.scene.cameras.main.fade(
+					250,
+					0,
+					0,
+					0,
+					false,
+					function (camera, progress) {
+						if (progress >= 1) {
+							this.scene.cameras.main.fadeFrom(
+								250,
+								0,
+								0,
+								0,
+								true,
+								function (camera, progress) {
+									if (progress >= 1) {
+										Logging.endEvent(this.scene, this.getCurrEvent());
+										this.next();
+										this.fadingCamera = false;
+									}
+								},
+								this
+							);
+						}
+					},
+					this
+				);
+			}
+		} else {
+			this.currEventManager.act(time, delta, keysPressed);
+		}
+	}
 
-    public isDone(): boolean {
-        return this.done;
-    }
+	private sendCurrEvent(currEvent: string) {
+		let request: XMLHttpRequest = new XMLHttpRequest();
+		request.open('PUT', debugUrl + '/' + this.storyId);
+		request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
-    public act(time: number, delta: number, keysPressed: Phaser.Input.Keyboard.Key[]) {
-
-        if(this.done) {
-            return;
-        }
-
-        if (this.currEventManager.isDone()) {
-            Logging.endEvent(this.scene, this.getCurrEvent());
-            this.next();
-        } else {
-            this.currEventManager.act(time, delta, keysPressed);
-        }
-    }
-
-    private sendCurrEvent(currEvent: string) {
-        let request: XMLHttpRequest = new XMLHttpRequest();
-        request.open("PUT", debugUrl + "/" + this.storyId);
-        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-        let body = {
-            currEvent: currEvent
-        };
-        request.send(JSON.stringify(body));
-    }
+		let body = {
+			currEvent: currEvent,
+		};
+		request.send(JSON.stringify(body));
+	}
 }

@@ -1,129 +1,157 @@
-import { Actor } from "./actor";
-import { GameScene } from "./game-scene";
-import { Player } from "./player";
-import { ActionBox } from "./ui/action-box";
-import { IInteractable } from "./i-interactable";
-import { IDialogueLine, IFlagChange } from "../utils/interfaces";
-import * as filter from "../utils/filtrex";
-import { getAssetIdFromPath } from "../utils/paths";
-import { isArcadeBody } from "../utils/type-predicates";
+import { Actor } from './actor';
+import { GameScene } from './game-scene';
+import { Player } from './player';
+import { ActionBox } from './ui/action-box';
+import { IInteractable } from './i-interactable';
+import { IDialogueLine, IFlagChange } from '../utils/interfaces';
+import * as filter from '../utils/filtrex';
+import { getAssetIdFromPath } from '../utils/paths';
+import { isArcadeBody } from '../utils/type-predicates';
 
 export class Npc extends Actor implements IInteractable {
+	public dialogue: IDialogueLine[];
 
-    public dialogue: IDialogueLine[];
+	private interactable: boolean;
+	private interactZone: Phaser.GameObjects.Zone;
+	private actionBox: ActionBox;
+	private playerInZone: boolean;
+	private interactableCondition: string;
+	private flagsChangesAfterInteraction: IFlagChange[];
 
-    private interactable: boolean;
-    private interactZone: Phaser.GameObjects.Zone;
-    private actionBox: ActionBox;
-    private playerInZone: boolean;
-    private interactableCondition: string;
-    private flagsChangesAfterInteraction: IFlagChange[];
+	constructor(
+		scene: GameScene,
+		x: number,
+		y: number,
+		actorObj: any,
+		npcObj: any,
+		flags: Map<string, boolean | number>,
+		realCoordinates?: boolean
+	) {
+		super(scene, x, y, actorObj, realCoordinates);
+		(this.sprite.body as Phaser.Physics.Arcade.Body).setImmovable();
 
-    constructor(scene: GameScene, x: number, y: number, actorObj: any, npcObj: any, flags: Map<string, boolean | number>, realCoordinates?: boolean) {
-        super(scene, x, y, actorObj, realCoordinates);
-        (this.sprite.body as Phaser.Physics.Arcade.Body).setImmovable();
+		this.interactableCondition = npcObj.isInteractableConditions;
+		this.dialogue = this.getDialogue(scene, npcObj.dialogue);
+		this.flagsChangesAfterInteraction = npcObj.flagChangesAfterInteraction;
 
-        this.interactableCondition = npcObj.isInteractableConditions;
-        this.dialogue = this.getDialogue(scene, npcObj.dialogue);
-        this.flagsChangesAfterInteraction = npcObj.flagChangesAfterInteraction;
+		this.setInteractable(flags);
+		this.createInteractZone(scene);
+		this.playerInZone = false;
+		this.actionBox = new ActionBox(
+			scene,
+			'Talk',
+			this.getX(),
+			this.getY() - this.sprite.height,
+			true
+		);
+	}
 
-        this.setInteractable(flags);
-        this.createInteractZone(scene);
-        this.playerInZone = false;
-        this.actionBox = new ActionBox(scene, "Talk", this.getX(), this.getY() - this.sprite.height, true);
-    }
+	public instantiateDialogue(dialogue: IDialogueLine[]) {
+		this.dialogue = dialogue;
+	}
 
-    public instantiateDialogue(dialogue: IDialogueLine[]) {
-        this.dialogue = dialogue;
-    }
+	public setInteractable(flags: Map<string, boolean | number>) {
+		let filterResult: boolean | Error = filter.boolean(
+			this.interactableCondition,
+			flags
+		);
+		if (filterResult instanceof Error) {
+			console.error(
+				'Error in isInteractable flags of npc ' +
+					this.id +
+					'\n' +
+					filterResult.message
+			);
+			this.interactable = false;
+			return;
+		}
 
-    public setInteractable(flags: Map<string, boolean | number>) {
+		this.interactable = filterResult as boolean;
+	}
 
-        let filterResult: boolean | Error = filter.boolean(this.interactableCondition, flags);
-        if (filterResult instanceof Error) {
-            console.error("Error in isInteractable flags of npc " + this.id + "\n" + filterResult.message);
-            this.interactable = false;
-            return;
-        }
+	public isInteractable(): boolean {
+		return this.interactable;
+	}
 
-        this.interactable = filterResult as boolean;
-    }
+	public getFlagsChangesAfterInteraction(): IFlagChange[] {
+		return this.flagsChangesAfterInteraction;
+	}
 
-    public isInteractable(): boolean {
-        return this.interactable;
-    }
+	public isPlayerInZone(scene: GameScene, player: Player): boolean {
+		return player.isOverlappingWithObject(scene, this.interactZone);
 
-    public getFlagsChangesAfterInteraction(): IFlagChange[] {
-        return this.flagsChangesAfterInteraction;
-    }
+		// if (isArcadeBody(this.interactZone.body)) {
+		//     if (this.interactZone.body.embedded) {
+		//         this.interactZone.body.touching.none = false;
+		//     }
 
-    public isPlayerInZone(scene:GameScene, player: Player): boolean {
+		//     if ((!this.interactZone.body.touching.none
+		//         || this.interactZone.body.wasTouching.none)
+		//         && this.playerInZone) {
+		//         return true;
+		//     }
+		// }
 
-        return player.isOverlappingWithObject(scene, this.interactZone);
+		// return false;
+	}
 
-        // if (isArcadeBody(this.interactZone.body)) {
-        //     if (this.interactZone.body.embedded) {
-        //         this.interactZone.body.touching.none = false;
-        //     }
+	public setPlayerInZone(playerInZone: boolean) {
+		this.playerInZone = playerInZone;
+	}
 
-        //     if ((!this.interactZone.body.touching.none
-        //         || this.interactZone.body.wasTouching.none)
-        //         && this.playerInZone) {
-        //         return true;
-        //     }
-        // }
+	public setActionBoxVisiblity(visible: boolean) {
+		if (visible) {
+			this.actionBox.show();
+		} else {
+			this.actionBox.hide();
+		}
+	}
 
-        // return false;
-    }
+	public destroy() {
+		this.sprite.destroy();
+		this.interactZone.destroy();
+		this.actionBox.destroy();
+	}
 
-    public setPlayerInZone(playerInZone: boolean) {
-        this.playerInZone = playerInZone;
-    }
+	private createInteractZone(scene: GameScene) {
+		const Zone = Phaser.GameObjects.Zone;
 
-    public setActionBoxVisiblity(visible: boolean) {
-        if (visible) {
-            this.actionBox.show();
-        } else {
-            this.actionBox.hide();
-        }
-    }
+		let width = this.sprite.width + scene.getMap().tileWidth;
+		let height = scene.getMap().tileHeight * 2;
 
-    public destroy() {
-        this.sprite.destroy();
-        this.actionBox.destroy();
-    }
+		let body: Phaser.Physics.Arcade.Body = this.sprite
+			.body as Phaser.Physics.Arcade.Body;
 
-    private createInteractZone(scene: GameScene) {
-        const Zone = Phaser.GameObjects.Zone;
+		let x =
+			this.sprite.x -
+			this.sprite.width / 2.0 +
+			body.offset.x +
+			body.width / 2.0;
+		let y =
+			this.sprite.y - this.sprite.height + body.offset.y + body.height / 2.0;
 
-        let width = this.sprite.width + scene.getMap().tileWidth;
-        let height = scene.getMap().tileHeight * 2;
+		this.interactZone = new Zone(scene, x, y, width, height);
 
-        let body: Phaser.Physics.Arcade.Body = this.sprite.body as Phaser.Physics.Arcade.Body;
+		scene.physics.add.existing(this.interactZone);
+	}
 
-        let x = this.sprite.x - this.sprite.width / 2.0 + body.offset.x + body.width / 2.0;
-        let y = this.sprite.y - this.sprite.height + body.offset.y + body.height / 2.0;
+	private getDialogue(
+		scene: GameScene,
+		dialogueFilename: string
+	): IDialogueLine[] {
+		const dialogue: IDialogueLine[] = [];
 
-        this.interactZone = new Zone(scene, x, y, width, height);
+		let key: string = getAssetIdFromPath(dialogueFilename);
+		let dialogueObj = scene.cache.json.get(key);
 
-        scene.physics.add.existing(this.interactZone);
-    }
+		for (let lineDesc of dialogueObj.lines) {
+			let line: IDialogueLine = {
+				author: lineDesc.author,
+				text: lineDesc.text,
+			};
+			dialogue.push(line);
+		}
 
-    private getDialogue(scene: GameScene, dialogueFilename: string): IDialogueLine[] {
-        const dialogue: IDialogueLine[] = [];
-
-        let key: string = getAssetIdFromPath(dialogueFilename);
-        let dialogueObj = scene.cache.json.get(key);
-
-        for (let lineDesc of dialogueObj.lines) {
-
-            let line: IDialogueLine = {
-                author: lineDesc.author,
-                text: lineDesc.text
-            };
-            dialogue.push(line);
-        }
-
-        return dialogue;
-    }
+		return dialogue;
+	}
 }
