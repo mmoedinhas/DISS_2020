@@ -33,8 +33,8 @@
         {
             "actorId": "Uncle",
             "position": [
-                3,
-                11
+                2,
+                10
             ],
             "dialogue": "happyUncle.json",
             "isInteractableConditions": "not guest1Greeted",

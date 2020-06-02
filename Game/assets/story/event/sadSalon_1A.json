@@ -9,30 +9,37 @@
             ]
         },
         {
-            "actorId": "Dancer1",
+            "actorId": "Uncle",
             "start": [
-                3,
+                2,
                 10
             ]
         },
         {
-            "actorId": "Dancer2",
+            "actorId": "Guest2",
             "start": [
-                14,
-                13
+                18,
+                12
             ]
         },
         {
-            "actorId": "Dancer3",
+            "actorId": "Guest3",
             "start": [
-                7,
-                17
+                17,
+                11
+            ]
+        },
+        {
+            "actorId": "Guest1",
+            "start": [
+                5,
+                15
             ]
         },
         {
             "actorId": "Grandma",
             "start": [
-                15,
+                17,
                 15
             ]
         }
