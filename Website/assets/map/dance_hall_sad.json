@@ -295,7 +295,7 @@
         {
          "columns":8,
          "firstgid":1,
-         "image":"..\/mapTiles\/castle-extruded.png",
+         "image":"..\/mapTiles\/castle-extruded-sad.png",
          "imageheight":646,
          "imagewidth":272,
          "margin":1,
@@ -318,7 +318,7 @@
         {
          "columns":8,
          "firstgid":153,
-         "image":"..\/mapTiles\/stairs-extruded.png",
+         "image":"..\/mapTiles\/stairs-extruded-sad.png",
          "imageheight":374,
          "imagewidth":272,
          "margin":1,
@@ -331,7 +331,7 @@
         {
          "columns":10,
          "firstgid":241,
-         "image":"..\/mapTiles\/christmastiles_1x2.png",
+         "image":"..\/mapTiles\/christmastiles_1x2-sad.png",
          "imageheight":448,
          "imagewidth":320,
          "margin":0,
@@ -344,7 +344,7 @@
         {
          "columns":4,
          "firstgid":381,
-         "image":"..\/mapTiles\/christmastiles_more_2.png",
+         "image":"..\/mapTiles\/christmastiles_more_2-sad.png",
          "imageheight":96,
          "imagewidth":128,
          "margin":0,
@@ -357,7 +357,7 @@
         {
          "columns":4,
          "firstgid":393,
-         "image":"..\/mapTiles\/presents.png",
+         "image":"..\/mapTiles\/presents-sad.png",
          "imageheight":32,
          "imagewidth":128,
          "margin":0,

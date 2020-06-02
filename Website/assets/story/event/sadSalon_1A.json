@@ -1,5 +1,5 @@
 {
-    "name": "happySalon_1A",
+    "name": "sadSalon_1A",
     "actors": [
         {
             "actorId": "Clara",
@@ -65,7 +65,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "It's finally Christmas!"
+                "text": "Mother and Father told me I have to attend their silly Christmas party."
             },
             "actorId": "Clara"
         },
@@ -73,7 +73,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "I waited for this day for so long! I'm so excited!"
+                "text": "I really REALLY don't feel like attending, but I don't want to disappoint them..."
             },
             "actorId": "Clara"
         },
@@ -81,7 +81,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "I can see the guests already arrived. I should go and say hello!"
+                "text": "I'll just greet everyone and go back to my room as soon as I can... Maybe Mother and Father won't notice I'm gone afterwards."
             },
             "actorId": "Clara"
         },

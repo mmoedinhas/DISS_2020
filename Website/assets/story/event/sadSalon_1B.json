@@ -1,5 +1,5 @@
 {
-    "name": "happySalon_1A",
+    "name": "sadSalon_1B",
     "actors": [
         {
             "actorId": "Clara",
@@ -54,6 +54,22 @@
             "actorId": "Clara"
         },
         {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Mother and Father told me I have to attend their silly Christmas party."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I really REALLY don't feel like attending, but I don't want to disappoint them..."
+            },
+            "actorId": "Clara"
+        },
+        {
             "action": "walk",
             "arguments": {
                 "x": 0,
@@ -65,7 +81,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "It's finally Christmas!"
+                "text": "I can see the guests already arrived. Oh my, I haven't seen everyone for so long..."
             },
             "actorId": "Clara"
         },
@@ -73,7 +89,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "I waited for this day for so long! I'm so excited!"
+                "text": "I'm so nervous, what if they don't remember who I am anymore?"
             },
             "actorId": "Clara"
         },
@@ -81,7 +97,31 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "I can see the guests already arrived. I should go and say hello!"
+                "text": "... I really don't want to be awkward ..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Why am I so nervous?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Ok, remember Mother and Father. You can't disappoint them. Come on, deep breaths..."
             },
             "actorId": "Clara"
         },
@@ -90,6 +130,14 @@
             "arguments": {
                 "x": 0,
                 "y": 6
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Wait, I see grandma over there! I'll go over to her, maybe she can help."
             },
             "actorId": "Clara"
         }

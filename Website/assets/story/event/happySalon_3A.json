@@ -1,6 +1,7 @@
 {
     "name": "happySalon_3A",
-    "flags": [{
+    "flags": [
+        {
             "name": "grandmaGreeted",
             "value": false
         },
@@ -28,15 +29,17 @@
         "startPosition": "current"
     },
     "enemies": [],
-    "npcs": [{
-            "actorId": "Dancer1",
+    "npcs": [
+        {
+            "actorId": "Uncle",
             "position": [
-                3,
+                2,
                 10
             ],
-            "dialogue": "talkGuest.json",
+            "dialogue": "happyUncle.json",
             "isInteractableConditions": "not guest1Greeted",
-            "flagChangesAfterInteraction": [{
+            "flagChangesAfterInteraction": [
+                {
                     "name": "guest1Greeted",
                     "value": "true"
                 },
@@ -47,14 +50,15 @@
             ]
         },
         {
-            "actorId": "Dancer2",
+            "actorId": "Guest3",
             "position": [
-                14,
-                13
+                17,
+                11
             ],
-            "dialogue": "talkGuest.json",
+            "dialogue": "happyGroup.json",
             "isInteractableConditions": "not guest2Greeted",
-            "flagChangesAfterInteraction": [{
+            "flagChangesAfterInteraction": [
+                {
                     "name": "guest2Greeted",
                     "value": "true"
                 },
@@ -65,14 +69,25 @@
             ]
         },
         {
-            "actorId": "Dancer3",
+            "actorId": "Guest2",
             "position": [
-                7,
-                17
+                18,
+                12
             ],
-            "dialogue": "talkGuest.json",
+            "dialogue": "happyGroup.json",
+            "isInteractableConditions": "false",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Guest1",
+            "position": [
+                5,
+                15
+            ],
+            "dialogue": "happyGuest.json",
             "isInteractableConditions": "not guest3Greeted",
-            "flagChangesAfterInteraction": [{
+            "flagChangesAfterInteraction": [
+                {
                     "name": "guest3Greeted",
                     "value": "true"
                 },
@@ -85,15 +100,17 @@
         {
             "actorId": "Grandma",
             "position": [
-                15,
+                17,
                 15
             ],
             "dialogue": "talkGrandma.json",
             "isInteractableConditions": "not grandmaGreeted",
-            "flagChangesAfterInteraction": [{
-                "name": "grandmaGreeted",
-                "value": "true"
-            }]
+            "flagChangesAfterInteraction": [
+                {
+                    "name": "grandmaGreeted",
+                    "value": "true"
+                }
+            ]
         }
     ],
     "items": []
