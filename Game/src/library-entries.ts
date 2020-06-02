@@ -12,8 +12,8 @@ declare const DEBUG: boolean;
 
 const physicsDebug: boolean = true;
 
-const gameWidth: number = 1080;
-const gameHeight: number = 720;
+const gameWidth: number = 640;
+const gameHeight: number = 360;
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
