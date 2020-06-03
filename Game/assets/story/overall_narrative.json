@@ -21,7 +21,6 @@
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "happySalon_2A",
                         "happySalon_3A"
                     ]
                 },
@@ -135,11 +134,21 @@
                         }
                     ],
                     "nextEvents": [
-                        "sadSalon_2A"
+                        "sadSalon_2B"
                     ]
                 },
                 {
                     "name": "sadSalon_2A",
+                    "description": "Clara is intrigued that her uncle is at the party and decides to talk to him first.",
+                    "type": "gameplay",
+                    "priority": 1,
+                    "emotionalRequirements": [],
+                    "nextEvents": [
+                        "sadSalon_3A"
+                    ]
+                },
+                {
+                    "name": "sadSalon_2B",
                     "description": "Since she is nervous, she only wants to talk to her Grandma first.",
                     "type": "gameplay",
                     "priority": 1,
@@ -150,6 +159,26 @@
                             "value": 8
                         }
                     ],
+                    "nextEvents": [
+                        "sadSalon_3A"
+                    ]
+                },
+                {
+                    "name": "sadSalon_3A",
+                    "description": "Clara tries her best at greeting the guests.",
+                    "type": "gameplay",
+                    "priority": 2,
+                    "emotionalRequirements": [],
+                    "nextEvents": [
+                        "finalCutsceneSad"
+                    ]
+                },
+                {
+                    "name": "finalCutsceneSad",
+                    "description": "Final sad cutscene",
+                    "type": "cutscene",
+                    "priority": 1,
+                    "emotionalRequirements": [],
                     "nextEvents": []
                 }
             ]

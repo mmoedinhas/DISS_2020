@@ -12,7 +12,7 @@
             "actorId": "Uncle",
             "start": [
                 2,
-                10
+                13
             ]
         },
         {
@@ -48,7 +48,7 @@
         {
             "action": "walk",
             "arguments": {
-                "x": 4,
+                "x": 1,
                 "y": 0
             },
             "actorId": "Clara"
@@ -100,6 +100,22 @@
                 "y": 5
             },
             "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": -3
+            },
+            "actorId": "Uncle"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Wait, I see Uncle over there! That's rare... I'll greet him first then."
+            },
+            "actorId": "Uncle"
         }
     ]
 }

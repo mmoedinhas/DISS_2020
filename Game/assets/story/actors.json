@@ -62,7 +62,52 @@
             "name": "Uncle",
             "tilesetId": "chara2",
             "defaultFrame": 49,
-            "animations": [],
+            "animations": [
+                {
+                    "key": "left",
+                    "frames": [
+                        61,
+                        62,
+                        61,
+                        60
+                    ],
+                    "frameRate": 10,
+                    "repeat": -1
+                },
+                {
+                    "key": "right",
+                    "frames": [
+                        73,
+                        74,
+                        73,
+                        72
+                    ],
+                    "frameRate": 10,
+                    "repeat": -1
+                },
+                {
+                    "key": "up",
+                    "frames": [
+                        85,
+                        86,
+                        85,
+                        84
+                    ],
+                    "frameRate": 10,
+                    "repeat": -1
+                },
+                {
+                    "key": "down",
+                    "frames": [
+                        49,
+                        50,
+                        49,
+                        48
+                    ],
+                    "frameRate": 10,
+                    "repeat": -1
+                }
+            ],
             "body": {
                 "height": 33,
                 "width": 50,
