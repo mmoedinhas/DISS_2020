@@ -21,7 +21,8 @@
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "happySalon_3A"
+                        "happySalon_3A",
+                        "happySalon_3B"
                     ]
                 },
                 {
@@ -37,8 +38,7 @@
                         }
                     ],
                     "nextEvents": [
-                        "happySalon_2A",
-                        "happySalon_3A"
+                        "happySalon_2A"
                     ]
                 },
                 {
@@ -54,15 +54,33 @@
                         }
                     ],
                     "nextEvents": [
-                        "happySalon_3A"
+                        "happySalon_3A",
+                        "happySalon_3B"
                     ]
                 },
                 {
                     "name": "happySalon_3A",
                     "description": "Time to talk to other guests.",
                     "type": "gameplay",
-                    "priority": 2,
+                    "priority": 3,
                     "emotionalRequirements": [],
+                    "nextEvents": [
+                        "finalCutsceneDefault",
+                        "finalCutsceneAnxiety"
+                    ]
+                },
+                {
+                    "name": "happySalon_3B",
+                    "description": "Time to talk to other guests, but one of the guests smells disgusting...",
+                    "type": "gameplay",
+                    "priority": 2,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "disgust",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
                     "nextEvents": [
                         "finalCutsceneDefault",
                         "finalCutsceneAnxiety"
@@ -162,7 +180,8 @@
                     "priority": 1,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "sadSalon_3A"
+                        "sadSalon_3A",
+                        "sadSalon_3B"
                     ]
                 },
                 {
@@ -178,7 +197,8 @@
                         }
                     ],
                     "nextEvents": [
-                        "sadSalon_3A"
+                        "sadSalon_3A",
+                        "sadSalon_3B"
                     ]
                 },
                 {
@@ -187,6 +207,22 @@
                     "type": "gameplay",
                     "priority": 2,
                     "emotionalRequirements": [],
+                    "nextEvents": [
+                        "finalCutsceneSad"
+                    ]
+                },
+                {
+                    "name": "sadSalon_3B",
+                    "description": "Time to talk to other guests, but one of the guests smells disgusting...",
+                    "type": "gameplay",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "disgust",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
                     "nextEvents": [
                         "finalCutsceneSad"
                     ]
