@@ -65,7 +65,8 @@
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "finalCutsceneDefault"
+                        "finalCutsceneDefault",
+                        "finalCutsceneAnxiety"
                     ]
                 },
                 {
@@ -74,6 +75,20 @@
                     "type": "cutscene",
                     "priority": 2,
                     "emotionalRequirements": [],
+                    "nextEvents": []
+                },
+                {
+                    "name": "finalCutsceneAnxiety",
+                    "description": "Final anxiety cutscene.",
+                    "type": "cutscene",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "anxiety",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
                     "nextEvents": []
                 }
             ]
