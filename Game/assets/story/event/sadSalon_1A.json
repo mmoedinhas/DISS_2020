@@ -48,7 +48,7 @@
         {
             "action": "walk",
             "arguments": {
-                "x": 2,
+                "x": 4,
                 "y": 0
             },
             "actorId": "Clara"
@@ -65,7 +65,15 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "Mother and Father told me I have to attend their silly Christmas party."
+                "text": "The past few days I've been feeling down..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "And now, Mother and Father tell me I have to attend their silly Christmas party."
             },
             "actorId": "Clara"
         },
@@ -89,7 +97,7 @@
             "action": "walk",
             "arguments": {
                 "x": 0,
-                "y": 6
+                "y": 5
             },
             "actorId": "Clara"
         }

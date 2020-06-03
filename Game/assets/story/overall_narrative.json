@@ -118,12 +118,30 @@
                     "type": "cutscene",
                     "priority": 2,
                     "emotionalRequirements": [],
-                    "nextEvents": []
+                    "nextEvents": [
+                        "sadSalon_2A"
+                    ]
                 },
                 {
                     "name": "sadSalon_1B",
                     "description": "Clara is sad and the mere thought of talking to the guests is making her very nervous",
                     "type": "cutscene",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "anxiety",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "sadSalon_2A"
+                    ]
+                },
+                {
+                    "name": "sadSalon_2A",
+                    "description": "Since she is nervous, she only wants to talk to her Grandma first.",
+                    "type": "gameplay",
                     "priority": 1,
                     "emotionalRequirements": [
                         {

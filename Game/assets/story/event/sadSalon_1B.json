@@ -48,7 +48,7 @@
         {
             "action": "walk",
             "arguments": {
-                "x": 2,
+                "x": 4,
                 "y": 0
             },
             "actorId": "Clara"
@@ -57,7 +57,15 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "Mother and Father told me I have to attend their silly Christmas party."
+                "text": "The past few days I've been feeling down..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "And now, Mother and Father tell me I have to attend their silly Christmas party."
             },
             "actorId": "Clara"
         },
@@ -89,14 +97,6 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "I'm so nervous, what if they don't remember who I am anymore?"
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
                 "text": "... I really don't want to be awkward ..."
             },
             "actorId": "Clara"
@@ -105,7 +105,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "Why am I so nervous?"
+                "text": "Why is it being so hard to just greet them?"
             },
             "actorId": "Clara"
         },
@@ -129,9 +129,17 @@
             "action": "walk",
             "arguments": {
                 "x": 0,
-                "y": 6
+                "y": 5
             },
             "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": -4,
+                "y": 0
+            },
+            "actorId": "Grandma"
         },
         {
             "action": "talk",
@@ -139,7 +147,7 @@
                 "author": "Clara",
                 "text": "Wait, I see grandma over there! I'll go over to her, maybe she can help."
             },
-            "actorId": "Clara"
+            "actorId": "Grandma"
         }
     ]
 }

@@ -11,16 +11,16 @@
         "playerId": "Clara",
         "actorId": "Clara",
         "startPosition": [
-            10,
-            13
+            12,
+            10
         ]
     },
     "enemies": [],
     "npcs": [
         {
-            "actorId": "Dancer1",
+            "actorId": "Uncle",
             "position": [
-                3,
+                2,
                 10
             ],
             "dialogue": "sad_notGrandma.json",
@@ -28,20 +28,30 @@
             "flagChangesAfterInteraction": []
         },
         {
-            "actorId": "Dancer2",
+            "actorId": "Guest3",
             "position": [
-                14,
-                13
+                17,
+                11
             ],
             "dialogue": "sad_notGrandma.json",
             "isInteractableConditions": "true",
             "flagChangesAfterInteraction": []
         },
         {
-            "actorId": "Dancer3",
+            "actorId": "Guest2",
             "position": [
-                7,
-                17
+                18,
+                12
+            ],
+            "dialogue": "sad_notGrandma.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Guest1",
+            "position": [
+                5,
+                15
             ],
             "dialogue": "sad_notGrandma.json",
             "isInteractableConditions": "true",
@@ -50,10 +60,10 @@
         {
             "actorId": "Grandma",
             "position": [
-                15,
+                13,
                 15
             ],
-            "dialogue": "nervousTalkGrandma.json",
+            "dialogue": "sadNervousTalkGrandma.json",
             "isInteractableConditions": "not grandmaGreeted",
             "flagChangesAfterInteraction": [
                 {
