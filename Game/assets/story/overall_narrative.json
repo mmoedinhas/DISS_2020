@@ -64,6 +64,16 @@
                     "type": "gameplay",
                     "priority": 2,
                     "emotionalRequirements": [],
+                    "nextEvents": [
+                        "finalCutsceneDefault"
+                    ]
+                },
+                {
+                    "name": "finalCutsceneDefault",
+                    "description": "Final default cutscene.",
+                    "type": "cutscene",
+                    "priority": 2,
+                    "emotionalRequirements": [],
                     "nextEvents": []
                 }
             ]

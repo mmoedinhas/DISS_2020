@@ -48,7 +48,7 @@
         {
             "action": "walk",
             "arguments": {
-                "x": 2,
+                "x": 4,
                 "y": 0
             },
             "actorId": "Clara"
@@ -129,7 +129,7 @@
             "action": "walk",
             "arguments": {
                 "x": 0,
-                "y": 6
+                "y": 5
             },
             "actorId": "Clara"
         },

@@ -61,7 +61,7 @@
             "id": "Uncle",
             "name": "Uncle",
             "tilesetId": "chara2",
-            "defaultFrame": 48,
+            "defaultFrame": 49,
             "animations": [],
             "body": {
                 "height": 33,
