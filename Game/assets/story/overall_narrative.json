@@ -72,18 +72,36 @@
                     "name": "finalCutsceneDefault",
                     "description": "Final default cutscene.",
                     "type": "cutscene",
-                    "priority": 2,
+                    "priority": 3,
                     "emotionalRequirements": [],
-                    "nextEvents": []
+                    "nextEvents": [
+                        "finalCutsceneAnger"
+                    ]
                 },
                 {
                     "name": "finalCutsceneAnxiety",
                     "description": "Final anxiety cutscene.",
                     "type": "cutscene",
-                    "priority": 1,
+                    "priority": 2,
                     "emotionalRequirements": [
                         {
                             "parameter": "anxiety",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "finalCutsceneAnger"
+                    ]
+                },
+                {
+                    "name": "finalCutsceneAnger",
+                    "description": "Final anger cutscene.",
+                    "type": "cutscene",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "anger",
                             "condition": ">",
                             "value": 8
                         }
@@ -179,6 +197,22 @@
                     "type": "cutscene",
                     "priority": 1,
                     "emotionalRequirements": [],
+                    "nextEvents": [
+                        "finalCutsceneAnger"
+                    ]
+                },
+                {
+                    "name": "finalCutsceneAnger",
+                    "description": "Final anger cutscene",
+                    "type": "cutscene",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "anger",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
                     "nextEvents": []
                 }
             ]
