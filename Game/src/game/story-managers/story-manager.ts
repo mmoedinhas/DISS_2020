@@ -172,19 +172,21 @@ export class StoryManager {
 						if (progress >= 1) {
 							Logging.endEvent(this.scene, this.getCurrEvent());
 							this.next();
-							this.scene.cameras.main.fadeFrom(
-								250,
-								0,
-								0,
-								0,
-								true,
-								function (camera, progress) {
-									if (progress >= 1) {
-										this.fadingCamera = false;
-									}
-								},
-								this
-							);
+							if (!this.done) {
+								this.scene.cameras.main.fadeFrom(
+									250,
+									0,
+									0,
+									0,
+									true,
+									function (camera, progress) {
+										if (progress >= 1) {
+											this.fadingCamera = false;
+										}
+									},
+									this
+								);
+							}
 						}
 					},
 					this

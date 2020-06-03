@@ -66,19 +66,7 @@ export class GameScene extends Phaser.Scene {
 		}
 		if (this.storyManager.isDone()) {
 			this.isGameEnded = true;
-			this.cameras.main.fade(
-				500,
-				0,
-				0,
-				0,
-				true,
-				function (camera, progress) {
-					if (progress >= 1) {
-						this.scene.start('End');
-					}
-				},
-				this
-			);
+			this.scene.start('End');
 			return;
 		}
 
