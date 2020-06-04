@@ -10,23 +10,25 @@
             "emotionalRequirements": [],
             "transitions": [],
             "firstEvents": [
-                "happySalon_1A",
-                "happySalon_1B"
+                "default_startingCutscene",
+                "anxious_startingCutscene"
             ],
             "events": [
                 {
-                    "name": "happySalon_1A",
+                    "name": "default_startingCutscene",
                     "description": "Clara is excited and happy for the Christmas party.",
                     "type": "cutscene",
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "happySalon_3A",
-                        "happySalon_3B"
+                        "default_talkAllGuests",
+                        "disgust&happy_talkAllGuests",
+                        "disgust_talkAllGuests",
+                        "happy_talkAllGuests"
                     ]
                 },
                 {
-                    "name": "happySalon_1B",
+                    "name": "anxious_startingCutscene",
                     "description": "Clara is happy for the party but is somewhat nervous.",
                     "type": "cutscene",
                     "priority": 1,
@@ -38,11 +40,11 @@
                         }
                     ],
                     "nextEvents": [
-                        "happySalon_2A"
+                        "anxious_onlyTalkingToGrandma"
                     ]
                 },
                 {
-                    "name": "happySalon_2A",
+                    "name": "anxious_onlyTalkingToGrandma",
                     "description": "Since she is nervous, she only wants to talk to her Grandma first.",
                     "type": "gameplay",
                     "priority": 1,
@@ -54,12 +56,14 @@
                         }
                     ],
                     "nextEvents": [
-                        "happySalon_3A",
-                        "happySalon_3B"
+                        "default_talkAllGuests",
+                        "disgust&happy_talkAllGuests",
+                        "disgust_talkAllGuests",
+                        "happy_talkAllGuests"
                     ]
                 },
                 {
-                    "name": "happySalon_3A",
+                    "name": "default_talkAllGuests",
                     "description": "Time to talk to other guests.",
                     "type": "gameplay",
                     "priority": 3,
@@ -70,13 +74,52 @@
                     ]
                 },
                 {
-                    "name": "happySalon_3B",
+                    "name": "disgust&happy_talkAllGuests",
+                    "description": "Time to talk to other guests, but one of the guests smells disgusting... Also, Clara receives a gift from Grandma which boosts her happiness.",
+                    "type": "gameplay",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "disgust",
+                            "condition": ">",
+                            "value": 8
+                        },
+                        {
+                            "parameter": "happiness",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "finalCutsceneDefault",
+                        "finalCutsceneAnxiety"
+                    ]
+                },
+                {
+                    "name": "disgust_talkAllGuests",
                     "description": "Time to talk to other guests, but one of the guests smells disgusting...",
                     "type": "gameplay",
                     "priority": 2,
                     "emotionalRequirements": [
                         {
                             "parameter": "disgust",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "finalCutsceneDefault",
+                        "finalCutsceneAnxiety"
+                    ]
+                },
+                {
+                    "name": "happy_talkAllGuests",
+                    "description": "Clara receives a gift from Grandma which boosts her happiness.",
+                    "type": "gameplay",
+                    "priority": 2,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "happiness",
                             "condition": ">",
                             "value": 8
                         }
@@ -139,26 +182,31 @@
                     "parameter": "sadness",
                     "condition": ">",
                     "value": 10
+                },
+                {
+                    "parameter": "happiness",
+                    "condition": "<=",
+                    "value": 10
                 }
             ],
             "transitions": [],
             "firstEvents": [
-                "sadSalon_1A",
-                "sadSalon_1B"
+                "sad_startingCutscene",
+                "sad&anxious_startingCutscene"
             ],
             "events": [
                 {
-                    "name": "sadSalon_1A",
+                    "name": "sad_startingCutscene",
                     "description": "Clara is sad and doesn't feel like going to the party.",
                     "type": "cutscene",
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "sadSalon_2A"
+                        "sad_onlyTalkingToUncle"
                     ]
                 },
                 {
-                    "name": "sadSalon_1B",
+                    "name": "sad&anxious_startingCutscene",
                     "description": "Clara is sad and the mere thought of talking to the guests is making her very nervous",
                     "type": "cutscene",
                     "priority": 1,
@@ -170,22 +218,22 @@
                         }
                     ],
                     "nextEvents": [
-                        "sadSalon_2B"
+                        "sad&anxious_onlyTalkingToGrandma"
                     ]
                 },
                 {
-                    "name": "sadSalon_2A",
+                    "name": "sad_onlyTalkingToUncle",
                     "description": "Clara is intrigued that her uncle is at the party and decides to talk to him first.",
                     "type": "gameplay",
                     "priority": 1,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "sadSalon_3A",
-                        "sadSalon_3B"
+                        "sad_talkAllGuests",
+                        "sad&disgust_talkAllGuests"
                     ]
                 },
                 {
-                    "name": "sadSalon_2B",
+                    "name": "sad&anxious_onlyTalkingToGrandma",
                     "description": "Since she is nervous, she only wants to talk to her Grandma first.",
                     "type": "gameplay",
                     "priority": 1,
@@ -197,12 +245,12 @@
                         }
                     ],
                     "nextEvents": [
-                        "sadSalon_3A",
-                        "sadSalon_3B"
+                        "sad_talkAllGuests",
+                        "sad&disgust_talkAllGuests"
                     ]
                 },
                 {
-                    "name": "sadSalon_3A",
+                    "name": "sad_talkAllGuests",
                     "description": "Clara tries her best at greeting the guests.",
                     "type": "gameplay",
                     "priority": 2,
@@ -212,7 +260,7 @@
                     ]
                 },
                 {
-                    "name": "sadSalon_3B",
+                    "name": "sad&disgust_talkAllGuests",
                     "description": "Time to talk to other guests, but one of the guests smells disgusting...",
                     "type": "gameplay",
                     "priority": 1,

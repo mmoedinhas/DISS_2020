@@ -1,5 +1,5 @@
 {
-    "name": "sadSalon_3B",
+    "name": "happy_talkAllGuests",
     "flags": [
         {
             "name": "grandmaGreeted",
@@ -36,7 +36,7 @@
                 2,
                 10
             ],
-            "dialogue": "sadGreetUncle.json",
+            "dialogue": "happyUncle.json",
             "isInteractableConditions": "not guest1Greeted",
             "flagChangesAfterInteraction": [
                 {
@@ -103,7 +103,7 @@
                 17,
                 15
             ],
-            "dialogue": "sadTalkGrandma.json",
+            "dialogue": "talkGrandma.json",
             "isInteractableConditions": "not grandmaGreeted",
             "flagChangesAfterInteraction": [
                 {

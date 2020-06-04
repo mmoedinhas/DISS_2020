@@ -1,5 +1,5 @@
 {
-    "name": "happySalon_1A",
+    "name": "anxious_startingCutscene",
     "actors": [
         {
             "actorId": "Clara",
@@ -81,7 +81,47 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "I can see the guests already arrived. I should go and say hello!"
+                "text": "I can see the guests already arrived. Oh my, I haven't seen everyone for so long..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I'm so nervous, what if they don't remember who I am anymore?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "... I really don't want to be awkward ..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Why am I so nervous?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "For now, let's just say hello to everyone and see how things go."
             },
             "actorId": "Clara"
         },
@@ -92,6 +132,22 @@
                 "y": 5
             },
             "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": -4,
+                "y": 0
+            },
+            "actorId": "Grandma"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Wait, I see grandma over there! I'll go over to her, maybe she can help."
+            },
+            "actorId": "Grandma"
         }
     ]
 }

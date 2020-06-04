@@ -1,5 +1,5 @@
 {
-    "name": "sadSalon_1A",
+    "name": "sad&anxious_startingCutscene",
     "actors": [
         {
             "actorId": "Clara",
@@ -12,7 +12,7 @@
             "actorId": "Uncle",
             "start": [
                 2,
-                13
+                10
             ]
         },
         {
@@ -48,16 +48,8 @@
         {
             "action": "walk",
             "arguments": {
-                "x": 1,
+                "x": 4,
                 "y": 0
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "walk",
-            "arguments": {
-                "x": 0,
-                "y": 1
             },
             "actorId": "Clara"
         },
@@ -86,10 +78,50 @@
             "actorId": "Clara"
         },
         {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": 1
+            },
+            "actorId": "Clara"
+        },
+        {
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "I'll just greet everyone and go back to my room as soon as I can... Maybe Mother and Father won't notice I'm gone afterwards."
+                "text": "I can see the guests already arrived. Oh my, I haven't seen everyone for so long..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "... I really don't want to be awkward ..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Why is it being so hard to just greet them?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Ok, remember Mother and Father. You can't disappoint them. Come on, deep breaths..."
             },
             "actorId": "Clara"
         },
@@ -104,18 +136,18 @@
         {
             "action": "walk",
             "arguments": {
-                "x": 0,
-                "y": -3
+                "x": -4,
+                "y": 0
             },
-            "actorId": "Uncle"
+            "actorId": "Grandma"
         },
         {
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "Wait, I see Uncle over there! That's rare... I'll greet him first then."
+                "text": "Wait, I see grandma over there! I'll go over to her, maybe she can help."
             },
-            "actorId": "Uncle"
+            "actorId": "Grandma"
         }
     ]
 }
