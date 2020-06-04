@@ -21,7 +21,7 @@ var surveyJSON = {
 					name: 'introduction',
 					html: `<p>In this Master thesis project we are researching and creating a framework that helps build game narratives that take into account the player's feelings and emotions, using an affective profile.</p>
 						<p>The main objective is to help the creation of video game experiences that are more personal to the user and hopefully more enjoyable.</p>
-						<p>To test this framework, we have prepared a gameplay experiment running on a desktop web browser (<b>no support for mobile devices at the moment</b>) and we are asking for volunteeers to perform the experiment.</p>
+						<p>To test this framework, we have prepared a gameplay experiment running on a desktop web browser (<b>no support for mobile devices at the moment</b>) and we are asking for volunters to perform the experiment.</p>
 						<p>This experiment should not take more than 30 mins. It is divided in 3 steps: </p>
 						<ul>
 						<li> Short questionnaire for gathering some general information, such as age range, gaming habits and affective profile. </li>
@@ -857,7 +857,7 @@ var surveyJSON = {
 	],
 	showPrevButton: true,
 	showQuestionNumbers: 'off',
-	requiredText: '(required)',
+	requiredText: '*',
 	firstPageIsStarted: true,
 	showProgressBar: 'bottom',
 };
