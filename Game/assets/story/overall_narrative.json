@@ -70,7 +70,9 @@
                     "emotionalRequirements": [],
                     "nextEvents": [
                         "finalCutsceneDefault",
-                        "finalCutsceneAnxiety"
+                        "finalCutsceneAnxiety",
+                        "desire_finalCutsceneDefault",
+                        "desire_finalCutsceneAnxiety"
                     ]
                 },
                 {
@@ -92,7 +94,9 @@
                     ],
                     "nextEvents": [
                         "finalCutsceneDefault",
-                        "finalCutsceneAnxiety"
+                        "finalCutsceneAnxiety",
+                        "desire_finalCutsceneDefault",
+                        "desire_finalCutsceneAnxiety"
                     ]
                 },
                 {
@@ -109,7 +113,9 @@
                     ],
                     "nextEvents": [
                         "finalCutsceneDefault",
-                        "finalCutsceneAnxiety"
+                        "finalCutsceneAnxiety",
+                        "desire_finalCutsceneDefault",
+                        "desire_finalCutsceneAnxiety"
                     ]
                 },
                 {
@@ -126,7 +132,9 @@
                     ],
                     "nextEvents": [
                         "finalCutsceneDefault",
-                        "finalCutsceneAnxiety"
+                        "finalCutsceneAnxiety",
+                        "desire_finalCutsceneDefault",
+                        "desire_finalCutsceneAnxiety"
                     ]
                 },
                 {
@@ -156,10 +164,79 @@
                     ]
                 },
                 {
-                    "name": "finalCutsceneAnger",
-                    "description": "Final anger cutscene.",
+                    "name": "desire_finalCutsceneDefault",
+                    "description": "Final anxiety cutscene. But suddenly, Clara desires cakes.",
+                    "type": "cutscene",
+                    "priority": 2,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "desire",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "desire_searchForCake"
+                    ]
+                },
+                {
+                    "name": "desire_finalCutsceneAnxiety",
+                    "description": "Final anxiety cutscene.. But suddenly, Clara desires cakes.",
                     "type": "cutscene",
                     "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "anxiety",
+                            "condition": ">",
+                            "value": 8
+                        },
+                        {
+                            "parameter": "desire",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "desire_searchForCake"
+                    ]
+                },
+                {
+                    "name": "desire_searchForCake",
+                    "description": "Clara needs to know who talked about the cakes.",
+                    "type": "gameplay",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "desire",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "finalCutsceneDesire"
+                    ]
+                },
+                {
+                    "name": "finalCutsceneDesire",
+                    "description": "Clara is satisfied eating the cake.",
+                    "type": "cutscene",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "desire",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "finalCutsceneAnger"
+                    ]
+                },
+                {
+                    "name": "finalCutsceneAnger",
+                    "description": "Clara's brother does something that pisses Clara off.",
+                    "type": "cutscene",
+                    "priority": 2,
                     "emotionalRequirements": [
                         {
                             "parameter": "anger",
@@ -256,7 +333,8 @@
                     "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "finalCutsceneSad"
+                        "finalCutsceneSad",
+                        "desire_finalCutsceneSad"
                     ]
                 },
                 {
@@ -272,24 +350,73 @@
                         }
                     ],
                     "nextEvents": [
-                        "finalCutsceneSad"
+                        "finalCutsceneSad",
+                        "desire_finalCutsceneSad"
                     ]
                 },
                 {
                     "name": "finalCutsceneSad",
                     "description": "Final sad cutscene",
                     "type": "cutscene",
-                    "priority": 1,
+                    "priority": 2,
                     "emotionalRequirements": [],
                     "nextEvents": [
-                        "finalCutsceneAnger"
+                        "sad_finalCutsceneAnger"
                     ]
                 },
                 {
-                    "name": "finalCutsceneAnger",
-                    "description": "Final anger cutscene",
+                    "name": "desire_finalCutsceneSad",
+                    "description": "Final sad cutscene. But suddenly, Clara desires cakes.",
                     "type": "cutscene",
                     "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "desire",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "desire&sad_searchForCake"
+                    ]
+                },
+                {
+                    "name": "desire&sad_searchForCake",
+                    "description": "Clara needs to know who talked about the cakes.",
+                    "type": "gameplay",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "desire",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "sad_finalCutsceneDesire"
+                    ]
+                },
+                {
+                    "name": "sad_finalCutsceneDesire",
+                    "description": "Clara is satisfied eating the cake.",
+                    "type": "cutscene",
+                    "priority": 1,
+                    "emotionalRequirements": [
+                        {
+                            "parameter": "desire",
+                            "condition": ">",
+                            "value": 8
+                        }
+                    ],
+                    "nextEvents": [
+                        "sad_finalCutsceneAnger"
+                    ]
+                },
+                {
+                    "name": "sad_finalCutsceneAnger",
+                    "description": "Final anger cutscene",
+                    "type": "cutscene",
+                    "priority": 2,
                     "emotionalRequirements": [
                         {
                             "parameter": "anger",
