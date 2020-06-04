@@ -1,5 +1,5 @@
 {
-    "name": "sadSalon_1B",
+    "name": "anxious_startingCutscene",
     "actors": [
         {
             "actorId": "Clara",
@@ -54,34 +54,26 @@
             "actorId": "Clara"
         },
         {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "The past few days I've been feeling down..."
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "And now, Mother and Father tell me I have to attend their silly Christmas party."
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "I really REALLY don't feel like attending, but I don't want to disappoint them..."
-            },
-            "actorId": "Clara"
-        },
-        {
             "action": "walk",
             "arguments": {
                 "x": 0,
                 "y": 1
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "It's finally Christmas!"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I waited for this day for so long! I'm so excited!"
             },
             "actorId": "Clara"
         },
@@ -97,6 +89,14 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
+                "text": "I'm so nervous, what if they don't remember who I am anymore?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
                 "text": "... I really don't want to be awkward ..."
             },
             "actorId": "Clara"
@@ -105,7 +105,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "Why is it being so hard to just greet them?"
+                "text": "Why am I so nervous?"
             },
             "actorId": "Clara"
         },
@@ -121,7 +121,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "Ok, remember Mother and Father. You can't disappoint them. Come on, deep breaths..."
+                "text": "For now, let's just say hello to everyone and see how things go."
             },
             "actorId": "Clara"
         },

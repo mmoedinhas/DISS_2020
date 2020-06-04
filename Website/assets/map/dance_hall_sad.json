@@ -19,7 +19,7 @@
                 {
                  "name":"collidable",
                  "type":"bool",
-                 "value":false
+                 "value":true
                 }, 
                 {
                  "name":"depth",

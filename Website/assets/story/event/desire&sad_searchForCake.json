@@ -1,19 +1,16 @@
 {
-    "name": "happySalon_2A",
+    "name": "desire&sad_searchForCake",
     "flags": [
         {
-            "name": "grandmaGreeted",
+            "name": "foundCake",
             "value": false
         }
     ],
-    "endEventCondition": "grandmaGreeted",
+    "endEventCondition": "foundCake",
     "player": {
         "playerId": "Clara",
         "actorId": "Clara",
-        "startPosition": [
-            12,
-            10
-        ]
+        "startPosition": "current"
     },
     "enemies": [],
     "npcs": [
@@ -23,7 +20,7 @@
                 2,
                 10
             ],
-            "dialogue": "notGrandma.json",
+            "dialogue": "noCakes.json",
             "isInteractableConditions": "true",
             "flagChangesAfterInteraction": []
         },
@@ -33,9 +30,14 @@
                 17,
                 11
             ],
-            "dialogue": "notGrandma.json",
-            "isInteractableConditions": "true",
-            "flagChangesAfterInteraction": []
+            "dialogue": "yesCakes.json",
+            "isInteractableConditions": "not foundCake",
+            "flagChangesAfterInteraction": [
+                {
+                    "name": "foundCake",
+                    "value": "true"
+                }
+            ]
         },
         {
             "actorId": "Guest2",
@@ -43,7 +45,7 @@
                 18,
                 12
             ],
-            "dialogue": "notGrandma.json",
+            "dialogue": "yesCakes.json",
             "isInteractableConditions": "false",
             "flagChangesAfterInteraction": []
         },
@@ -53,24 +55,19 @@
                 5,
                 15
             ],
-            "dialogue": "notGrandma.json",
+            "dialogue": "noCakes.json",
             "isInteractableConditions": "true",
             "flagChangesAfterInteraction": []
         },
         {
             "actorId": "Grandma",
             "position": [
-                13,
+                17,
                 15
             ],
-            "dialogue": "nervousTalkGrandma.json",
-            "isInteractableConditions": "not grandmaGreeted",
-            "flagChangesAfterInteraction": [
-                {
-                    "name": "grandmaGreeted",
-                    "value": "true"
-                }
-            ]
+            "dialogue": "noCakes.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
         }
     ],
     "items": []

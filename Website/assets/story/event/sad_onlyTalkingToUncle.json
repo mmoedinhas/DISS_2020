@@ -1,17 +1,17 @@
 {
-    "name": "happySalon_2A",
+    "name": "sad_onlyTalkingToUncle",
     "flags": [
         {
-            "name": "grandmaGreeted",
+            "name": "uncleGreeted",
             "value": false
         }
     ],
-    "endEventCondition": "grandmaGreeted",
+    "endEventCondition": "uncleGreeted",
     "player": {
         "playerId": "Clara",
         "actorId": "Clara",
         "startPosition": [
-            12,
+            9,
             10
         ]
     },
@@ -23,9 +23,14 @@
                 2,
                 10
             ],
-            "dialogue": "notGrandma.json",
-            "isInteractableConditions": "true",
-            "flagChangesAfterInteraction": []
+            "dialogue": "sadTalkUncle.json",
+            "isInteractableConditions": "not uncleGreeted",
+            "flagChangesAfterInteraction": [
+                {
+                    "name": "uncleGreeted",
+                    "value": "true"
+                }
+            ]
         },
         {
             "actorId": "Guest3",
@@ -33,7 +38,7 @@
                 17,
                 11
             ],
-            "dialogue": "notGrandma.json",
+            "dialogue": "sad_notUncle.json",
             "isInteractableConditions": "true",
             "flagChangesAfterInteraction": []
         },
@@ -43,8 +48,8 @@
                 18,
                 12
             ],
-            "dialogue": "notGrandma.json",
-            "isInteractableConditions": "false",
+            "dialogue": "sad_notUncle.json",
+            "isInteractableConditions": "true",
             "flagChangesAfterInteraction": []
         },
         {
@@ -53,24 +58,19 @@
                 5,
                 15
             ],
-            "dialogue": "notGrandma.json",
+            "dialogue": "sad_notUncle.json",
             "isInteractableConditions": "true",
             "flagChangesAfterInteraction": []
         },
         {
             "actorId": "Grandma",
             "position": [
-                13,
+                17,
                 15
             ],
-            "dialogue": "nervousTalkGrandma.json",
-            "isInteractableConditions": "not grandmaGreeted",
-            "flagChangesAfterInteraction": [
-                {
-                    "name": "grandmaGreeted",
-                    "value": "true"
-                }
-            ]
+            "dialogue": "sad_notUncle.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
         }
     ],
     "items": []

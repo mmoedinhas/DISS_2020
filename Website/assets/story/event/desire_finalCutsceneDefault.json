@@ -1,11 +1,11 @@
 {
-    "name": "happySalon_1B",
+    "name": "finalCutsceneDefault",
     "actors": [
         {
             "actorId": "Clara",
             "start": [
-                8,
-                4
+                12,
+                10
             ]
         },
         {
@@ -46,66 +46,26 @@
     ],
     "actions": [
         {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "And that was the last guest I needed to greet."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "The only thing left is enjoy the party!"
+            },
+            "actorId": "Clara"
+        },
+        {
             "action": "walk",
             "arguments": {
-                "x": 4,
+                "x": 2,
                 "y": 0
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "walk",
-            "arguments": {
-                "x": 0,
-                "y": 1
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "It's finally Christmas!"
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "I waited for this day for so long! I'm so excited!"
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "I can see the guests already arrived. Oh my, I haven't seen everyone for so long..."
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "I'm so nervous, what if they don't remember who I am anymore?"
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "... I really don't want to be awkward ..."
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "Why am I so nervous?"
             },
             "actorId": "Clara"
         },
@@ -121,33 +81,25 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "For now, let's just say hello to everyone and see how things go."
+                "text": "I really feel like some cakes right now..."
             },
             "actorId": "Clara"
-        },
-        {
-            "action": "walk",
-            "arguments": {
-                "x": 0,
-                "y": 5
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "walk",
-            "arguments": {
-                "x": -4,
-                "y": 0
-            },
-            "actorId": "Grandma"
         },
         {
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "Wait, I see grandma over there! I'll go over to her, maybe she can help."
+                "text": "Fluffy cakes just out of the oven... Yummy..."
             },
-            "actorId": "Grandma"
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I remember talking to a guest about cakes! I should ask them where the cakes are."
+            },
+            "actorId": "Clara"
         }
     ]
 }

@@ -1,11 +1,11 @@
 {
-    "name": "happySalon_1A",
+    "name": "finalCutsceneDesire",
     "actors": [
         {
             "actorId": "Clara",
             "start": [
-                8,
-                4
+                14,
+                10
             ]
         },
         {
@@ -46,18 +46,10 @@
     ],
     "actions": [
         {
-            "action": "walk",
+            "action": "talk",
             "arguments": {
-                "x": 4,
-                "y": 0
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "walk",
-            "arguments": {
-                "x": 0,
-                "y": 1
+                "author": "Clara",
+                "text": "I was craving cakes so bad, finally I can eat one!"
             },
             "actorId": "Clara"
         },
@@ -65,7 +57,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "It's finally Christmas!"
+                "text": "Nom nom nom nom"
             },
             "actorId": "Clara"
         },
@@ -73,23 +65,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara",
-                "text": "I waited for this day for so long! I'm so excited!"
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "talk",
-            "arguments": {
-                "author": "Clara",
-                "text": "I can see the guests already arrived. I should go and say hello!"
-            },
-            "actorId": "Clara"
-        },
-        {
-            "action": "walk",
-            "arguments": {
-                "x": 0,
-                "y": 5
+                "text": "Yummy! That girl was right, these cakes are delicious!"
             },
             "actorId": "Clara"
         }
