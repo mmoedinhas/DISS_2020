@@ -138,7 +138,7 @@ function drawLocationNode(
 
 	graph.nodes.push({
 		id: nodeId,
-		label: 'Location: ' + locationId,
+		label: locationId,
 		longLabel: 'Location: ' + locationId,
 		type: 'circle',
 		x: globalCoords.x,
@@ -171,7 +171,7 @@ function parseScene(
 	parentId
 ) {
 	let id = getSceneId(scene);
-	let label = 'Scene: ' + scene['name'];
+	let label = scene['name'];
 	let longLabel = label + '\n\n' + wrap(scene['description'], label.length);
 
 	graph.nodes.push({
@@ -402,12 +402,10 @@ function getEventNodeProperties(event) {
 	};
 
 	if (event['type'] == 'cutscene') {
-		properties.label = 'Cutscene: ';
 		properties.type = 'square';
 		properties.color = palette['purple'];
 		properties.id = 'cutscene_';
 	} else if (event['type'] == 'gameplay') {
-		properties.label = 'Gameplay: ';
 		properties.type = 'diamond';
 		properties.color = palette['pink'];
 		properties.id = 'gameplay_';
