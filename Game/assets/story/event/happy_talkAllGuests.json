@@ -84,7 +84,7 @@
                 5,
                 15
             ],
-            "dialogue": "disgustedGuest.json",
+            "dialogue": "happyGuest.json",
             "isInteractableConditions": "not guest3Greeted",
             "flagChangesAfterInteraction": [
                 {
@@ -103,7 +103,7 @@
                 17,
                 15
             ],
-            "dialogue": "talkGrandma.json",
+            "dialogue": "happyTalkGrandma.json",
             "isInteractableConditions": "not grandmaGreeted",
             "flagChangesAfterInteraction": [
                 {
