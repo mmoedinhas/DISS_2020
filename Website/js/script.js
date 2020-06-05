@@ -188,8 +188,13 @@ function startSurvey(isDefaultFirst) {
 
 		if (question.name.includes('_logs')) {
 			htmlElement.classList.add('game');
-			let panel = document.getElementsByClassName('sv_p_container')[0];
-			panel.classList.add('game');
+		}
+
+		if (
+			question.name.includes('play_session_') &&
+			question.name.includes('_description')
+		) {
+			htmlElement.classList.add('game_desc');
 		}
 	});
 

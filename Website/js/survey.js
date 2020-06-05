@@ -374,42 +374,33 @@ var surveyJSON = {
 			name: 'play_session_1',
 			elements: [
 				{
-					type: 'panel',
-					innerIndent: 1,
-					name: 'panel_play_session_1_description',
-					title: 'Game instructions',
-					state: 'collapsed',
-					elements: [
-						{
-							type: 'html',
-							name: 'play_session_1_description',
-							html: `<p>You are Clara, the daughter of a wealthy family. Today is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests. How is Clara
-                            going to handle this responsibility?</p>
-    
-                        <table class="game-controls">
-                            <tr>
-                                <th colspan="2">Game controls</th>
-                            </tr>
-                            <tr>
-                                <td>Arrows</td>
-                                <td>Walking</td>
-                            </tr>
-                            <tr>
-                                <td>Z</td>
-                                <td>
-                                    <p>Interacting with characters whenever prompted</p>
-                                    <p>Interacting with the dialogue box</p>
-                                </td>
-                            </tr>
-                        </table>`,
-						},
-					],
-				},
-				{
 					type: 'game',
 					name: 'play_session_1_logs',
 					title: ' ',
 					defaultValue: true,
+				},
+				{
+					type: 'html',
+					name: 'play_session_1_description',
+					html: `<p>You are Clara, the daughter of a wealthy family. Today is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests. How is Clara
+					going to handle this responsibility?</p>
+
+				<table class="game-controls">
+					<tr>
+						<th colspan="2">Game controls</th>
+					</tr>
+					<tr>
+						<td>Arrows</td>
+						<td>Walking</td>
+					</tr>
+					<tr>
+						<td>Z</td>
+						<td>
+							<p>Interacting with characters whenever prompted</p>
+							<p>Interacting with the dialogue box</p>
+						</td>
+					</tr>
+				</table>`,
 				},
 			],
 			navigationButtonsVisibility: 'hide',
@@ -580,42 +571,33 @@ var surveyJSON = {
 			name: 'play_session_2',
 			elements: [
 				{
-					type: 'panel',
-					innerIndent: 1,
-					name: 'panel_play_session_2_description',
-					title: 'Game instructions',
-					state: 'collapsed',
-					elements: [
-						{
-							type: 'html',
-							name: 'play_session_2_description',
-							html: `<p>You are Clara, the daughter of a wealthy family. Today is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests. How is Clara
-                            going to handle this responsibility?</p>
-    
-                        <table class="game-controls">
-                            <tr>
-                                <th colspan="2">Game controls</th>
-                            </tr>
-                            <tr>
-                                <td>Arrows</td>
-                                <td>Walking</td>
-                            </tr>
-                            <tr>
-                                <td>Z</td>
-                                <td>
-                                    <p>Interacting with characters whenever prompted</p>
-                                    <p>Interacting with the dialogue box</p>
-                                </td>
-                            </tr>
-                        </table>`,
-						},
-					],
-				},
-				{
 					type: 'game',
 					name: 'play_session_2_logs',
 					title: ' ',
 					defaultValue: false,
+				},
+				{
+					type: 'html',
+					name: 'play_session_2_description',
+					html: `<p>You are Clara, the daughter of a wealthy family. Today is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests. How is Clara
+					going to handle this responsibility?</p>
+
+				<table class="game-controls">
+					<tr>
+						<th colspan="2">Game controls</th>
+					</tr>
+					<tr>
+						<td>Arrows</td>
+						<td>Walking</td>
+					</tr>
+					<tr>
+						<td>Z</td>
+						<td>
+							<p>Interacting with characters whenever prompted</p>
+							<p>Interacting with the dialogue box</p>
+						</td>
+					</tr>
+				</table>`,
 				},
 			],
 			navigationButtonsVisibility: 'hide',
