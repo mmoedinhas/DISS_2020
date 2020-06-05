@@ -867,5 +867,5 @@ var surveyJSON = {
 	showQuestionNumbers: 'off',
 	requiredText: '*',
 	firstPageIsStarted: true,
-	showProgressBar: 'bottom',
+	showProgressBar: 'both',
 };
