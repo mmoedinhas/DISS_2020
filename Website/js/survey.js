@@ -540,7 +540,8 @@ var surveyJSON = {
 				{
 					type: 'comment',
 					name: 'open_answer_game_exp_1',
-					title: 'What do you think the game reflected about you?',
+					title:
+						'What do you think the game reflected about you or your emotions?',
 				},
 				{
 					type: 'comment',
@@ -737,7 +738,8 @@ var surveyJSON = {
 				{
 					type: 'comment',
 					name: 'open_answer_game_exp_2',
-					title: 'What do you think the game reflected about you?',
+					title:
+						'What do you think the game reflected about you or your emotions?',
 				},
 				{
 					type: 'comment',
