@@ -63,6 +63,16 @@
 	background-color: white;
 }
 
+.sticky td ~ td {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.sticky th {
+	margin-left: 0;
+	margin-right: 0;
+}
+
 .no-overflow {
 	overflow: visible !important;
 }
