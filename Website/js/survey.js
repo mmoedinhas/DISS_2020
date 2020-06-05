@@ -99,69 +99,76 @@ var surveyJSON = {
 					],
 				},
 				{
-					type: 'radiogroup',
-					name: 'favorite_games',
-					visibleIf: "{play_games} = 'regularly'",
-					title: 'What is your favorite game genre?',
-					isRequired: true,
-					hasOther: true,
-					choices: [
+					type: 'panel',
+					name: 'if_you_play_games',
+					elements: [
 						{
-							value: 'action',
-							text: 'Action games',
+							type: 'html',
+							name: 'filler',
 						},
 						{
-							value: 'shooter',
-							text: 'Shooter games',
+							type: 'radiogroup',
+							name: 'favorite_games',
+							visibleIf: "{play_games} = 'regularly'",
+							title: 'What is your favorite game genre?',
+							isRequired: true,
+							hasOther: true,
+							choices: [
+								{
+									value: 'action',
+									text: 'Action games',
+								},
+								{
+									value: 'shooter',
+									text: 'Shooter games',
+								},
+								{
+									value: 'sports',
+									text: 'Sports games',
+								},
+								{
+									value: 'action_adventure',
+									text: 'Action Adventure games',
+								},
+								{
+									value: 'rpg',
+									text: 'Role Playing games',
+								},
+								{
+									value: 'adventure',
+									text: 'Adventure games',
+								},
+								{
+									value: 'racing',
+									text: 'Racing games',
+								},
+								{
+									value: 'fighting',
+									text: 'Fighting games',
+								},
+								{
+									value: 'strategy',
+									text: 'Strategy games',
+								},
+								{
+									value: 'simulator',
+									text: 'Simulator games',
+								},
+							],
+							otherText: 'Other',
 						},
 						{
-							value: 'sports',
-							text: 'Sports games',
-						},
-						{
-							value: 'rpg',
-							text: 'Role Playing games',
-						},
-						{
-							value: 'adventure',
-							text: 'Adventure games',
-						},
-						{
-							value: 'platformer',
-							text: 'Platformer games',
-						},
-						{
-							value: 'puzzle',
-							text: 'Puzzle games',
-						},
-						{
-							value: 'racing',
-							text: 'Racing games',
-						},
-						{
-							value: 'fighting',
-							text: 'Fighting games',
-						},
-						{
-							value: 'strategy',
-							text: 'Strategy games',
-						},
-						{
-							value: 'simulaton',
-							text: 'Simulaton games',
+							type: 'rating',
+							name: 'important_narrative',
+							visibleIf: "{play_games} = 'regularly'",
+							title: 'How important is the narrative in a game to you?',
+							isRequired: true,
+							minRateDescription: 'Not important at all',
+							maxRateDescription: 'Extremely important',
 						},
 					],
-					otherText: 'Other',
-				},
-				{
-					type: 'rating',
-					name: 'important_narrative',
-					visibleIf: "{play_games} = 'regularly'",
-					title:
-						'Considering games with a significant narrative, how important is the narrative to you?',
-					isRequired: true,
-					minRateDescription: 'Not important at all',
-					maxRateDescription: 'Extremely important',
+					title: 'If you answered yes to the previous question:',
+					innerIndent: 1,
 				},
 			],
 			title: 'This module will gather some general information.',
