@@ -131,7 +131,7 @@ export class BootScene extends Phaser.Scene {
 			}
 
 			if (!validationResults.includes(false)) {
-				this.scene.start('Tutorial');
+				this.scene.start('Introduction');
 			}
 		});
 	}

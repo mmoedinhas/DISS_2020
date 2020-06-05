@@ -1,5 +1,8 @@
 import * as Phaser from 'phaser';
-import { TextBox } from 'phaser3-rex-plugins/templates/ui/ui-components.js';
+import {
+	TextBox,
+	Label,
+} from 'phaser3-rex-plugins/templates/ui/ui-components.js';
 import BBCodeText from 'phaser3-rex-plugins/plugins/bbcodetext.js';
 
 const config: Phaser.Types.Scenes.SettingsConfig = {
@@ -50,7 +53,11 @@ export class IntroScene extends Phaser.Scene {
 				fixedWidth: 500,
 				fixedHeight: 300,
 			}
-		).start(this.text, 50);
+		).start(this.text, 30);
+
+		this.createLabel(40, 330, 'Press Z or SPACE to continue...', {
+			wrapWidth: 500,
+		});
 	}
 
 	private createTextBox(x: number, y: number, config: any) {
@@ -128,6 +135,68 @@ export class IntroScene extends Phaser.Scene {
 		return scene.add.existing(txt);
 	}
 
+	private createLabel(x: number, y: number, text: string, config?: any): Label {
+		const GetValue = Phaser.Utils.Objects.GetValue;
+
+		let wrapWidth: number = GetValue(config, 'wrapWidth', 0);
+		let fixedWidth: number = GetValue(config, 'fixedWidth', 0);
+		let fixedHeight: number = GetValue(config, 'fixedHeight', 0);
+		let fontFamily: string = GetValue(config, 'fontFamily', this.fontFamily);
+		let fontSize: string = GetValue(config, 'fontSize', this.fontSize);
+		let color: string = GetValue(config, 'color', '#ffffff');
+
+		let label = new Label(this, {
+			x: x,
+			y: y,
+
+			text: this.getText(
+				this,
+				text,
+				wrapWidth,
+				fixedWidth,
+				fixedHeight,
+				fontFamily,
+				fontSize,
+				color
+			),
+
+			// space: {
+			// 	left: 10,
+			// 	right: 10,
+			// 	top: 10,
+			// 	bottom: 10,
+			// },
+		})
+			.setOrigin(0, 0)
+			.layout();
+
+		return label;
+	}
+
+	private getText(
+		scene: Phaser.Scene,
+		text: string,
+		wrapWidth: number,
+		fixedWidth: number,
+		fixedHeight: number,
+		fontFamily: string,
+		fontSize: string,
+		color: string
+	): Phaser.GameObjects.Text {
+		return scene.add.text(0, 0, text, {
+			fontSize: fontSize,
+			fontFamily: fontFamily,
+			fixedWidth: fixedWidth,
+			fixedHeight: fixedHeight,
+			wordWrap: {
+				width: wrapWidth,
+			},
+			color: color,
+			stroke: this.stroke,
+			strokeThickness: this.strokeThickness,
+		});
+	}
+
 	private getArrow() {
 		let image: Phaser.GameObjects.Image = this.add
 			.image(0, 0, 'dialogue_arrow')
@@ -150,7 +219,7 @@ export class IntroScene extends Phaser.Scene {
 						false,
 						function (camera, progress) {
 							if (progress >= 1) {
-								this.scene.start('Game');
+								this.scene.start('Tutorial');
 							}
 						},
 						this
