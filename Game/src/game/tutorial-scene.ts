@@ -13,15 +13,19 @@ export class TutorialScene extends Phaser.Scene {
 	private stroke: string = '#000000';
 	private strokeThickness: number = 2;
 
-	private interactKey: Phaser.Input.Keyboard.Key;
+	private interactKey1: Phaser.Input.Keyboard.Key;
+	private interactKey2: Phaser.Input.Keyboard.Key;
 
 	constructor() {
 		super(config);
 	}
 
 	public init() {
-		this.interactKey = this.input.keyboard.addKey(
+		this.interactKey1 = this.input.keyboard.addKey(
 			Phaser.Input.Keyboard.KeyCodes.Z
+		);
+		this.interactKey2 = this.input.keyboard.addKey(
+			Phaser.Input.Keyboard.KeyCodes.SPACE
 		);
 	}
 
@@ -53,9 +57,13 @@ export class TutorialScene extends Phaser.Scene {
 
 		exampleClara.anims.play('walk_example');
 
-		this.createLabel(110, 110, 'Walking - Arrow Keys', {});
+		this.createLabel(110, 110, 'Walking', {});
 
-		let arrow = this.add.image(60, 172, 'dialogue_arrow');
+		this.createLabel(395, 110, '-', {});
+
+		this.createLabel(450, 110, 'Arrow Keys', {});
+
+		let arrow = this.add.image(60, 162, 'dialogue_arrow');
 
 		this.tweens.add({
 			targets: arrow,
@@ -66,13 +74,29 @@ export class TutorialScene extends Phaser.Scene {
 			yoyo: true,
 		});
 
-		this.createLabel(110, 160, 'Go to next page - Z Key', {
+		this.createLabel(110, 150, 'Go to next page', {
 			wrapWidth: 500,
 		});
 
-		new ActionBox(this, 'Talk', 70, 233, false);
-		this.createLabel(110, 210, 'Talk to other characters - Z Key', {
+		this.createLabel(395, 150, '-', {
 			wrapWidth: 500,
+		});
+
+		this.createLabel(450, 150, 'Z Key or Spacebar', {
+			wrapWidth: 150,
+		});
+
+		new ActionBox(this, 'Talk', 70, 233, false);
+		this.createLabel(110, 210, 'Talk to other characters', {
+			wrapWidth: 500,
+		});
+
+		this.createLabel(395, 210, '-', {
+			wrapWidth: 500,
+		});
+
+		this.createLabel(450, 210, 'Z Key or Spacebar', {
+			wrapWidth: 150,
 		});
 
 		this.createLabel(420, 283, 'Start Game', {
@@ -153,17 +177,12 @@ export class TutorialScene extends Phaser.Scene {
 		});
 	}
 
-	private getArrow() {
-		let image: Phaser.GameObjects.Image = this.add
-			.image(0, 0, 'dialogue_arrow')
-			.setVisible(false);
-		image.depth = 9999;
-		return image;
-	}
-
 	public update(time: number, delta: number) {
-		if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
-			this.scene.start('Introduction');
+		if (
+			Phaser.Input.Keyboard.JustDown(this.interactKey1) ||
+			Phaser.Input.Keyboard.JustDown(this.interactKey2)
+		) {
+			this.scene.start('Game');
 		}
 	}
 }
