@@ -42,7 +42,7 @@ var surveyJSON = {
 				{
 					type: 'radiogroup',
 					name: 'age',
-					title: 'Age',
+					title: '1.1 Age',
 					isRequired: true,
 					choices: [
 						{
@@ -70,7 +70,7 @@ var surveyJSON = {
 				{
 					type: 'radiogroup',
 					name: 'language',
-					title: 'Is English your native language?',
+					title: '1.2 Is English your native language?',
 					isRequired: true,
 					choices: [
 						{
@@ -86,7 +86,7 @@ var surveyJSON = {
 				{
 					type: 'radiogroup',
 					name: 'play_games',
-					title: 'Do you play video games regularly? (>= 6 hours a week)',
+					title: '1.3 Do you play video games regularly? (>= 6 hours a week)',
 					isRequired: true,
 					choices: [
 						{
@@ -111,7 +111,7 @@ var surveyJSON = {
 							type: 'radiogroup',
 							name: 'favorite_games',
 							visibleIf: "{play_games} = 'regularly'",
-							title: 'What is your favorite game genre?',
+							title: '1.4 What is your favorite game genre?',
 							isRequired: true,
 							hasOther: true,
 							choices: [
@@ -162,7 +162,7 @@ var surveyJSON = {
 							type: 'rating',
 							name: 'important_narrative',
 							visibleIf: "{play_games} = 'regularly'",
-							title: 'How important is the narrative in a game to you?',
+							title: '1.5 How important is the narrative in a game to you?',
 							isRequired: true,
 							minRateDescription: 'Not important at all',
 							maxRateDescription: 'Extremely important',
@@ -187,7 +187,7 @@ var surveyJSON = {
 				{
 					type: 'matrix',
 					name: 'deq',
-					title: 'Discrete Emotions Questionnaire',
+					title: '1.6 Discrete Emotions Questionnaire',
 					isRequired: true,
 					columns: [
 						{
@@ -413,7 +413,7 @@ var surveyJSON = {
 					type: 'matrix',
 					name: 'game_exp_core_module_1',
 					title:
-						'Please indicate how you felt WHILE playing the game for each of these items',
+						'2.1 Please indicate how you felt WHILE playing the game for each of these items',
 					isRequired: true,
 					columns: [
 						{
@@ -536,18 +536,19 @@ var surveyJSON = {
 				{
 					type: 'comment',
 					name: 'post_game_opinion_1',
-					title: 'In your own words, how did you feel AFTER playing the game?',
+					title:
+						'2.2 In your own words, how did you feel AFTER playing the game?',
 				},
 				{
 					type: 'comment',
 					name: 'open_answer_game_exp_1',
 					title:
-						'What do you think the game reflected about you or your emotions?',
+						'2.3 What do you think the game reflected about you or your emotions?',
 				},
 				{
 					type: 'comment',
 					name: 'main_character_opinion_1',
-					title: 'What did you think of the main character?',
+					title: '2.4 What did you think of the main character?',
 				},
 			],
 			title:
@@ -611,7 +612,7 @@ var surveyJSON = {
 					type: 'matrix',
 					name: 'game_exp_core_module_2',
 					title:
-						'Please indicate how you felt WHILE playing the game for each of these items',
+						'2.5 Please indicate how you felt WHILE playing the game for each of these items',
 					isRequired: true,
 					columns: [
 						{
@@ -734,18 +735,19 @@ var surveyJSON = {
 				{
 					type: 'comment',
 					name: 'post_game_opinion_2',
-					title: 'In your own words, how did you feel AFTER playing the game?',
+					title:
+						'2.6 In your own words, how did you feel AFTER playing the game?',
 				},
 				{
 					type: 'comment',
 					name: 'open_answer_game_exp_2',
 					title:
-						'What do you think the game reflected about you or your emotions?',
+						'2.7 What do you think the game reflected about you or your emotions?',
 				},
 				{
 					type: 'comment',
 					name: 'main_character_opinion_2',
-					title: 'What did you think of the main character?',
+					title: '2.8 What did you think of the main character?',
 				},
 			],
 			title:
@@ -773,7 +775,7 @@ var surveyJSON = {
 				{
 					type: 'radiogroup',
 					name: 'version_liked_most',
-					title: 'Which version of the game did you like the most?',
+					title: '3.1 Which version of the game did you like the most?',
 					isRequired: true,
 					choices: [
 						{
@@ -793,13 +795,13 @@ var surveyJSON = {
 				{
 					type: 'comment',
 					name: 'open_answer_version_liked_most',
-					title: 'Why?',
+					title: '3.2 Why?',
 				},
 				{
 					type: 'radiogroup',
 					name: 'version_reflected_most',
 					title:
-						'Which version of the game did you think reflected you or your emotions the most?',
+						'3.3 Which version of the game did you think reflected you or your emotions the most?',
 					isRequired: true,
 					choices: [
 						{
@@ -819,12 +821,13 @@ var surveyJSON = {
 				{
 					type: 'comment',
 					name: 'open_answer_version_reflected_most',
-					title: 'Why?',
+					title: '3.4 Why?',
 				},
 				{
 					type: 'radiogroup',
 					name: 'games_like_this_in_the_future',
-					title: 'Would you like to play more games like this in the future?',
+					title:
+						'3.5 Would you like to play more games like this in the future?',
 					isRequired: true,
 					choices: [
 						{
@@ -840,7 +843,7 @@ var surveyJSON = {
 				{
 					type: 'comment',
 					name: 'open_answer_games_like_this_in_the_future',
-					title: 'Why?',
+					title: '3.6 Why?',
 				},
 				{
 					type: 'comment',
