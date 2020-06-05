@@ -86,3 +86,11 @@
 div.sv_progress > span {
 	display: none;
 }
+
+.header_step {
+	font-size: 1.5em;
+	font-weight: 500;
+	margin-bottom: 0;
+	margin-top: 0;
+	margin-left: 1em;
+}

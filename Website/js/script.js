@@ -147,6 +147,25 @@ function startSurvey(isDefaultFirst) {
 		}
 	});
 
+	survey.onAfterRenderHeader.add(function (survey, { htmlElement }) {
+		htmlElement.querySelector('.sv_header__text > h5').style.display = 'none';
+		let headerText = document.createElement('h4');
+		headerText.classList.add('header_step');
+		htmlElement.querySelector('.sv_header__text').appendChild(headerText);
+	});
+
+	survey.onAfterRenderPage.add(function (survey, { page, htmlElement }) {
+		if (page.name == 'play_session_1') {
+			document.querySelector('.header_step').innerHTML = 'Step 2';
+		} else if (page.name == 'final_questions') {
+			document.querySelector('.header_step').innerHTML = 'Step 3';
+		}
+	});
+
+	survey.onStarted.add(function () {
+		document.querySelector('.header_step').innerHTML = 'Step 1';
+	});
+
 	survey.onAfterRenderQuestion.add(function (
 		survey,
 		{ question, htmlElement }
