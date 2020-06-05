@@ -145,6 +145,19 @@ function startSurvey(isDefaultFirst) {
 			}
 			Game.endGame();
 		}
+
+		if (newCurrentPage.name == 'introduction_part2') {
+			document.querySelector('.sv_next_btn').value = 'Start Part 2';
+		} else if (newCurrentPage.name == 'introduction_part3') {
+			document.querySelector('.sv_next_btn').value = 'Continue Part 2';
+		} else if (newCurrentPage.name == 'introduction_part4') {
+			document.querySelector('.sv_next_btn').value = 'Start Part 3';
+		} else {
+			let button = document.querySelector('.sv_next_btn');
+			if (button) {
+				value = 'Next';
+			}
+		}
 	});
 
 	survey.onAfterRenderHeader.add(function (survey, { htmlElement }) {

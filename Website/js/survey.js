@@ -755,11 +755,11 @@ var surveyJSON = {
 				'This module will ask you some questions about the game you just played.',
 		},
 		{
-			name: 'introduction_part3',
+			name: 'introduction_part4',
 			elements: [
 				{
 					type: 'html',
-					name: 'introduction_part3_panel',
+					name: 'introduction_part4_panel',
 					html: `<h1>You have completed part 2!</h1>
           <p>Thank you for playing the two different versions of the game and completing the questionnaires.</p>
           <p></p>
