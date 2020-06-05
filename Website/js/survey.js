@@ -162,7 +162,8 @@ var surveyJSON = {
 							type: 'rating',
 							name: 'important_narrative',
 							visibleIf: "{play_games} = 'regularly'",
-							title: '1.5 How important is the narrative in a game to you?',
+							title:
+								'1.5 Considering games with a substancial narrative, how important to your enjoyment of the game is its narrative to you?',
 							isRequired: true,
 							minRateDescription: 'Not important at all',
 							maxRateDescription: 'Extremely important',
