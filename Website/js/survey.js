@@ -177,11 +177,16 @@ var surveyJSON = {
 			name: 'deq_page',
 			elements: [
 				{
+					type: 'html',
+					name: 'deq_introduction',
+					html: `<p class='deq_desc'>Take some time to think how you've been feeling the past week up until now and which emotions you experienced. 
+						Then, with that in mind, read each word and rate them according to how strongly you felt or are still feeling that emotion.</p>
+						<p>Please answer as honestly as possible.</p>`,
+				},
+				{
 					type: 'matrix',
 					name: 'deq',
 					title: 'Discrete Emotions Questionnaire',
-					description: `Take some time to think how you've been feeling the past week up until now and which emotions you experienced. 
-            Then, with that in mind, read each word and rate them according to how strongly you felt or are still feeling that emotion. Please answer as honestly as possible.`,
 					isRequired: true,
 					columns: [
 						{

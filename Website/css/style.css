@@ -32,7 +32,7 @@
 .sticky thead td {
 	position: sticky;
 	top: 0;
-	background-color: #f4f4f4;
+	background-color: #d4d4d4;
 	z-index: 1;
 }
 
@@ -53,6 +53,14 @@
 
 .sticky td {
 	text-align: center;
+}
+
+.sticky tr:nth-child(even) {
+	background-color: #f4f4f4;
+}
+
+.sticky tr:nth-child(odd) {
+	background-color: white;
 }
 
 .no-overflow {
@@ -93,4 +101,8 @@ div.sv_progress > span {
 	margin-bottom: 0;
 	margin-top: 0;
 	margin-left: 1em;
+}
+
+.deq_desc {
+	font-size: 1.1em;
 }
