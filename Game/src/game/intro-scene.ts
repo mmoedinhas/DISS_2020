@@ -19,15 +19,20 @@ export class IntroScene extends Phaser.Scene {
 	private textBox: TextBox;
 	private text: string;
 
-	private interactKey: Phaser.Input.Keyboard.Key;
+	private interactKey1: Phaser.Input.Keyboard.Key;
+	private interactKey2: Phaser.Input.Keyboard.Key;
 
 	constructor() {
 		super(config);
 	}
 
 	public init() {
-		this.interactKey = this.input.keyboard.addKey(
+		this.interactKey1 = this.input.keyboard.addKey(
 			Phaser.Input.Keyboard.KeyCodes.Z
+		);
+
+		this.interactKey2 = this.input.keyboard.addKey(
+			Phaser.Input.Keyboard.KeyCodes.SPACE
 		);
 
 		this.text =
@@ -206,7 +211,10 @@ export class IntroScene extends Phaser.Scene {
 	}
 
 	public update(time: number, delta: number) {
-		if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
+		if (
+			Phaser.Input.Keyboard.JustDown(this.interactKey1) ||
+			Phaser.Input.Keyboard.JustDown(this.interactKey2)
+		) {
 			if (this.textBox.isTyping) {
 				this.textBox.stop(true);
 			} else {

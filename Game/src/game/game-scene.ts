@@ -15,6 +15,7 @@ export class GameScene extends Phaser.Scene {
 
 	public static cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 	public static interactKey: Phaser.Input.Keyboard.Key;
+	public static spaceKey: Phaser.Input.Keyboard.Key;
 
 	private map: Phaser.Tilemaps.Tilemap;
 	private obstacles: Phaser.Tilemaps.StaticTilemapLayer[] = [];
@@ -45,6 +46,9 @@ export class GameScene extends Phaser.Scene {
 		GameScene.cursors = this.input.keyboard.createCursorKeys();
 		GameScene.interactKey = this.input.keyboard.addKey(
 			Phaser.Input.Keyboard.KeyCodes.Z
+		);
+		GameScene.spaceKey = this.input.keyboard.addKey(
+			Phaser.Input.Keyboard.KeyCodes.SPACE
 		);
 
 		this.storyManager.start();
@@ -87,7 +91,10 @@ export class GameScene extends Phaser.Scene {
 	private parseUserInput(): Phaser.Input.Keyboard.Key[] {
 		let keysPressed: Phaser.Input.Keyboard.Key[] = [];
 
-		if (Phaser.Input.Keyboard.JustDown(GameScene.interactKey)) {
+		if (
+			Phaser.Input.Keyboard.JustDown(GameScene.interactKey) ||
+			Phaser.Input.Keyboard.JustDown(GameScene.spaceKey)
+		) {
 			keysPressed.push(GameScene.interactKey);
 		}
 

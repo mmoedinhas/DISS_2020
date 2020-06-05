@@ -13,15 +13,19 @@ export class TutorialScene extends Phaser.Scene {
 	private stroke: string = '#000000';
 	private strokeThickness: number = 2;
 
-	private interactKey: Phaser.Input.Keyboard.Key;
+	private interactKey1: Phaser.Input.Keyboard.Key;
+	private interactKey2: Phaser.Input.Keyboard.Key;
 
 	constructor() {
 		super(config);
 	}
 
 	public init() {
-		this.interactKey = this.input.keyboard.addKey(
+		this.interactKey1 = this.input.keyboard.addKey(
 			Phaser.Input.Keyboard.KeyCodes.Z
+		);
+		this.interactKey2 = this.input.keyboard.addKey(
+			Phaser.Input.Keyboard.KeyCodes.SPACE
 		);
 	}
 
@@ -174,7 +178,10 @@ export class TutorialScene extends Phaser.Scene {
 	}
 
 	public update(time: number, delta: number) {
-		if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
+		if (
+			Phaser.Input.Keyboard.JustDown(this.interactKey1) ||
+			Phaser.Input.Keyboard.JustDown(this.interactKey2)
+		) {
 			this.scene.start('Game');
 		}
 	}
