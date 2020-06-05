@@ -99,69 +99,76 @@ var surveyJSON = {
 					],
 				},
 				{
-					type: 'radiogroup',
-					name: 'favorite_games',
-					visibleIf: "{play_games} = 'regularly'",
-					title: 'What is your favorite game genre?',
-					isRequired: true,
-					hasOther: true,
-					choices: [
+					type: 'panel',
+					name: 'if_you_play_games',
+					elements: [
 						{
-							value: 'action',
-							text: 'Action games',
+							type: 'html',
+							name: 'filler',
 						},
 						{
-							value: 'shooter',
-							text: 'Shooter games',
+							type: 'radiogroup',
+							name: 'favorite_games',
+							visibleIf: "{play_games} = 'regularly'",
+							title: 'What is your favorite game genre?',
+							isRequired: true,
+							hasOther: true,
+							choices: [
+								{
+									value: 'action',
+									text: 'Action games',
+								},
+								{
+									value: 'shooter',
+									text: 'Shooter games',
+								},
+								{
+									value: 'sports',
+									text: 'Sports games',
+								},
+								{
+									value: 'action_adventure',
+									text: 'Action Adventure games',
+								},
+								{
+									value: 'rpg',
+									text: 'Role Playing games',
+								},
+								{
+									value: 'adventure',
+									text: 'Adventure games',
+								},
+								{
+									value: 'racing',
+									text: 'Racing games',
+								},
+								{
+									value: 'fighting',
+									text: 'Fighting games',
+								},
+								{
+									value: 'strategy',
+									text: 'Strategy games',
+								},
+								{
+									value: 'simulator',
+									text: 'Simulator games',
+								},
+							],
+							otherText: 'Other',
 						},
 						{
-							value: 'sports',
-							text: 'Sports games',
-						},
-						{
-							value: 'rpg',
-							text: 'Role Playing games',
-						},
-						{
-							value: 'adventure',
-							text: 'Adventure games',
-						},
-						{
-							value: 'platformer',
-							text: 'Platformer games',
-						},
-						{
-							value: 'puzzle',
-							text: 'Puzzle games',
-						},
-						{
-							value: 'racing',
-							text: 'Racing games',
-						},
-						{
-							value: 'fighting',
-							text: 'Fighting games',
-						},
-						{
-							value: 'strategy',
-							text: 'Strategy games',
-						},
-						{
-							value: 'simulaton',
-							text: 'Simulaton games',
+							type: 'rating',
+							name: 'important_narrative',
+							visibleIf: "{play_games} = 'regularly'",
+							title: 'How important is the narrative in a game to you?',
+							isRequired: true,
+							minRateDescription: 'Not important at all',
+							maxRateDescription: 'Extremely important',
 						},
 					],
-					otherText: 'Other',
-				},
-				{
-					type: 'rating',
-					name: 'important_narrative',
-					visibleIf: "{play_games} = 'regularly'",
-					title:
-						'Considering games with a significant narrative, how important is the narrative to you?',
-					isRequired: true,
-					minRateDescription: 'Not important at all',
-					maxRateDescription: 'Extremely important',
+					title: 'If you answered yes to the previous question:',
+					innerIndent: 1,
 				},
 			],
 			title: 'This module will gather some general information.',
@@ -170,11 +177,16 @@ var surveyJSON = {
 			name: 'deq_page',
 			elements: [
 				{
+					type: 'html',
+					name: 'deq_introduction',
+					html: `<p class='deq_desc'>Take some time to think how you've been feeling the past week up until now and which emotions you experienced. 
+						Then, with that in mind, read each word and rate them according to how strongly you felt or are still feeling that emotion.</p>
+						<p>Please answer as honestly as possible.</p>`,
+				},
+				{
 					type: 'matrix',
 					name: 'deq',
 					title: 'Discrete Emotions Questionnaire',
-					description: `Take some time to think how you've been feeling the past week up until now and which emotions you experienced. 
-            Then, with that in mind, read each word and rate them according to how strongly you felt or are still feeling that emotion. Please answer as honestly as possible.`,
 					isRequired: true,
 					columns: [
 						{
@@ -362,42 +374,33 @@ var surveyJSON = {
 			name: 'play_session_1',
 			elements: [
 				{
-					type: 'panel',
-					innerIndent: 1,
-					name: 'panel_play_session_1_description',
-					title: 'Game instructions',
-					state: 'collapsed',
-					elements: [
-						{
-							type: 'html',
-							name: 'play_session_1_description',
-							html: `<p>You are Clara, the daughter of a wealthy family. Today is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests. How is Clara
-                            going to handle this responsibility?</p>
-    
-                        <table class="game-controls">
-                            <tr>
-                                <th colspan="2">Game controls</th>
-                            </tr>
-                            <tr>
-                                <td>Arrows</td>
-                                <td>Walking</td>
-                            </tr>
-                            <tr>
-                                <td>Z</td>
-                                <td>
-                                    <p>Interacting with characters whenever prompted</p>
-                                    <p>Interacting with the dialogue box</p>
-                                </td>
-                            </tr>
-                        </table>`,
-						},
-					],
-				},
-				{
 					type: 'game',
 					name: 'play_session_1_logs',
 					title: ' ',
 					defaultValue: true,
+				},
+				{
+					type: 'html',
+					name: 'play_session_1_description',
+					html: `<p>You are Clara, the daughter of a wealthy family. Today is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests. How is Clara
+					going to handle this responsibility?</p>
+
+				<table class="game-controls">
+					<tr>
+						<th colspan="2">Game controls</th>
+					</tr>
+					<tr>
+						<td>Arrows</td>
+						<td>Walking</td>
+					</tr>
+					<tr>
+						<td>Z</td>
+						<td>
+							<p>Interacting with characters whenever prompted</p>
+							<p>Interacting with the dialogue box</p>
+						</td>
+					</tr>
+				</table>`,
 				},
 			],
 			navigationButtonsVisibility: 'hide',
@@ -568,42 +571,33 @@ var surveyJSON = {
 			name: 'play_session_2',
 			elements: [
 				{
-					type: 'panel',
-					innerIndent: 1,
-					name: 'panel_play_session_2_description',
-					title: 'Game instructions',
-					state: 'collapsed',
-					elements: [
-						{
-							type: 'html',
-							name: 'play_session_2_description',
-							html: `<p>You are Clara, the daughter of a wealthy family. Today is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests. How is Clara
-                            going to handle this responsibility?</p>
-    
-                        <table class="game-controls">
-                            <tr>
-                                <th colspan="2">Game controls</th>
-                            </tr>
-                            <tr>
-                                <td>Arrows</td>
-                                <td>Walking</td>
-                            </tr>
-                            <tr>
-                                <td>Z</td>
-                                <td>
-                                    <p>Interacting with characters whenever prompted</p>
-                                    <p>Interacting with the dialogue box</p>
-                                </td>
-                            </tr>
-                        </table>`,
-						},
-					],
-				},
-				{
 					type: 'game',
 					name: 'play_session_2_logs',
 					title: ' ',
 					defaultValue: false,
+				},
+				{
+					type: 'html',
+					name: 'play_session_2_description',
+					html: `<p>You are Clara, the daughter of a wealthy family. Today is Christmas and your parents are hosting a party with a lot of guests. As the eldest daughter of the family, it is expected that you attend the party and interact with the guests. How is Clara
+					going to handle this responsibility?</p>
+
+				<table class="game-controls">
+					<tr>
+						<th colspan="2">Game controls</th>
+					</tr>
+					<tr>
+						<td>Arrows</td>
+						<td>Walking</td>
+					</tr>
+					<tr>
+						<td>Z</td>
+						<td>
+							<p>Interacting with characters whenever prompted</p>
+							<p>Interacting with the dialogue box</p>
+						</td>
+					</tr>
+				</table>`,
 				},
 			],
 			navigationButtonsVisibility: 'hide',
@@ -860,5 +854,5 @@ var surveyJSON = {
 	showQuestionNumbers: 'off',
 	requiredText: '*',
 	firstPageIsStarted: true,
-	showProgressBar: 'bottom',
+	showProgressBar: 'both',
 };
