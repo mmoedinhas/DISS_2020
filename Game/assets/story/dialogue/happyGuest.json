@@ -1,12 +1,12 @@
 {
-
-    "lines": [{
+    "lines": [
+        {
             "author": "Clara",
             "text": "Merry Christmas! Enjoying the party?"
         },
         {
             "author": "Guest",
-            "text": "Merry Christmas Clara! Yes, very much so! Your parents throw the best parties!"
+            "text": "Merry Christmas Clara! Yes, very much so, your parents throw the best parties!"
         },
         {
             "author": "Clara",
