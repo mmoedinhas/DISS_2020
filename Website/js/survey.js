@@ -12,6 +12,7 @@
 var surveyJSON = {
 	title: 'Affective Narratives for Engagement in Digital Games',
 	completedHtml: '<h3>Thank you for your help!</h3>',
+	focusFirstQuestionAutomatic: false,
 	pages: [
 		{
 			name: 'introdution',
