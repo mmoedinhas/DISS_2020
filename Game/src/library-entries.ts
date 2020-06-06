@@ -77,11 +77,15 @@ export function newGame(
 	gameConfig.scale.parent = options.parent
 		? options.parent
 		: gameConfig.scale.parent;
+
+	let uuid = Phaser.Utils.String.UUID();
 	game = new Phaser.Game(gameConfig);
 	let playerProfile = options.playerProfile ? options.playerProfile : {};
 
 	game.registry.set('doneDomElem', options.doneDomElem);
 	game.registry.set('playerType', playerProfile);
+
+	return uuid;
 }
 
 export function getRatio() {
