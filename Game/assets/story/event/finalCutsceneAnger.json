@@ -56,7 +56,7 @@
             "action": "talk",
             "arguments": {
                 "author": "",
-                "text": "CRAAAASH"
+                "text": "*CRAAAASH*"
             },
             "actorId": "Clara"
         },
@@ -128,7 +128,7 @@
             "action": "talk",
             "arguments": {
                 "author": "Clara's Brother",
-                "text": "Aaa... Nothing..."
+                "text": "Aha... Nothing..."
             },
             "actorId": "Brother"
         },
