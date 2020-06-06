@@ -56,6 +56,48 @@ function calculatePlayerData(deq) {
 	return playerProfile;
 }
 
+function sendPartialDataToSurvey(survey) {
+	if (survey.currentPage.name == 'game_exp_1') {
+		let data = { ...survey.data };
+		data.playerProfile = calculatePlayerData(survey.data.deq);
+
+		data.defaultFirst = surveyJSON.pages
+			.find((page) => page.name === 'play_session_1')
+			.elements.find((element) => element.type === 'game').defaultValue;
+
+		data.partial = 1;
+		data.uuid = data.play_session_1_logs.uuid;
+
+		data.deq = JSON.stringify(data.deq);
+		data.playerProfile = JSON.stringify(data.playerProfile);
+		data.play_session_1_logs = JSON.stringify(data.play_session_1_logs.logs);
+		data.game_exp_core_module_1 = JSON.stringify(data.game_exp_core_module_1);
+
+		if (DEBUG) {
+			console.log('The results are:' + JSON.stringify(data));
+		}
+
+		$.ajax({
+			url: './action_add_player.php',
+			type: 'POST',
+			data: data,
+			dataType: 'json',
+
+			error: function (err) {
+				if (DEBUG) {
+					console.log(err);
+				}
+			},
+
+			success: function (result) {
+				if (DEBUG) {
+					console.log(result);
+				}
+			},
+		});
+	}
+}
+
 function sendDataToServer(survey) {
 	let data = { ...survey.data };
 	data.playerProfile = calculatePlayerData(survey.data.deq);
@@ -64,16 +106,18 @@ function sendDataToServer(survey) {
 		.find((page) => page.name === 'play_session_1')
 		.elements.find((element) => element.type === 'game').defaultValue;
 
+	data.partial = 0;
+	data.uuid = data.play_session_1_logs.uuid;
+	data.deq = JSON.stringify(data.deq);
+	data.playerProfile = JSON.stringify(data.playerProfile);
+	data.play_session_1_logs = JSON.stringify(data.play_session_1_logs.logs);
+	data.play_session_2_logs = JSON.stringify(data.play_session_2_logs.logs);
+	data.game_exp_core_module_1 = JSON.stringify(data.game_exp_core_module_1);
+	data.game_exp_core_module_2 = JSON.stringify(data.game_exp_core_module_2);
+
 	if (DEBUG) {
 		console.log('The results are:' + JSON.stringify(data));
 	}
-
-	data.deq = JSON.stringify(data.deq);
-	data.playerProfile = JSON.stringify(data.playerProfile);
-	data.play_session_1_logs = JSON.stringify(data.play_session_1_logs);
-	data.play_session_2_logs = JSON.stringify(data.play_session_2_logs);
-	data.game_exp_core_module_1 = JSON.stringify(data.game_exp_core_module_1);
-	data.game_exp_core_module_2 = JSON.stringify(data.game_exp_core_module_2);
 
 	$.ajax({
 		url: './action_add_player.php',
@@ -144,6 +188,7 @@ function startSurvey(isDefaultFirst) {
 				console.log('ending game');
 			}
 			Game.endGame();
+			window.scrollTo(0, 0);
 		}
 
 		if (newCurrentPage.name == 'introduction_part2') {
@@ -214,6 +259,7 @@ function startSurvey(isDefaultFirst) {
 	$('#surveyContainer').Survey({
 		model: survey,
 		onComplete: sendDataToServer,
+		onPartialSend: sendPartialDataToSurvey,
 	});
 
 	if (DEBUG) {

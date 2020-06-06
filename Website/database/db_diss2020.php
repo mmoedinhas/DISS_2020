@@ -7,8 +7,9 @@ function addPlayer($post)
     global $dbh;
 
     try {
-        $stmt = $dbh->prepare('INSERT INTO player VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt = $dbh->prepare('INSERT INTO player VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $stmt->execute(array(
+            $post['uuid'] ?? null,
             $post['defaultFirst'] ?? null,
             $post['age'] ?? null, $post['language'] ?? null, $post['play_games'] ?? null,
             $post['favorite_games'] ?? null, $post['important_narrative'] ?? null, $post['deq'] ?? null,
@@ -26,6 +27,30 @@ function addPlayer($post)
         return 'success';
     } catch (PDOException $e) {
         return 'Error adding player: ' . $e->getMessage();
+    }
+}
+
+function addPlayerPartial($post)
+{
+    global $dbh;
+
+    try {
+        $stmt = $dbh->prepare('INSERT INTO player_partial VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute(array(
+            $post['uuid'] ?? null,
+            $post['defaultFirst'] ?? null,
+            $post['age'] ?? null, $post['language'] ?? null, $post['play_games'] ?? null,
+            $post['favorite_games'] ?? null, $post['important_narrative'] ?? null, $post['deq'] ?? null,
+            $post['playerProfile'] ??  null, $post['play_session_1_logs'] ?? null,
+            $post['game_exp_core_module_1'] ?? null,
+            $post['post_game_opinion_1'] ?? null,
+            $post['open_answer_game_exp_1'] ?? null,
+            $post['main_character_opinion_1'] ?? null
+        ));
+
+        return 'success';
+    } catch (PDOException $e) {
+        return 'Error adding partial player: ' . $e->getMessage();
     }
 }
 

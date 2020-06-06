@@ -25,18 +25,20 @@ var widget = {
 			playerProfile = calculatePlayerData(survey.data.deq);
 		}
 
-		el.addEventListener('endGame', function () {
-			question.value = Game.getLogs();
-
-			survey.currentPage.navigationButtonsVisibility = 'show';
-			var navigationButton = document.getElementsByClassName('sv_next_btn')[0];
-			navigationButton.scrollIntoView({ behavior: 'smooth' });
-		});
-
-		Game.newGame({
+		let uuid = Game.newGame({
 			parent: 'game',
 			doneDomElem: el,
 			playerProfile: playerProfile,
+		});
+
+		el.addEventListener('endGame', function () {
+			question.value = {
+				logs: Game.getLogs(),
+				uuid: uuid,
+			};
+			survey.currentPage.navigationButtonsVisibility = 'show';
+			var navigationButton = document.getElementsByClassName('sv_next_btn')[0];
+			navigationButton.scrollIntoView({ behavior: 'smooth' });
 		});
 	},
 };

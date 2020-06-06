@@ -14,7 +14,11 @@ if (!$dbExists) {
     if ($sqlfile) {
         $sqlcontents = fread($sqlfile, filesize("database/diss2020.sql"));
 
-        $dbh->exec($sqlcontents);
-        fclose($sqlfile);
+        try {
+            $dbh->exec($sqlcontents);
+            fclose($sqlfile);
+        } catch (PDOException $e) {
+            echo 'Creating tables failed: ' . $e->getMessage();
+        }
     }
 }
