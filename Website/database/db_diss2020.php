@@ -59,7 +59,7 @@ function getLastPlayer()
     global $dbh;
 
     try {
-        $stmt = $dbh->prepare('SELECT * FROM player ORDER BY p_id DESC LIMIT 1');
+        $stmt = $dbh->prepare('SELECT * FROM player_partial ORDER BY p_id DESC LIMIT 1');
         $stmt->execute();
         return $stmt->fetch();
     } catch (PDOException $e) {
