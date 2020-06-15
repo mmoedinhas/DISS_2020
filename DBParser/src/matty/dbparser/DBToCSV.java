@@ -1,11 +1,13 @@
 package matty.dbparser;
 
-import javax.xml.transform.Result;
+import org.json.JSONObject;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class DBToCSV {
 
@@ -19,88 +21,96 @@ public class DBToCSV {
         ResultSet rs;
         List<List<String>> list = new ArrayList<List<String>>();
 
-        List<String> header = Arrays.asList("id",
-                "uuid",
-                "default first",
-                "age",
-                "language",
-                "plays games",
-                "favorite genre",
-                "how important is narrative",
-                "deq",
-                "affective profile",
-                "logs session 1",
-                "logs session 2",
-                "game exp core module session 1",
-                "game exp core module session 2",
-                "post game opinion session 1",
-                "post game opinion session 2",
-                "open answer game exp session 1",
-                "open answer game exp session 2",
-                "main character opinion session 1",
-                "main character opinion session 2",
-                "version liked most",
-                "open answer version liked most",
-                "version reflected most",
-                "open answer version reflected most",
-                "play games like this in the future?",
-                "open answer games like this in the future",
-                "suggestions");
+        List<List<String>> headers = getHeaders();
 
-        list.add(header);
+        list.addAll(headers);
 
-        if ((rs = db.selectAllPlayers()) != null) {
-            while (true) {
-                try {
-                    if (!rs.next()) break;
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                    break;
-                }
-                    List<String> player = new ArrayList<String>();
-
-                try {
-                    player.add(getRow(rs, "p_id"));
-                    player.add(getRow(rs, "p_uuid"));
-                    player.add(getRow(rs, "p_default_first"));
-                    player.add(getRow(rs, "p_age"));
-                    player.add(getRow(rs, "p_language"));
-                    player.add(getRow(rs, "p_play_games"));
-                    player.add(getRow(rs, "p_favorite_genre"));
-                    player.add(getRow(rs, "p_important_narrative"));
-                    player.add(getRow(rs, "p_deq"));
-                    player.add(getRow(rs, "p_affective_profile"));
-                    player.add(getRow(rs, "p_logs_1"));
-                    player.add(getRow(rs, "p_logs_2"));
-                    player.add(getRow(rs, "p_game_exp_core_module_1"));
-                    player.add(getRow(rs, "p_game_exp_core_module_2"));
-                    player.add(getRow(rs, "p_post_game_opinion_1"));
-                    player.add(getRow(rs, "p_post_game_opinion_2"));
-                    player.add(getRow(rs, "p_open_answer_game_exp_1"));
-                    player.add(getRow(rs, "p_open_answer_game_exp_2"));
-                    player.add(getRow(rs, "p_main_character_opinion_1"));
-                    player.add(getRow(rs, "p_main_character_opinion_2"));
-                    player.add(getRow(rs, "p_version_liked_most"));
-                    player.add(getRow(rs, "p_open_answer_version_liked_most"));
-                    player.add(getRow(rs, "p_version_reflected_most"));
-                    player.add(getRow(rs, "p_open_answer_version_reflected_most"));
-                    player.add(getRow(rs, "p_games_like_this_in_the_future"));
-                    player.add(getRow(rs, "p_open_answer_games_like_this_in_the_future"));
-                    player.add(getRow(rs, "p_suggestions"));
-                    list.add(player);
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
+//        if ((rs = db.selectAllPlayers()) != null) {
+//            while (true) {
+//                try {
+//                    if (!rs.next()) break;
+//                } catch (SQLException e) {
+//                    System.out.println(e.getMessage());
+//                    break;
+//                }
+//                List<String> player = new ArrayList<String>();
+//
+//                try {
+//                    player.add(getRow(rs, "p_id"));
+//                    player.add(getRow(rs, "p_uuid"));
+//                    player.add(getRow(rs, "p_default_first"));
+//                    player.add(getRow(rs, "p_age"));
+//                    player.add(getRow(rs, "p_language"));
+//                    player.add(getRow(rs, "p_play_games"));
+//                    player.add(getRow(rs, "p_favorite_genre"));
+//                    player.add(getRow(rs, "p_important_narrative"));
+//                    player.add(getRow(rs, "p_deq"));
+//                    player.add(getRow(rs, "p_affective_profile"));
+//                    player.add(getRow(rs, "p_logs_1"));
+//                    player.add(getRow(rs, "p_logs_2"));
+//                    player.add(getRow(rs, "p_game_exp_core_module_1"));
+//                    player.add(getRow(rs, "p_game_exp_core_module_2"));
+//                    player.add(getRow(rs, "p_post_game_opinion_1"));
+//                    player.add(getRow(rs, "p_post_game_opinion_2"));
+//                    player.add(getRow(rs, "p_open_answer_game_exp_1"));
+//                    player.add(getRow(rs, "p_open_answer_game_exp_2"));
+//                    player.add(getRow(rs, "p_main_character_opinion_1"));
+//                    player.add(getRow(rs, "p_main_character_opinion_2"));
+//                    player.add(getRow(rs, "p_version_liked_most"));
+//                    player.add(getRow(rs, "p_open_answer_version_liked_most"));
+//                    player.add(getRow(rs, "p_version_reflected_most"));
+//                    player.add(getRow(rs, "p_open_answer_version_reflected_most"));
+//                    player.add(getRow(rs, "p_games_like_this_in_the_future"));
+//                    player.add(getRow(rs, "p_open_answer_games_like_this_in_the_future"));
+//                    player.add(getRow(rs, "p_suggestions"));
+//                    list.add(player);
+//                } catch (SQLException e) {
+//                    System.out.println(e.getMessage());
+//                }
+//            }
+//        }
 
         return list;
+    }
+
+    private List<List<String>> getHeaders() {
+        List<String> header1 = new ArrayList<String>();
+        List<String> header2 = new ArrayList<String>();
+
+
+        for(int i = 0; i <= CSVColumns.getHighestIndex(); i++) {
+            String s1 = CSVColumns.header1.get(i);
+            if(s1 == null) {
+                s1 = "";
+            }
+
+            s1 = "\"" + s1 + "\"";
+            header1.add(s1);
+
+            String s2 = CSVColumns.header2.get(i);
+            if(s2 == null) {
+                s2 = "";
+            }
+
+            s2 = "\"" + s2 + "\"";
+            header2.add(s2);
+        }
+
+        ArrayList<List<String>> headers = new ArrayList<List<String>>();
+        headers.add(header1);
+        headers.add(header2);
+        return headers;
+    }
+
+    private String getJSONRow() {
+        JSONObject jo = new JSONObject("");
+        return "";
     }
 
     private String getRow(ResultSet rs, String rowName) throws SQLException {
         String data = rs.getString(rowName);
 
-        if(data == null) {
+        if (data == null) {
             data = "\"\"";
         } else {
             data = "\"" + data + "\"";
