@@ -1,6 +1,8 @@
 package matty.dbparser;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DB {
 
@@ -67,7 +69,13 @@ public class DB {
             while (true) {
                 try {
                     if (!rs.next()) break;
-                    s += "id - " + rs.getInt("p_id") + "\n" +
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    break;
+                }
+
+                try {
+                    String s2 = "id - " + rs.getInt("p_id") + "\n" +
                             "\t" + "uuid - " + rs.getString("p_uuid") + "\n" +
                             "\t" + "default first - " + rs.getInt("p_default_first") + "\n" +
                             "\t" + "age - " + rs.getString("p_age") + "\n" +
@@ -95,6 +103,7 @@ public class DB {
                             "\t" + "open answer games like this in the future - " + rs.getString("p_open_answer_games_like_this_in_the_future") + "\n" +
                             "\t" + "suggestions - " + rs.getString("p_suggestions") + "\n" +
                             "\n";
+                    s += s2;
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
                 }

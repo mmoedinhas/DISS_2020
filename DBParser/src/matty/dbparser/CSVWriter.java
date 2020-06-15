@@ -15,10 +15,8 @@ public class CSVWriter {
     }
 
     public void writeRow(List<String> rowData) throws IOException {
-        for (String data : rowData) {
-            csvWriter.append(String.join(",", rowData));
-            csvWriter.append("\n");
-        }
+        csvWriter.append(String.join(";", rowData));
+        csvWriter.append("\n");
     }
 
     public void close() throws IOException {
