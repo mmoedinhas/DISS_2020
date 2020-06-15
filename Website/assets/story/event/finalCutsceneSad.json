@@ -1,0 +1,81 @@
+{
+    "name": "finalCutsceneSad",
+    "actors": [
+        {
+            "actorId": "Clara",
+            "start": [
+                12,
+                10
+            ]
+        },
+        {
+            "actorId": "Uncle",
+            "start": [
+                2,
+                10
+            ]
+        },
+        {
+            "actorId": "Guest2",
+            "start": [
+                18,
+                12
+            ]
+        },
+        {
+            "actorId": "Guest3",
+            "start": [
+                17,
+                11
+            ]
+        },
+        {
+            "actorId": "Guest1",
+            "start": [
+                5,
+                15
+            ]
+        },
+        {
+            "actorId": "Grandma",
+            "start": [
+                17,
+                15
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Aaaaand that was the last guest I needed to greet."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "The mood here is not that bad... I think I'll stay a little longer."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 2,
+                "y": 0
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Now, where are those cakes..."
+            },
+            "actorId": "Clara"
+        }
+    ]
+}

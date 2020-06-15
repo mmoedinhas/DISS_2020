@@ -1,0 +1,104 @@
+#game {
+	display: flex;
+	justify-content: center;
+}
+
+#game canvas {
+	border-style: outset;
+	width: 80%;
+}
+
+.sv_qstn.game {
+	background-color: white !important;
+}
+
+.sticky thead th,
+.sticky thead td {
+	position: sticky;
+	top: 0;
+	background-color: #d4d4d4;
+	z-index: 1;
+}
+
+.sticky thead th::after,
+.sticky thead td::after {
+	content: '';
+	width: 100%;
+	height: 1px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: #e7e7e7;
+}
+
+.sticky {
+	width: auto !important;
+}
+
+.sticky td {
+	text-align: center;
+}
+
+.sticky tr:nth-child(even) {
+	background-color: #f4f4f4;
+}
+
+.sticky tr:nth-child(odd) {
+	background-color: white;
+}
+
+.sticky td ~ td {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.sticky th {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.no-overflow {
+	overflow: visible !important;
+}
+
+.game-controls {
+	width: auto !important;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.game-controls th,
+.game-controls td {
+	border-bottom: 1px solid #e7e7e7;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.game-controls tr > td:first-child {
+	padding-right: 15px;
+	text-align: center;
+}
+
+.game-controls p {
+	margin: 0;
+}
+
+div.sv_progress > span {
+	display: none;
+}
+
+.header_step {
+	font-size: 1.5em;
+	font-weight: 500;
+	margin-bottom: 0;
+	margin-top: 0;
+	margin-left: 1em;
+}
+
+.deq_desc {
+	font-size: 1.1em;
+}
+
+.game_desc {
+	text-align: center;
+}
