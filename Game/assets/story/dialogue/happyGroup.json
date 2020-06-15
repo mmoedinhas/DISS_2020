@@ -1,0 +1,28 @@
+{
+    "lines": [
+        {
+            "author": "Clara",
+            "text": "Merry Christmas! How is the party? Are you enjoying it?"
+        },
+        {
+            "author": "Girl in the white dress",
+            "text": "Merry Christmas Clara! Yes, of course. Whenever we see an invitation from your parents we know we HAVE to attend. These are the best Christmas parties in town."
+        },
+        {
+            "author": "Girl in the black dress",
+            "text": "Have you tried these cakes yet? I don't know what the baker puts in them, I can't stop eating!"
+        },
+        {
+            "author": "Girl in the white dress",
+            "text": "And then you wonder why your clothes won't fit you anymore..."
+        },
+        {
+            "author": "Girl in the black dress",
+            "text": "Oh you didn't say that! How can you when it's you that---"
+        },
+        {
+            "author": "Clara",
+            "text": "(Ok... I should leave them alone...)"
+        }
+    ]
+}

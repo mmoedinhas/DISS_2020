@@ -1,0 +1,77 @@
+{
+    "name": "sad_onlyTalkingToUncle",
+    "flags": [
+        {
+            "name": "uncleGreeted",
+            "value": false
+        }
+    ],
+    "endEventCondition": "uncleGreeted",
+    "player": {
+        "playerId": "Clara",
+        "actorId": "Clara",
+        "startPosition": [
+            9,
+            10
+        ]
+    },
+    "enemies": [],
+    "npcs": [
+        {
+            "actorId": "Uncle",
+            "position": [
+                2,
+                10
+            ],
+            "dialogue": "sadTalkUncle.json",
+            "isInteractableConditions": "not uncleGreeted",
+            "flagChangesAfterInteraction": [
+                {
+                    "name": "uncleGreeted",
+                    "value": "true"
+                }
+            ]
+        },
+        {
+            "actorId": "Guest3",
+            "position": [
+                17,
+                11
+            ],
+            "dialogue": "sad_notUncle.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Guest2",
+            "position": [
+                18,
+                12
+            ],
+            "dialogue": "sad_notUncle.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Guest1",
+            "position": [
+                5,
+                15
+            ],
+            "dialogue": "sad_notUncle.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Grandma",
+            "position": [
+                17,
+                15
+            ],
+            "dialogue": "sad_notUncle.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
+        }
+    ],
+    "items": []
+}

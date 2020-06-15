@@ -1,0 +1,74 @@
+{
+    "name": "desire&sad_searchForCake",
+    "flags": [
+        {
+            "name": "foundCake",
+            "value": false
+        }
+    ],
+    "endEventCondition": "foundCake",
+    "player": {
+        "playerId": "Clara",
+        "actorId": "Clara",
+        "startPosition": "current"
+    },
+    "enemies": [],
+    "npcs": [
+        {
+            "actorId": "Uncle",
+            "position": [
+                2,
+                10
+            ],
+            "dialogue": "noCakes.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Guest3",
+            "position": [
+                17,
+                11
+            ],
+            "dialogue": "yesCakes.json",
+            "isInteractableConditions": "not foundCake",
+            "flagChangesAfterInteraction": [
+                {
+                    "name": "foundCake",
+                    "value": "true"
+                }
+            ]
+        },
+        {
+            "actorId": "Guest2",
+            "position": [
+                18,
+                12
+            ],
+            "dialogue": "yesCakes.json",
+            "isInteractableConditions": "false",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Guest1",
+            "position": [
+                5,
+                15
+            ],
+            "dialogue": "noCakes.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
+        },
+        {
+            "actorId": "Grandma",
+            "position": [
+                17,
+                15
+            ],
+            "dialogue": "noCakes.json",
+            "isInteractableConditions": "true",
+            "flagChangesAfterInteraction": []
+        }
+    ],
+    "items": []
+}

@@ -1,0 +1,184 @@
+{
+    "name": "sad_finalCutsceneAnger",
+    "actors": [
+        {
+            "actorId": "Brother",
+            "start": [
+                5,
+                3
+            ]
+        },
+        {
+            "actorId": "Clara",
+            "start": [
+                14,
+                10
+            ]
+        },
+        {
+            "actorId": "Uncle",
+            "start": [
+                2,
+                10
+            ]
+        },
+        {
+            "actorId": "Guest2",
+            "start": [
+                18,
+                12
+            ]
+        },
+        {
+            "actorId": "Guest3",
+            "start": [
+                17,
+                11
+            ]
+        },
+        {
+            "actorId": "Guest1",
+            "start": [
+                5,
+                15
+            ]
+        },
+        {
+            "actorId": "Grandma",
+            "start": [
+                17,
+                15
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "",
+                "text": "*CRAAAASH*"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Did something break?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 3,
+                "y": 1
+            },
+            "actorId": "Brother"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 3,
+                "y": 0
+            },
+            "actorId": "Brother"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": 1
+            },
+            "actorId": "Brother"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara's Brother",
+                "text": "Ok, if I act like nothing happened, no one will suspect me..."
+            },
+            "actorId": "Brother"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": -2,
+                "y": 0
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": -2
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "What did you just do!?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara's Brother",
+                "text": "Aha... Nothing..."
+            },
+            "actorId": "Brother"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Spill it out!"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara's Brother",
+                "text": "Huumm... Aa... You know your favorite wall mirror? I was... just running in the hallway and..."
+            },
+            "actorId": "Brother"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "HOW MANY TIMES HAVE I TOLD YOU NOT TO RUN IN THE HALLWAYS!?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Oh you make me furious! Come here!"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": -6,
+                "y": -2
+            },
+            "actorId": "Brother"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Oh little brother, you're hopeless!"
+            },
+            "actorId": "Clara"
+        }
+    ]
+}

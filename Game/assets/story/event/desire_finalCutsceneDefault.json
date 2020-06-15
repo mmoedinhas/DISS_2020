@@ -1,0 +1,105 @@
+{
+    "name": "finalCutsceneDefault",
+    "actors": [
+        {
+            "actorId": "Clara",
+            "start": [
+                12,
+                10
+            ]
+        },
+        {
+            "actorId": "Uncle",
+            "start": [
+                2,
+                10
+            ]
+        },
+        {
+            "actorId": "Guest2",
+            "start": [
+                18,
+                12
+            ]
+        },
+        {
+            "actorId": "Guest3",
+            "start": [
+                17,
+                11
+            ]
+        },
+        {
+            "actorId": "Guest1",
+            "start": [
+                5,
+                15
+            ]
+        },
+        {
+            "actorId": "Grandma",
+            "start": [
+                17,
+                15
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "And that was the last guest I needed to greet."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "The only thing left is enjoy the party!"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 2,
+                "y": 0
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I really feel like some cakes right now..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Fluffy cakes fresh out of the oven... Yummy..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I remember talking to a guest about cakes! I should ask them where the cakes are."
+            },
+            "actorId": "Clara"
+        }
+    ]
+}

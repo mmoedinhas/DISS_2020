@@ -17,29 +17,70 @@
             padding: 0 !important;
             overflow: hidden !important;
         }
-        
+
         #content {
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
-        #error {
+
+        .error {
             color: red;
             font-size: 0.8em;
             display: none;
+        }
+
+        body {
+            display: flex;
+            flex-flow: column;
+        }
+
+        #storyViewLink,
+        #graph-error,
+        #connection-error,
+        #general-error {
+            flex: 0 1 auto;
+            align-self: flex-start;
+        }
+
+        #game {
+            flex: 1 1 auto;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 
 <body>
     <button id="storyViewLink" type="button" disabled>Debug View</button>
-    <p id="error">There are errors in the graph. Open console for details.</p>
+    <p class="error" id="graph-error">There are errors in the graph. Open console for details.</p>
+    <p class="error" id="connection-error">Couldn't establish connection with Story Viewer.</p>
+    <p class="error" id="general-error">Something happened. Open console for details.</p>
     <a id="linkToStoryViewer" style="display: none" target="_blank"></a>
-    <div id="content"></div>
+    <div id="game">
+        <div id="content"></div>
+    </div>
+
 
     <script src="vendors.app.bundle.js"></script>
     <script src="app.bundle.js"></script>
+    <script>
+        let eventSender = document.getElementById('content');
+        let playerProfile = {
+            anger: 4,
+            disgust: 9,
+            fear: 5,
+            anxiety: 8,
+            sadness: 11,
+            desire: 10,
+            relaxation: 6,
+            happiness: 10,
+        };
+        Game.newGame({
+            doneDomElem: eventSender,
+            parent: "content",
+            playerProfile: playerProfile
+        });
+    </script>
 </body>
 
 </html>

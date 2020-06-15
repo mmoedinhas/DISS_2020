@@ -1,0 +1,36 @@
+{
+    "lines": [
+        {
+            "author": "Clara",
+            "text": "Hello!"
+        },
+        {
+            "author": "Both girls",
+            "text": "Hi Clara!"
+        },
+        {
+            "author": "Clara",
+            "text": "Do you happen to know where the cakes are? I remember one of you talking about them with me."
+        },
+        {
+            "author": "Girl in the black dress",
+            "text": "You mean these amazing cakes I haven't stopped eating since I arrived? Oh, they're right around the---"
+        },
+        {
+            "author": "Girl in the white dress",
+            "text": "Please! She has had enough! Take this one out of her hands. I beg of you!"
+        },
+        {
+            "author": "Clara",
+            "text": "Thank you?"
+        },
+        {
+            "author": "Girl in the white dress",
+            "text": "No, thank you! For helping me prevent a serious catastrophe!"
+        },
+        {
+            "author": "Clara",
+            "text": "(Poor girl... I get you, I love sweets too...)"
+        }
+    ]
+}

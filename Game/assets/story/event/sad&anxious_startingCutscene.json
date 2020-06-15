@@ -1,0 +1,153 @@
+{
+    "name": "sad&anxious_startingCutscene",
+    "actors": [
+        {
+            "actorId": "Clara",
+            "start": [
+                8,
+                4
+            ]
+        },
+        {
+            "actorId": "Uncle",
+            "start": [
+                2,
+                10
+            ]
+        },
+        {
+            "actorId": "Guest2",
+            "start": [
+                18,
+                12
+            ]
+        },
+        {
+            "actorId": "Guest3",
+            "start": [
+                17,
+                11
+            ]
+        },
+        {
+            "actorId": "Guest1",
+            "start": [
+                5,
+                15
+            ]
+        },
+        {
+            "actorId": "Grandma",
+            "start": [
+                17,
+                15
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 4,
+                "y": 0
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "The past few days I've been feeling down..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "And now, Mother and Father tell me I have to attend their silly Christmas party."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I really REALLY don't feel like attending, but I don't want to disappoint them..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": 1
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "I can see the guests already arrived. Oh my, I haven't seen everyone for so long..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "... I really don't want to be awkward ..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Why is it being so hard to just greet them?"
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Ok, remember Mother and Father. You can't disappoint them. Come on, deep breaths..."
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": 0,
+                "y": 5
+            },
+            "actorId": "Clara"
+        },
+        {
+            "action": "walk",
+            "arguments": {
+                "x": -4,
+                "y": 0
+            },
+            "actorId": "Grandma"
+        },
+        {
+            "action": "talk",
+            "arguments": {
+                "author": "Clara",
+                "text": "Wait, I see grandma over there! I'll go over to her, maybe she can help."
+            },
+            "actorId": "Grandma"
+        }
+    ]
+}
