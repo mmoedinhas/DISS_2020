@@ -4,8 +4,8 @@ import java.sql.*;
 
 public class DB {
 
-    static DB db = new DB();
-    Connection conn = null;
+    private static DB db = new DB();
+    private Connection conn = null;
 
     private DB() {}
 
