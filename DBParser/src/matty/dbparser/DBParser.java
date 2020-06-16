@@ -7,8 +7,8 @@ public class DBParser {
 
     public static void main(String[] args) {
 
-        if (!(args.length == 1 || args.length == 2)) {
-            System.out.println("Usage: java DBParser <path-to-db> ?<parent-path-to-results.csv>");
+        if (!(args.length >= 2 || args.length <= 3)) {
+            System.out.println("Usage: java DBParser <path-to-db> <csv-separator> ?<parent-path-to-results.csv>");
             return;
         }
 
@@ -24,9 +24,9 @@ public class DBParser {
 
             CSVWriter csvWriter;
             if(args.length == 1) {
-                csvWriter = new CSVWriter("./");
+                csvWriter = new CSVWriter("./", args[1]);
             } else {
-                csvWriter = new CSVWriter(args[1]);
+                csvWriter = new CSVWriter(args[2], args[1]);
             }
 
             for(List<String> rowData: results) {
