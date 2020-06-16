@@ -2,6 +2,7 @@ package matty.dbparser;
 
 import org.json.JSONObject;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,50 +26,36 @@ public class DBToCSV {
 
         list.addAll(headers);
 
-//        if ((rs = db.selectAllPlayers()) != null) {
-//            while (true) {
-//                try {
-//                    if (!rs.next()) break;
-//                } catch (SQLException e) {
-//                    System.out.println(e.getMessage());
-//                    break;
-//                }
-//                List<String> player = new ArrayList<String>();
-//
-//                try {
-//                    player.add(getRow(rs, "p_id"));
-//                    player.add(getRow(rs, "p_uuid"));
-//                    player.add(getRow(rs, "p_default_first"));
-//                    player.add(getRow(rs, "p_age"));
-//                    player.add(getRow(rs, "p_language"));
-//                    player.add(getRow(rs, "p_play_games"));
-//                    player.add(getRow(rs, "p_favorite_genre"));
-//                    player.add(getRow(rs, "p_important_narrative"));
-//                    player.add(getRow(rs, "p_deq"));
-//                    player.add(getRow(rs, "p_affective_profile"));
-//                    player.add(getRow(rs, "p_logs_1"));
-//                    player.add(getRow(rs, "p_logs_2"));
-//                    player.add(getRow(rs, "p_game_exp_core_module_1"));
-//                    player.add(getRow(rs, "p_game_exp_core_module_2"));
-//                    player.add(getRow(rs, "p_post_game_opinion_1"));
-//                    player.add(getRow(rs, "p_post_game_opinion_2"));
-//                    player.add(getRow(rs, "p_open_answer_game_exp_1"));
-//                    player.add(getRow(rs, "p_open_answer_game_exp_2"));
-//                    player.add(getRow(rs, "p_main_character_opinion_1"));
-//                    player.add(getRow(rs, "p_main_character_opinion_2"));
-//                    player.add(getRow(rs, "p_version_liked_most"));
-//                    player.add(getRow(rs, "p_open_answer_version_liked_most"));
-//                    player.add(getRow(rs, "p_version_reflected_most"));
-//                    player.add(getRow(rs, "p_open_answer_version_reflected_most"));
-//                    player.add(getRow(rs, "p_games_like_this_in_the_future"));
-//                    player.add(getRow(rs, "p_open_answer_games_like_this_in_the_future"));
-//                    player.add(getRow(rs, "p_suggestions"));
-//                    list.add(player);
-//                } catch (SQLException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//            }
-//        }
+        if ((rs = db.selectAllPlayers()) != null) {
+            while (true) {
+                try {
+                    if (!rs.next()) break;
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    break;
+                }
+                List<String> player = new ArrayList<String>();
+
+                for (int i = 0; i <= CSVColumns.getHighestIndex(); i++) {
+                    String columnName = CSVColumns.indexes.get(i);
+
+                    try {
+                        if (columnName.contains("p_deq")) {
+                            int[] indexHolder = {i};
+                            player.addAll(getDeq(rs, indexHolder));
+                            i = indexHolder[0] - 1;
+                        } else {
+                            player.add(getRow(rs, columnName));
+                        }
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                        player.add(escapeString(""));
+                    }
+                }
+
+                list.add(player);
+            }
+        }
 
         return list;
     }
@@ -78,21 +65,21 @@ public class DBToCSV {
         List<String> header2 = new ArrayList<String>();
 
 
-        for(int i = 0; i <= CSVColumns.getHighestIndex(); i++) {
+        for (int i = 0; i <= CSVColumns.getHighestIndex(); i++) {
             String s1 = CSVColumns.header1.get(i);
-            if(s1 == null) {
+            if (s1 == null) {
                 s1 = "";
             }
 
-            s1 = "\"" + s1 + "\"";
+            s1 = escapeString(s1);
             header1.add(s1);
 
             String s2 = CSVColumns.header2.get(i);
-            if(s2 == null) {
+            if (s2 == null) {
                 s2 = "";
             }
 
-            s2 = "\"" + s2 + "\"";
+            escapeString(s2);
             header2.add(s2);
         }
 
@@ -102,20 +89,39 @@ public class DBToCSV {
         return headers;
     }
 
-    private String getJSONRow() {
-        JSONObject jo = new JSONObject("");
-        return "";
+    private List<String> getDeq(ResultSet rs, int[] indexHolder) throws SQLException {
+        String deq = rs.getString("p_deq");
+        JSONObject jo = new JSONObject(deq);
+        List<String> deqValues = new ArrayList<String>();
+        int i = indexHolder[0];
+        System.out.println("i before: " + i);
+
+        while(CSVColumns.indexes.get(i).contains("p_deq")) {
+            String deqKey = CSVColumns.indexes.get(i).split(":")[1];
+            String deqValue = (String) jo.get(deqKey);
+            deqValues.add(escapeString(deqValue));
+            i++;
+        }
+
+        System.out.println("i after: " + i);
+        indexHolder[0] = i;
+        return deqValues;
     }
 
     private String getRow(ResultSet rs, String rowName) throws SQLException {
         String data = rs.getString(rowName);
 
         if (data == null) {
-            data = "\"\"";
-        } else {
-            data = "\"" + data + "\"";
+            data = "";
         }
 
+        data = escapeString(data);
+
         return data;
+    }
+
+    private String escapeString(String s) {
+        s = s.replace('"', '\'');
+        return s = "\"" + s + "\"";
     }
 }
