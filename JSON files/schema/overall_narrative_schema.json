@@ -2,8 +2,8 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "http://diss2020.com/overall-narrative.schema.json",
     "type": "object",
-    "title": "The Root Schema",
-    "description": "The root schema comprises the entire JSON document.",
+    "title": "Overall narrative",
+    "description": "The representation of the overall narrative of the game",
     "required": [
         "firstLocation",
         "scenes"
